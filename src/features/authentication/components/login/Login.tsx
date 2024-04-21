@@ -15,7 +15,10 @@ interface LoginProps {}
 
 export const Login: FC<LoginProps> = ({}) => {
   const navigate = useNavigate();
-  const [formValues, setFormValues] = useState<{ email: string; password: string }>({
+  const [formValues, setFormValues] = useState<{
+    email: string;
+    password: string;
+  }>({
     email: '',
     password: '',
   });

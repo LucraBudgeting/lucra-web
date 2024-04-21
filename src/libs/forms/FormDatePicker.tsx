@@ -17,7 +17,12 @@ interface FormDatePickerProps {
   disabled?: boolean;
 }
 
-export const FormDatePicker: FC<FormDatePickerProps> = ({ fieldMapping, control, initialValue, disabled }) => {
+export const FormDatePicker: FC<FormDatePickerProps> = ({
+  fieldMapping,
+  control,
+  initialValue,
+  disabled,
+}) => {
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
       <FormControl className="form-filled-input-control" variant="filled">

@@ -109,10 +109,13 @@ class registerFormMapping extends BaseFormSchema {
 
 export const registerFormFields = new registerFormMapping();
 
-const schema = getSchemaFromClass(registerFormFields).refine((data) => data.password === data.confirmPassword, {
-  path: ['confirmPassword'],
-  message: 'Passwords do not match',
-});
+const schema = getSchemaFromClass(registerFormFields).refine(
+  (data) => data.password === data.confirmPassword,
+  {
+    path: ['confirmPassword'],
+    message: 'Passwords do not match',
+  }
+);
 
 export type RegisterFormSchema = z.infer<typeof schema>;
 

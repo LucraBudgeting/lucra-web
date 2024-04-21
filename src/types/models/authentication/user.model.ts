@@ -1,11 +1,11 @@
+import { USER_TYPE } from '@/stores/sliceTypes/Authentication.type';
 import { IBaseModel } from '../base.model';
 
 export interface UserModel extends IBaseModel {
-  id: string;
-  name: string;
-  username: string;
-  nickname: string;
+  userId: string;
+  phoneNumber: string | null;
+  token: string;
   email: string;
-  picture: string;
-  o_auth_sub: string;
+  companyId: string;
+  userType: USER_TYPE;
 }

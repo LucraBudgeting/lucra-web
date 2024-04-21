@@ -4,7 +4,10 @@ import { lazyImport } from '@/utils/lazyImport';
 import { AuthCheckProvider } from '@/providers/AuthProviders';
 import { pokemonRoutes } from './RouteConstants';
 import { Redirect } from './redirect';
-const { PokemonRoutes } = lazyImport(() => import('@/features/pokemon/PokemonRoutes'), 'PokemonRoutes');
+const { PokemonRoutes } = lazyImport(
+  () => import('@/features/pokemon/PokemonRoutes'),
+  'PokemonRoutes'
+);
 
 export const AuthenticatedRoutes: RouteObject[] = [
   {
