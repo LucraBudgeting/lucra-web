@@ -8,7 +8,7 @@ import { allowedCharactersRegex } from '@/utils/form-regex';
 
 const pokemonTypeValueEnum: [string, ...string[]] = pokemonTypeValueMap.map((type) => type.value as string) as [
   string,
-  ...string[]
+  ...string[],
 ];
 class pokemonFormMapping extends BaseFormSchema {
   pokemonType: FormFieldMapping = {

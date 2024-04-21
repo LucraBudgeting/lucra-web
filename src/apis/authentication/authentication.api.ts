@@ -27,9 +27,7 @@ export class AuthenticationApi extends BaseRepository implements IAuthentication
     return HttpClient.post(`${this.apiUrl}/api/user/guest/${eventId}`);
   };
 
-  registerNewUser = async (
-    user: RegisterUserPayload
-  ): Promise<AuthResponse<RegisterUserResponse>> => {
+  registerNewUser = async (user: RegisterUserPayload): Promise<AuthResponse<RegisterUserResponse>> => {
     return HttpClient.post(`${this.apiUrl}/api/auth/register`, { ...user });
   };
 

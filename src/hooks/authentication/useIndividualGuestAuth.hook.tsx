@@ -1,9 +1,6 @@
 import { useContext, useEffect, useState } from 'react';
 import { ApiContext } from '@/apis/api.context';
-import {
-  authenticationSelector,
-  setGuestAuthentication,
-} from '@/stores/slices/Authentication.slice';
+import { authenticationSelector, setGuestAuthentication } from '@/stores/slices/Authentication.slice';
 import { useAppDispatch } from '@/stores/store.hooks';
 import localStorageRepository from '@/utils/localStorage.repository';
 

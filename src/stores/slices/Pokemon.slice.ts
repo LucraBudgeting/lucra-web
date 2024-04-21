@@ -35,7 +35,6 @@ export const pokemonSlice = createSlice({
 
 export const pokemonSelector = () => useAppSelector((store) => store.pokemon);
 
-export const { setActivePokemon, setPokemons, resetPokemon, addNewPokemon, deletePokemon } =
-  pokemonSlice.actions;
+export const { setActivePokemon, setPokemons, resetPokemon, addNewPokemon, deletePokemon } = pokemonSlice.actions;
 
 export default pokemonSlice.reducer;

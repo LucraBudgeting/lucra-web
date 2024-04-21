@@ -87,7 +87,7 @@ export function usePokemonRequest(
 
         setResponse(res);
       })
-      .catch((err) => {
+      .catch((_err) => {
         if (!isMounted) return;
 
         dispatch(
