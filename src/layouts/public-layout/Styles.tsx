@@ -6,7 +6,6 @@ export const CoreLayoutContainer = styled(Box)`
   display: flex;
   flex-direction: column;
   width: 100vw;
-  height: 100vh;
   position: fixed;
   top: 0;
 `;
@@ -27,17 +26,6 @@ export const CoreColumn = styled(Box)<{ width?: string }>(({ width }) => ({
   flexDirection: 'column',
   width: width || 'auto',
 }));
-
-export const CoreLayoutOutlet = styled(Box)`
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  justify-content: flex-start;
-  width: 100%;
-  padding: 0 20px;
-  margin-top: 20px;
-`;
-
 export const CoreCardContent = styled(Card)(({ theme }) => ({
   display: 'flex',
   flexDirection: 'column',

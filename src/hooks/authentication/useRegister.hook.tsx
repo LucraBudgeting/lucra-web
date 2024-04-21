@@ -4,46 +4,38 @@ import { HttpStatusCodes } from '@/libs/http/http.config';
 import { setSnackbarProps } from '@/stores/slices/SnackBar.slice';
 import { useAppDispatch } from '@/stores/store.hooks';
 import { setAuthentication } from '@/stores/slices/Authentication.slice';
+import { RegisterUserPayload } from '@/apis/authentication/RegisterUserPayload';
 
-export enum loginActions {
+export enum registerActions {
   login = 'login',
-  logout = 'logout',
-  register = 'register',
+  alreadyExists = 'alreadyExists',
 }
 
-type hookResponse = {
-  loginAction: loginActions | undefined;
-  isAuthorizing: boolean;
-  isAuthorized: boolean;
-};
+type hookResponse = [registerActions | undefined, boolean, boolean];
 
-export function useLogin(email: string, password: string): hookResponse {
-  const [action, setAction] = useState<loginActions>();
+export function useRegister(userPayload: RegisterUserPayload): hookResponse {
+  const [action, setAction] = useState<registerActions>();
   const [isAuthorized, setIsAuthorized] = useState<boolean>(false);
   const [isFetching, setIsFetching] = useState<boolean>(false);
   const apis = useContext(ApiContext);
 
   const dispatch = useAppDispatch();
 
-  function loginDataIsValid(): boolean {
-    return email && password ? true : false;
-  }
-
   useEffect(() => {
     let isMounted = true;
 
-    if (!loginDataIsValid()) return;
+    if (userPayload.validate().length) return;
 
     setIsFetching(true);
 
     apis.authentication
-      .login(email, password)
+      .registerNewUser(userPayload)
       .then((res) => {
         if (!isMounted) return;
 
         const { user } = res;
 
-        setAction(loginActions.login);
+        setAction(registerActions.login);
         setIsAuthorized(true);
 
         dispatch(
@@ -64,19 +56,21 @@ export function useLogin(email: string, password: string): hookResponse {
             severity: 'success',
           })
         );
+
+        location.href = user.checkoutUrl;
       })
       .catch(async (err) => {
         if (!isMounted) return;
 
         switch (err.code) {
-          case HttpStatusCodes.NotFound:
-            await handleUserNotFound();
+          case HttpStatusCodes.Conflict:
+            await handleUserAlreadyExists();
             break;
           default:
             dispatch(
               setSnackbarProps({
                 open: true,
-                message: 'User Could Not Be Logged In',
+                message: 'New User Could Not Be Registered',
                 severity: 'error',
               })
             );
@@ -92,22 +86,18 @@ export function useLogin(email: string, password: string): hookResponse {
     return () => {
       isMounted = false;
     };
-  }, [email, password]);
+  }, [userPayload]);
 
-  async function handleUserNotFound() {
+  async function handleUserAlreadyExists() {
     dispatch(
       setSnackbarProps({
         open: true,
-        message: 'User Not Found',
+        message: 'User Already Exists',
         severity: 'error',
       })
     );
-    setAction(loginActions.register);
+    setAction(registerActions.alreadyExists);
   }
 
-  return {
-    loginAction: action,
-    isAuthorizing: isFetching,
-    isAuthorized: isAuthorized,
-  };
+  return [action, isFetching, isAuthorized];
 }

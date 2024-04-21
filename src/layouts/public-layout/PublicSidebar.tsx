@@ -19,7 +19,7 @@ interface coreSidebarProps {}
 
 const drawerWidth = 200;
 
-export const CoreSidebar: FC<coreSidebarProps> = ({}) => {
+export const PublicSidebar: FC<coreSidebarProps> = ({}) => {
   const drawer = (
     <>
       <List>

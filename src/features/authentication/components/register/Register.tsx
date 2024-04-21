@@ -1,68 +1,82 @@
-import { FC, useEffect, useState } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
-
-import { Typography } from '@mui/material';
-import { useAuth0 } from '@auth0/auth0-react';
-import siteLogo from '@/assets/siteLogo';
+import { FC, useState } from 'react';
+import { Button } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
+import { FieldValues } from 'react-hook-form';
 import { authRoutes } from '@/routes/RouteConstants';
-import { useRegisterUser } from '@/hooks/authentication/useRegisterUser.hook';
+import { FormFilledInput, FormFilledSelect } from '@/libs/forms/formFilledComponents';
+import { useRegister } from '@/hooks/authentication/useRegister.hook';
+import { getStateValueMap } from '@/types/location/States';
 import { LoadingComponent } from '@/components/loading/Loading.Component';
-import { AuthButton } from '../Auth.button';
+import { RegisterUserPayload } from '@/apis/authentication/RegisterUserPayload';
 import * as Styled from '../auth.styles';
+import { registerFormFields, useRegisterForm } from './registerForm';
 
-interface RegisterProps {}
+const stateOptions = getStateValueMap();
 
-export const Register: FC<RegisterProps> = ({}) => {
+interface RegisterComponentProps {}
+
+export const RegisterComponent: FC<RegisterComponentProps> = ({}) => {
   const navigate = useNavigate();
-  const location = useLocation();
-  const queryParams = new URLSearchParams(location.search);
+  const [formValues, setFormValues] = useState<RegisterUserPayload>(new RegisterUserPayload());
 
-  const { loginWithRedirect, isAuthenticated, isLoading, user, logout } = useAuth0();
+  const { handleSubmit, control } = useRegisterForm({
+    username: '',
+    password: '',
+  });
 
-  const [isFetching, setIsFetching] = useState<boolean>(false);
-  const [submitRegistration, setSubmitRegistration] = useState<boolean>(false);
+  const [_, isAuthorizing] = useRegister(formValues);
 
-  useRegisterUser(submitRegistration, setIsFetching);
-
-  const routeAction = queryParams.get('action');
-
-  useEffect(() => {
-    switch (routeAction) {
-      case 'not-found':
-        setSubmitRegistration(true);
-        break;
-      default:
-        break;
-    }
-  }, [routeAction]);
-
-  const register = () => {
-    if (!user || !isAuthenticated) {
-      loginWithRedirect();
-    } else {
-      //Handle new user registration to API
-      setSubmitRegistration(true);
-    }
+  const handleValidForm = (formData: FieldValues) => {
+    const formInfo = registerFormFields.createEditSaveRequest(formData);
+    setFormValues(formInfo);
   };
 
-  const handleLoginLink = () => {
-    if (isAuthenticated) {
-      logout();
-    } else {
-      navigate(authRoutes.login);
-    }
-  };
+  const handleInvalidForm = (_formData: FieldValues) => {};
 
-  if (isLoading || isFetching) return <LoadingComponent />;
+  const onSubmitForm = handleSubmit(handleValidForm, handleInvalidForm);
+
+  const redirectToLogin = () => {
+    navigate(authRoutes.login);
+  };
 
   return (
-    <Styled.AuthCardContainer>
-      <Styled.LogoContainer srcSet={siteLogo} alt="temporary-site-logo" />
-      <Typography variant={'h2'}>Register</Typography>
-      <AuthButton onClick={register} text="Register" />
-      <Typography variant="body2">
-        Go Back to <Styled.Link onClick={handleLoginLink}>Login</Styled.Link>
-      </Typography>
-    </Styled.AuthCardContainer>
+    <div>
+      <Styled.BaseForm onSubmit={onSubmitForm}>
+        <Styled.FormTitle>Register</Styled.FormTitle>
+        <Styled.Row>
+          <Styled.Column>
+            <FormFilledInput fieldMapping={registerFormFields.email} control={control} />
+            <FormFilledInput fieldMapping={registerFormFields.phoneNumber} control={control} />
+            <FormFilledInput fieldMapping={registerFormFields.password} control={control} />
+            <FormFilledInput fieldMapping={registerFormFields.confirmPassword} control={control} />
+            <FormFilledInput fieldMapping={registerFormFields.firstName} control={control} />
+            <FormFilledInput fieldMapping={registerFormFields.lastName} control={control} />
+          </Styled.Column>
+
+          <Styled.Column>
+            <FormFilledInput fieldMapping={registerFormFields.companyName} control={control} />
+            <FormFilledInput fieldMapping={registerFormFields.streetAddress1} control={control} />
+            <FormFilledInput fieldMapping={registerFormFields.streetAddress2} control={control} />
+            <FormFilledInput fieldMapping={registerFormFields.city} control={control} />
+            <FormFilledSelect
+              options={stateOptions}
+              fieldMapping={registerFormFields.state}
+              control={control}
+            />
+            <FormFilledInput fieldMapping={registerFormFields.zipCode} control={control} />
+          </Styled.Column>
+        </Styled.Row>
+        {isAuthorizing ? (
+          <LoadingComponent animateOnly={true} />
+        ) : (
+          <Styled.AroundRow>
+            <Button color="secondary" onClick={redirectToLogin}>
+              Back To Login
+            </Button>
+            <Button onClick={onSubmitForm}>Register Company</Button>
+          </Styled.AroundRow>
+        )}
+      </Styled.BaseForm>
+    </div>
   );
 };

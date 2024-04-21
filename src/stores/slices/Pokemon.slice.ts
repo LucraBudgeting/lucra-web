@@ -3,6 +3,7 @@ import { Pokemon } from '@/types/models/pokemon/pokemon.type';
 import { useAppSelector } from '../store.hooks';
 import { PokemonState } from '../sliceTypes/PokemonState.type';
 
+export const pokemonSliceName = 'pokemonSlice';
 export const initialPokemonState: PokemonState = {
   // DO NOT USE AN INSTANTIATED CLASS AS INITIAL STATE - WILL BREAK REDUCERS AND BE ANNOYING
   pokemons: [],
@@ -10,7 +11,7 @@ export const initialPokemonState: PokemonState = {
 };
 
 export const pokemonSlice = createSlice({
-  name: 'pokemonSlice',
+  name: pokemonSliceName,
   initialState: initialPokemonState,
   reducers: {
     setPokemons: (state, action: PayloadAction<Pokemon[]>) => {
@@ -26,14 +27,15 @@ export const pokemonSlice = createSlice({
       state.pokemons = state.pokemons.filter((pokemon) => pokemon.id !== action.payload);
     },
     resetPokemon: (state) => {
-      state.pokemons = initialState.pokemons;
-      state.activePokemon = initialState.activePokemon;
+      state.pokemons = initialPokemonState.pokemons;
+      state.activePokemon = initialPokemonState.activePokemon;
     },
   },
 });
 
 export const pokemonSelector = () => useAppSelector((store) => store.pokemon);
 
-export const { setActivePokemon, setPokemons, resetPokemon, addNewPokemon, deletePokemon } = pokemonSlice.actions;
+export const { setActivePokemon, setPokemons, resetPokemon, addNewPokemon, deletePokemon } =
+  pokemonSlice.actions;
 
 export default pokemonSlice.reducer;

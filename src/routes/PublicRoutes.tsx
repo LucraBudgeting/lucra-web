@@ -1,6 +1,7 @@
-import { Navigate, RouteObject } from 'react-router-dom';
+import {  RouteObject } from 'react-router-dom';
 import { lazyImport } from '@/utils/lazyImport';
-import { authBase } from './RouteConstants';
+import { authRoutes } from './RouteConstants';
+import { Redirect } from './redirect';
 
 const { AuthenticationRoutes } = lazyImport(
   () => import('@/features/authentication/AuthenticationRoutes'),
@@ -9,11 +10,11 @@ const { AuthenticationRoutes } = lazyImport(
 
 export const PublicRoutes: RouteObject[] = [
   {
-    path: `/${authBase}/*`,
+    path: `/${authRoutes.base}/*`,
     element: <AuthenticationRoutes />,
   },
   {
     path: '/*',
-    element: <Navigate to={`/${authBase}`} />,
+    element: <Redirect />,
   },
 ];
