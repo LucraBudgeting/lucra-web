@@ -1,5 +1,6 @@
 const pokemonBase = 'pokemon';
 const authBase = 'auth';
+export const healthBase = 'health';
 
 export const pokemonRoutes = {
   base: pokemonBase,
