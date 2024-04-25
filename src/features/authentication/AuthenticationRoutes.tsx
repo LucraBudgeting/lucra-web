@@ -8,11 +8,9 @@ import { RegisterComponent } from './components/register/Register';
 export const AuthenticationRoutes = () => {
   return (
     <AuthenticatedLayout>
-      <Route>
-        <Route path={'login'} element={<Login />} />
-        <Route path={'register'} element={<RegisterComponent />} />
-        <Route path={'*'} element={<Navigate to={authRoutes.login} />} />
-      </Route>
+      <Route path={'login'} element={<Login />} />
+      <Route path={'register'} element={<RegisterComponent />} />
+      <Route path={'*'} element={<Navigate to={authRoutes.login} />} />
     </AuthenticatedLayout>
   );
 };

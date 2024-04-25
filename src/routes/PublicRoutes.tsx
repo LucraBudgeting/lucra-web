@@ -15,7 +15,7 @@ export const PublicRoutes: RouteObject[] = [
     element: <AuthenticationRoutes />,
   },
   {
-    path: healthBase + '/*',
+    path: `/${healthBase}/*`,
     element: <HealthRoutes />,
   },
   {

@@ -8,11 +8,9 @@ import { Pokemons } from './components/pokemons/Pokemons.component';
 export const PokemonRoutes = () => {
   return (
     <CoreLayout>
-      <Route>
-        <Route path={'/'} element={<Pokemons />} />
-        <Route path={'/:id'} element={<Pokemon />} />
-        <Route path={'*'} element={<Navigate to={'/' + pokemonRoutes.base} />} />
-      </Route>
+      <Route path={'/'} element={<Pokemons />} />
+      <Route path={'/:id'} element={<Pokemon />} />
+      <Route path={'*'} element={<Navigate to={'/' + pokemonRoutes.base} />} />
     </CoreLayout>
   );
 };
