@@ -1,8 +1,8 @@
+import { useEffect, useState } from 'react';
+import { Route, Routes } from 'react-router-dom';
 import { BaseRepository } from '@/apis/base.repository';
 import { LoadingComponent } from '@/components/loading/Loading.Component';
 import HttpClient from '@/libs/http/http.client';
-import { FC, useEffect, useState } from 'react';
-import { Route, Routes } from 'react-router-dom';
 
 export const HealthRoutes = ({}) => {
   return (
