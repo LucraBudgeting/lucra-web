@@ -6,6 +6,7 @@ import { ApiContext } from '@/apis/api.context';
 import { useAppDispatch } from '@/stores/store.hooks';
 import { setAuthentication } from '@/stores/slices/Authentication.slice';
 import { Redirect } from '@/routes/redirect';
+import LocalStorageRepository from '@/utils/localStorage.repository';
 
 interface AuthCheckProviderProps {}
 
@@ -15,6 +16,8 @@ export const AuthCheckProvider: FC<AuthCheckProviderProps> = ({}) => {
   const { isAuthenticated, user } = useAuth();
 
   const [isLoading, setIsLoading] = useState<boolean>(true);
+
+  const hasAuthToken = LocalStorageRepository.getUserToken();
 
   useEffect(() => {
     let isMounted = true;
@@ -50,7 +53,7 @@ export const AuthCheckProvider: FC<AuthCheckProviderProps> = ({}) => {
     };
   }, []);
 
-  if (isLoading) return <LoadingComponent loadingText="Authenticating User" />;
+  if (isLoading && hasAuthToken) return <LoadingComponent loadingText="Authenticating User" />;
 
   if (!isAuthenticated) {
     // LOGOUT REQUEST
