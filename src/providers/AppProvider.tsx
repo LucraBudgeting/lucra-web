@@ -11,6 +11,9 @@ type AppProviderProps = {
 };
 
 export const AppProvider = ({ children }: AppProviderProps) => {
+  React.useEffect(() => {
+    document.title = 'Lucra Budgeting';
+  }, []);
   return (
     <React.Suspense
       fallback={
