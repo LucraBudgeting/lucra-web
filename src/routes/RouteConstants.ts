@@ -1,5 +1,6 @@
 const pokemonBase = 'pokemon';
 const authBase = 'auth';
+const bankBase = 'bank';
 export const healthBase = 'health';
 
 export const pokemonRoutes = {
@@ -9,6 +10,10 @@ export const authRoutes = {
   base: authBase,
   login: `/${authBase}/login`,
   register: `/${authBase}/register`,
+};
+
+export const bankRoutes = {
+  base: bankBase,
 };
 
 export const homeRoute = '/' + pokemonBase;

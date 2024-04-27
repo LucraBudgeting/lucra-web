@@ -15,20 +15,20 @@ export default defineConfig({
 
   plugins: [
     react(),
-    VitePWA({
-      registerType: 'autoUpdate', // Automatically check for updates
-      workbox: {
-        runtimeCaching: [
-          {
-            urlPattern: ({ request }) => request.mode === 'navigate',
-            handler: 'NetworkFirst',
-            options: {
-              // Configure cache options here if needed
-            },
-          },
-        ],
-      },
-    }),
+    // VitePWA({
+    //   registerType: 'autoUpdate', // Automatically check for updates
+    //   workbox: {
+    //     runtimeCaching: [
+    //       {
+    //         urlPattern: ({ request }) => request.mode === 'navigate',
+    //         handler: 'NetworkFirst',
+    //         options: {
+    //           // Configure cache options here if needed
+    //         },
+    //       },
+    //     ],
+    //   },
+    // }),
   ],
 
   resolve: {
