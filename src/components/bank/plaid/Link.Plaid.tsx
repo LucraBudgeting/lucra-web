@@ -38,8 +38,14 @@ export const LinkPlaid: FC<LinkPlaidProps> = ({}) => {
         Link Bank
       </Button>
 
-      <h1>Transactions</h1>
-      <code>{transactions}</code>
+      {transactions && (
+        <>
+          <h1>Transactions</h1>
+          <code>
+            <pre>{transactions}</pre>
+          </code>
+        </>
+      )}
     </div>
   );
 };
