@@ -1,8 +1,8 @@
 import { FC } from 'react';
-import { LinkPlaid } from '@/components/bank/plaid/Link.Plaid';
+import { QsLinkPlaid } from '@/components/bank/qsPlaid/Link.Plaid.qs';
 
 interface LinkBankProps {}
 
 export const LinkBank: FC<LinkBankProps> = ({}) => {
-  return <LinkPlaid />;
+  return <QsLinkPlaid />;
 };

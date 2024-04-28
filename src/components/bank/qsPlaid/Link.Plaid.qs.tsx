@@ -5,10 +5,10 @@ import { ApiContext } from '@/apis/api.context';
 
 interface LinkPlaidProps {}
 
-export const LinkPlaid: FC<LinkPlaidProps> = ({}) => {
+export const QsLinkPlaid: FC<LinkPlaidProps> = ({}) => {
   const [linkToken, setLinkToken] = useState<string>('');
   const [transactions, setTransactions] = useState<string>('');
-  const { plaidApi: bankApi } = useContext(ApiContext);
+  const { qsPlaidApi: bankApi } = useContext(ApiContext);
 
   useEffect(() => {
     const fetchLinkToken = async () => {

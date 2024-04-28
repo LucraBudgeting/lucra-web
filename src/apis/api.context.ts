@@ -2,13 +2,13 @@ import { createContext } from 'react';
 import { PokemonApi } from './pokemon.api';
 import { AuthenticationApi } from './authentication/authentication.api';
 import { BillingApi } from './billing/billing.api';
-import { PlaidApi } from './bank/plaid.api';
+import { QsPlaidApi } from './bank/plaid.qs.api';
 
 interface Apis {
   pokemon: PokemonApi;
   billingApi: BillingApi;
   authentication: AuthenticationApi;
-  plaidApi: PlaidApi;
+  qsPlaidApi: QsPlaidApi;
   apiUrl: string;
 }
 
@@ -18,7 +18,7 @@ export const initializedApis: Apis = {
   pokemon: new PokemonApi(),
   billingApi: new BillingApi(),
   authentication: new AuthenticationApi(),
-  plaidApi: new PlaidApi(),
+  qsPlaidApi: new QsPlaidApi(),
   apiUrl: import.meta.env[`VITE_API_BASE_URL_${VITE_ENV}`],
 };
 
