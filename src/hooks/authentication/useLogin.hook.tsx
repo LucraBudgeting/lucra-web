@@ -41,7 +41,7 @@ export function useLogin(email: string, password: string): hookResponse {
       .then((res) => {
         if (!isMounted) return;
 
-        const { user } = res;
+        const { user, accessToken } = res;
 
         setAction(loginActions.login);
         setIsAuthorized(true);
@@ -49,11 +49,9 @@ export function useLogin(email: string, password: string): hookResponse {
         dispatch(
           setAuthentication({
             userId: user.userId,
-            companyId: user.companyId,
-            token: user.token,
+            token: accessToken,
             phoneNumber: user.phoneNumber,
             email: user.email,
-            userType: user.userType,
           })
         );
 

@@ -1,6 +1,5 @@
 import HttpClient from '@/libs/http/http.client';
 import { BaseRepository } from '../base.repository';
-import { IBankApi } from './IBankApi';
 
 export class PlaidApi extends BaseRepository {
   getLinkToken = async (): Promise<string> => {

@@ -2,7 +2,6 @@ import { createContext } from 'react';
 import { PokemonApi } from './pokemon.api';
 import { AuthenticationApi } from './authentication/authentication.api';
 import { BillingApi } from './billing/billing.api';
-import { IBankApi } from './bank/IBankApi';
 import { PlaidApi } from './bank/plaid.api';
 
 interface Apis {

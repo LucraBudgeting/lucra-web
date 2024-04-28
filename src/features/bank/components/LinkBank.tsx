@@ -1,5 +1,5 @@
-import { LinkPlaid } from '@/components/bank/plaid/Link.Plaid';
 import { FC } from 'react';
+import { LinkPlaid } from '@/components/bank/plaid/Link.Plaid';
 
 interface LinkBankProps {}
 

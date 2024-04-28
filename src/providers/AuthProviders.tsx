@@ -27,15 +27,13 @@ export const AuthCheckProvider: FC<AuthCheckProviderProps> = ({}) => {
         .then((res) => {
           if (!isMounted) return;
 
-          const { user } = res;
+          const { user, accessToken } = res;
           dispatch(
             setAuthentication({
               userId: user.userId,
-              companyId: user.companyId,
-              token: user.token,
+              token: accessToken,
               phoneNumber: user.phoneNumber,
               email: user.email,
-              userType: user.userType,
             })
           );
         })

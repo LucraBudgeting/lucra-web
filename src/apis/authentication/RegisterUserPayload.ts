@@ -2,7 +2,6 @@ export class RegisterUserPayload {
   constructor(payload: Partial<RegisterUserPayload> = {}) {
     Object.assign(this, payload);
   }
-  public companyName: string = '';
   public firstName: string = '';
   public lastName: string = '';
   public userName: string = '';
@@ -11,11 +10,11 @@ export class RegisterUserPayload {
   public strategyId: string = '';
   public password: string = '';
   public phoneNumber: string = '';
-  public streetAddress1: string = '';
-  public streetAddress2: string = '';
-  public city: string = '';
-  public state: string = '';
-  public zipCode: string = '';
+  public streetAddress1?: string;
+  public streetAddress2?: string;
+  public city?: string;
+  public state?: string;
+  public zipCode?: string;
 
   validate(): string[] {
     const errors: string[] = [];
@@ -28,10 +27,6 @@ export class RegisterUserPayload {
       'strategyId',
       'password',
       'phoneNumber',
-      'streetAddress1',
-      'city',
-      'state',
-      'zipCode',
     ];
 
     requiredFields.forEach((field) => {

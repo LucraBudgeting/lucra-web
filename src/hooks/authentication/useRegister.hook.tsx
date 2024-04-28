@@ -33,7 +33,7 @@ export function useRegister(userPayload: RegisterUserPayload): hookResponse {
       .then((res) => {
         if (!isMounted) return;
 
-        const { user } = res;
+        const { user, accessToken } = res;
 
         setAction(registerActions.login);
         setIsAuthorized(true);
@@ -41,11 +41,9 @@ export function useRegister(userPayload: RegisterUserPayload): hookResponse {
         dispatch(
           setAuthentication({
             userId: user.userId,
-            companyId: user.companyId,
-            token: user.token,
+            token: accessToken,
             phoneNumber: user.phoneNumber,
             email: user.email,
-            userType: user.userType,
           })
         );
 

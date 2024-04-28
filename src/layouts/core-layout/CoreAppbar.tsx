@@ -23,7 +23,6 @@ interface coreNavbarProps {}
 
 export const CoreAppbar: FC<coreNavbarProps> = ({}) => {
   const { billingApi } = useContext(ApiContext);
-  const { companyId } = useAuth().user;
   const { logout } = useAuth();
   const navigate = useNavigate();
   const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
@@ -42,7 +41,7 @@ export const CoreAppbar: FC<coreNavbarProps> = ({}) => {
   };
 
   const gotoBilling = async () => {
-    const billingUrl = await billingApi.getBillingUrl(companyId);
+    const billingUrl = await billingApi.getBillingUrl('');
     location.href = billingUrl;
   };
 
