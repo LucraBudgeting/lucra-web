@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { QsLinkPlaid } from '@/components/bank/qsPlaid/Link.Plaid.qs';
+import { QsLinkPlaid } from '@/components/bank/qsPlaid/QsLink.Plaid.qs';
 
 interface LinkBankProps {}
 

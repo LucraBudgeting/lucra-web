@@ -3,12 +3,14 @@ import { PokemonApi } from './pokemon.api';
 import { AuthenticationApi } from './authentication/authentication.api';
 import { BillingApi } from './billing/billing.api';
 import { QsPlaidApi } from './bank/plaid.qs.api';
+import { PlaidApi } from './bank/plaid.api';
 
 interface Apis {
   pokemon: PokemonApi;
   billingApi: BillingApi;
   authentication: AuthenticationApi;
   qsPlaidApi: QsPlaidApi;
+  PlaidApi: PlaidApi;
   apiUrl: string;
 }
 
@@ -19,6 +21,7 @@ export const initializedApis: Apis = {
   billingApi: new BillingApi(),
   authentication: new AuthenticationApi(),
   qsPlaidApi: new QsPlaidApi(),
+  PlaidApi: new PlaidApi(),
   apiUrl: import.meta.env[`VITE_API_BASE_URL_${VITE_ENV}`],
 };
 

@@ -8,6 +8,7 @@ import { Pokemon } from '@/types/models/pokemon/pokemon.type';
 import { useDeletePokemon } from '@/hooks/pokemon/useDeletePokemon.hook';
 import * as Styled from '../../pokemon.styles';
 import { PokemonFormDialog } from '../pokemon/Pokemon.form.dialog';
+import { LinkPlaid } from '@/components/bank/plaid/Link.Plaid';
 
 interface PokemonsProps {}
 
@@ -50,6 +51,7 @@ export const Pokemons: FC<PokemonsProps> = ({}) => {
         <Styled.AddIcon fontSize="large" onClick={toggleEdit} />
       </Styled.Row>
       <hr />
+      <LinkPlaid />
       {!isFetching && (
         <ul>
           {!pokemons?.length ? (
