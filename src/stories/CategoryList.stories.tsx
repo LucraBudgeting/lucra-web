@@ -1,5 +1,5 @@
-import { CategoryList } from '@/components/category/CategoryList';
 import { Meta, StoryObj } from '@storybook/react';
+import { CategoryList } from '@/components/category/CategoryList';
 
 const meta = {
   title: 'modal/Category/List',

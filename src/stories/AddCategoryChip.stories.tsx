@@ -1,6 +1,6 @@
-import { AddCategoryChip } from '@/components/chip/AddCategoryChip';
 import type { Meta, StoryObj } from '@storybook/react';
 import { fn } from '@storybook/test';
+import { AddCategoryChip } from '@/components/chip/AddCategoryChip';
 
 const meta = {
   title: 'basic/Chip/AddCategory',

@@ -1,6 +1,6 @@
-import { Chip } from '@/components/chip/Chip';
 import type { Meta, StoryObj } from '@storybook/react';
 import { fn } from '@storybook/test';
+import { Chip } from '@/components/chip/Chip';
 
 const meta = {
   title: 'basic/Chip',

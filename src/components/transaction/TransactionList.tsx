@@ -1,7 +1,7 @@
 import { FC } from 'react';
-import { transaction } from './transaction.type';
 import styled from 'styled-components';
 import dayjs from 'dayjs';
+import { transaction } from './transaction.type';
 import { TransactionItem } from './TransactionItem';
 
 interface TransactionListProps {

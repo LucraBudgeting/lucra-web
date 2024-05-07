@@ -1,8 +1,8 @@
 import { FC, useState } from 'react';
-import { category } from './category.type';
 import styled from 'styled-components';
-import { CategoryItem } from './CategoryItem';
 import { SpyGlassOutline } from '@/assets/spyglass-outline';
+import { category } from './category.type';
+import { CategoryItem } from './CategoryItem';
 
 interface CategoryListProps {
   incomes: category[];

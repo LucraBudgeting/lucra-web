@@ -1,4 +1,3 @@
-import avatar from '@/assets/theme/components/avatar';
 import { FC } from 'react';
 import styled from 'styled-components';
 

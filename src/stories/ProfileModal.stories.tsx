@@ -1,5 +1,5 @@
-import { ProfileModal } from '@/components/profile/ProfileModal';
 import { Meta, StoryObj } from '@storybook/react';
+import { ProfileModal } from '@/components/profile/ProfileModal';
 
 const meta = {
   title: 'modal/Profile',

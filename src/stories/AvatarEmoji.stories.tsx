@@ -1,5 +1,5 @@
-import { AvatarEmoji } from '@/components/avatar/AvatarEmoji';
 import type { Meta, StoryObj } from '@storybook/react';
+import { AvatarEmoji } from '@/components/avatar/AvatarEmoji';
 
 const meta = {
   title: 'avatar/AvatarEmoji',

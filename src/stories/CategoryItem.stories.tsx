@@ -1,6 +1,6 @@
+import { Meta, StoryObj } from '@storybook/react';
 import { CategoryItem } from '@/components/category/CategoryItem';
 import { createShortGuid } from '@/utils/guid.helper';
-import { Meta, StoryObj } from '@storybook/react';
 
 const meta = {
   title: 'modal/Category/Item',

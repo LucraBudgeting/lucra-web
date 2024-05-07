@@ -6,7 +6,7 @@ interface ParentContainerProps {
   children: React.ReactNode;
 }
 
-export const ParentContainer: FC<ParentContainerProps> = ({ width, height, children }) => {
+export const ParentContainer: FC<ParentContainerProps> = ({ width, children }) => {
   return (
     <div
       style={{

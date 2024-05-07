@@ -1,12 +1,12 @@
 import { FC } from 'react';
-import { ProfileHeader } from './ProfileHeader';
 import styled from 'styled-components';
-import { ProfileSection } from './ProfileSection';
 import { ProfileOutline } from '@/assets/profile-outline';
 import { AccountsOutlineline } from '@/assets/accounts-outline';
 import { ApperanceOutline } from '@/assets/apperance-outline';
 import { NotificationsOutline } from '@/assets/notifications-outline';
 import { PaperOutline } from '@/assets/paper-outline';
+import { ProfileSection } from './ProfileSection';
+import { ProfileHeader } from './ProfileHeader';
 
 interface ProfileModalProps {}
 
