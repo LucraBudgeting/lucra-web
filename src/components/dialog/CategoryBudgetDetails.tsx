@@ -1,6 +1,6 @@
 import { DiaglogContainer } from '@/atoms/dialog/DiaglogContainer';
 import { DiaglogProps } from '@/atoms/dialog/Dialog.types';
-import { FC } from 'react';
+import { FC, useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import { category } from '../category/category.type';
 import { balanceEntry } from '@/types/types';
@@ -17,15 +17,23 @@ interface CategoryBudgetDetailsProps extends DiaglogProps {
 }
 
 export const CategoryBudgetDetails: FC<CategoryBudgetDetailsProps> = (props) => {
+  const [dividerWidth, setDividerWidth] = useState('20');
+  const sectionContainerRef = useRef<HTMLDivElement>(null);
   const { category, budgeted, actual, budgetType } = props;
   const dialogTitle = (category.emoji ? category.emoji + ' ' : '') + category.label;
   const remaining = calcRemaining(budgeted, actual);
   const isRemainingGood = calcIsRemainingGood(budgeted, actual, budgetType);
 
+  useEffect(() => {
+    const offsetWidth = sectionContainerRef?.current?.offsetWidth;
+    if (!offsetWidth) return;
+    setDividerWidth((offsetWidth * 0.9).toString());
+  }, [sectionContainerRef]);
+
   return (
     <DiaglogContainer {...props} headerText={dialogTitle}>
       <Styled.container>
-        <Styled.sectionContainer>
+        <Styled.sectionContainer ref={sectionContainerRef}>
           <Styled.section>
             <h6>Budget</h6>
             <h4>{formatAsMoney(budgeted)}</h4>
@@ -34,7 +42,7 @@ export const CategoryBudgetDetails: FC<CategoryBudgetDetailsProps> = (props) => 
             <h6>Actual</h6>
             <h4>{formatAsMoney(actual)}</h4>
           </Styled.section>
-          <DividerSvg />
+          <DividerSvg width={dividerWidth} />
           <Styled.section type={isRemainingGood ? 'success' : 'warning'}>
             <h6>Remaining</h6>
             <h4>{formatAsMoney(remaining)}</h4>
@@ -72,6 +80,7 @@ const Styled = {
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
     gap: 16px;
   `,
   section: styled.section<{ type?: 'warning' | 'success' }>`

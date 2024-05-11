@@ -66,7 +66,7 @@ const Styled = {
       }
     }};
     border: none;
-    border-radius: 5px;
+    border-radius: 8px;
     padding: ${(props) => {
       switch (props.size) {
         case 'large':

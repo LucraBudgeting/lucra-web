@@ -26,6 +26,7 @@ export const Default: Story = {
     actual: 0,
     budgetType: 'debit',
     closeCb: fn(),
+    editCb: fn(),
   },
 };
 
@@ -41,6 +42,7 @@ export const Debit: Story = {
     actual: 1250,
     budgetType: 'debit',
     closeCb: fn(),
+    editCb: fn(),
   },
 };
 
@@ -56,5 +58,6 @@ export const Credit: Story = {
     actual: 1500,
     budgetType: 'credit',
     closeCb: fn(),
+    editCb: fn(),
   },
 };

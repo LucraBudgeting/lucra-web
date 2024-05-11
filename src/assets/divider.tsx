@@ -13,10 +13,10 @@ export const DividerSvg: FC<dividerProps> = ({ width = '402', height = '2' }) =>
       xmlns="http://www.w3.org/2000/svg"
       width={width}
       height={height}
-      viewBox="0 0 402 2"
+      viewBox={`0 0 ${width} ${height}`}
       fill="none"
     >
-      <path d="M1 1H401" stroke="#E8E8E8" stroke-width="2" stroke-linecap="round" />
+      <path d={`M1 1H${width}`} stroke="#E8E8E8" strokeWidth="2" strokeLinecap="round" />
     </Svg>
   );
 };
