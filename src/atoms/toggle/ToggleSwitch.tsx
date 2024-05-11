@@ -6,7 +6,6 @@ interface ToggleSwitchProps {
   defaultIndex?: number;
   onToggle: (value: string) => void;
 }
-
 const ToggleSwitch: React.FC<ToggleSwitchProps> = ({ options, defaultIndex, onToggle }) => {
   const [activeIndex, setActiveIndex] = useState(defaultIndex || 0);
   const switchRef = useRef<HTMLDivElement>(null);
@@ -56,6 +55,7 @@ const Styled = {
     overflow: hidden;
     color: black;
     padding: 4px;
+    gap: 0;
   `,
   marker: styled.div<{ width: string }>`
     position: absolute;
@@ -84,6 +84,7 @@ const Styled = {
     color: black;
     text-align: center;
     width: ${({ width }) => width};
+    font-weight: 500;
 
     :focus {
       background-color: #e6e6e6;

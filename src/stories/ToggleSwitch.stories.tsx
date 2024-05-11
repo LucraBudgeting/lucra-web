@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import ToggleSwitch from '@/atoms/toggle/ToggleSwitch';
 import { fn } from '@storybook/test';
+import ToggleSwitch from '@/atoms/toggle/ToggleSwitch';
 
 const meta = {
   title: 'atom/ToggleSwitch',

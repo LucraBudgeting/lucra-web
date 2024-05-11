@@ -24,6 +24,12 @@ export const Primary: Story = {
     label: 'Button',
   },
 };
+export const NotPrimary: Story = {
+  args: {
+    primary: false,
+    label: 'Button',
+  },
+};
 
 export const Secondary: Story = {
   args: {
