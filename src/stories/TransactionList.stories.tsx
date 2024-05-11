@@ -2,6 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 import { TransactionList } from '@/components/transaction/TransactionList';
 import { createShortGuid } from '@/utils/guid.helper';
 import { ParentContainer } from './ParentContainer';
+import { transactionList } from './__mocks/TransactionList';
 
 const meta = {
   title: 'transaction/TransactionList',
@@ -18,50 +19,7 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   args: {
-    transactions: [
-      {
-        category: {
-          label: 'Eating Out',
-          emoji: '🍔',
-          backgroundColor: '#FDF9A9',
-          id: createShortGuid(),
-        },
-        id: createShortGuid(),
-        amount: -49.88,
-        description: 'TST* Rodney Scotts BBQ',
-        date: '2021-09-01',
-      },
-      {
-        category: {
-          label: 'Car Payment',
-          emoji: '🚗',
-          backgroundColor: '#FDF9A9',
-          id: createShortGuid(),
-        },
-        id: createShortGuid(),
-        amount: -409.88,
-        description: 'Lindon Toyota',
-        date: '2021-09-01',
-      },
-      {
-        category: {
-          label: 'Groceries',
-          emoji: '🛒',
-          backgroundColor: '#FDF9A9',
-          id: createShortGuid(),
-        },
-        id: createShortGuid(),
-        amount: -102.34,
-        description: 'Walmart',
-        date: '2021-08-27',
-      },
-      {
-        id: createShortGuid(),
-        amount: -102.34,
-        description: 'Mortgage',
-        date: '2021-08-27',
-      },
-    ].concat(generateFakeTransactions(2)),
+    transactions: transactionList.concat(generateFakeTransactions(2)),
   },
 };
 

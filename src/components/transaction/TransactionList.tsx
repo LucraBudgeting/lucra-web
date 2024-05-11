@@ -22,10 +22,27 @@ const Styled = {
     background-color: #f2eeeedd;
     font-size: 12px;
   `,
+  noTransactionContainer: styled.div`
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    border-radius: 8px;
+    background-color: #fafcd5;
+  `,
 };
 
 export const TransactionList: FC<TransactionListProps> = ({ transactions }) => {
   const groupedTransactions = groupTransactionsByDate(transactions);
+
+  if (!transactions?.length) {
+    return (
+      <Styled.noTransactionContainer>
+        <p>No Transaction History</p>
+      </Styled.noTransactionContainer>
+    );
+  }
   return (
     <Styled.container height="540px">
       {Object.keys(groupedTransactions).map((date) => (

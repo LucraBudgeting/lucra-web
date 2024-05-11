@@ -2,20 +2,10 @@ import { FC } from 'react';
 import styled from 'styled-components';
 import { EditIcon } from '@/assets/edit-icon';
 import { Button } from '../button/Button';
+import { DiaglogProps } from './Dialog.types';
 
-interface DiaglogContainerProps {
-  headerText?: string;
-  enableHeader?: boolean;
-  enableFooter?: boolean;
-  closeButton?: boolean;
-  successButton?: boolean;
-  closeCb: () => void;
-  successCb?: () => void;
-  editCb?: () => void;
+interface DiaglogContainerProps extends DiaglogProps {
   children?: React.ReactNode;
-  closeOnOverlayClick?: boolean;
-  width?: string;
-  height?: string;
 }
 
 export const DiaglogContainer: FC<DiaglogContainerProps> = ({
@@ -133,6 +123,14 @@ const Styled = {
     justify-content: center;
     align-items: center;
     text-align: center;
+
+    p {
+      font-family: Inter;
+      font-size: 18px;
+      font-style: normal;
+      font-weight: 600;
+      line-height: 22px;
+    }
   `,
   headerActions: styled.div`
     position: absolute;

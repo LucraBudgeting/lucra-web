@@ -1,1 +1,1 @@
-export type balanceEntry = 'credit' | 'debit';
+export type balanceEntry = 'credit' | 'debit'; //

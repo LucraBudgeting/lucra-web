@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { balanceEntry } from '@/types/types';
 import { formatAsMoney } from '@/utils/formatAsMoney';
 import { AvatarEmoji } from '../../atoms/avatar/AvatarEmoji';
+import { calcIsRemainingGood, calcRemaining } from './budgetCalculator';
 
 interface BudgetItemProps {
   avatar: {
@@ -44,18 +45,6 @@ export const BudgetItem: FC<BudgetItemProps> = ({
     </Styled.container>
   );
 };
-
-function calcIsRemainingGood(budgeted: number, actual: number, budgetType: balanceEntry) {
-  if (budgetType === 'credit') {
-    return actual - budgeted < 0;
-  } else {
-    return budgeted - actual < 0;
-  }
-}
-
-function calcRemaining(budgeted: number, actual: number) {
-  return Math.abs(budgeted - actual);
-}
 
 const Styled = {
   container: styled.span`
