@@ -4,7 +4,7 @@ import { FC, useState, useEffect } from 'react';
 import { FieldValues } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { FormFilledInput } from '@/libs/forms/formFilledComponents';
-import { LoadingComponent } from '@/components/loading/Loading.Component';
+import { LoadingComponent } from '@/atoms/loading/Loading.Component';
 import { useLogin } from '@/hooks/authentication/useLogin.hook';
 import { authRoutes, homeRoute } from '@/routes/RouteConstants';
 import { useAuth } from '@/hooks/authentication/useAuth.hook';

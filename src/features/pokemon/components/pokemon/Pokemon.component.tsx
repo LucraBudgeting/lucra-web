@@ -1,7 +1,7 @@
 import { FC, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { Typography } from '@mui/material';
-import { LoadingComponent } from '@/components/loading/Loading.Component';
+import { LoadingComponent } from '@/atoms/loading/Loading.Component';
 
 import { usePokemonHook } from '@/hooks/pokemon/usePokemon.hook';
 import * as Styled from '../../pokemon.styles';

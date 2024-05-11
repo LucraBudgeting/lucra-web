@@ -1,12 +1,12 @@
 import { FC, useContext, useEffect, useState } from 'react';
 import { Outlet } from 'react-router-dom';
-import { LoadingComponent } from '@/components/loading/Loading.Component';
 import { isUserModelLocal, useAuth } from '@/hooks/authentication/useAuth.hook';
 import { ApiContext } from '@/apis/api.context';
 import { useAppDispatch } from '@/stores/store.hooks';
 import { setAuthentication } from '@/stores/slices/Authentication.slice';
 import { Redirect } from '@/routes/redirect';
 import LocalStorageRepository from '@/utils/localStorage.repository';
+import { LoadingComponent } from '@/atoms/loading/Loading.Component';
 
 interface AuthCheckProviderProps {}
 

@@ -2,7 +2,7 @@ import { FC } from 'react';
 import styled from 'styled-components';
 import { balanceEntry } from '@/types/types';
 import { formatAsMoney } from '@/utils/formatAsMoney';
-import { AvatarEmoji } from '../avatar/AvatarEmoji';
+import { AvatarEmoji } from '../../atoms/avatar/AvatarEmoji';
 
 interface BudgetItemProps {
   avatar: {

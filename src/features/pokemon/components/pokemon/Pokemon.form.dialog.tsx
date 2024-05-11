@@ -10,7 +10,7 @@ import {
 import { usePokemonRequest } from '@/hooks/pokemon/usePokemonForm.hook';
 import { FormFilledInput, FormFilledSelect } from '@/libs/forms/formFilledComponents';
 import { pokemonFormFields, usePokemonForm } from '@/hooks/pokemon/pokemonForm';
-import { LoadingComponent } from '@/components/loading/Loading.Component';
+import { LoadingComponent } from '@/atoms/loading/Loading.Component';
 import * as Styled from '../../pokemon.styles';
 
 interface PokemonFormDialogProps {

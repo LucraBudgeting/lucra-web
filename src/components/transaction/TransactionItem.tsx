@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import styled from 'styled-components';
-import { Chip } from '../chip/Chip';
-import { AddCategoryChip } from '../chip/AddCategoryChip';
+import { Chip } from '../../atoms/chip/Chip';
+import { AddCategoryChip } from '../../atoms/chip/AddCategoryChip';
 import { category } from '../category/category.type';
 
 interface TransactionItemProps {

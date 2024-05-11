@@ -6,7 +6,7 @@ import { authRoutes } from '@/routes/RouteConstants';
 import { FormFilledInput, FormFilledSelect } from '@/libs/forms/formFilledComponents';
 import { useRegister } from '@/hooks/authentication/useRegister.hook';
 import { getStateValueMap } from '@/types/location/States';
-import { LoadingComponent } from '@/components/loading/Loading.Component';
+import { LoadingComponent } from '@/atoms/loading/Loading.Component';
 import { RegisterUserPayload } from '@/apis/authentication/RegisterUserPayload';
 import * as Styled from '../auth.styles';
 import { registerFormFields, useRegisterForm } from './registerForm';
