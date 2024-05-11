@@ -1,6 +1,6 @@
-import { CategoryBudgetDetails } from '@/components/dialog/CategoryBudgetDetails';
 import { Meta, StoryObj } from '@storybook/react';
 import { fn } from '@storybook/test';
+import { CategoryBudgetDetails } from '@/components/dialog/CategoryBudgetDetails';
 
 const meta = {
   title: 'modal/Category/BudgetDetails',

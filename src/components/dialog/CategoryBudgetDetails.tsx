@@ -1,12 +1,12 @@
-import { DiaglogContainer } from '@/atoms/dialog/DiaglogContainer';
-import { DiaglogProps } from '@/atoms/dialog/Dialog.types';
 import { FC, useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
-import { category } from '../category/category.type';
+import { DiaglogProps } from '@/atoms/dialog/Dialog.types';
+import { DiaglogContainer } from '@/atoms/dialog/DiaglogContainer';
 import { balanceEntry } from '@/types/types';
-import { calcIsRemainingGood, calcRemaining } from '../budget/budgetCalculator';
 import { formatAsMoney } from '@/utils/formatAsMoney';
 import { DividerSvg } from '@/assets/divider';
+import { category } from '../category/category.type';
+import { calcIsRemainingGood, calcRemaining } from '../budget/budgetCalculator';
 import { TransactionList } from '../transaction/TransactionList';
 
 interface CategoryBudgetDetailsProps extends DiaglogProps {
