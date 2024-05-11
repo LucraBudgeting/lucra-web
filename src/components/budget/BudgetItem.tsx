@@ -25,7 +25,6 @@ export const BudgetItem: FC<BudgetItemProps> = ({
   const remaining = calcRemaining(budgeted, actual);
   const isRemainingGood = calcIsRemainingGood(budgeted, actual, budgetType);
   const inputWidth = formatAsMoney(budgeted).length * 10 + 20 + 'px';
-  console.log(inputWidth);
 
   return (
     <Styled.container>
