@@ -32,3 +32,10 @@ export const TwoOptions: Story = {
     options: ['Income', 'Expense'],
   },
 };
+
+export const DefaultIndex: Story = {
+  args: {
+    options: ['Income', 'Expense'],
+    defaultIndex: 1,
+  },
+};
