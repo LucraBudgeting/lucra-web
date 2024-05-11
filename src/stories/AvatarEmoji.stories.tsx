@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 import { AvatarEmoji } from '@/atoms/avatar/AvatarEmoji';
 
 const meta = {
-  title: 'avatar/AvatarEmoji',
+  title: 'atom/Avatar/AvatarEmoji',
   component: AvatarEmoji,
   parameters: {
     layout: 'centered',

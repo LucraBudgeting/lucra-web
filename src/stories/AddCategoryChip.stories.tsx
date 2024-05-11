@@ -3,7 +3,7 @@ import { fn } from '@storybook/test';
 import { AddCategoryChip } from '@/atoms/chip/AddCategoryChip';
 
 const meta = {
-  title: 'basic/Chip/AddCategory',
+  title: 'atom/Chip/AddCategory',
   component: AddCategoryChip,
   parameters: {
     layout: 'centered',
