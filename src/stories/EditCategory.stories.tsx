@@ -25,6 +25,18 @@ export const Default: Story = {
       backgroundColor: '#49CCCB',
       id: '1',
     },
-    budgeted: 100,
+    budgeted: 0,
+  },
+};
+
+export const InitialAmount: Story = {
+  args: {
+    category: {
+      label: 'Eating Out',
+      emoji: '🍔',
+      backgroundColor: '#49CCCB',
+      id: '1',
+    },
+    budgeted: 4335,
   },
 };

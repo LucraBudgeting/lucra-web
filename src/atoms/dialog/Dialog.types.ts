@@ -1,4 +1,4 @@
-export interface DiaglogProps {
+export interface DialogProps {
   headerText?: string;
   enableHeader?: boolean;
   enableFooter?: boolean;

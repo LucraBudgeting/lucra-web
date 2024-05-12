@@ -2,13 +2,13 @@ import { FC } from 'react';
 import styled from 'styled-components';
 import { EditIcon } from '@/assets/edit-icon';
 import { Button } from '../button/Button';
-import { DiaglogProps } from './Dialog.types';
+import { DialogProps } from './Dialog.types';
 
-interface DiaglogContainerProps extends DiaglogProps {
+interface DiaglogContainerProps extends DialogProps {
   children?: React.ReactNode;
 }
 
-export const DiaglogContainer: FC<DiaglogContainerProps> = ({
+export const DialogContainer: FC<DiaglogContainerProps> = ({
   headerText,
   enableHeader = true,
   enableFooter = true,

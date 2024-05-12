@@ -1,6 +1,6 @@
 import { FC, useEffect, useRef, useState } from 'react';
-import { DiaglogProps } from '@/atoms/dialog/Dialog.types';
-import { DiaglogContainer } from '@/atoms/dialog/DiaglogContainer';
+import { DialogProps } from '@/atoms/dialog/Dialog.types';
+import { DialogContainer } from '@/atoms/dialog/DiaglogContainer';
 import { balanceEntry } from '@/types/types';
 import { formatAsMoney } from '@/utils/formatAsMoney';
 import { DividerSvg } from '@/assets/divider';
@@ -9,7 +9,7 @@ import { calcIsRemainingGood, calcRemaining } from '../budget/budgetCalculator';
 import { TransactionList } from '../transaction/TransactionList';
 import { Styled } from './Styled';
 
-interface CategoryBudgetDetailsProps extends DiaglogProps {
+interface CategoryBudgetDetailsProps extends DialogProps {
   category: category;
   budgeted: number;
   actual: number;
@@ -31,7 +31,7 @@ export const CategoryBudgetDetails: FC<CategoryBudgetDetailsProps> = (props) => 
   }, [sectionContainerRef]);
 
   return (
-    <DiaglogContainer {...props} headerText={dialogTitle}>
+    <DialogContainer {...props} headerText={dialogTitle}>
       <Styled.container>
         <Styled.sectionContainer ref={sectionContainerRef}>
           <Styled.section>
@@ -53,6 +53,6 @@ export const CategoryBudgetDetails: FC<CategoryBudgetDetailsProps> = (props) => 
           <TransactionList transactions={[]} />
         </Styled.transactionContainer>
       </Styled.container>
-    </DiaglogContainer>
+    </DialogContainer>
   );
 };

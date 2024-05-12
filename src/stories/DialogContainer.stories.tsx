@@ -1,16 +1,16 @@
 import { Meta, StoryObj } from '@storybook/react';
 import { fn } from '@storybook/test';
-import { DiaglogContainer } from '@/atoms/dialog/DiaglogContainer';
+import { DialogContainer } from '@/atoms/dialog/DiaglogContainer';
 
 const meta = {
   title: 'atom/Dialog',
-  component: DiaglogContainer,
+  component: DialogContainer,
   parameters: {
     layout: 'centered',
   },
   tags: ['autodocs'],
   args: { closeCb: fn(), successCb: fn() },
-} satisfies Meta<typeof DiaglogContainer>;
+} satisfies Meta<typeof DialogContainer>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;

@@ -1,6 +1,28 @@
-import styled from 'styled-components';
+import { CurrencyInput } from '@/atoms/input/CurrencyInput';
+import styled, { css } from 'styled-components';
 
-export const Styled = {
+const inputStyles = css<{ isempty?: string }>`
+  color: ${({ isempty }) => (isempty === 'true' ? '#9B9B9B' : '#333')};
+
+  text-align: center;
+
+  font-family: Inter;
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 28px;
+  background-color: transparent;
+  border: none;
+  width: 100%;
+  padding: 14px;
+
+  &:focus {
+    outline: none;
+    box-shadow: none;
+  }
+`;
+
+const Styled = {
   container: styled.div`
     width: 100%;
   `,
@@ -47,22 +69,11 @@ export const Styled = {
     }};
   `,
   sectionInput: styled.input<{ isempty?: string }>`
-    color: ${({ isempty }) => (isempty === 'true' ? '#9B9B9B' : '#333')};
-    text-align: center;
-
-    font-family: Inter;
-    font-size: 24px;
-    font-style: normal;
-    font-weight: 600;
-    line-height: 28px;
-    background-color: transparent;
-    border: none;
-    width: 100%;
-    padding: 14px;
-
-    &:focus {
-      outline: none;
-      box-shadow: none;
-    }
+    ${inputStyles}
+  `,
+  sectionCurrencyInput: styled(CurrencyInput)<{ isempty?: string }>`
+    ${inputStyles}
   `,
 };
+
+export { Styled };
