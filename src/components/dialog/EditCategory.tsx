@@ -1,13 +1,12 @@
-import { DialogProps } from '@/atoms/dialog/Dialog.types';
 import { FC, useEffect, useRef, useState } from 'react';
-import { category } from '../category/category.type';
+import { DialogProps } from '@/atoms/dialog/Dialog.types';
 import { DialogContainer } from '@/atoms/dialog/DiaglogContainer';
-import { Styled } from './Styled';
 import ToggleSwitch from '@/atoms/toggle/ToggleSwitch';
 import { DividerSvg } from '@/assets/divider';
-import { formatAsMoney, formatMoneyAsNumber } from '@/utils/formatAsMoney';
 import { ColorPicker } from '@/atoms/picker/ColorPicker';
 import { balanceEntry, textToBalanceEntry } from '@/types/types';
+import { category } from '../category/category.type';
+import { Styled } from './Styled';
 
 interface EditCategoryProps extends DialogProps {
   category: category;
@@ -17,7 +16,7 @@ interface EditCategoryProps extends DialogProps {
 export const EditCategory: FC<EditCategoryProps> = (props) => {
   const { category, budgeted } = props;
   const [categoryColor, setCategoryColor] = useState<string | undefined>(category.backgroundColor);
-  const [budetType, setBudgetType] = useState<balanceEntry>(category.budgetType ?? 'debit');
+  const [_budetType, setBudgetType] = useState<balanceEntry>(category.budgetType ?? 'debit');
   const [budgetedAmount, setBudgetedAmount] = useState(budgeted);
 
   const [dividerWidth, setDividerWidth] = useState('20');

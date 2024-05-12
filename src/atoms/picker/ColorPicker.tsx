@@ -1,8 +1,8 @@
 import { FC } from 'react';
 import styled from 'styled-components';
+import { useAutoAnimate } from '@formkit/auto-animate/react';
 import { SelectedColorCircle } from './SelectedColorCircle';
 import { ColorCircle } from './ColorCircle';
-import { useAutoAnimate } from '@formkit/auto-animate/react';
 
 interface ColorPickerProps {
   onClick: (color: string) => void;

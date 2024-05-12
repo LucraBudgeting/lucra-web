@@ -1,6 +1,6 @@
-import { CurrencyInput } from '@/atoms/input/CurrencyInput';
 import { Meta, StoryObj } from '@storybook/react';
 import { fn } from '@storybook/test';
+import { CurrencyInput } from '@/atoms/input/CurrencyInput';
 
 const meta = {
   title: 'atom/CurrencyInput',

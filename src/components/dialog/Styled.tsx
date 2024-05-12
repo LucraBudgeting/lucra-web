@@ -1,5 +1,5 @@
-import { CurrencyInput } from '@/atoms/input/CurrencyInput';
 import styled, { css } from 'styled-components';
+import { CurrencyInput } from '@/atoms/input/CurrencyInput';
 
 const inputStyles = css<{ isempty?: string }>`
   color: ${({ isempty }) => (isempty === 'true' ? '#9B9B9B' : '#333')};

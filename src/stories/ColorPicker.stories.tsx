@@ -1,6 +1,6 @@
-import { ColorPicker } from '@/atoms/picker/ColorPicker';
 import { Meta, StoryObj } from '@storybook/react';
 import { fn } from '@storybook/test';
+import { ColorPicker } from '@/atoms/picker/ColorPicker';
 import { ParentContainer } from './ParentContainer';
 
 const meta = {
