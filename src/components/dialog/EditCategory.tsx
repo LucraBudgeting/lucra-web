@@ -7,6 +7,7 @@ import { ColorPicker } from '@/atoms/picker/ColorPicker';
 import { balanceEntry, textToBalanceEntry } from '@/types/types';
 import { category } from '../category/category.type';
 import { Styled } from './Styled';
+import { EmojiPicker } from '@/atoms/picker/EmojiPicker';
 
 interface EditCategoryProps extends DialogProps {
   category: category;
@@ -17,6 +18,7 @@ export const EditCategory: FC<EditCategoryProps> = (props) => {
   const { category, budgeted } = props;
   const [categoryColor, setCategoryColor] = useState<string | undefined>(category.backgroundColor);
   const [_budetType, setBudgetType] = useState<balanceEntry>(category.budgetType ?? 'debit');
+  const [currentEmoji, setCurrentEmoji] = useState<string>(category.emoji ?? '👍');
   const [budgetedAmount, setBudgetedAmount] = useState(budgeted);
 
   const [dividerWidth, setDividerWidth] = useState('20');
@@ -33,14 +35,16 @@ export const EditCategory: FC<EditCategoryProps> = (props) => {
   };
 
   function onBudgetedChange(budgeted: number) {
-    console.log('budgeted', budgeted);
-    // setBudgetedAmount(formatMoneyAsNumber(budgeted));
     if (budgeted) {
       setBudgetedAmount(budgeted);
     } else {
       setBudgetedAmount(0);
     }
   }
+
+  const onEmojiChange = (emoji: string) => {
+    setCurrentEmoji(emoji);
+  };
 
   const onColorChange = (color: string) => {
     setCategoryColor(color);
@@ -52,7 +56,7 @@ export const EditCategory: FC<EditCategoryProps> = (props) => {
         <Styled.sectionContainer ref={sectionContainerRef}>
           <ToggleSwitch onToggle={onBudgetTypeChange} options={['Income', 'Expense']} />
           <DividerSvg width={dividerWidth} height="1" />
-          {/* <Styled.sectionInput value={category.emoji} /> */}
+          <EmojiPicker currentEmoji={currentEmoji} onSelect={onEmojiChange} />
           <DividerSvg width={dividerWidth} height="1" />
           <Styled.sectionCurrencyInput
             initialValue={budgetedAmount}
