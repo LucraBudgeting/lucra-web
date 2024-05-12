@@ -64,7 +64,7 @@ const Styled = {
     bottom: 5px;
     left: 0px;
     right: 0px;
-    width: calc(${({ width }) => width} - 20px);
+    width: calc(${({ width }) => width} - 10px);
     background-color: #fff;
     border-radius: 20px;
     transition: transform 0.3s ease;
@@ -86,8 +86,9 @@ const Styled = {
     width: ${({ width }) => width};
     font-weight: 500;
 
-    :focus {
-      background-color: #e6e6e6;
+    &:focus {
+      outline: none;
+      box-shadow: none;
     }
   `,
 };

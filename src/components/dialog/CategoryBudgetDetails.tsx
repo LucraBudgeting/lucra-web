@@ -1,5 +1,4 @@
 import { FC, useEffect, useRef, useState } from 'react';
-import styled from 'styled-components';
 import { DiaglogProps } from '@/atoms/dialog/Dialog.types';
 import { DiaglogContainer } from '@/atoms/dialog/DiaglogContainer';
 import { balanceEntry } from '@/types/types';
@@ -8,6 +7,7 @@ import { DividerSvg } from '@/assets/divider';
 import { category } from '../category/category.type';
 import { calcIsRemainingGood, calcRemaining } from '../budget/budgetCalculator';
 import { TransactionList } from '../transaction/TransactionList';
+import { Styled } from './Styled';
 
 interface CategoryBudgetDetailsProps extends DiaglogProps {
   category: category;
@@ -55,52 +55,4 @@ export const CategoryBudgetDetails: FC<CategoryBudgetDetailsProps> = (props) => 
       </Styled.container>
     </DiaglogContainer>
   );
-};
-
-const Styled = {
-  container: styled.div`
-    width: 100%;
-  `,
-  transactionContainer: styled.div`
-    margin-top: 15px;
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-    h4 {
-      color: var(--Black-100, #000);
-      font-family: Inter;
-      font-size: 16px;
-      font-style: normal;
-      font-weight: 500;
-      line-height: 20px; /* 125% */
-    }
-  `,
-  sectionContainer: styled.div`
-    margin-bottom: 15px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 16px;
-  `,
-  section: styled.section<{ type?: 'warning' | 'success' }>`
-    flex: 1;
-    display: flex;
-    padding: 24px 20px;
-    justify-content: space-between;
-    align-items: center;
-    align-self: stretch;
-
-    border-radius: 16px;
-    background: ${({ type }) => {
-      switch (type) {
-        case 'warning':
-          return '#FFE9E9';
-        case 'success':
-          return '#d4fade';
-        default:
-          return '#f9f9f9';
-      }
-    }};
-  `,
 };

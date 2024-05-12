@@ -20,7 +20,7 @@ export const DiaglogContainer: FC<DiaglogContainerProps> = ({
   children,
   closeOnOverlayClick = false,
   width = '540px',
-  height = '500px',
+  height = 'auto',
 }) => {
   const closeDialog = () => {
     if (closeCb) {
@@ -108,6 +108,7 @@ const Styled = {
     padding: 30px 30px 0px 30px;
     width: calc(100% - 60px);
     height: ${({ height }) => height};
+    max-height: 600px;
   `,
   header: styled.div`
     padding: 20px 24px;

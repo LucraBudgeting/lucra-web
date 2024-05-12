@@ -9,6 +9,10 @@ const meta = {
     layout: 'centered',
   },
   tags: ['autodocs'],
+  args: {
+    closeCb: fn(),
+    editCb: fn(),
+  },
 } satisfies Meta<typeof CategoryBudgetDetails>;
 
 export default meta;
@@ -25,8 +29,6 @@ export const Default: Story = {
     budgeted: 0,
     actual: 0,
     budgetType: 'debit',
-    closeCb: fn(),
-    editCb: fn(),
   },
 };
 
@@ -41,8 +43,6 @@ export const Debit: Story = {
     budgeted: 1000,
     actual: 1250,
     budgetType: 'debit',
-    closeCb: fn(),
-    editCb: fn(),
   },
 };
 
@@ -57,7 +57,5 @@ export const Credit: Story = {
     budgeted: 1000,
     actual: 1500,
     budgetType: 'credit',
-    closeCb: fn(),
-    editCb: fn(),
   },
 };
