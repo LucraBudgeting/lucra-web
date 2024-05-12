@@ -4,7 +4,7 @@ import { SelectedColorCircle } from './SelectedColorCircle';
 import { ColorCircle } from './ColorCircle';
 
 interface ColorPickerProps {
-  onClick: () => void;
+  onClick: (color: string) => void;
   selectedColor?: string;
 }
 
@@ -22,10 +22,14 @@ const colors = [
 ];
 
 export const ColorPicker: FC<ColorPickerProps> = ({ onClick, selectedColor }) => {
+  const selectColor = (color: string) => {
+    onClick(color);
+  };
+
   return (
     <Styled.container>
       {colors.map((color) => (
-        <Styled.colorContainer key={color}>
+        <Styled.colorContainer key={color} onClick={() => selectColor(color)}>
           {isColorSelected(color, selectedColor) ? (
             <ColorCircle color={color} />
           ) : (
