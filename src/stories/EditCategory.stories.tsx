@@ -11,7 +11,6 @@ const meta = {
   tags: ['autodocs'],
   args: {
     closeCb: fn(),
-    editCb: fn(),
   },
 } satisfies Meta<typeof EditCategory>;
 
@@ -23,7 +22,7 @@ export const Default: Story = {
     category: {
       label: 'Eating Out',
       emoji: '🍔',
-      backgroundColor: '#FDF9A9',
+      backgroundColor: '#49CCCB',
       id: '1',
     },
     budgeted: 100,

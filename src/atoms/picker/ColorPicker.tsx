@@ -2,6 +2,7 @@ import { FC } from 'react';
 import styled from 'styled-components';
 import { SelectedColorCircle } from './SelectedColorCircle';
 import { ColorCircle } from './ColorCircle';
+import { useAutoAnimate } from '@formkit/auto-animate/react';
 
 interface ColorPickerProps {
   onClick: (color: string) => void;
@@ -22,6 +23,8 @@ const colors = [
 ];
 
 export const ColorPicker: FC<ColorPickerProps> = ({ onClick, selectedColor }) => {
+  const [parent] = useAutoAnimate();
+  const formattedSelectedColor = selectedColor?.replace('#', '');
   const selectColor = (color: string) => {
     onClick(color);
   };
@@ -29,11 +32,11 @@ export const ColorPicker: FC<ColorPickerProps> = ({ onClick, selectedColor }) =>
   return (
     <Styled.container>
       {colors.map((color) => (
-        <Styled.colorContainer key={color} onClick={() => selectColor(color)}>
-          {isColorSelected(color, selectedColor) ? (
-            <ColorCircle color={color} />
-          ) : (
+        <Styled.colorContainer ref={parent} key={color} onClick={() => selectColor(color)}>
+          {isColorSelected(color, formattedSelectedColor) ? (
             <SelectedColorCircle color={color} />
+          ) : (
+            <ColorCircle color={color} />
           )}
         </Styled.colorContainer>
       ))}
