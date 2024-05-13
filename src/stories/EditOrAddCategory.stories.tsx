@@ -1,10 +1,10 @@
 import { Meta, StoryObj } from '@storybook/react';
 import { fn } from '@storybook/test';
-import { EditCategory } from '@/components/dialog/EditCategory';
+import { EditOrAddCategory } from '@/components/dialog/EditOrAddCategory';
 
 const meta = {
-  title: 'modal/Category/EditCategory',
-  component: EditCategory,
+  title: 'modal/Category/EditOrAddCategory',
+  component: EditOrAddCategory,
   parameters: {
     layout: 'centered',
   },
@@ -12,7 +12,7 @@ const meta = {
   args: {
     closeCb: fn(),
   },
-} satisfies Meta<typeof EditCategory>;
+} satisfies Meta<typeof EditOrAddCategory>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
@@ -26,6 +26,8 @@ export const Default: Story = {
       id: '1',
     },
     budgeted: 0,
+    headerText: 'Edit Category',
+    successCb: fn(),
   },
 };
 
@@ -38,5 +40,14 @@ export const InitialAmount: Story = {
       id: '1',
     },
     budgeted: 4335,
+    headerText: 'Edit Category',
+  },
+};
+
+export const AddCategory: Story = {
+  args: {
+    headerText: 'Add Category',
+    budgeted: 0,
+    successCb: fn(),
   },
 };

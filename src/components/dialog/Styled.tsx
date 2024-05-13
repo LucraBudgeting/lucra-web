@@ -14,7 +14,6 @@ const inputStyles = css<{ isempty?: string }>`
   background-color: transparent;
   border: none;
   width: 100%;
-  padding: 14px;
 
   &:focus {
     outline: none;
@@ -73,6 +72,12 @@ const Styled = {
   `,
   sectionCurrencyInput: styled(CurrencyInput)<{ isempty?: string }>`
     ${inputStyles}
+  `,
+  sectionItem: styled.div`
+    /* height: 75px; */
+    display: flex;
+    align-items: center;
+    justify-content: center;
   `,
 };
 

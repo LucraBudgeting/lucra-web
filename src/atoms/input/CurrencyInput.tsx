@@ -1,14 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import styled from 'styled-components';
-
-// Basic styled input component for default styles
-const BasicInput = styled.input`
-  padding: 8px;
-  margin: 5px;
-  font-size: 16px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-`;
 
 interface CurrencyInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   initialValue: number;
@@ -45,7 +35,7 @@ export const CurrencyInput: React.FC<CurrencyInputProps> = ({
   };
 
   return (
-    <BasicInput
+    <input
       type="text"
       className={className} // Apply className prop to the styled component
       value={`$${displayValue}`}

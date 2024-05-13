@@ -50,3 +50,18 @@ export const Small: Story = {
     label: 'Button',
   },
 };
+
+export const Disabled: Story = {
+  args: {
+    disabled: true,
+    label: 'Button',
+  },
+};
+
+export const DisableNonPrimaru: Story = {
+  args: {
+    label: 'Button',
+    primary: false,
+    disabled: true,
+  },
+};

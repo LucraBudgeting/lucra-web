@@ -3,10 +3,11 @@ import styled from 'styled-components';
 
 interface ToggleSwitchProps {
   options: string[];
-  defaultIndex?: number;
+  defaultValue?: string;
   onToggle: (value: string) => void;
 }
-const ToggleSwitch: React.FC<ToggleSwitchProps> = ({ options, defaultIndex, onToggle }) => {
+const ToggleSwitch: React.FC<ToggleSwitchProps> = ({ options, defaultValue, onToggle }) => {
+  const defaultIndex = defaultValue ? options.indexOf(defaultValue) : 0;
   const [activeIndex, setActiveIndex] = useState(defaultIndex || 0);
   const switchRef = useRef<HTMLDivElement>(null);
   const markerRef = useRef<HTMLDivElement>(null);

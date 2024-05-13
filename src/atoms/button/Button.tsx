@@ -13,6 +13,7 @@ interface ButtonProps extends BaseButtonProps {
 
   label: string;
   onClick: () => void;
+  disabled?: boolean;
 }
 
 export const Button: FC<ButtonProps> = ({
@@ -21,6 +22,7 @@ export const Button: FC<ButtonProps> = ({
   size = 'medium',
   label,
   onClick,
+  disabled = false,
 }) => {
   return (
     <Styled.button
@@ -29,6 +31,7 @@ export const Button: FC<ButtonProps> = ({
       primaryb={primary.toString()}
       backgroundColor={backgroundColor}
       onClick={onClick}
+      disabled={disabled}
     >
       {label}
     </Styled.button>
@@ -79,6 +82,18 @@ const Styled = {
     }};
     cursor: pointer;
     transition: background-color 0.5s;
+
+    &:disabled {
+      background-color: ${(props) => {
+        if (props.primaryb == 'true') {
+          return '#f3f3f3';
+        }
+
+        return 'transparent';
+      }};
+      color: #9b9b9b;
+      cursor: not-allowed;
+    }
 
     &:hover {
       background-color: ${(props) => {

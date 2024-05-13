@@ -5,5 +5,5 @@ export interface category {
   emoji?: string;
   backgroundColor?: string;
   budgetType?: balanceEntry;
-  id: string;
+  id?: string;
 }

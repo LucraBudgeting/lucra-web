@@ -36,6 +36,6 @@ export const TwoOptions: Story = {
 export const DefaultIndex: Story = {
   args: {
     options: ['Income', 'Expense'],
-    defaultIndex: 1,
+    defaultValue: 'Expense',
   },
 };
