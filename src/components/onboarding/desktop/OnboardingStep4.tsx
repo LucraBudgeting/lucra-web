@@ -8,7 +8,7 @@ export const OnboardingStep4Left: FC<OnboardingStep4Props> = ({}) => {
   return (
     <Styled.left>
       <Styled.leftTextContainer>
-        <h1>Create your account</h1>
+        <h1>Connect your accounts</h1>
         <h3>
           Set up your account to get started. This helps us keep your financial information safe and
           secure.

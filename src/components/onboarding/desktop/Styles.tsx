@@ -3,8 +3,6 @@ import { BaseInput } from '@/atoms/input/BaseInput';
 
 export const styles = {
   right: styled.div`
-    width: 100%;
-    height: 100%;
     padding: 75px;
     display: flex;
     justify-content: center;

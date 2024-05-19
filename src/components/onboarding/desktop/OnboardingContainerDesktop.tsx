@@ -8,16 +8,16 @@ import { OnboardingStep2Left, OnboardingStep2Right } from './OnboardingStep2';
 import { OnboardingStep3Left, OnboardingStep3Right } from './OnboardingStep3';
 import { OnboardingStep4Left, OnboardingStep4Right } from './OnboardingStep4';
 import { OnboardingStep5Left, OnboardingStep5Right } from './OnboardingStep5';
-import { OnboardingStep6Left, OnboardingStep6Right } from './OnboardingStep6';
 
 interface OnboardingDualCardContainerProps {}
 
 export const OnboardingContainerDesktop: FC<OnboardingDualCardContainerProps> = ({}) => {
-  const [currentPage, setCurrentPage] = useState(2);
-  const totalPages = 6;
+  const [currentPage, setCurrentPage] = useState(1);
+  const totalPages = 5;
 
   const nextPage = () => {
     if (currentPage === totalPages) return; // TODO - REPLACE WITH SUBMIT
+    setCurrentPage(currentPage + 1);
   };
 
   const prevPage = () => {
@@ -78,11 +78,6 @@ function getStepElement(currentPage: number): {
         leftCard: <OnboardingStep5Left />,
         rightCard: <OnboardingStep5Right />,
       };
-    case 6:
-      return {
-        leftCard: <OnboardingStep6Left />,
-        rightCard: <OnboardingStep6Right />,
-      };
     default:
       return {
         leftCard: <LoadingComponent />,
@@ -93,12 +88,13 @@ function getStepElement(currentPage: number): {
 
 const Styled = {
   container: styled.div`
-    width: 100%;
-    height: 100%;
+    width: 95%;
+    height: 90%;
     display: flex;
     justify-content: space-between;
     gap: 20px;
     background: #f9f9f9;
+    padding: 20px;
   `,
   leftCardContent: styled.div`
     padding: 40px;
@@ -124,6 +120,5 @@ const Styled = {
     border: 1px solid #e2e2e2;
     background: #f4f4f4;
     box-shadow: 0px 4px 12px -1px rgba(0, 0, 0, 0.1);
-    height: 100%;
   `,
 };

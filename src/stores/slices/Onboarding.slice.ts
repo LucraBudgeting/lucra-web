@@ -6,7 +6,7 @@ export const initialState = {
   email: '',
   password: '',
   confirmPassword: '',
-  isCurrentPageDisabled: true,
+  isCurrentPageDisabled: false,
 };
 
 export const onboardingSlice = createSlice({
