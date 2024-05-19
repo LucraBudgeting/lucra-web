@@ -11,5 +11,5 @@ export const siteImageUrls = {
   onboarding_lock:
     'https://res.cloudinary.com/dr8cg8xmb/image/upload/site-images/onboarding-lock.png',
   onboarding_boy:
-    'https://res.cloudinary.com/dr8cg8xmb/image/upload/site-images/onboarding-boy.png',
+    'https://res.cloudinary.com/dr8cg8xmb/image/upload/site-images/onboarding-boy-1.png',
 };

@@ -1,4 +1,3 @@
-import { useAutoAnimate } from '@formkit/auto-animate/react';
 import { FC } from 'react';
 import styled from 'styled-components';
 
@@ -10,7 +9,6 @@ interface ProgressBarProps {
 const height = '2px';
 
 export const ProgressBar: FC<ProgressBarProps> = ({ totalPages, currentPage }) => {
-  const [parentRef] = useAutoAnimate();
   const getProgressWidth = () => {
     return (currentPage / totalPages) * 100;
   };
@@ -22,7 +20,7 @@ export const ProgressBar: FC<ProgressBarProps> = ({ totalPages, currentPage }) =
         <Styled.stepTextSecondary> of {totalPages}</Styled.stepTextSecondary>
       </Styled.stepText>
       <Styled.progressBar>
-        <Styled.filledBar width={`${getProgressWidth()}%`} ref={parentRef} />
+        <Styled.filledBar width={`${getProgressWidth()}%`} />
       </Styled.progressBar>
     </Styled.container>
   );
@@ -62,5 +60,7 @@ const Styled = {
     width: ${(props) => props.width};
     height: ${height};
     background-color: #333333;
+
+    transition: width 0.25s ease-in-out;
   `,
 };

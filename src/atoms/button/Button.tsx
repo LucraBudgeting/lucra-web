@@ -11,9 +11,10 @@ interface BaseButtonProps {
 interface ButtonProps extends BaseButtonProps {
   primary?: boolean;
 
-  label: string;
+  label?: string;
   onClick: () => void;
   disabled?: boolean;
+  children?: React.ReactNode;
 }
 
 export const Button: FC<ButtonProps> = ({
@@ -23,6 +24,7 @@ export const Button: FC<ButtonProps> = ({
   label,
   onClick,
   disabled = false,
+  children,
 }) => {
   return (
     <Styled.button
@@ -33,7 +35,7 @@ export const Button: FC<ButtonProps> = ({
       onClick={onClick}
       disabled={disabled}
     >
-      {label}
+      {children ? children : label}
     </Styled.button>
   );
 };
