@@ -4,6 +4,7 @@ import { BackArrow } from '@/assets/back-arrow';
 import { ForwardArrow } from '@/assets/forward-arrow';
 import { Button } from '@/atoms/button/Button';
 import { onboardingSelector } from '@/stores/slices/Onboarding.slice';
+import { LoadingComponent } from '@/atoms/loading/Loading.Component';
 
 interface StepperFooterProps {
   prevPage: () => void;
@@ -11,20 +12,20 @@ interface StepperFooterProps {
   isLastPage?: boolean;
 }
 
-export const StepperFooter: FC<StepperFooterProps> = ({
-  prevPage,
-  nextPage,
-  isLastPage,
-}) => {
-  const { isCurrentPageDisabled } = onboardingSelector();
+export const StepperFooter: FC<StepperFooterProps> = ({ prevPage, nextPage, isLastPage }) => {
+  const { isCurrentPageDisabled, isNextStepLoading } = onboardingSelector();
 
   return (
     <Styled.stepperFooter id="stepper-footer">
       <Button onClick={prevPage} primary={false}>
         <BackArrow /> Back
       </Button>
-      <Button onClick={nextPage} primary={false} disabled={isCurrentPageDisabled}>
-        {isLastPage ? 'Finish' : 'Continue'} <ForwardArrow />
+      <Button
+        onClick={nextPage}
+        primary={false}
+        disabled={isNextStepLoading || isCurrentPageDisabled}
+      >
+        {isNextStepLoading ? 'Loading...' : isLastPage ? 'Finish' : 'Continue'} <ForwardArrow />
       </Button>
     </Styled.stepperFooter>
   );

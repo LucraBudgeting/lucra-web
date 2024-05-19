@@ -1,4 +1,4 @@
-import { FC, useState } from 'react';
+import { FC, useContext, useState } from 'react';
 import styled from 'styled-components';
 import { LoadingComponent } from '@/atoms/loading/Loading.Component';
 import { ProgressBar } from '@/atoms/progress/ProgressBar';
@@ -11,11 +11,29 @@ import { OnboardingStep5Left, OnboardingStep5Right } from './OnboardingStep5';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { authRoutes } from '@/routes/RouteConstants';
 import useClientDevice from '@/hooks/client/useClientDevice';
+import { ApiContext } from '@/apis/api.context';
+import { useAppDispatch } from '@/stores/store.hooks';
+import { onboardingSelector, setIsNextStepLoading } from '@/stores/slices/Onboarding.slice';
+import localStorageRepository from '@/utils/localStorage.repository';
 
 interface OnboardingDualCardContainerProps {}
 
+const stages: { [key: string]: number[] } = {
+  1: [1, 2],
+  2: [3],
+  3: [4],
+  4: [5],
+};
+
+const isCurrentPageInStage = (page: number, stage: number): boolean => {
+  return stages[stage].includes(page);
+};
+
 export const OnboardingContainerDesktop: FC<OnboardingDualCardContainerProps> = ({}) => {
   const { isDesktop } = useClientDevice();
+  const _dispatch = useAppDispatch();
+  const { email, fullName, password } = onboardingSelector();
+  const apis = useContext(ApiContext);
 
   const [searchParams] = useSearchParams();
   const userId = searchParams.get('userid');
@@ -27,6 +45,16 @@ export const OnboardingContainerDesktop: FC<OnboardingDualCardContainerProps> = 
   const totalPages = 5;
 
   const nextPage = () => {
+    if (isCurrentPageInStage(currentPage, 1)) {
+      checkStage1();
+    } else if (isCurrentPageInStage(currentPage, 2)) {
+      checkStage2();
+    } else if (isCurrentPageInStage(currentPage, 3)) {
+      checkStage3();
+    } else if (isCurrentPageInStage(currentPage, 4)) {
+      checkStage4();
+    }
+
     if (currentPage === totalPages) return; // TODO - REPLACE WITH SUBMIT
     setCurrentPage(currentPage + 1);
   };
@@ -37,6 +65,27 @@ export const OnboardingContainerDesktop: FC<OnboardingDualCardContainerProps> = 
       return;
     }
     setCurrentPage((prev) => prev - 1);
+  };
+
+  const checkStage1 = async () => {
+    if (currentPage == 1) return;
+
+    apis.onboardingApi.createAccount(email, fullName, password).then((res) => {
+      localStorageRepository.setUserToken(res.token);
+      location.href = res.checkoutUrl;
+    });
+  };
+
+  const checkStage2 = async () => {
+    console.log('STAGE 2');
+  };
+
+  const checkStage3 = async () => {
+    console.log('STAGE 3');
+  };
+
+  const checkStage4 = async () => {
+    console.log('STAGE 4');
   };
 
   const { leftCard, rightCard } = getStepElement(currentPage);

@@ -1,13 +1,16 @@
-import { FC, useState } from 'react';
+import { FC, useContext, useState } from 'react';
 import { siteImageUrls } from '@/assets/site-image-urls';
 import { useAppDispatch } from '@/stores/store.hooks';
 import { onboardingSelector, setEmail, setFullName } from '@/stores/slices/Onboarding.slice';
 import { isValidEmail } from '@/utils/isValidEmail';
 import { styles } from './Styles';
+import { ApiContext } from '@/apis/api.context';
 
 interface OnboardingStep1Props {}
 
 export const OnboardingStep1Left: FC<OnboardingStep1Props> = ({}) => {
+  const apis = useContext(ApiContext);
+
   const [fullNameErrors, setFullNameErrors] = useState<string | undefined>();
   const [emailErrors, setEmailErrors] = useState<string | undefined>();
 
@@ -36,6 +39,9 @@ export const OnboardingStep1Left: FC<OnboardingStep1Props> = ({}) => {
       setEmailErrors('Email format is invalid');
     } else {
       setEmailErrors('');
+      apis.onboardingApi.doesAccountWithEmailExist(email).catch((res) => {
+        setEmailErrors(res?.content?.message);
+      });
     }
   };
 

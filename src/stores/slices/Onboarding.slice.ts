@@ -7,6 +7,7 @@ export const initialState = {
   password: '',
   confirmPassword: '',
   isCurrentPageDisabled: false,
+  isNextStepLoading: false,
 };
 
 export const onboardingSlice = createSlice({
@@ -28,12 +29,21 @@ export const onboardingSlice = createSlice({
     setIsCurrentPageDisabled: (state, action: PayloadAction<boolean>) => {
       state.isCurrentPageDisabled = action.payload;
     },
+    setIsNextStepLoading: (state, action: PayloadAction<boolean>) => {
+      state.isNextStepLoading = action.payload;
+    },
   },
 });
 
 export const onboardingSelector = () => useAppSelector((store) => store.onboarding);
 
-export const { setFullName, setEmail, setPassword, setConfirmPassword, setIsCurrentPageDisabled } =
-  onboardingSlice.actions;
+export const {
+  setFullName,
+  setEmail,
+  setPassword,
+  setConfirmPassword,
+  setIsCurrentPageDisabled,
+  setIsNextStepLoading,
+} = onboardingSlice.actions;
 
 export default onboardingSlice.reducer;
