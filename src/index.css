@@ -149,7 +149,7 @@ table {
   border-spacing: 0;
 }
 
-button, blockquote {
+button, blockquote, img {
   user-select: none; /* Standard syntax */
   -webkit-user-select: none; /* Chrome/Safari */
   -moz-user-select: none; /* Firefox */
