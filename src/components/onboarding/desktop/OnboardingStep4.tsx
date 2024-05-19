@@ -21,7 +21,7 @@ export const OnboardingStep4Left: FC<OnboardingStep4Props> = ({}) => {
 export const OnboardingStep4Right: FC<OnboardingStep4Props> = ({}) => {
   return (
     <Styled.right>
-      <Styled.rightImage src={siteImageUrls.onboarding_boy} />
+      <Styled.rightImage src={siteImageUrls.logo_secondary} />
     </Styled.right>
   );
 };

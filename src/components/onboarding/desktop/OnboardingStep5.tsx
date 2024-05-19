@@ -21,7 +21,7 @@ export const OnboardingStep5Left: FC<OnboardingStep5Props> = ({}) => {
 export const OnboardingStep5Right: FC<OnboardingStep5Props> = ({}) => {
   return (
     <Styled.right>
-      <Styled.rightImage src={siteImageUrls.onboarding_boy} />
+      <Styled.rightImage src={siteImageUrls.logo_secondary} />
     </Styled.right>
   );
 };
