@@ -1,5 +1,4 @@
 import { FC } from 'react';
-import styled from 'styled-components';
 import { siteImageUrls } from '@/assets/site-image-urls';
 import { styles } from './Styles';
 

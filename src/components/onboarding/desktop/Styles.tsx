@@ -1,5 +1,5 @@
-import { BaseInput } from '@/atoms/input/BaseInput';
 import styled from 'styled-components';
+import { BaseInput } from '@/atoms/input/BaseInput';
 
 export const styles = {
   right: styled.div`

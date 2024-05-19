@@ -20,7 +20,6 @@ export const StepperFooter: FC<StepperFooterProps> = ({
 }) => {
   const { isCurrentPageDisabled } = onboardingSelector();
 
-  console.log('isCurrentPageDisabled', isCurrentPageDisabled);
   return (
     <Styled.stepperFooter id="stepper-footer">
       {isFirstPage ? (

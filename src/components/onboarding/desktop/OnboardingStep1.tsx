@@ -1,16 +1,9 @@
 import { FC, useState } from 'react';
-import styled from 'styled-components';
 import { siteImageUrls } from '@/assets/site-image-urls';
 import { useAppDispatch } from '@/stores/store.hooks';
-import {
-  onboardingSelector,
-  setEmail,
-  setFullName,
-  setIsCurrentPageDisabled,
-} from '@/stores/slices/Onboarding.slice';
+import { onboardingSelector, setEmail, setFullName } from '@/stores/slices/Onboarding.slice';
 import { isValidEmail } from '@/utils/isValidEmail';
 import { styles } from './Styles';
-import useIgnoreFirstRenderUseEffect from '@/hooks/react/useIgnoreFirstRenderEffect';
 
 interface OnboardingStep1Props {}
 
@@ -20,18 +13,6 @@ export const OnboardingStep1Left: FC<OnboardingStep1Props> = ({}) => {
 
   const dispatch = useAppDispatch();
   const { fullName, email } = onboardingSelector();
-
-  useIgnoreFirstRenderUseEffect(() => {
-    if (typeof fullNameErrors === 'undefined' || typeof emailErrors === 'undefined') return;
-
-    if (fullNameErrors || emailErrors) {
-      dispatch(setIsCurrentPageDisabled(true));
-    } else {
-      dispatch(setIsCurrentPageDisabled(false));
-    }
-
-    return () => {};
-  }, [emailErrors, fullNameErrors]);
 
   const updateFullName = (e: React.ChangeEvent<HTMLInputElement>) => {
     dispatch(setFullName(e.target.value));

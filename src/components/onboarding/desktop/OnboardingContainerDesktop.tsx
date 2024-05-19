@@ -9,20 +9,15 @@ import { OnboardingStep3Left, OnboardingStep3Right } from './OnboardingStep3';
 import { OnboardingStep4Left, OnboardingStep4Right } from './OnboardingStep4';
 import { OnboardingStep5Left, OnboardingStep5Right } from './OnboardingStep5';
 import { OnboardingStep6Left, OnboardingStep6Right } from './OnboardingStep6';
-import { useAppDispatch } from '@/stores/store.hooks';
-import { setIsCurrentPageDisabled } from '@/stores/slices/Onboarding.slice';
 
 interface OnboardingDualCardContainerProps {}
 
 export const OnboardingContainerDesktop: FC<OnboardingDualCardContainerProps> = ({}) => {
-  const dispatch = useAppDispatch();
-  const [currentPage, setCurrentPage] = useState(1);
+  const [currentPage, setCurrentPage] = useState(2);
   const totalPages = 6;
 
   const nextPage = () => {
     if (currentPage === totalPages) return; // TODO - REPLACE WITH SUBMIT
-    setCurrentPage((prev) => prev + 1);
-    dispatch(setIsCurrentPageDisabled(false));
   };
 
   const prevPage = () => {
