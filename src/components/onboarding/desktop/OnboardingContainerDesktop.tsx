@@ -1,20 +1,20 @@
 import { FC, useContext, useState } from 'react';
 import styled from 'styled-components';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { LoadingComponent } from '@/atoms/loading/Loading.Component';
 import { ProgressBar } from '@/atoms/progress/ProgressBar';
+import { authRoutes } from '@/routes/RouteConstants';
+import useClientDevice from '@/hooks/client/useClientDevice';
+import { ApiContext } from '@/apis/api.context';
+import { useAppDispatch } from '@/stores/store.hooks';
+import { onboardingSelector } from '@/stores/slices/Onboarding.slice';
+import localStorageRepository from '@/utils/localStorage.repository';
 import { OnboardingStep1Left, OnboardingStep1Right } from './OnboardingStep1';
 import { StepperFooter } from './StepperFooter';
 import { OnboardingStep2Left, OnboardingStep2Right } from './OnboardingStep2';
 import { OnboardingStep3Left, OnboardingStep3Right } from './OnboardingStep3';
 import { OnboardingStep4Left, OnboardingStep4Right } from './OnboardingStep4';
 import { OnboardingStep5Left, OnboardingStep5Right } from './OnboardingStep5';
-import { useNavigate, useSearchParams } from 'react-router-dom';
-import { authRoutes } from '@/routes/RouteConstants';
-import useClientDevice from '@/hooks/client/useClientDevice';
-import { ApiContext } from '@/apis/api.context';
-import { useAppDispatch } from '@/stores/store.hooks';
-import { onboardingSelector, setIsNextStepLoading } from '@/stores/slices/Onboarding.slice';
-import localStorageRepository from '@/utils/localStorage.repository';
 
 interface OnboardingDualCardContainerProps {}
 

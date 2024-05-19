@@ -4,7 +4,6 @@ import { BackArrow } from '@/assets/back-arrow';
 import { ForwardArrow } from '@/assets/forward-arrow';
 import { Button } from '@/atoms/button/Button';
 import { onboardingSelector } from '@/stores/slices/Onboarding.slice';
-import { LoadingComponent } from '@/atoms/loading/Loading.Component';
 
 interface StepperFooterProps {
   prevPage: () => void;
