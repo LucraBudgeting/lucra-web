@@ -1,11 +1,22 @@
 import { FC } from 'react';
 import styled from 'styled-components';
 import { siteImageUrls } from '@/assets/site-image-urls';
+import { styles } from './Styles';
 
 interface OnboardingStep3Props {}
 
 export const OnboardingStep3Left: FC<OnboardingStep3Props> = ({}) => {
-  return <div>OnboardingStep3Left</div>;
+  return (
+    <Styled.left>
+      <Styled.leftTextContainer>
+        <h1>Create your account</h1>
+        <h3>
+          Set up your account to get started. This helps us keep your financial information safe and
+          secure.
+        </h3>
+      </Styled.leftTextContainer>
+    </Styled.left>
+  );
 };
 
 export const OnboardingStep3Right: FC<OnboardingStep3Props> = ({}) => {
@@ -17,16 +28,5 @@ export const OnboardingStep3Right: FC<OnboardingStep3Props> = ({}) => {
 };
 
 const Styled = {
-  right: styled.div`
-    width: 100%;
-    height: 100%;
-    padding: 75px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  `,
-  rightImage: styled.img`
-    max-height: 100%;
-    max-width: 100%;
-  `,
+  ...styles,
 };

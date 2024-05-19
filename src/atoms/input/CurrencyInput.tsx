@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { BaseInput } from './BaseInput';
 
 interface CurrencyInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   initialValue: number;
@@ -35,7 +36,7 @@ export const CurrencyInput: React.FC<CurrencyInputProps> = ({
   };
 
   return (
-    <input
+    <BaseInput
       type="text"
       className={className} // Apply className prop to the styled component
       value={`$${displayValue}`}

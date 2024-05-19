@@ -3,20 +3,35 @@ import styled from 'styled-components';
 import { BackArrow } from '@/assets/back-arrow';
 import { ForwardArrow } from '@/assets/forward-arrow';
 import { Button } from '@/atoms/button/Button';
+import { onboardingSelector } from '@/stores/slices/Onboarding.slice';
 
 interface StepperFooterProps {
   prevPage: () => void;
   nextPage: () => void;
+  isFirstPage?: boolean;
+  isLastPage?: boolean;
 }
 
-export const StepperFooter: FC<StepperFooterProps> = ({ prevPage, nextPage }) => {
+export const StepperFooter: FC<StepperFooterProps> = ({
+  prevPage,
+  nextPage,
+  isFirstPage,
+  isLastPage,
+}) => {
+  const { isCurrentPageDisabled } = onboardingSelector();
+
+  console.log('isCurrentPageDisabled', isCurrentPageDisabled);
   return (
     <Styled.stepperFooter id="stepper-footer">
-      <Button onClick={prevPage} primary={false}>
-        <BackArrow /> Back
-      </Button>
-      <Button onClick={nextPage} primary={false}>
-        Continue <ForwardArrow />
+      {isFirstPage ? (
+        <span></span>
+      ) : (
+        <Button onClick={prevPage} primary={false}>
+          <BackArrow /> Back
+        </Button>
+      )}
+      <Button onClick={nextPage} primary={false} disabled={isCurrentPageDisabled}>
+        {isLastPage ? 'Finish' : 'Continue'} <ForwardArrow />
       </Button>
     </Styled.stepperFooter>
   );

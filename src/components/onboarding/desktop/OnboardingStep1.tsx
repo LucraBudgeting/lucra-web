@@ -1,11 +1,90 @@
-import { FC } from 'react';
+import { FC, useState } from 'react';
 import styled from 'styled-components';
 import { siteImageUrls } from '@/assets/site-image-urls';
+import { useAppDispatch } from '@/stores/store.hooks';
+import {
+  onboardingSelector,
+  setEmail,
+  setFullName,
+  setIsCurrentPageDisabled,
+} from '@/stores/slices/Onboarding.slice';
+import { isValidEmail } from '@/utils/isValidEmail';
+import { styles } from './Styles';
+import useIgnoreFirstRenderUseEffect from '@/hooks/react/useIgnoreFirstRenderEffect';
 
 interface OnboardingStep1Props {}
 
 export const OnboardingStep1Left: FC<OnboardingStep1Props> = ({}) => {
-  return <div>OnboardingStep1Left</div>;
+  const [fullNameErrors, setFullNameErrors] = useState<string | undefined>();
+  const [emailErrors, setEmailErrors] = useState<string | undefined>();
+
+  const dispatch = useAppDispatch();
+  const { fullName, email } = onboardingSelector();
+
+  useIgnoreFirstRenderUseEffect(() => {
+    if (typeof fullNameErrors === 'undefined' || typeof emailErrors === 'undefined') return;
+
+    if (fullNameErrors || emailErrors) {
+      dispatch(setIsCurrentPageDisabled(true));
+    } else {
+      dispatch(setIsCurrentPageDisabled(false));
+    }
+
+    return () => {};
+  }, [emailErrors, fullNameErrors]);
+
+  const updateFullName = (e: React.ChangeEvent<HTMLInputElement>) => {
+    dispatch(setFullName(e.target.value));
+  };
+  const updateEmail = (e: React.ChangeEvent<HTMLInputElement>) => {
+    dispatch(setEmail(e.target.value));
+  };
+
+  const validateFullName = () => {
+    if (!fullName) {
+      setFullNameErrors('Full name is required');
+    } else {
+      setFullNameErrors('');
+    }
+  };
+
+  const validateEmail = () => {
+    if (!email) {
+      setEmailErrors('Email is required');
+    } else if (!isValidEmail(email)) {
+      setEmailErrors('Email format is invalid');
+    } else {
+      setEmailErrors('');
+    }
+  };
+
+  return (
+    <Styled.left>
+      <Styled.leftTextContainer>
+        <h1>Create your account</h1>
+        <h3>
+          Set up your account to get started. This helps us keep your financial information safe and
+          secure.
+        </h3>
+      </Styled.leftTextContainer>
+      <Styled.leftInputContainer>
+        <Styled.input
+          onChange={updateFullName}
+          onBlur={validateFullName}
+          value={fullName}
+          error={fullNameErrors}
+          label="Full name"
+        />
+        <Styled.input
+          onChange={updateEmail}
+          onBlur={validateEmail}
+          value={email}
+          error={emailErrors}
+          label="Email address"
+        />
+      </Styled.leftInputContainer>
+    </Styled.left>
+  );
 };
 
 export const OnboardingStep1Right: FC<OnboardingStep1Props> = ({}) => {
@@ -17,16 +96,5 @@ export const OnboardingStep1Right: FC<OnboardingStep1Props> = ({}) => {
 };
 
 const Styled = {
-  right: styled.div`
-    width: 100%;
-    height: 100%;
-    padding: 75px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  `,
-  rightImage: styled.img`
-    max-height: 100%;
-    max-width: 100%;
-  `,
+  ...styles,
 };
