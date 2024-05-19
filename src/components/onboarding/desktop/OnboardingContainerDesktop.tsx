@@ -8,11 +8,14 @@ import { OnboardingStep2Left, OnboardingStep2Right } from './OnboardingStep2';
 import { OnboardingStep3Left, OnboardingStep3Right } from './OnboardingStep3';
 import { OnboardingStep4Left, OnboardingStep4Right } from './OnboardingStep4';
 import { OnboardingStep5Left, OnboardingStep5Right } from './OnboardingStep5';
+import { useNavigate } from 'react-router-dom';
+import { authRoutes } from '@/routes/RouteConstants';
 
 interface OnboardingDualCardContainerProps {}
 
 export const OnboardingContainerDesktop: FC<OnboardingDualCardContainerProps> = ({}) => {
   const [currentPage, setCurrentPage] = useState(1);
+  const navigate = useNavigate();
   const totalPages = 5;
 
   const nextPage = () => {
@@ -21,7 +24,10 @@ export const OnboardingContainerDesktop: FC<OnboardingDualCardContainerProps> = 
   };
 
   const prevPage = () => {
-    if (currentPage === 1) return;
+    if (currentPage === 1) {
+      navigate(authRoutes.login);
+      return;
+    }
     setCurrentPage((prev) => prev - 1);
   };
 
@@ -38,7 +44,6 @@ export const OnboardingContainerDesktop: FC<OnboardingDualCardContainerProps> = 
           prevPage={prevPage}
           nextPage={nextPage}
           isLastPage={currentPage == totalPages}
-          isFirstPage={currentPage == 1}
         />
       </Styled.cardContainer>
       <Styled.cardContainer id="right">

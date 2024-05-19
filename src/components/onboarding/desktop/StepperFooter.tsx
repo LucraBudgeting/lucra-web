@@ -8,27 +8,21 @@ import { onboardingSelector } from '@/stores/slices/Onboarding.slice';
 interface StepperFooterProps {
   prevPage: () => void;
   nextPage: () => void;
-  isFirstPage?: boolean;
   isLastPage?: boolean;
 }
 
 export const StepperFooter: FC<StepperFooterProps> = ({
   prevPage,
   nextPage,
-  isFirstPage,
   isLastPage,
 }) => {
   const { isCurrentPageDisabled } = onboardingSelector();
 
   return (
     <Styled.stepperFooter id="stepper-footer">
-      {isFirstPage ? (
-        <span></span>
-      ) : (
-        <Button onClick={prevPage} primary={false}>
-          <BackArrow /> Back
-        </Button>
-      )}
+      <Button onClick={prevPage} primary={false}>
+        <BackArrow /> Back
+      </Button>
       <Button onClick={nextPage} primary={false} disabled={isCurrentPageDisabled}>
         {isLastPage ? 'Finish' : 'Continue'} <ForwardArrow />
       </Button>
