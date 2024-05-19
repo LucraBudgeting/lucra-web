@@ -42,6 +42,10 @@ export const Button: FC<ButtonProps> = ({
 
 const Styled = {
   button: styled.button<BaseButtonProps>`
+    user-select: none; /* Standard syntax */
+    -webkit-user-select: none; /* Chrome/Safari */
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* Internet Explorer/Edge */
     background-color: ${(props) => {
       if (props.backgroundColor) {
         return props.backgroundColor;
