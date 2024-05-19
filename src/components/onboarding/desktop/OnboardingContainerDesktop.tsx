@@ -8,13 +8,21 @@ import { OnboardingStep2Left, OnboardingStep2Right } from './OnboardingStep2';
 import { OnboardingStep3Left, OnboardingStep3Right } from './OnboardingStep3';
 import { OnboardingStep4Left, OnboardingStep4Right } from './OnboardingStep4';
 import { OnboardingStep5Left, OnboardingStep5Right } from './OnboardingStep5';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { authRoutes } from '@/routes/RouteConstants';
+import useClientDevice from '@/hooks/client/useClientDevice';
 
 interface OnboardingDualCardContainerProps {}
 
 export const OnboardingContainerDesktop: FC<OnboardingDualCardContainerProps> = ({}) => {
-  const [currentPage, setCurrentPage] = useState(1);
+  const { isDesktop } = useClientDevice();
+
+  const [searchParams] = useSearchParams();
+  const userId = searchParams.get('userid');
+  const currentStep = searchParams.get('step');
+
+  const [currentPage, setCurrentPage] = useState<number>(currentStep ? parseInt(currentStep) : 1);
+
   const navigate = useNavigate();
   const totalPages = 5;
 
@@ -46,9 +54,11 @@ export const OnboardingContainerDesktop: FC<OnboardingDualCardContainerProps> = 
           isLastPage={currentPage == totalPages}
         />
       </Styled.cardContainer>
-      <Styled.cardContainer id="right">
-        <Styled.rightCardContent id="right-content">{rightCard}</Styled.rightCardContent>
-      </Styled.cardContainer>
+      {isDesktop && (
+        <Styled.cardContainer id="right">
+          <Styled.rightCardContent id="right-content">{rightCard}</Styled.rightCardContent>
+        </Styled.cardContainer>
+      )}
     </Styled.container>
   );
 };
