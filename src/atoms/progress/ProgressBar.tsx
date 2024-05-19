@@ -34,7 +34,7 @@ const Styled = {
     width: 100%;
   `,
   stepText: styled.div`
-    width: 30%;
+    width: 90%;
     display: flex;
     gap: 4px;
 
