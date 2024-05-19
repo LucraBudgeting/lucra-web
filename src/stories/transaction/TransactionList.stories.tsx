@@ -1,8 +1,8 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { TransactionList } from '@/components/transaction/TransactionList';
 import { createShortGuid } from '@/utils/guid.helper';
-import { ParentContainer } from './ParentContainer';
-import { transactionList } from './__mocks/TransactionList';
+import { ParentContainer } from '../ParentContainer';
+import { transactionList } from '../__mocks/TransactionList';
 
 const meta = {
   title: 'transaction/TransactionList',

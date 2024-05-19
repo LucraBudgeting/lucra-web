@@ -1,9 +1,9 @@
 import { ProgressBar } from '@/atoms/progress/ProgressBar';
 import type { Meta, StoryObj } from '@storybook/react';
-import { ParentContainer } from './ParentContainer';
+import { ParentContainer } from '../ParentContainer';
 
 const meta = {
-  title: 'atom/ProgressBar',
+  title: 'onboarding/ProgressBar',
   component: ProgressBar,
   parameters: {
     layout: 'centered',

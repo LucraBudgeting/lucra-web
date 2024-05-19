@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { TransactionItem } from '@/components/transaction/TransactionItem';
-import { ParentContainer } from './ParentContainer';
+import { ParentContainer } from '../ParentContainer';
 
 const ItemParent = (props: any) => {
   return (

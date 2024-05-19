@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { BudgetItem } from '@/components/budget/BudgetItem';
-import { ParentContainer } from './ParentContainer';
+import { ParentContainer } from '../ParentContainer';
 
 const meta = {
   title: 'budget/BudgetItem',
