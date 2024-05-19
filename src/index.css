@@ -148,3 +148,10 @@ table {
   border-collapse: collapse;
   border-spacing: 0;
 }
+
+button, blockquote {
+  user-select: none; /* Standard syntax */
+  -webkit-user-select: none; /* Chrome/Safari */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* Internet Explorer/Edge */
+}
