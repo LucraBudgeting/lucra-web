@@ -8,6 +8,7 @@ export const initialState = {
   confirmPassword: '',
   isCurrentPageDisabled: false,
   isNextStepLoading: false,
+  isCurrentPageLoading: false,
 };
 
 export const onboardingSlice = createSlice({
@@ -29,6 +30,9 @@ export const onboardingSlice = createSlice({
     setIsCurrentPageDisabled: (state, action: PayloadAction<boolean>) => {
       state.isCurrentPageDisabled = action.payload;
     },
+    setIsCurrentPageLoading: (state, action: PayloadAction<boolean>) => {
+      state.isCurrentPageLoading = action.payload;
+    },
     setIsNextStepLoading: (state, action: PayloadAction<boolean>) => {
       state.isNextStepLoading = action.payload;
     },
@@ -43,6 +47,7 @@ export const {
   setPassword,
   setConfirmPassword,
   setIsCurrentPageDisabled,
+  setIsCurrentPageLoading,
   setIsNextStepLoading,
 } = onboardingSlice.actions;
 

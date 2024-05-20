@@ -3,10 +3,13 @@ import { BaseInput } from '@/atoms/input/BaseInput';
 
 export const styles = {
   right: styled.div`
-    padding: 75px;
     display: flex;
     justify-content: center;
     align-items: center;
+    width: calc(100% - 75px);
+    height: calc(100% - 75px);
+    padding: 40px;
+    box-sizing: border-box;
   `,
   rightImage: styled.img`
     max-height: 100%;

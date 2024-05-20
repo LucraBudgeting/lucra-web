@@ -16,8 +16,8 @@ export function LoadingComponent({
     <div
       id="loading"
       style={{
-        width: '100vw',
-        height: '100vh',
+        // width: '100vw',
+        // height: '100vh',
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'center',

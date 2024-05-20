@@ -7,7 +7,7 @@ import { authRoutes } from '@/routes/RouteConstants';
 import useClientDevice from '@/hooks/client/useClientDevice';
 import { ApiContext } from '@/apis/api.context';
 import { useAppDispatch } from '@/stores/store.hooks';
-import { onboardingSelector } from '@/stores/slices/Onboarding.slice';
+import { onboardingSelector, setIsCurrentPageLoading } from '@/stores/slices/Onboarding.slice';
 import localStorageRepository from '@/utils/localStorage.repository';
 import { OnboardingStep1Left, OnboardingStep1Right } from './OnboardingStep1';
 import { StepperFooter } from './StepperFooter';
@@ -31,8 +31,8 @@ const isCurrentPageInStage = (page: number, stage: number): boolean => {
 
 export const OnboardingContainerDesktop: FC<OnboardingDualCardContainerProps> = ({}) => {
   const { isDesktop } = useClientDevice();
-  const _dispatch = useAppDispatch();
-  const { email, fullName, password } = onboardingSelector();
+  const dispatch = useAppDispatch();
+  const { email, fullName, password, isCurrentPageLoading } = onboardingSelector();
   const apis = useContext(ApiContext);
 
   const [searchParams] = useSearchParams();
@@ -70,6 +70,7 @@ export const OnboardingContainerDesktop: FC<OnboardingDualCardContainerProps> = 
   const checkStage1 = async () => {
     if (currentPage == 1) return;
 
+    dispatch(setIsCurrentPageLoading(true));
     apis.onboardingApi.createAccount(email, fullName, password).then((res) => {
       localStorageRepository.setUserToken(res.token);
       location.href = res.checkoutUrl;
@@ -93,15 +94,21 @@ export const OnboardingContainerDesktop: FC<OnboardingDualCardContainerProps> = 
   return (
     <Styled.container id="container">
       <Styled.cardContainer id="left">
-        <Styled.leftCardContent id="left-content">
-          <ProgressBar currentPage={currentPage} totalPages={totalPages} />
-          {leftCard}
-        </Styled.leftCardContent>
-        <StepperFooter
-          prevPage={prevPage}
-          nextPage={nextPage}
-          isLastPage={currentPage == totalPages}
-        />
+        {isCurrentPageLoading ? (
+          <LoadingComponent />
+        ) : (
+          <>
+            <Styled.leftCardContent id="left-content">
+              <ProgressBar currentPage={currentPage} totalPages={totalPages} />
+              {leftCard}
+            </Styled.leftCardContent>
+            <StepperFooter
+              prevPage={prevPage}
+              nextPage={nextPage}
+              isLastPage={currentPage == totalPages}
+            />
+          </>
+        )}
       </Styled.cardContainer>
       {isDesktop && (
         <Styled.cardContainer id="right">
@@ -154,6 +161,7 @@ const Styled = {
   container: styled.div`
     width: 95%;
     height: 90%;
+
     display: flex;
     justify-content: space-between;
     gap: 20px;
@@ -180,6 +188,8 @@ const Styled = {
   `,
   cardContainer: styled.div`
     flex: 1;
+    max-width: 650px;
+    max-height: 650px;
     border-radius: 20px;
     border: 1px solid #e2e2e2;
     background: #f4f4f4;

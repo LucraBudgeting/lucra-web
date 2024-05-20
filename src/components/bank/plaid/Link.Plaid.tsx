@@ -1,11 +1,14 @@
-import { Button } from '@mui/material';
-import { FC, useCallback, useContext, useEffect, useState } from 'react';
+import React, { FC, useCallback, useContext, useEffect, useState } from 'react';
 import { usePlaidLink } from 'react-plaid-link';
 import { ApiContext } from '@/apis/api.context';
+import { Button } from '@/atoms/button/Button';
 
-interface LinkPlaidProps {}
+interface LinkPlaidProps {
+  children?: React.ReactNode;
+  informParent?: (status: 'success' | 'error') => void;
+}
 
-export const LinkPlaid: FC<LinkPlaidProps> = ({}) => {
+export const LinkPlaid: FC<LinkPlaidProps> = ({ children, informParent }) => {
   const [linkToken, setLinkToken] = useState<string>('');
   const { PlaidApi: bankApi } = useContext(ApiContext);
 
@@ -19,7 +22,14 @@ export const LinkPlaid: FC<LinkPlaidProps> = ({}) => {
 
   const onSuccess = useCallback(async (publicToken: string) => {
     console.log('public token:', publicToken);
-    await bankApi.syncLinkedAccounts(publicToken);
+    await bankApi
+      .syncLinkedAccounts(publicToken)
+      .then(() => {
+        informParent && informParent('success');
+      })
+      .catch(() => {
+        informParent && informParent('error');
+      });
   }, []);
 
   const config: Parameters<typeof usePlaidLink>[0] = {
@@ -31,7 +41,7 @@ export const LinkPlaid: FC<LinkPlaidProps> = ({}) => {
   return (
     <div>
       <Button onClick={() => open()} disabled={!ready}>
-        Link Bank
+        {children ? children : 'Link'}
       </Button>
     </div>
   );
