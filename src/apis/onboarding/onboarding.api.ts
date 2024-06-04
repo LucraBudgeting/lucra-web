@@ -21,6 +21,10 @@ export class OnboardingApi extends BaseRepository {
     );
   };
 
+  syncAccount = async (publicToken: string): Promise<any> => {
+    return await HttpClient.get<any>(`${this.apiUrl}/api/onboarding/sync_accounts/${publicToken}`);
+  };
+
   getUser = async (userId: string): Promise<onboardingUserResponse> => {
     return await HttpClient.get<onboardingUserResponse>(
       `${this.apiUrl}/api/onboarding/user/${userId}`

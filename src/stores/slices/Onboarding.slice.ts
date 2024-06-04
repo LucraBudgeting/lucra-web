@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { useAppSelector } from '@/stores/store.hooks';
+import { IBankAccount } from '@/types/models/bank/BankAccount';
 
 export const initialState = {
   fullName: '',
@@ -9,6 +10,7 @@ export const initialState = {
   isCurrentPageDisabled: false,
   isNextStepLoading: false,
   isCurrentPageLoading: false,
+  bankAccounts: [] as IBankAccount[],
 };
 
 export const onboardingSlice = createSlice({
@@ -36,6 +38,14 @@ export const onboardingSlice = createSlice({
     setIsNextStepLoading: (state, action: PayloadAction<boolean>) => {
       state.isNextStepLoading = action.payload;
     },
+    addAccounts: (state, action: PayloadAction<IBankAccount[]>) => {
+      const uniqueAccounts = state.bankAccounts.concat(action.payload).reduce((acc, obj) => {
+        acc.set(obj.id, obj);
+        return acc;
+      }, new Map());
+
+      state.bankAccounts = Array.from(uniqueAccounts.values());
+    },
   },
 });
 
@@ -49,6 +59,7 @@ export const {
   setIsCurrentPageDisabled,
   setIsCurrentPageLoading,
   setIsNextStepLoading,
+  addAccounts,
 } = onboardingSlice.actions;
 
 export default onboardingSlice.reducer;

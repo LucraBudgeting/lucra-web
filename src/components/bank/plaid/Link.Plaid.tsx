@@ -5,10 +5,12 @@ import { Button } from '@/atoms/button/Button';
 
 interface LinkPlaidProps {
   children?: React.ReactNode;
-  informParent?: (status: 'success' | 'error') => void;
+  informParent?: (status: 'success' | 'error') => void; // Only needed if parent needs to be informed or onSuccessCb is not present
+  onSuccess?: (publicToken: string) => void;
 }
 
-export const LinkPlaid: FC<LinkPlaidProps> = ({ children, informParent }) => {
+export const LinkPlaid: FC<LinkPlaidProps> = ({ children, informParent, onSuccess }) => {
+  const [tokenHash, setTokenHash] = useState<string>('');
   const [linkToken, setLinkToken] = useState<string>('');
   const { PlaidApi: bankApi } = useContext(ApiContext);
 
@@ -18,10 +20,15 @@ export const LinkPlaid: FC<LinkPlaidProps> = ({ children, informParent }) => {
       setLinkToken(token);
     };
     fetchLinkToken();
-  }, []);
+  }, [tokenHash]);
 
-  const onSuccess = useCallback(async (publicToken: string) => {
-    console.log('public token:', publicToken);
+  const plaidOnSuccess = useCallback(async (publicToken: string) => {
+    setTokenHash(publicToken);
+
+    if (onSuccess) {
+      return onSuccess(publicToken);
+    }
+
     await bankApi
       .syncLinkedAccounts(publicToken)
       .then(() => {
@@ -34,7 +41,7 @@ export const LinkPlaid: FC<LinkPlaidProps> = ({ children, informParent }) => {
 
   const config: Parameters<typeof usePlaidLink>[0] = {
     token: linkToken,
-    onSuccess,
+    onSuccess: plaidOnSuccess,
   };
 
   const { open, ready } = usePlaidLink(config);

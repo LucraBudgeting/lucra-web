@@ -4,19 +4,42 @@ import { siteImageUrls } from '@/assets/site-image-urls';
 import { LinkPlaid } from '@/components/bank/plaid/Link.Plaid';
 import { ApiContext } from '@/apis/api.context';
 import { styles } from './Styles';
+import { useDispatch } from 'react-redux';
+import { addAccounts, onboardingSelector } from '@/stores/slices/Onboarding.slice';
+import { BankAccountItem } from '@/atoms/bank/BankAccountItem';
 
 interface OnboardingStep4Props {}
 
 export const OnboardingStep4Left: FC<OnboardingStep4Props> = ({}) => {
-  const { bankApi } = useContext(ApiContext);
-  const [accounts, setAccounts] = useState<any[]>([]);
+  const dispatch = useDispatch();
+  const { bankAccounts } = onboardingSelector();
+  const { bankApi, onboardingApi } = useContext(ApiContext);
+  const [errorMsg, setErrorMsg] = useState<string>('');
 
-  const onPliadLinkCb = (status: 'success' | 'error') => {
-    console.log('Plaid link status:', status);
+  async function getAccounts() {
     bankApi.getBankAccounts().then((response) => {
-      console.log('Bank accounts:', response);
-      setAccounts(response.bankAccounts);
+      dispatch(addAccounts(response.bankAccounts));
     });
+  }
+
+  const onLinkCb = async (status: 'success' | 'error', msg?: string) => {
+    if (status === 'error') {
+      setErrorMsg(msg || '');
+      return;
+    }
+
+    await getAccounts();
+  };
+
+  const onBankSuccessCb = async (publicToken: string) => {
+    await onboardingApi
+      .syncAccount(publicToken)
+      .then(() => {
+        onLinkCb('success');
+      })
+      .catch((err) => {
+        onLinkCb('error', err);
+      });
   };
 
   return (
@@ -25,23 +48,30 @@ export const OnboardingStep4Left: FC<OnboardingStep4Props> = ({}) => {
         <h1>Connect your accounts</h1>
         <h3>Lucra uses Plaid to securely connect all of your bank and investment accounts.</h3>
       </Styled.leftTextContainer>
-      <LinkPlaid informParent={onPliadLinkCb}>Connect Your Account</LinkPlaid>
-      <button onClick={() => onPliadLinkCb('success')}>TEST</button>
-      {accounts.map((account) => {
-        return <div key={account.id}>{account.institutionDisplayName}</div>;
-      })}
+      <LinkPlaid onSuccess={onBankSuccessCb}>
+        {bankAccounts.length ? '+ Add Another Account' : 'Connect Your Account'}
+      </LinkPlaid>
+      <p>{errorMsg}</p>
+      <button onClick={() => onLinkCb('success')}>TEST</button>
     </Styled.left>
   );
 };
 
 export const OnboardingStep4Right: FC<OnboardingStep4Props> = ({}) => {
+  const { bankAccounts } = onboardingSelector();
   return (
     <Styled.right>
       <Styled.rightContainer>
         <Styled.rightHeaderText>Your accounts</Styled.rightHeaderText>
-        <Styled.imgContainer>
-          <Styled.rightImage src={siteImageUrls.logo_secondary} />
-        </Styled.imgContainer>
+        {!bankAccounts.length ? (
+          <Styled.imgContainer>
+            <Styled.rightImage src={siteImageUrls.logo_secondary} />
+          </Styled.imgContainer>
+        ) : (
+          bankAccounts.map((account) => {
+            return <BankAccountItem key={account.id} account={account} />;
+          })
+        )}
       </Styled.rightContainer>
     </Styled.right>
   );
@@ -59,6 +89,9 @@ const Styled = {
     padding: 40px;
     background: #fff;
     box-shadow: 0px 2px 8px -1px rgba(0, 0, 0, 0.1);
+    overflow-y: auto;
+    gap: 20px;
+    padding-bottom: 4px;
   `,
   imgContainer: styled.div`
     width: 100%;
@@ -66,6 +99,7 @@ const Styled = {
     justify-content: center;
     align-items: center;
     margin-top: 40px;
+    height: 100%;
   `,
   rightHeaderText: styled.h1`
     font-size: 28px;
