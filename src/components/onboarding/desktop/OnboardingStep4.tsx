@@ -8,6 +8,8 @@ import { useDispatch } from 'react-redux';
 import { addAccounts, onboardingSelector } from '@/stores/slices/Onboarding.slice';
 import { BankAccountItem } from '@/atoms/bank/BankAccountItem';
 
+const isLocal = import.meta.env['VITE_ENV']?.toLowerCase() === 'local';
+
 interface OnboardingStep4Props {}
 
 export const OnboardingStep4Left: FC<OnboardingStep4Props> = ({}) => {
@@ -52,7 +54,7 @@ export const OnboardingStep4Left: FC<OnboardingStep4Props> = ({}) => {
         {bankAccounts.length ? '+ Add Another Account' : 'Connect Your Account'}
       </LinkPlaid>
       <p>{errorMsg}</p>
-      <button onClick={() => onLinkCb('success')}>TEST</button>
+      {isLocal && <button onClick={() => onLinkCb('success')}>TEST</button>}
     </Styled.left>
   );
 };
