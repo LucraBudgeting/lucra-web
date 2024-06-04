@@ -1,6 +1,6 @@
-import { BaseRepository } from '../base.repository';
 import { category } from '@/components/category/category.type';
 import HttpClient from '@/libs/http/http.client';
+import { BaseRepository } from '../base.repository';
 
 export default class CategoryApi extends BaseRepository {
   AddCategory = async (category: category): Promise<{ category: category; message: string }> => {

@@ -1,5 +1,5 @@
-import { AddBudgetCategory } from '@/components/onboarding/desktop/AddBudgetCategory';
 import { Meta, StoryObj } from '@storybook/react';
+import { AddBudgetCategory } from '@/components/onboarding/desktop/AddBudgetCategory';
 import { ParentContainer } from '../ParentContainer';
 
 const meta = {

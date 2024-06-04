@@ -1,11 +1,10 @@
 import { FC, useContext, useState } from 'react';
-import { styles } from './Styles';
 import styled from 'styled-components';
-import { number } from 'zod';
 import { EditOrAddCategory } from '@/components/dialog/EditOrAddCategory';
 import { category } from '@/components/category/category.type';
 import { ApiContext } from '@/apis/api.context';
 import { LoadingComponent } from '@/atoms/loading/Loading.Component';
+import { styles } from './Styles';
 
 interface AddBudgetCategoryProps {
   type: 'Income' | 'Expense';

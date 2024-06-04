@@ -53,7 +53,7 @@ export const OnboardingContainerDesktop: FC<OnboardingDualCardContainerProps> = 
     // };
   }, []);
 
-  function handleKeyPress(e: KeyboardEvent) {
+  function _handleKeyPress(e: KeyboardEvent) {
     if (e.key === 'Enter') {
       nextPage();
     }
