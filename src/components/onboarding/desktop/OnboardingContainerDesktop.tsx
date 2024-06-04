@@ -1,4 +1,4 @@
-import { FC, useContext, useState } from 'react';
+import { FC, useContext, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { LoadingComponent } from '@/atoms/loading/Loading.Component';
@@ -35,7 +35,8 @@ export const OnboardingContainerDesktop: FC<OnboardingDualCardContainerProps> = 
   const { email, fullName, password, isCurrentPageLoading } = onboardingSelector();
   const apis = useContext(ApiContext);
 
-  const [searchParams] = useSearchParams();
+  const [searchParams, setSearchParams] = useSearchParams();
+  const currentParams = new URLSearchParams(searchParams);
   const _userId = searchParams.get('userid');
   const currentStep = searchParams.get('step');
 
@@ -43,6 +44,23 @@ export const OnboardingContainerDesktop: FC<OnboardingDualCardContainerProps> = 
 
   const navigate = useNavigate();
   const totalPages = 5;
+
+  useEffect(() => {
+    // window.addEventListener('keydown', handleKeyPress);
+    // // Cleanup the event listener on component unmount
+    // return () => {
+    //   window.removeEventListener('keydown', handleKeyPress);
+    // };
+  }, []);
+
+  function handleKeyPress(e: KeyboardEvent) {
+    if (e.key === 'Enter') {
+      nextPage();
+    }
+    if (e.key === 'Escape') {
+      prevPage();
+    }
+  }
 
   const nextPage = () => {
     if (isCurrentPageInStage(currentPage, 1)) {
@@ -55,16 +73,25 @@ export const OnboardingContainerDesktop: FC<OnboardingDualCardContainerProps> = 
       checkStage4();
     }
 
-    if (currentPage === totalPages) return; // TODO - REPLACE WITH SUBMIT
-    setCurrentPage(currentPage + 1);
+    currentParams.set('step', (currentPage + 1).toString());
+    setSearchParams(currentParams);
+
+    setCurrentPage((prev) => {
+      if (prev === totalPages) return prev;
+
+      return prev + 1;
+    });
   };
 
   const prevPage = () => {
-    if (currentPage === 1) {
-      navigate(authRoutes.login);
-      return;
-    }
-    setCurrentPage((prev) => prev - 1);
+    currentParams.set('step', (currentPage - 1).toString());
+    setSearchParams(currentParams);
+    setCurrentPage((prev) => {
+      if (prev === 1) {
+        navigate(authRoutes.login);
+      }
+      return prev - 1;
+    });
   };
 
   const checkStage1 = async () => {
@@ -77,17 +104,11 @@ export const OnboardingContainerDesktop: FC<OnboardingDualCardContainerProps> = 
     });
   };
 
-  const checkStage2 = async () => {
-    console.log('STAGE 2');
-  };
+  const checkStage2 = async () => {};
 
-  const checkStage3 = async () => {
-    console.log('STAGE 3');
-  };
+  const checkStage3 = async () => {};
 
-  const checkStage4 = async () => {
-    console.log('STAGE 4');
-  };
+  const checkStage4 = async () => {};
 
   const { leftCard, rightCard } = getStepElement(currentPage);
 

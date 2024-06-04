@@ -1,6 +1,7 @@
 import { FC } from 'react';
 import { siteImageUrls } from '@/assets/site-image-urls';
 import { styles } from './Styles';
+import { AddBudgetCategory } from './AddBudgetCategory';
 
 interface OnboardingStep5Props {}
 
@@ -13,6 +14,7 @@ export const OnboardingStep5Left: FC<OnboardingStep5Props> = ({}) => {
           Set up your account to get started. This helps us keep your financial information safe and
           secure.
         </h3>
+        <AddBudgetCategory type="Income" />
       </Styled.leftTextContainer>
     </Styled.left>
   );

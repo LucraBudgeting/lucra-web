@@ -6,4 +6,5 @@ export interface category {
   backgroundColor?: string;
   budgetType?: balanceEntry;
   id?: string;
+  amount: number;
 }

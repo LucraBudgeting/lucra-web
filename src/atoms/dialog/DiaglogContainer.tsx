@@ -15,6 +15,8 @@ export const DialogContainer: FC<DiaglogContainerProps> = ({
   closeButton = true,
   successButton = true,
   disableSave = false,
+  closeText = 'Close',
+  nextText = 'Save',
   closeCb,
   successCb,
   editCb,
@@ -67,9 +69,9 @@ export const DialogContainer: FC<DiaglogContainerProps> = ({
         <Styled.content height={height}>{children}</Styled.content>
         {enableFooter && (
           <Styled.footer>
-            {closeButton && <Button onClick={closeDialog} label="Close" primary={false} />}
+            {closeButton && <Button onClick={closeDialog} label={closeText} primary={false} />}
             {successButton && (
-              <Button onClick={successDialog} label="Save" disabled={disableSave} />
+              <Button onClick={successDialog} label={nextText} disabled={disableSave} />
             )}
           </Styled.footer>
         )}

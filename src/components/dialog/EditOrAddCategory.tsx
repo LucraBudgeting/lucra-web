@@ -66,6 +66,7 @@ export const EditOrAddCategory: FC<EditCategoryProps> = (props) => {
       emoji: currentEmoji,
       backgroundColor: categoryColor,
       budgetType: textToBalanceEntry(budetType),
+      amount: budgetedAmount,
     };
     successCb(savedCategory);
   };

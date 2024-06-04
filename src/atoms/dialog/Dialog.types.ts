@@ -11,4 +11,6 @@ export interface DialogProps<T = any> {
   closeOnOverlayClick?: boolean;
   width?: string;
   height?: string;
+  closeText?: string;
+  nextText?: string;
 }
