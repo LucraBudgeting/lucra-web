@@ -1,8 +1,7 @@
-import { Styled } from '@/components/dialog/Styled';
-import { IBankAccount } from '@/types/models/bank/BankAccount';
-import { getBase64ImageString } from '@/utils/base64Img';
 import { FC } from 'react';
 import styled from 'styled-components';
+import { IBankAccount } from '@/types/models/bank/BankAccount';
+import { getBase64ImageString } from '@/utils/base64Img';
 
 interface BankAccountItemProps {
   account: IBankAccount;

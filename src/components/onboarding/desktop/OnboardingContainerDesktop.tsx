@@ -36,7 +36,7 @@ export const OnboardingContainerDesktop: FC<OnboardingDualCardContainerProps> = 
   const apis = useContext(ApiContext);
 
   const [searchParams] = useSearchParams();
-  const userId = searchParams.get('userid');
+  const _userId = searchParams.get('userid');
   const currentStep = searchParams.get('step');
 
   const [currentPage, setCurrentPage] = useState<number>(currentStep ? parseInt(currentStep) : 1);

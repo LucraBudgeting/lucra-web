@@ -1,5 +1,5 @@
-import { BankAccountItem } from '@/atoms/bank/BankAccountItem';
 import { Meta, StoryObj } from '@storybook/react';
+import { BankAccountItem } from '@/atoms/bank/BankAccountItem';
 import { ParentContainer } from '../ParentContainer';
 
 const meta = {

@@ -1,12 +1,12 @@
 import { FC, useContext, useState } from 'react';
 import styled from 'styled-components';
+import { useDispatch } from 'react-redux';
 import { siteImageUrls } from '@/assets/site-image-urls';
 import { LinkPlaid } from '@/components/bank/plaid/Link.Plaid';
 import { ApiContext } from '@/apis/api.context';
-import { styles } from './Styles';
-import { useDispatch } from 'react-redux';
 import { addAccounts, onboardingSelector } from '@/stores/slices/Onboarding.slice';
 import { BankAccountItem } from '@/atoms/bank/BankAccountItem';
+import { styles } from './Styles';
 
 const isLocal = import.meta.env['VITE_ENV']?.toLowerCase() === 'local';
 
