@@ -1,4 +1,4 @@
-import { FC, useContext, useState } from 'react';
+import { FC, useContext, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { useDispatch } from 'react-redux';
 import { siteImageUrls } from '@/assets/site-image-urls';
@@ -17,6 +17,12 @@ export const OnboardingStep4Left: FC<OnboardingStep4Props> = ({}) => {
   const { bankAccounts } = onboardingSelector();
   const { bankApi, onboardingApi } = useContext(ApiContext);
   const [errorMsg, setErrorMsg] = useState<string>('');
+
+  useEffect(() => {
+    getAccounts();
+
+    return () => {};
+  }, []);
 
   async function getAccounts() {
     bankApi.getBankAccounts().then((response) => {
