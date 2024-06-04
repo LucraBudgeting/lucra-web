@@ -23,7 +23,7 @@ export const Default: Story = {
       id: 'clwyb4p4u0008emvp5x6s3q8t',
       accessAccountId: 'clwyb4otx0006emvpgp33lbvb',
       accountId: 'BXJ35lEmjMT8KeyR6r5ecbKkmXyQwPF4vDkQp',
-      institutionDisplayName: 'Plaid Gold Standard 0% Interest Checking',
+      institutionDisplayName: 'SoFi Checking',
       institutionId: 'ins_56',
       type: 'Checking',
       subType: 'checking',

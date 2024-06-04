@@ -33,6 +33,7 @@ const Styles = {
     display: flex;
     padding: 20px;
     align-items: center;
+    justify-content: space-between;
     gap: 14px;
     border-radius: 16px;
     border: 1px solid #e2e2e2;
