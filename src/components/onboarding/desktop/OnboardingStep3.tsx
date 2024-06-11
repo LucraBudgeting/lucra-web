@@ -1,10 +1,14 @@
-import { FC } from 'react';
+import { FC, useEffect } from 'react';
 import { siteImageUrls } from '@/assets/site-image-urls';
 import { styles } from './Styles';
 
 interface OnboardingStep3Props {}
 
 export const OnboardingStep3Left: FC<OnboardingStep3Props> = ({}) => {
+  useEffect(() => {
+    document.title = 'Billing information';
+  }, []);
+
   return (
     <Styled.left>
       <Styled.leftTextContainer>

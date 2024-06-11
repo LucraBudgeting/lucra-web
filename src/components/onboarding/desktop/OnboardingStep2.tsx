@@ -17,6 +17,10 @@ export const OnboardingStep2Left: FC<OnboardingStep2Props> = ({}) => {
   const { password } = onboardingSelector();
 
   useEffect(() => {
+    document.title = 'Create password';
+  }, []);
+
+  useEffect(() => {
     validatePassword(password);
   }, []);
 

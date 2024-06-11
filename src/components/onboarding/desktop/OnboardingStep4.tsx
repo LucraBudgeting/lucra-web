@@ -19,6 +19,10 @@ export const OnboardingStep4Left: FC<OnboardingStep4Props> = ({}) => {
   const [errorMsg, setErrorMsg] = useState<string>('');
 
   useEffect(() => {
+    document.title = 'Connect your accounts';
+  }, []);
+
+  useEffect(() => {
     getAccounts();
 
     return () => {};

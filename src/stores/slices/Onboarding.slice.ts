@@ -1,6 +1,8 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { useAppSelector } from '@/stores/store.hooks';
 import { IBankAccount } from '@/types/models/bank/BankAccount';
+import { category } from '@/components/category/category.type';
+import { balanceEntry } from '@/types/types';
 
 export const initialState = {
   fullName: '',
@@ -11,6 +13,8 @@ export const initialState = {
   isNextStepLoading: false,
   isCurrentPageLoading: false,
   bankAccounts: [] as IBankAccount[],
+  categories: [] as category[],
+  step5Stage: 'debit' as balanceEntry,
 };
 
 export const onboardingSlice = createSlice({
@@ -46,6 +50,17 @@ export const onboardingSlice = createSlice({
 
       state.bankAccounts = Array.from(uniqueAccounts.values());
     },
+    addCategories: (state, action: PayloadAction<category[]>) => {
+      const uniqueCategories = state.categories.concat(action.payload).reduce((acc, obj) => {
+        acc.set(obj.id, obj);
+        return acc;
+      }, new Map());
+
+      state.categories = Array.from(uniqueCategories.values());
+    },
+    changeStep5Stage: (state, action: PayloadAction<balanceEntry>) => {
+      state.step5Stage = action.payload;
+    },
   },
 });
 
@@ -60,6 +75,8 @@ export const {
   setIsCurrentPageLoading,
   setIsNextStepLoading,
   addAccounts,
+  addCategories,
+  changeStep5Stage,
 } = onboardingSlice.actions;
 
 export default onboardingSlice.reducer;

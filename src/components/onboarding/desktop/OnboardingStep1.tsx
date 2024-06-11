@@ -1,4 +1,4 @@
-import { FC, useContext, useState } from 'react';
+import { FC, useContext, useEffect, useState } from 'react';
 import { siteImageUrls } from '@/assets/site-image-urls';
 import { useAppDispatch } from '@/stores/store.hooks';
 import { onboardingSelector, setEmail, setFullName } from '@/stores/slices/Onboarding.slice';
@@ -10,6 +10,10 @@ interface OnboardingStep1Props {}
 
 export const OnboardingStep1Left: FC<OnboardingStep1Props> = ({}) => {
   const apis = useContext(ApiContext);
+
+  useEffect(() => {
+    document.title = 'Create your account';
+  }, []);
 
   const [fullNameErrors, setFullNameErrors] = useState<string | undefined>();
   const [emailErrors, setEmailErrors] = useState<string | undefined>();

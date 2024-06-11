@@ -18,3 +18,29 @@ export const convertEpochToDateFormat = (
 ): string => {
   return convertEpochToDate(date).toLocaleDateString('en-us', options);
 };
+
+export function getFullMonth(): string {
+  const monthNames = [
+    'January',
+    'February',
+    'March',
+    'April',
+    'May',
+    'June',
+    'July',
+    'August',
+    'September',
+    'October',
+    'November',
+    'December',
+  ];
+
+  const currentDate = new Date();
+  const monthIndex = currentDate.getMonth();
+
+  return monthNames[monthIndex];
+}
+
+export function getCurrentYear(): number {
+  return new Date().getFullYear();
+}

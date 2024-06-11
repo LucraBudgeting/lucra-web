@@ -10,4 +10,11 @@ export default class CategoryApi extends BaseRepository {
     );
     return response;
   };
+
+  GetCategories = async (): Promise<{ categories: category[]; message: string }> => {
+    const response = await HttpClient.get<{ categories: category[]; message: string }>(
+      `${this.apiUrl}/api/category`
+    );
+    return response;
+  };
 }
