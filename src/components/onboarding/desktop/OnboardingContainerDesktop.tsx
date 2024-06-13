@@ -73,6 +73,11 @@ export const OnboardingContainerDesktop: FC<OnboardingDualCardContainerProps> = 
       checkStage4();
     }
 
+    if (currentPage == totalPages) {
+      navigate(authRoutes.login);
+      return;
+    }
+
     currentParams.set('step', (currentPage + 1).toString());
     setSearchParams(currentParams);
 

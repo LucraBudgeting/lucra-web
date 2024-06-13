@@ -1,12 +1,11 @@
 import { FC, useContext, useEffect } from 'react';
-import { siteImageUrls } from '@/assets/site-image-urls';
-import { styles } from './Styles';
-import { AddBudgetCategory } from './AddBudgetCategory';
-import { ApiContext } from '@/apis/api.context';
 import { useDispatch } from 'react-redux';
+import { ApiContext } from '@/apis/api.context';
+import { siteImageUrls } from '@/assets/site-image-urls';
 import { addCategories, onboardingSelector } from '@/stores/slices/Onboarding.slice';
-import { balanceEntry } from '@/types/types';
 import { getCurrentYear, getFullMonth } from '@/utils/time.helper';
+import { AddBudgetCategory } from './AddBudgetCategory';
+import { styles } from './Styles';
 
 interface OnboardingStep5Props {}
 
