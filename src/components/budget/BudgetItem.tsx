@@ -5,7 +5,7 @@ import { formatAsMoney } from '@/utils/formatAsMoney';
 import { AvatarEmoji } from '../../atoms/avatar/AvatarEmoji';
 import { calcIsRemainingGood, calcRemaining } from './budgetCalculator';
 
-interface BudgetItemProps {
+export interface BudgetItemProps {
   avatar: {
     emoji: string;
     backgroundColor: string;
@@ -51,6 +51,9 @@ const Styled = {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    height: 50px;
+    padding: 0 1rem;
+    border-bottom: solid 1px #ccc;
   `,
   input: styled.input<{ width: string }>`
     border: 1px solid #ccc;

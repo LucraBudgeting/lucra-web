@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { BudgetItem } from '@/components/budget/BudgetItem';
 import { ParentContainer } from '../ParentContainer';
+import BudgetList from '../__mocks/BudgetList';
 
 const meta = {
   title: 'budget/BudgetItem',
@@ -16,66 +17,21 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
-  args: {
-    avatar: {
-      emoji: '💰',
-      backgroundColor: '#24e90a',
-    },
-    title: 'Salary',
-    budgeted: 4000,
-    actual: 4500,
-    budgetType: 'debit',
-  },
+  args: BudgetList.Default,
 };
 
 export const CreditNoRemaining: Story = {
-  args: {
-    avatar: {
-      emoji: '🏠',
-      backgroundColor: '#10e3b9',
-    },
-    title: 'Mortgage',
-    budgeted: 4000,
-    actual: 4500,
-    budgetType: 'credit',
-  },
+  args: BudgetList.CreditNoRemaining,
 };
 
 export const CreditRemaining: Story = {
-  args: {
-    avatar: {
-      emoji: '🍔',
-      backgroundColor: '#f10dad',
-    },
-    title: 'Eating Out',
-    budgeted: 4000,
-    actual: 3500,
-    budgetType: 'credit',
-  },
+  args: BudgetList.CreditRemaining,
 };
 
 export const DebitNoRemaining: Story = {
-  args: {
-    avatar: {
-      emoji: '🤑',
-      backgroundColor: '#2eaf4a',
-    },
-    title: 'Rent Income',
-    budgeted: 4000,
-    actual: 3500,
-    budgetType: 'debit',
-  },
+  args: BudgetList.DebitNoRemaining,
 };
 
 export const DebitRemaining: Story = {
-  args: {
-    avatar: {
-      emoji: '🍔',
-      backgroundColor: '#FDF9A9',
-    },
-    title: 'Salary',
-    budgeted: 4000,
-    actual: 4500,
-    budgetType: 'debit',
-  },
+  args: BudgetList.DebitRemaining,
 };
