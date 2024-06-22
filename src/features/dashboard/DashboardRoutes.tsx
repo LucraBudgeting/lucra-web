@@ -1,7 +1,7 @@
-import { DashboardLayout } from '@/layouts/dashboard/DashboardLayout';
-import { dashboardRoutes } from '@/routes/RouteConstants';
 import { FC, useEffect } from 'react';
 import { Navigate, Route } from 'react-router-dom';
+import { DashboardLayout } from '@/layouts/dashboard/DashboardLayout';
+import { dashboardRoutes } from '@/routes/RouteConstants';
 import { DashboardPage } from './pages/DashboardPage';
 
 interface DashboardRoutesProps {}
