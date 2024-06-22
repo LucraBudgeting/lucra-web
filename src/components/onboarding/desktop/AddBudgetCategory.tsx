@@ -1,9 +1,9 @@
 import { FC, useContext, useState } from 'react';
 import styled from 'styled-components';
 import { EditOrAddCategory } from '@/components/dialog/EditOrAddCategory';
-import { category } from '@/components/category/category.type';
 import { ApiContext } from '@/apis/api.context';
 import { LoadingComponent } from '@/atoms/loading/Loading.Component';
+import { ICategory } from '@/types/basic/Category.type';
 import { styles } from './Styles';
 
 interface AddBudgetCategoryProps {
@@ -28,7 +28,7 @@ export const AddBudgetCategory: FC<AddBudgetCategoryProps> = ({ type, isDone, is
     setIsModalOpen(true);
   };
 
-  const addBudgetCb = (newCategory: category) => {
+  const addBudgetCb = (newCategory: ICategory) => {
     setIsCategoryAdding(true);
     categoryApi
       .AddCategory(newCategory)

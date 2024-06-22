@@ -23,7 +23,7 @@ const Styles = {
     width: 100%;
     display: flex;
     flex-direction: column;
-    border: solid black 2px;
+    /* border: solid black 2px; */
     /* margin: 10px; */
   `,
 };

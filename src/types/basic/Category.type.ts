@@ -1,6 +1,6 @@
 import { balanceEntry } from '@/types/types';
 
-export interface category {
+export interface ICategory {
   label: string;
   emoji?: string;
   backgroundColor?: string;

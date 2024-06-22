@@ -6,11 +6,11 @@ import { DividerSvg } from '@/assets/divider';
 import { ColorPicker } from '@/atoms/picker/ColorPicker';
 import { balanceEntryToText, textToBalanceEntry } from '@/types/types';
 import { EmojiPicker } from '@/atoms/picker/EmojiPicker';
-import { category } from '../category/category.type';
+import { ICategory } from '../../types/basic/Category.type';
 import { Styled } from './Styled';
 
 interface EditCategoryProps extends DialogProps {
-  category?: category;
+  category?: ICategory;
   budgeted: number;
 }
 
@@ -60,7 +60,7 @@ export const EditOrAddCategory: FC<EditCategoryProps> = (props) => {
   const saveCategory = () => {
     if (!successCb) return;
 
-    const savedCategory: category = {
+    const savedCategory: ICategory = {
       id: category?.id ?? undefined,
       label: label,
       emoji: currentEmoji,

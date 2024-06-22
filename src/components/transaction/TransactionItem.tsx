@@ -2,10 +2,10 @@ import { FC } from 'react';
 import styled from 'styled-components';
 import { Chip } from '../../atoms/chip/Chip';
 import { AddCategoryChip } from '../../atoms/chip/AddCategoryChip';
-import { category } from '../category/category.type';
+import { ICategory } from '../../types/basic/Category.type';
 
 interface TransactionItemProps {
-  category?: category;
+  category?: ICategory;
   amount: number;
   description: string;
   id: string;

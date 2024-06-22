@@ -1,6 +1,6 @@
-import { category } from '../category/category.type';
+import { ICategory } from '../../types/basic/Category.type';
 export interface transaction {
-  category?: category;
+  category?: ICategory;
   amount: number;
   description: string;
   date: string;

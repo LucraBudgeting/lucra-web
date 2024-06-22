@@ -1,8 +1,8 @@
 import { FC } from 'react';
 import styled from 'styled-components';
-import { category } from './category.type';
+import { ICategory } from '../../types/basic/Category.type';
 
-export const CategoryItem: FC<category> = ({ label, emoji, backgroundColor }) => {
+export const CategoryItem: FC<ICategory> = ({ label, emoji, backgroundColor }) => {
   return (
     <Styled.container>
       <Styled.emoji color={backgroundColor}>{emoji}</Styled.emoji>

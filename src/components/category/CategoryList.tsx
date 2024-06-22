@@ -1,18 +1,18 @@
 import { FC, useState } from 'react';
 import styled from 'styled-components';
 import { SpyGlassOutline } from '@/assets/spyglass-outline';
-import { category } from './category.type';
+import { ICategory } from '../../types/basic/Category.type';
 import { CategoryItem } from './CategoryItem';
 
 interface CategoryListProps {
-  incomes: category[];
-  expenses: category[];
+  incomes: ICategory[];
+  expenses: ICategory[];
 }
 
 export const CategoryList: FC<CategoryListProps> = ({ incomes, expenses }) => {
   const [searchValue, setSearchValue] = useState('');
-  const [incomeList, setIncomeList] = useState<category[]>(incomes);
-  const [expenseList, setExpenseList] = useState<category[]>(expenses);
+  const [incomeList, setIncomeList] = useState<ICategory[]>(incomes);
+  const [expenseList, setExpenseList] = useState<ICategory[]>(expenses);
 
   const filterCategories = (value: string) => {
     const incomeCategories = incomes.filter((category) =>

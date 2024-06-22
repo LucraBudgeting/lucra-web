@@ -4,13 +4,13 @@ import { DialogContainer } from '@/atoms/dialog/DiaglogContainer';
 import { balanceEntry } from '@/types/types';
 import { formatAsMoney } from '@/utils/formatAsMoney';
 import { DividerSvg } from '@/assets/divider';
-import { category } from '../category/category.type';
+import { ICategory } from '../../types/basic/Category.type';
 import { calcIsRemainingGood, calcRemaining } from '../budget/budgetCalculator';
 import { TransactionList } from '../transaction/TransactionList';
 import { Styled } from './Styled';
 
 interface CategoryBudgetDetailsProps extends DialogProps {
-  category: category;
+  category: ICategory;
   budgeted: number;
   actual: number;
   budgetType: balanceEntry;
