@@ -18,6 +18,6 @@ const Styled = {
   container: styled.div`
     display: flex;
     width: 100%;
-    border: solid black 2px;
+    /* border: solid black 2px; */
   `,
 };
