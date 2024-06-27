@@ -22,8 +22,10 @@ export const Default: Story = {
   args: {
     category: {
       label: 'Eating Out',
-      emoji: '🍔',
-      backgroundColor: '#FDF9A9',
+      avatar: {
+        emoji: '🍔',
+        backgroundColor: '#FDF9A9',
+      },
       id: '1',
     },
     budgeted: 0,
@@ -36,8 +38,10 @@ export const Debit: Story = {
   args: {
     category: {
       label: 'Income',
-      emoji: '💰',
-      backgroundColor: '#f5f5f5',
+      avatar: {
+        emoji: '💰',
+        backgroundColor: '#f5f5f5',
+      },
       id: '1',
     },
     budgeted: 1000,
@@ -50,8 +54,10 @@ export const Credit: Story = {
   args: {
     category: {
       label: 'Eating Out',
-      emoji: '🍔',
-      backgroundColor: '#f5f5f5',
+      avatar: {
+        emoji: '🍔',
+        backgroundColor: '#f5f5f5',
+      },
       id: '1',
     },
     budgeted: 1000,

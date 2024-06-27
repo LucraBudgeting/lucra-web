@@ -17,8 +17,10 @@ type Story = StoryObj<typeof meta>;
 export const Default: Story = {
   args: {
     label: 'Eating Out',
-    emoji: '🍔',
-    backgroundColor: '#FDF9A9',
+    avatar: {
+      emoji: '🍔',
+      backgroundColor: '#FDF9A9',
+    },
     id: createShortGuid(),
   },
 };

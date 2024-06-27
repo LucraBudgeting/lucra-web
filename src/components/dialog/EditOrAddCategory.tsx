@@ -16,12 +16,14 @@ interface EditCategoryProps extends DialogProps {
 
 export const EditOrAddCategory: FC<EditCategoryProps> = (props) => {
   const { category, budgeted, headerText, successCb } = props;
-  const [categoryColor, setCategoryColor] = useState<string | undefined>(category?.backgroundColor);
+  const [categoryColor, setCategoryColor] = useState<string | undefined>(
+    category?.avatar.backgroundColor
+  );
   const [budetType, setBudgetType] = useState<string>(
     balanceEntryToText(category?.budgetType ?? 'debit')
   );
   const [label, setLabel] = useState<string>(category?.label ?? '');
-  const [currentEmoji, setCurrentEmoji] = useState<string>(category?.emoji ?? '💰');
+  const [currentEmoji, setCurrentEmoji] = useState<string>(category?.avatar.emoji ?? '💰');
   const [budgetedAmount, setBudgetedAmount] = useState(budgeted);
 
   const [dividerWidth, setDividerWidth] = useState('20');
@@ -63,8 +65,10 @@ export const EditOrAddCategory: FC<EditCategoryProps> = (props) => {
     const savedCategory: ICategory = {
       id: category?.id ?? undefined,
       label: label,
-      emoji: currentEmoji,
-      backgroundColor: categoryColor,
+      avatar: {
+        emoji: currentEmoji,
+        backgroundColor: categoryColor ?? '#50de21aa',
+      },
       budgetType: textToBalanceEntry(budetType),
       amount: budgetedAmount,
     };

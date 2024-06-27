@@ -33,8 +33,10 @@ function generateFakeTransactions(count: number) {
       const newItem = {
         category: {
           label: 'Category',
-          emoji: '😊',
-          backgroundColor: '#e0cdcd',
+          avatar: {
+            emoji: '😊',
+            backgroundColor: '#e0cdcd',
+          },
           id: createShortGuid(),
         },
         id: createShortGuid(),

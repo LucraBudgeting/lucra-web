@@ -3,7 +3,7 @@ import { IAvatar } from './_shared/avatar';
 
 export interface IBudget {
   id?: string;
-  avatar: IBudgetAvatar;
+  label: string;
   budgetType?: balanceEntry;
   amount?: number;
 }

@@ -20,7 +20,7 @@ export const CategoryBudgetDetails: FC<CategoryBudgetDetailsProps> = (props) => 
   const [dividerWidth, setDividerWidth] = useState('20');
   const sectionContainerRef = useRef<HTMLDivElement>(null);
   const { category, budgeted, actual, budgetType } = props;
-  const dialogTitle = (category.emoji ? category.emoji + ' ' : '') + category.label;
+  const dialogTitle = (category.avatar.emoji ? category.avatar.emoji + ' ' : '') + category.label;
   const remaining = calcRemaining(budgeted, actual);
   const isRemainingGood = calcIsRemainingGood(budgeted, actual, budgetType);
 

@@ -7,6 +7,7 @@ import { PlaidApi } from './bank/plaid.api';
 import { OnboardingApi } from './onboarding/onboarding.api';
 import BankApi from './bank/bank.api';
 import CategoryApi from './budget/category.api';
+import TransactionApi from './budget/transaction.api';
 
 interface Apis {
   pokemon: PokemonApi;
@@ -18,6 +19,7 @@ interface Apis {
   apiUrl: string;
   bankApi: BankApi;
   categoryApi: CategoryApi;
+  transactionApi: TransactionApi;
 }
 
 const { VITE_ENV } = import.meta.env;
@@ -31,6 +33,7 @@ export const initializedApis: Apis = {
   onboardingApi: new OnboardingApi(),
   bankApi: new BankApi(),
   categoryApi: new CategoryApi(),
+  transactionApi: new TransactionApi(),
   apiUrl: import.meta.env[`VITE_API_BASE_URL_${VITE_ENV}`],
 };
 

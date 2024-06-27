@@ -18,76 +18,100 @@ export const Default: Story = {
     incomes: [
       {
         label: 'Eating Out',
-        emoji: '🍔',
-        backgroundColor: '#FDF9A9',
+        avatar: {
+          emoji: '🍔',
+          backgroundColor: '#FDF9A9',
+        },
         id: '1',
       },
       {
         label: 'Car Payment',
-        emoji: '🚗',
-        backgroundColor: '#FDF9A9',
+        avatar: {
+          emoji: '🚗',
+          backgroundColor: '#FDF9A9',
+        },
         id: '2',
       },
       {
         label: 'Groceries',
-        emoji: '🛒',
-        backgroundColor: '#FDF9A9',
+        avatar: {
+          emoji: '🛒',
+          backgroundColor: '#FDF9A9',
+        },
         id: '3',
       },
       {
         label: 'Eating Out',
-        emoji: '🍔',
-        backgroundColor: '#FDF9A9',
+        avatar: {
+          emoji: '🍔',
+          backgroundColor: '#FDF9A9',
+        },
         id: '4',
       },
       {
         label: 'Car Payment',
-        emoji: '🚗',
-        backgroundColor: '#FDF9A9',
+        avatar: {
+          emoji: '🚗',
+          backgroundColor: '#FDF9A9',
+        },
         id: '5',
       },
       {
         label: 'Groceries',
-        emoji: '🛒',
-        backgroundColor: '#FDF9A9',
+        avatar: {
+          emoji: '🛒',
+          backgroundColor: '#FDF9A9',
+        },
         id: '6',
       },
     ],
     expenses: [
       {
         label: 'Eating Out',
-        emoji: '🍔',
-        backgroundColor: '#FDF9A9',
+        avatar: {
+          emoji: '🍔',
+          backgroundColor: '#FDF9A9',
+        },
         id: '1',
       },
       {
         label: 'Car Payment',
-        emoji: '🚗',
-        backgroundColor: '#FDF9A9',
+        avatar: {
+          emoji: '🚗',
+          backgroundColor: '#FDF9A9',
+        },
         id: '2',
       },
       {
         label: 'Groceries',
-        emoji: '🛒',
-        backgroundColor: '#FDF9A9',
+        avatar: {
+          emoji: '🛒',
+          backgroundColor: '#FDF9A9',
+        },
         id: '3',
       },
       {
         label: 'Eating Out',
-        emoji: '🍔',
-        backgroundColor: '#FDF9A9',
+        avatar: {
+          emoji: '🍔',
+          backgroundColor: '#FDF9A9',
+        },
         id: '4',
       },
       {
         label: 'Car Payment',
-        emoji: '🚗',
-        backgroundColor: '#FDF9A9',
+        avatar: {
+          emoji: '🚗',
+          backgroundColor: '#FDF9A9',
+        },
         id: '5',
       },
       {
         label: 'Groceries',
-        emoji: '🛒',
-        backgroundColor: '#FDF9A9',
+        avatar: {
+          emoji: '🛒',
+          backgroundColor: '#FDF9A9',
+        },
         id: '6',
       },
     ],

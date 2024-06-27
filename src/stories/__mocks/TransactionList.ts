@@ -4,8 +4,10 @@ export const transactionList = [
   {
     category: {
       label: 'Eating Out',
-      emoji: '🍔',
-      backgroundColor: '#FDF9A9',
+      avatar: {
+        emoji: '🍔',
+        backgroundColor: '#FDF9A9',
+      },
       id: createShortGuid(),
     },
     id: createShortGuid(),
@@ -16,8 +18,10 @@ export const transactionList = [
   {
     category: {
       label: 'Car Payment',
-      emoji: '🚗',
-      backgroundColor: '#FDF9A9',
+      avatar: {
+        emoji: '🚗',
+        backgroundColor: '#FDF9A9',
+      },
       id: createShortGuid(),
     },
     id: createShortGuid(),
@@ -28,8 +32,10 @@ export const transactionList = [
   {
     category: {
       label: 'Groceries',
-      emoji: '🛒',
-      backgroundColor: '#FDF9A9',
+      avatar: {
+        emoji: '🛒',
+        backgroundColor: '#FDF9A9',
+      },
       id: createShortGuid(),
     },
     id: createShortGuid(),

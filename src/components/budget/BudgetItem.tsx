@@ -1,41 +1,32 @@
 import { FC } from 'react';
 import styled from 'styled-components';
-import { balanceEntry } from '@/types/types';
 import { formatAsMoney } from '@/utils/formatAsMoney';
+import { ICategory } from '@/types/basic/Category.type';
+import { dashboardSelector } from '@/stores/slices/Dashboard.slice';
 import { AvatarEmoji } from '../../atoms/avatar/AvatarEmoji';
 import { calcIsRemainingGood, calcRemaining } from './budgetCalculator';
 
 export interface BudgetItemProps {
-  avatar: {
-    emoji: string;
-    backgroundColor: string;
-  };
-  title: string;
-  budgeted: number;
-  actual: number;
-  budgetType: balanceEntry;
+  category: ICategory;
 }
 
-export const BudgetItem: FC<BudgetItemProps> = ({
-  avatar,
-  title,
-  budgeted,
-  actual,
-  budgetType,
-}) => {
-  const remaining = calcRemaining(budgeted, actual);
-  const isRemainingGood = calcIsRemainingGood(budgeted, actual, budgetType);
-  const inputWidth = formatAsMoney(budgeted).length * 10 + 20 + 'px';
+export const BudgetItem: FC<BudgetItemProps> = ({ category }) => {
+  const { id, label, avatar, amount, budgetType } = category;
+  const actual = id ? dashboardSelector().budgetActuals[id] : 0;
+
+  const remaining = calcRemaining(amount, actual);
+  const isRemainingGood = calcIsRemainingGood(amount, actual, budgetType);
+  const inputWidth = formatAsMoney(amount).length * 10 + 20 + 'px';
 
   return (
     <Styled.container>
       <Styled.budgetContainer>
         <AvatarEmoji emoji={avatar.emoji} backgroundColor={avatar.backgroundColor} />
-        <Styled.title>{title}</Styled.title>
+        <Styled.title>{label}</Styled.title>
       </Styled.budgetContainer>
       <Styled.budgetContainer>
         <Styled.amountCell>
-          <Styled.input width={inputWidth} value={formatAsMoney(budgeted)} />
+          <Styled.input width={inputWidth} value={formatAsMoney(amount)} />
         </Styled.amountCell>
         <Styled.amountCell>{formatAsMoney(actual)}</Styled.amountCell>
         <Styled.remainingCell isremaininggood={isRemainingGood ? 'true' : 'false'}>

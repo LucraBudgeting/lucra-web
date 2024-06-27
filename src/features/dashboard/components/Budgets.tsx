@@ -1,18 +1,23 @@
 import { FC } from 'react';
 import styled from 'styled-components';
 import { BudgetItem } from '@/components/budget/BudgetItem';
-import BudgetList from '@/stories/__mocks/BudgetList';
+import { ICategoriesSplit } from '@/hooks/dashboard/useCategories.hook';
 
-interface BudgetsProps {}
+interface BudgetsProps {
+  categories: ICategoriesSplit;
+}
 
-export const Budgets: FC<BudgetsProps> = ({}) => {
+export const Budgets: FC<BudgetsProps> = ({ categories }) => {
   return (
     <Styles.container>
-      <BudgetItem {...BudgetList.Default} />
-      <BudgetItem {...BudgetList.CreditNoRemaining} />
-      <BudgetItem {...BudgetList.CreditRemaining} />
-      <BudgetItem {...BudgetList.DebitNoRemaining} />
-      <BudgetItem {...BudgetList.DebitRemaining} />
+      <p>Income</p>
+      {categories.credit.map((category) => (
+        <BudgetItem key={category.id} category={category} />
+      ))}
+      <p>Expenses</p>
+      {categories.debit.map((category) => (
+        <BudgetItem key={category.id} category={category} />
+      ))}
     </Styles.container>
   );
 };

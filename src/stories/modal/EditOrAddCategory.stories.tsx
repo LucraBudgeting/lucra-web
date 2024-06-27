@@ -21,8 +21,10 @@ export const Default: Story = {
   args: {
     category: {
       label: 'Eating Out',
-      emoji: '🍔',
-      backgroundColor: '#49CCCB',
+      avatar: {
+        emoji: '🍔',
+        backgroundColor: '#49CCCB',
+      },
       id: '1',
       amount: 0,
     },
@@ -36,8 +38,10 @@ export const InitialAmount: Story = {
   args: {
     category: {
       label: 'Eating Out',
-      emoji: '🍔',
-      backgroundColor: '#49CCCB',
+      avatar: {
+        emoji: '🍔',
+        backgroundColor: '#49CCCB',
+      },
       id: '1',
       amount: 0,
     },
