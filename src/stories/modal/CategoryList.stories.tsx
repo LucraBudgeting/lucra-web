@@ -18,6 +18,8 @@ export const Default: Story = {
     incomes: [
       {
         label: 'Eating Out',
+        budgetType: 'debit',
+        amount: 0,
         avatar: {
           emoji: '🍔',
           backgroundColor: '#FDF9A9',
@@ -26,6 +28,8 @@ export const Default: Story = {
       },
       {
         label: 'Car Payment',
+        budgetType: 'debit',
+        amount: 0,
         avatar: {
           emoji: '🚗',
           backgroundColor: '#FDF9A9',
@@ -34,6 +38,8 @@ export const Default: Story = {
       },
       {
         label: 'Groceries',
+        budgetType: 'debit',
+        amount: 0,
         avatar: {
           emoji: '🛒',
           backgroundColor: '#FDF9A9',
@@ -42,6 +48,8 @@ export const Default: Story = {
       },
       {
         label: 'Eating Out',
+        budgetType: 'debit',
+        amount: 0,
         avatar: {
           emoji: '🍔',
           backgroundColor: '#FDF9A9',
@@ -50,6 +58,8 @@ export const Default: Story = {
       },
       {
         label: 'Car Payment',
+        budgetType: 'debit',
+        amount: 0,
         avatar: {
           emoji: '🚗',
           backgroundColor: '#FDF9A9',
@@ -58,6 +68,8 @@ export const Default: Story = {
       },
       {
         label: 'Groceries',
+        budgetType: 'debit',
+        amount: 0,
         avatar: {
           emoji: '🛒',
           backgroundColor: '#FDF9A9',
@@ -68,6 +80,8 @@ export const Default: Story = {
     expenses: [
       {
         label: 'Eating Out',
+        budgetType: 'debit',
+        amount: 0,
         avatar: {
           emoji: '🍔',
           backgroundColor: '#FDF9A9',
@@ -76,6 +90,8 @@ export const Default: Story = {
       },
       {
         label: 'Car Payment',
+        budgetType: 'debit',
+        amount: 0,
         avatar: {
           emoji: '🚗',
           backgroundColor: '#FDF9A9',
@@ -84,6 +100,8 @@ export const Default: Story = {
       },
       {
         label: 'Groceries',
+        budgetType: 'debit',
+        amount: 0,
         avatar: {
           emoji: '🛒',
           backgroundColor: '#FDF9A9',
@@ -92,6 +110,8 @@ export const Default: Story = {
       },
       {
         label: 'Eating Out',
+        budgetType: 'debit',
+        amount: 0,
         avatar: {
           emoji: '🍔',
           backgroundColor: '#FDF9A9',
@@ -100,6 +120,8 @@ export const Default: Story = {
       },
       {
         label: 'Car Payment',
+        budgetType: 'debit',
+        amount: 0,
         avatar: {
           emoji: '🚗',
           backgroundColor: '#FDF9A9',
@@ -108,6 +130,8 @@ export const Default: Story = {
       },
       {
         label: 'Groceries',
+        budgetType: 'debit',
+        amount: 0,
         avatar: {
           emoji: '🛒',
           backgroundColor: '#FDF9A9',

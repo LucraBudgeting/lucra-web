@@ -1,11 +1,10 @@
 import { FC } from 'react';
 import styled from 'styled-components';
+import { dashboardSelector } from '@/stores/slices/Dashboard.slice';
 import { Chip } from '../../atoms/chip/Chip';
 import { AddCategoryChip } from '../../atoms/chip/AddCategoryChip';
-import { ICategory } from '../../types/basic/Category.type';
 
 interface TransactionItemProps {
-  category?: ICategory;
   amount: number;
   description: string;
   id: string;
@@ -44,11 +43,12 @@ const Styled = {
 };
 
 export const TransactionItem: FC<TransactionItemProps> = ({
-  category,
   amount,
   description,
+  id,
   isLast = false,
 }) => {
+  const category = id ? dashboardSelector().categoryDictionary[id] : null;
   return (
     <Styled.container islast={isLast ? 'true' : 'false'}>
       <Styled.descriptionContainer>

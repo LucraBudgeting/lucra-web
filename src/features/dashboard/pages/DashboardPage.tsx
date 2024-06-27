@@ -20,7 +20,10 @@ export const DashboardPage: FC<DashboardPageProps> = ({}) => {
   console.log('transactions', transactions);
   return (
     <Styled.container>
-      <SplitView left={<Budgets categories={categories} />} right={<Transactions />} />
+      <SplitView
+        left={<Budgets categories={categories} />}
+        right={<Transactions transactions={transactions} />}
+      />
     </Styled.container>
   );
 };

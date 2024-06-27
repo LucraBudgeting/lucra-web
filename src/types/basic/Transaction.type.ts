@@ -4,7 +4,7 @@ export interface ITransaction {
   id: string;
   userId: string;
   amount: number;
-  date: Date;
+  date: string;
   isoCurrencyCode: IIsoCurrencyCode;
   merchantName: string | null;
   name: string | null;

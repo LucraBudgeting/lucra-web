@@ -1,13 +1,15 @@
 import { FC } from 'react';
 import { TransactionList } from '@/components/transaction/TransactionList';
-import { transactionList } from '@/stories/__mocks/TransactionList';
+import { ITransaction } from '@/types/basic/Transaction.type';
 
-interface TransactionsProps {}
+interface TransactionsProps {
+  transactions: ITransaction[];
+}
 
-export const Transactions: FC<TransactionsProps> = ({}) => {
+export const Transactions: FC<TransactionsProps> = ({ transactions }) => {
   return (
     <div>
-      <TransactionList transactions={transactionList} />
+      <TransactionList transactions={transactions} />
     </div>
   );
 };

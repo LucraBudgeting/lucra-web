@@ -1,11 +1,11 @@
 import { FC } from 'react';
 import styled from 'styled-components';
 import dayjs from 'dayjs';
-import { transaction } from './transaction.type';
+import { ITransaction } from '@/types/basic/Transaction.type';
 import { TransactionItem } from './TransactionItem';
 
 interface TransactionListProps {
-  transactions: transaction[];
+  transactions: ITransaction[];
 }
 
 const Styled = {
@@ -52,10 +52,9 @@ export const TransactionList: FC<TransactionListProps> = ({ transactions }) => {
             {groupedTransactions[date].map((transaction, i) => (
               <TransactionItem
                 amount={transaction.amount}
-                description={transaction.description}
+                description={transaction.merchantName || transaction.name || 'No Description'}
                 id={transaction.id}
                 key={transaction.id}
-                category={transaction.category}
                 isLast={i === groupedTransactions[date].length - 1}
               />
             ))}
@@ -66,8 +65,8 @@ export const TransactionList: FC<TransactionListProps> = ({ transactions }) => {
   );
 };
 
-function groupTransactionsByDate(transactions: transaction[]): { [date: string]: transaction[] } {
-  const groupedTransactions: { [date: string]: transaction[] } = {};
+function groupTransactionsByDate(transactions: ITransaction[]): { [date: string]: ITransaction[] } {
+  const groupedTransactions: { [date: string]: ITransaction[] } = {};
 
   if (!transactions?.length) {
     const todaysDate = new Date().toISOString().split('T')[0]; // Extracting the date part

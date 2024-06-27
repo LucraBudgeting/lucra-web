@@ -5,6 +5,7 @@ import { useAppSelector } from '../store.hooks';
 export const initialState = {
   creditCategories: [] as ICategory[],
   debitCategories: [] as ICategory[],
+  categoryDictionary: {} as Record<string, ICategory>,
   transactions: [] as ITransaction[],
   budgetActuals: {} as Record<string, number>,
 };
@@ -18,19 +19,39 @@ export const dashboardSlice = createSlice({
         (category) => category.budgetType === 'credit'
       );
       state.debitCategories = action.payload.filter((category) => category.budgetType === 'debit');
+
+      state.categoryDictionary = action.payload.reduce(
+        (acc, category) => {
+          if (!category.id) return acc;
+
+          acc[category.id] = category;
+          return acc;
+        },
+        {} as Record<string, ICategory>
+      );
     },
     setTransactions: (state, action: PayloadAction<ITransaction[]>) => {
       state.transactions = action.payload;
 
-      action.payload.forEach((transaction) => {
-        if (!transaction.categoryId) return;
+      action.payload.reduce(
+        (acc, transaction) => {
+          if (!transaction.categoryId) return acc;
 
-        if (state.budgetActuals[transaction.categoryId]) {
-          state.budgetActuals[transaction.categoryId] += transaction.amount;
-        } else {
-          state.budgetActuals[transaction.categoryId] = transaction.amount;
-        }
-      });
+          acc[transaction.categoryId] != transaction.amount;
+          return acc;
+        },
+        {} as Record<string, number>
+      );
+
+      // action.payload.forEach((transaction) => {
+      //   if (!transaction.categoryId) return;
+
+      //   if (state.budgetActuals[transaction.categoryId]) {
+      //     state.budgetActuals[transaction.categoryId] += transaction.amount;
+      //   } else {
+      //     state.budgetActuals[transaction.categoryId] = transaction.amount;
+      //   }
+      // });
     },
   },
 });

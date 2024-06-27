@@ -2,7 +2,9 @@ import type { Meta, StoryObj } from '@storybook/react';
 import { TransactionList } from '@/components/transaction/TransactionList';
 import { createShortGuid } from '@/utils/guid.helper';
 import { ParentContainer } from '../ParentContainer';
-import { transactionList } from '../__mocks/TransactionList';
+import { mockTransactionList } from '../__mocks/TransactionList';
+import { ITransaction } from '@/types/basic/Transaction.type';
+import { IIsoCurrencyCode, IPaymentChannel } from '@/types/basic/_shared/db.enum';
 
 const meta = {
   title: 'transaction/TransactionList',
@@ -19,33 +21,40 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   args: {
-    transactions: transactionList.concat(generateFakeTransactions(2)),
+    transactions: mockTransactionList.concat(generateFakeTransactions(2)),
   },
 };
 
-function generateFakeTransactions(count: number) {
-  const additionalData = [];
+function generateFakeTransactions(count: number): ITransaction[] {
+  const transactions: ITransaction[] = [];
+  const isoCurrencyCodes: IIsoCurrencyCode[] = ['USD', 'EUR', 'GBP'];
+  const paymentChannels: IPaymentChannel[] = ['ONLINE', 'IN_STORE'];
+
   for (let i = 0; i < count; i++) {
     const currentDate = new Date(`2021-08-27`);
     for (let j = 0; j < 5; j++) {
       const newDate = new Date(currentDate);
       newDate.setDate(currentDate.getDate() + j);
-      const newItem = {
-        category: {
-          label: 'Category',
-          avatar: {
-            emoji: '😊',
-            backgroundColor: '#e0cdcd',
-          },
-          id: createShortGuid(),
-        },
+
+      const newTransaction: ITransaction = {
         id: createShortGuid(),
-        amount: -(Math.random() * 200).toFixed(2), // Random negative amount
-        description: 'Description',
-        date: newDate.toISOString().slice(0, 10), // Format date as 'YYYY-MM-DD'
+        userId: createShortGuid(),
+        amount: parseFloat((Math.random() * 200).toFixed(2)),
+        date: newDate.toISOString(),
+        isoCurrencyCode: isoCurrencyCodes[Math.floor(Math.random() * isoCurrencyCodes.length)],
+        merchantName: Math.random() > 0.5 ? 'MerchantName' : null,
+        name: Math.random() > 0.5 ? 'TransactionName' : null,
+        pending: Math.random() > 0.5,
+        paymentChannel: paymentChannels[Math.floor(Math.random() * paymentChannels.length)],
+        addressId: Math.random() > 0.5 ? createShortGuid() : null,
+        categoryId: Math.random() > 0.5 ? createShortGuid() : null,
+        dateCreated: new Date(),
+        dateUpdated: new Date(),
       };
-      additionalData.push(newItem);
+
+      transactions.push(newTransaction);
     }
   }
-  return additionalData;
+
+  return transactions;
 }

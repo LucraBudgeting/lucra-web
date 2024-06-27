@@ -17,6 +17,8 @@ type Story = StoryObj<typeof meta>;
 export const Default: Story = {
   args: {
     label: 'Eating Out',
+    budgetType: 'debit',
+    amount: 0,
     avatar: {
       emoji: '🍔',
       backgroundColor: '#FDF9A9',

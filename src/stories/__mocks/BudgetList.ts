@@ -2,53 +2,58 @@ import { BudgetItemProps } from '@/components/budget/BudgetItem';
 
 export default {
   Default: {
-    avatar: {
-      emoji: '💰',
-      backgroundColor: '#24e90a',
+    category: {
+      avatar: {
+        emoji: '💰',
+        backgroundColor: '#24e90a',
+      },
+      label: 'Salary',
+      amount: 4500,
+      budgetType: 'debit',
     },
-    title: 'Salary',
-    budgeted: 4000,
-    actual: 4500,
-    budgetType: 'debit',
   } as BudgetItemProps,
   CreditNoRemaining: {
-    avatar: {
-      emoji: '🏠',
-      backgroundColor: '#10e3b9',
+    category: {
+      avatar: {
+        emoji: '🏠',
+        backgroundColor: '#10e3b9',
+      },
+      label: 'Mortgage',
+      amount: 4500,
+      budgetType: 'credit',
     },
-    title: 'Mortgage',
-    budgeted: 4000,
-    actual: 4500,
-    budgetType: 'credit',
   } as BudgetItemProps,
   CreditRemaining: {
-    avatar: {
-      emoji: '🍔',
-      backgroundColor: '#f10dad',
+    category: {
+      avatar: {
+        emoji: '🍔',
+        backgroundColor: '#f10dad',
+      },
+      label: 'Eating Out',
+      amount: 3500,
+      budgetType: 'credit',
     },
-    title: 'Eating Out',
-    budgeted: 4000,
-    actual: 3500,
-    budgetType: 'credit',
   } as BudgetItemProps,
   DebitNoRemaining: {
-    avatar: {
-      emoji: '🤑',
-      backgroundColor: '#2eaf4a',
+    category: {
+      avatar: {
+        emoji: '🤑',
+        backgroundColor: '#2eaf4a',
+      },
+      label: 'Rent Income',
+      amount: 3500,
+      budgetType: 'debit',
     },
-    title: 'Rent Income',
-    budgeted: 4000,
-    actual: 3500,
-    budgetType: 'debit',
   } as BudgetItemProps,
   DebitRemaining: {
-    avatar: {
-      emoji: '🍔',
-      backgroundColor: '#FDF9A9',
+    category: {
+      avatar: {
+        emoji: '🍔',
+        backgroundColor: '#FDF9A9',
+      },
+      label: 'Salary',
+      amount: 4500,
+      budgetType: 'debit',
     },
-    title: 'Salary',
-    budgeted: 4000,
-    actual: 4500,
-    budgetType: 'debit',
   } as BudgetItemProps,
 };
