@@ -30,6 +30,16 @@ export const dashboardSlice = createSlice({
         {} as Record<string, ICategory>
       );
     },
+    addNewCategory: (state, action: PayloadAction<ICategory>) => {
+      if (!action.payload.id) return;
+
+      if (action.payload.budgetType === 'credit') {
+        state.creditCategories.push(action.payload);
+      } else {
+        state.debitCategories.push(action.payload);
+      }
+      state.categoryDictionary[action.payload.id] = action.payload;
+    },
     setTransactions: (state, action: PayloadAction<ITransaction[]>) => {
       state.transactions = action.payload;
 
@@ -57,5 +67,5 @@ export const dashboardSlice = createSlice({
 });
 
 export const dashboardSelector = () => useAppSelector((state) => state.dashboard);
-export const { setCategories, setTransactions } = dashboardSlice.actions;
+export const { setCategories, setTransactions, addNewCategory } = dashboardSlice.actions;
 export default dashboardSlice.reducer;

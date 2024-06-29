@@ -18,6 +18,8 @@ export const BudgetItem: FC<BudgetItemProps> = ({ category }) => {
   const isRemainingGood = calcIsRemainingGood(amount, actual, budgetType);
   const inputWidth = formatAsMoney(amount).length * 10 + 20 + 'px';
 
+  const onBudgetChange = () => {};
+
   return (
     <Styled.container>
       <Styled.budgetContainer>
@@ -26,7 +28,11 @@ export const BudgetItem: FC<BudgetItemProps> = ({ category }) => {
       </Styled.budgetContainer>
       <Styled.budgetContainer>
         <Styled.amountCell>
-          <Styled.input width={inputWidth} value={formatAsMoney(amount)} />
+          <Styled.input
+            width={inputWidth}
+            value={formatAsMoney(amount)}
+            onChange={onBudgetChange}
+          />
         </Styled.amountCell>
         <Styled.amountCell>{formatAsMoney(actual)}</Styled.amountCell>
         <Styled.remainingCell isremaininggood={isRemainingGood ? 'true' : 'false'}>

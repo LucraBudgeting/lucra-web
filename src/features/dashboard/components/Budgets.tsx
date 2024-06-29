@@ -2,6 +2,7 @@ import { FC } from 'react';
 import styled from 'styled-components';
 import { BudgetItem } from '@/components/budget/BudgetItem';
 import { ICategoriesSplit } from '@/hooks/dashboard/useCategories.hook';
+import { BudgetsHeader } from './BudgetsHeader';
 
 interface BudgetsProps {
   categories: ICategoriesSplit;
@@ -10,6 +11,7 @@ interface BudgetsProps {
 export const Budgets: FC<BudgetsProps> = ({ categories }) => {
   return (
     <Styles.container>
+      <BudgetsHeader />
       <p>Income</p>
       {categories.credit.map((category) => (
         <BudgetItem key={category.id} category={category} />

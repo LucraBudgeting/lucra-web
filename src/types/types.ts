@@ -16,9 +16,9 @@ export function balanceEntryToText(entry: balanceEntry): string {
 export function textToBalanceEntry(text: string): balanceEntry {
   switch (text.toLowerCase()) {
     case 'expense':
-      return 'credit';
-    case 'income':
       return 'debit';
+    case 'income':
+      return 'credit';
     case 'transfer':
       return 'transfer';
     default:
