@@ -54,6 +54,7 @@ export const TransactionList: FC<TransactionListProps> = ({ transactions }) => {
                 amount={transaction.amount}
                 description={transaction.merchantName || transaction.name || 'No Description'}
                 id={transaction.id}
+                categoryId={transaction.categoryId}
                 key={transaction.id}
                 isLast={i === groupedTransactions[date].length - 1}
               />

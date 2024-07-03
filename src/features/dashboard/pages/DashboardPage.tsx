@@ -16,8 +16,8 @@ export const DashboardPage: FC<DashboardPageProps> = ({}) => {
   if (isCategoriesFetching || isTransactionsFetching)
     return <LoadingComponent loadingText="Loading Dashboard" />;
 
-  console.log('categories', categories);
-  console.log('transactions', transactions);
+  // console.log('categories', categories);
+  // console.log('transactions', transactions);
   return (
     <Styled.container>
       <SplitView

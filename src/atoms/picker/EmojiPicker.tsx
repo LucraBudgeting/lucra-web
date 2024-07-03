@@ -79,7 +79,7 @@ const Styled = {
     position: absolute;
     width: 300px; // Adjust width as needed
     z-index: 2000; // Ensures it is on top of other elements
-    left: ${400 / 2}px;
+    left: calc((100vw / 2.5));
     border-radius: 8px;
   `,
 };

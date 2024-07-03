@@ -52,20 +52,22 @@ export const dashboardSlice = createSlice({
         },
         {} as Record<string, number>
       );
+    },
+    updateTransactionCategory: (
+      state,
+      action: PayloadAction<{ id: string; categoryId: string }>
+    ) => {
+      const transactionIndex = state.transactions.findIndex(
+        (transaction) => transaction.id === action.payload.id
+      );
+      if (transactionIndex === -1) return;
 
-      // action.payload.forEach((transaction) => {
-      //   if (!transaction.categoryId) return;
-
-      //   if (state.budgetActuals[transaction.categoryId]) {
-      //     state.budgetActuals[transaction.categoryId] += transaction.amount;
-      //   } else {
-      //     state.budgetActuals[transaction.categoryId] = transaction.amount;
-      //   }
-      // });
+      state.transactions[transactionIndex].categoryId = action.payload.categoryId;
     },
   },
 });
 
 export const dashboardSelector = () => useAppSelector((state) => state.dashboard);
-export const { setCategories, setTransactions, addNewCategory } = dashboardSlice.actions;
+export const { setCategories, setTransactions, addNewCategory, updateTransactionCategory } =
+  dashboardSlice.actions;
 export default dashboardSlice.reducer;

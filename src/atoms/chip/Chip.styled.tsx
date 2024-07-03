@@ -1,7 +1,9 @@
 import styled from 'styled-components';
+import { hexToRGBA } from '@/utils/hexToRGBA';
 
 export default {
   chip: styled.div<{ backgroundcolor?: string }>`
+    user-select: none;
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -12,10 +14,10 @@ export default {
     transition: opacity 0.5s ease;
 
     &:hover {
-      opacity: 0.8;
+      opacity: 0.5;
     }
 
-    background-color: ${({ backgroundcolor }) => backgroundcolor};
+    background-color: ${({ backgroundcolor }) => hexToRGBA(backgroundcolor || '#000', 0.8)};
   `,
   emoji: styled.span`
     font-size: 20px;

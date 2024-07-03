@@ -1,24 +1,71 @@
-import { FC, useState } from 'react';
+import { FC, useCallback, useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import { SpyGlassOutline } from '@/assets/spyglass-outline';
+import { dashboardSelector } from '@/stores/slices/Dashboard.slice';
 import { ICategory } from '../../types/basic/Category.type';
 import { CategoryItem } from './CategoryItem';
 
 interface CategoryListProps {
-  incomes: ICategory[];
-  expenses: ICategory[];
+  parentRef: React.RefObject<HTMLDivElement>;
+  categoryClickCb: (id: string) => void;
+  outsideClickCb?: () => void;
 }
 
-export const CategoryList: FC<CategoryListProps> = ({ incomes, expenses }) => {
+export const CategoryList: FC<CategoryListProps> = ({
+  parentRef,
+  categoryClickCb,
+  outsideClickCb,
+}) => {
+  const [modalStyle, setModalStyle] = useState<React.CSSProperties>({
+    display: 'none',
+  });
+
+  const modalRef = useRef<HTMLDivElement>(null);
+
+  const handleClickOutside = useCallback(
+    (event: MouseEvent) => {
+      if (!outsideClickCb) return;
+
+      if (
+        modalRef.current &&
+        !modalRef.current.contains(event.target as Node) &&
+        parentRef.current &&
+        !parentRef.current.contains(event.target as Node)
+      ) {
+        outsideClickCb();
+      }
+    },
+    [modalRef, parentRef]
+  );
+
+  useEffect(() => {
+    document.addEventListener('click', handleClickOutside);
+    return () => {
+      document.removeEventListener('click', handleClickOutside);
+    };
+  }, [handleClickOutside]);
+
+  useEffect(() => {
+    if (parentRef.current) {
+      const rect = parentRef.current.getBoundingClientRect();
+      setModalStyle({
+        position: 'absolute',
+        top: rect.bottom + window.scrollY,
+        left: rect.left + window.scrollX + 125,
+      });
+    }
+  }, [parentRef]);
+
+  const { debitCategories, creditCategories } = dashboardSelector();
   const [searchValue, setSearchValue] = useState('');
-  const [incomeList, setIncomeList] = useState<ICategory[]>(incomes);
-  const [expenseList, setExpenseList] = useState<ICategory[]>(expenses);
+  const [incomeList, setIncomeList] = useState<ICategory[]>(creditCategories);
+  const [expenseList, setExpenseList] = useState<ICategory[]>(debitCategories);
 
   const filterCategories = (value: string) => {
-    const incomeCategories = incomes.filter((category) =>
+    const incomeCategories = creditCategories.filter((category) =>
       category.label.toLowerCase().includes(value.toLowerCase())
     );
-    const expenseCategories = expenses.filter((category) =>
+    const expenseCategories = debitCategories.filter((category) =>
       category.label.toLowerCase().includes(value.toLowerCase())
     );
 
@@ -28,7 +75,7 @@ export const CategoryList: FC<CategoryListProps> = ({ incomes, expenses }) => {
   };
 
   return (
-    <Styled.container>
+    <Styled.container ref={modalRef} style={modalStyle}>
       <Styled.searchContainer>
         <SpyGlassOutline />
         <Styled.searchInput
@@ -39,11 +86,11 @@ export const CategoryList: FC<CategoryListProps> = ({ incomes, expenses }) => {
       </Styled.searchContainer>
       <Styled.title>Income</Styled.title>
       {incomeList.map((income) => (
-        <CategoryItem key={income.id} {...income} />
+        <CategoryItem key={income.id} {...income} categoryClickCb={categoryClickCb} />
       ))}
       <Styled.title>Expense</Styled.title>
       {expenseList.map((expense) => (
-        <CategoryItem key={expense.id} {...expense} />
+        <CategoryItem key={expense.id} {...expense} categoryClickCb={categoryClickCb} />
       ))}
     </Styled.container>
   );

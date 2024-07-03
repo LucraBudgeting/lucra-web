@@ -1,14 +1,19 @@
-import { FC } from 'react';
+import { FC, useContext, useRef, useState } from 'react';
 import styled from 'styled-components';
-import { dashboardSelector } from '@/stores/slices/Dashboard.slice';
+import { useDispatch } from 'react-redux';
+import { dashboardSelector, updateTransactionCategory } from '@/stores/slices/Dashboard.slice';
+import { formatAsMoney } from '@/utils/formatAsMoney';
+import { ApiContext } from '@/apis/api.context';
 import { Chip } from '../../atoms/chip/Chip';
 import { AddCategoryChip } from '../../atoms/chip/AddCategoryChip';
+import { CategoryList } from '../category/CategoryList';
 
 interface TransactionItemProps {
   amount: number;
   description: string;
   id: string;
   isLast?: boolean;
+  categoryId: string | null;
 }
 
 const Styled = {
@@ -23,17 +28,19 @@ const Styled = {
     margin-bottom: 8px;
     font-weight: 400;
     color: black;
+    font-size: 14px;
+    width: 40%;
   `,
-  amount: styled.p`
+  amount: styled.p<{ amount: number }>`
     font-weight: 600;
-    color: black;
+    color: ${(props) => (props.amount > 0 ? 'green' : 'red')};
     font-size: 16px;
   `,
   descriptionContainer: styled.div`
     display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    justify-content: center;
+    align-items: center;
+    gap: 24px;
+    width: 80%;
   `,
   amountContainer: styled.div`
     display: flex;
@@ -47,16 +54,51 @@ export const TransactionItem: FC<TransactionItemProps> = ({
   description,
   id,
   isLast = false,
+  categoryId,
 }) => {
-  const category = id ? dashboardSelector().categoryDictionary[id] : null;
+  const dispatch = useDispatch();
+
+  const { transactionApi } = useContext(ApiContext);
+  const [isAddCategoryOpen, setIsAddCategoryOpen] = useState(false);
+  const parentRef = useRef<HTMLDivElement>(null);
+  const category = categoryId ? dashboardSelector().categoryDictionary[categoryId] : null;
+
+  const toggleChipClick = () => {
+    setIsAddCategoryOpen(!isAddCategoryOpen);
+  };
+
+  const associateCategory = (categoryId: string) => {
+    setIsAddCategoryOpen(false);
+    transactionApi.AssociateCategory(id, categoryId).then(() => {
+      dispatch(updateTransactionCategory({ id, categoryId }));
+    });
+  };
+
   return (
     <Styled.container islast={isLast ? 'true' : 'false'}>
-      <Styled.descriptionContainer>
+      <Styled.descriptionContainer ref={parentRef}>
         <Styled.title>{description}</Styled.title>
-        {category ? <Chip {...category} /> : <AddCategoryChip />}
+        <span onClick={toggleChipClick}>
+          {category ? (
+            <Chip
+              emoji={category.avatar.emoji}
+              label={category.label}
+              backgroundColor={category.avatar.backgroundColor}
+            />
+          ) : (
+            <AddCategoryChip />
+          )}
+        </span>
+        {isAddCategoryOpen && (
+          <CategoryList
+            parentRef={parentRef}
+            categoryClickCb={associateCategory}
+            outsideClickCb={toggleChipClick}
+          />
+        )}
       </Styled.descriptionContainer>
       <Styled.amountContainer>
-        <Styled.amount>{amount}</Styled.amount>
+        <Styled.amount amount={amount}>{formatAsMoney(amount)}</Styled.amount>
       </Styled.amountContainer>
     </Styled.container>
   );
