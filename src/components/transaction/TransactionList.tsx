@@ -11,7 +11,7 @@ interface TransactionListProps {
 const Styled = {
   container: styled.div<{ height?: string; width?: string }>`
     width: 100%;
-    height: 90vh;
+    height: 100%;
     overflow: auto;
   `,
   dateHeader: styled.div`
@@ -44,7 +44,7 @@ export const TransactionList: FC<TransactionListProps> = ({ transactions }) => {
     );
   }
   return (
-    <Styled.container height="540px">
+    <Styled.container>
       {Object.keys(groupedTransactions).map((date) => (
         <div key={date}>
           <Styled.dateHeader>{dayjs(date).format('MMM D, YYYY')}</Styled.dateHeader>

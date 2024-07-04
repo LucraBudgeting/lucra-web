@@ -23,7 +23,7 @@ export const BudgetItem: FC<BudgetItemProps> = ({ category }) => {
   return (
     <Styled.container>
       <Styled.budgetContainer>
-        <AvatarEmoji emoji={avatar.emoji} backgroundColor={avatar.backgroundColor} />
+        <AvatarEmoji emoji={avatar.emoji} backgroundColor={avatar.backgroundColor} align="left" />
         <Styled.title>{label}</Styled.title>
       </Styled.budgetContainer>
       <Styled.amountContainer>
@@ -49,7 +49,6 @@ const Styled = {
     align-items: center;
     justify-content: space-between;
     height: 50px;
-    padding: 0 1rem;
     border-bottom: solid 1px #ccc;
   `,
   input: styled.input<{ width: string }>`

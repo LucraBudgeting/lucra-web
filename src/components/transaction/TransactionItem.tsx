@@ -99,7 +99,7 @@ export const TransactionItem: FC<TransactionItemProps> = ({
         )}
       </Styled.descriptionContainer>
       <Styled.amountContainer>
-        <Styled.amount amount={amount}>{formatAsMoney(amount)}</Styled.amount>
+        <Styled.amount amount={amount}>{formatAsMoney(amount, true)}</Styled.amount>
       </Styled.amountContainer>
     </Styled.container>
   );

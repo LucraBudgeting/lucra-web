@@ -1,7 +1,6 @@
 import { FC } from 'react';
 import styled from 'styled-components';
 import { ICategoriesSplit } from '@/hooks/dashboard/useCategories.hook';
-import { BudgetsHeader } from './BudgetsHeader';
 import { BudgetsTable } from './BudgetsTable';
 
 interface BudgetsProps {
@@ -11,7 +10,6 @@ interface BudgetsProps {
 export const Budgets: FC<BudgetsProps> = ({ categories }) => {
   return (
     <Styles.container>
-      <BudgetsHeader />
       <BudgetsTable categories={categories} />
     </Styles.container>
   );

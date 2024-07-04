@@ -12,7 +12,7 @@ interface SplitViewProps {
 const SplitViewContainer = styled.div`
   display: flex;
   align-items: center;
-  height: 100vh;
+  height: 98%;
   width: 100%;
 `;
 

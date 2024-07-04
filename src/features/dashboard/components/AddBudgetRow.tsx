@@ -6,10 +6,11 @@ import { EditOrAddCategory } from '@/components/dialog/EditOrAddCategory';
 import { addNewCategory } from '@/stores/slices/Dashboard.slice';
 import { ICategory } from '@/types/basic/Category.type';
 import { LoadingComponent } from '@/atoms/loading/Loading.Component';
+import { Button } from '@/atoms/button/Button';
 
-interface BudgetsHeaderProps {}
+interface AddBudgetRowProps {}
 
-export const BudgetsHeader: FC<BudgetsHeaderProps> = ({}) => {
+export const AddBudgetRow: FC<AddBudgetRowProps> = ({}) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isCategoryAdding, setIsCategoryAdding] = useState(false);
   const dispatch = useDispatch();
@@ -43,7 +44,9 @@ export const BudgetsHeader: FC<BudgetsHeaderProps> = ({}) => {
       {isCategoryAdding ? (
         <LoadingComponent />
       ) : (
-        <Styles.addBudget onClick={openBudget}>Add Budget</Styles.addBudget>
+        <Button onClick={openBudget} primary={false}>
+          + New Category
+        </Button>
       )}
       {isModalOpen && (
         <EditOrAddCategory
@@ -56,8 +59,4 @@ export const BudgetsHeader: FC<BudgetsHeaderProps> = ({}) => {
       )}
     </div>
   );
-};
-
-const Styles = {
-  addBudget: styled.button``,
 };

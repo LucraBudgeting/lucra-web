@@ -16,8 +16,6 @@ export const DashboardPage: FC<DashboardPageProps> = ({}) => {
   if (isCategoriesFetching || isTransactionsFetching)
     return <LoadingComponent loadingText="Loading Dashboard" />;
 
-  // console.log('categories', categories);
-  // console.log('transactions', transactions);
   return (
     <Styled.container>
       <SplitView
@@ -32,6 +30,7 @@ const Styled = {
   container: styled.div`
     display: flex;
     width: 100%;
-    /* border: solid black 2px; */
+    padding-top: 1vh;
+    height: 99vh;
   `,
 };
