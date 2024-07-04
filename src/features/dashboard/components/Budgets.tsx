@@ -2,6 +2,7 @@ import { FC } from 'react';
 import styled from 'styled-components';
 import { ICategoriesSplit } from '@/hooks/dashboard/useCategories.hook';
 import { BudgetsTable } from './BudgetsTable';
+import { BudgetHeader } from './BudgetHeader';
 
 interface BudgetsProps {
   categories: ICategoriesSplit;
@@ -10,6 +11,7 @@ interface BudgetsProps {
 export const Budgets: FC<BudgetsProps> = ({ categories }) => {
   return (
     <Styles.container>
+      <BudgetHeader />
       <BudgetsTable categories={categories} />
     </Styles.container>
   );

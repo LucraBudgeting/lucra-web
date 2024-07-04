@@ -18,15 +18,18 @@ export const ProfileSection: FC<ProfileSectionProps> = ({ Icon, title }) => {
 const Styled = {
   container: styled.div`
     display: flex;
-    padding-bottom: 20px;
+    padding: 20px 0;
     justify-content: flex-start;
     align-items: center;
     align-self: stretch;
     gap: 10px;
     border-bottom: 1px solid var(--Grey-Stroke, #e2e2e2);
+    cursor: pointer;
+    transition: background-color 0.5s ease;
 
-    :hover {
-      cursor: pointer;
+    &:hover {
+      border-radius: 0.5rem;
+      background-color: #80808017; /* Background color on hover */
     }
   `,
   title: styled.h1`

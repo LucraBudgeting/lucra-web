@@ -152,7 +152,7 @@ const Styles = {
     }
   `,
   sectionRows: styled.div`
-    max-height: 300px;
+    max-height: 30vh;
     overflow-y: auto;
 
     ::-webkit-scrollbar-thumb {
@@ -201,6 +201,8 @@ const Styles = {
   headerContainer: styled.div`
     display: flex;
     justify-content: space-between;
+
+    user-select: none;
 
     p {
       font-size: 12px;

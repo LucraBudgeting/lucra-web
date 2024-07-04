@@ -3,12 +3,21 @@ import { useSelector } from 'react-redux';
 import { ICategory } from '@/types/basic/Category.type';
 import { ITransaction } from '@/types/basic/Transaction.type';
 import { RootState } from '../store';
+
+interface IDateRange {
+  startDate: string;
+  endDate: string;
+}
+
 export const initialState = {
   creditCategories: [] as ICategory[],
   debitCategories: [] as ICategory[],
   categoryDictionary: {} as Record<string, ICategory>,
   transactions: [] as ITransaction[],
   budgetActuals: {} as Record<string, number>,
+  dateRange: {
+    startDate: new Date().toISOString(),
+  } as IDateRange,
 };
 
 export const dashboardSlice = createSlice({

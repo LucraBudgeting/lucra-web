@@ -1,7 +1,8 @@
-import { FC, useCallback, useEffect, useRef, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { SpyGlassOutline } from '@/assets/spyglass-outline';
 import { dashboardSelector } from '@/stores/slices/Dashboard.slice';
+import { useOutsideClickRef } from '@/hooks/react/useOutsideClickRef';
 import { ICategory } from '../../types/basic/Category.type';
 import { CategoryItem } from './CategoryItem';
 
@@ -20,38 +21,33 @@ export const CategoryList: FC<CategoryListProps> = ({
     display: 'none',
   });
 
-  const modalRef = useRef<HTMLDivElement>(null);
-
-  const handleClickOutside = useCallback(
-    (event: MouseEvent) => {
-      if (!outsideClickCb) return;
-
-      if (
-        modalRef.current &&
-        !modalRef.current.contains(event.target as Node) &&
-        parentRef.current &&
-        !parentRef.current.contains(event.target as Node)
-      ) {
-        outsideClickCb();
-      }
-    },
-    [modalRef, parentRef]
-  );
-
-  useEffect(() => {
-    document.addEventListener('click', handleClickOutside);
-    return () => {
-      document.removeEventListener('click', handleClickOutside);
-    };
-  }, [handleClickOutside]);
+  const modalRef = useOutsideClickRef(outsideClickCb);
 
   useEffect(() => {
     if (parentRef.current) {
       const rect = parentRef.current.getBoundingClientRect();
+      const availableHeightBelow = window.innerHeight - rect.bottom;
+      const availableHeightAbove = rect.top;
+      const availableWidthRight = window.innerWidth - rect.right;
+      const modalHeight = 400;
+      const modalWidth = 50;
+
+      let top = rect.bottom + window.scrollY;
+      let left = rect.left + window.scrollX;
+
+      if (availableHeightBelow < modalHeight && availableHeightAbove > modalHeight) {
+        top = rect.top + window.scrollY - modalHeight;
+      }
+
+      if (availableWidthRight < modalWidth) {
+        left = rect.left + window.scrollX - modalWidth;
+      }
+
       setModalStyle({
         position: 'absolute',
-        top: rect.bottom + window.scrollY,
-        left: rect.left + window.scrollX + 125,
+        top,
+        left,
+        height: `${modalHeight}px`,
       });
     }
   }, [parentRef]);

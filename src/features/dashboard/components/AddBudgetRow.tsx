@@ -1,6 +1,5 @@
 import { FC, useContext, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import styled from 'styled-components';
 import { ApiContext } from '@/apis/api.context';
 import { EditOrAddCategory } from '@/components/dialog/EditOrAddCategory';
 import { addNewCategory } from '@/stores/slices/Dashboard.slice';

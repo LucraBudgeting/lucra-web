@@ -41,6 +41,32 @@ export function getFullMonth(): string {
   return monthNames[monthIndex];
 }
 
+export function getShortMonth(isoDate?: string): string {
+  const monthNames = [
+    'Jan',
+    'Feb',
+    'Mar',
+    'Apr',
+    'May',
+    'Jun',
+    'Jul',
+    'Aug',
+    'Sep',
+    'Oct',
+    'Nov',
+    'Dec',
+  ];
+
+  const currentDate = isoDate ? new Date(isoDate) : new Date();
+  const monthIndex = currentDate.getMonth();
+
+  return monthNames[monthIndex];
+}
+
+export function yearFromIso(isoDate: string): number {
+  return new Date(isoDate).getFullYear();
+}
+
 export function getCurrentYear(): number {
   return new Date().getFullYear();
 }
