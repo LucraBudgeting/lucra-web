@@ -83,6 +83,7 @@ const Styles = {
   optionsContainer: styled.div``,
   iconContainer: styled.div`
     display: flex;
-    gap: 16px;
+    align-items: center;
+    gap: 1rem;
   `,
 };
