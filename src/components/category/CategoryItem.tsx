@@ -3,13 +3,11 @@ import styled from 'styled-components';
 import { ICategory } from '../../types/basic/Category.type';
 
 interface categoryProps extends ICategory {
-  categoryClickCb: (id: string) => void;
+  categoryClickCb: (id?: string) => void;
 }
 
 export const CategoryItem: FC<categoryProps> = ({ label, id, avatar, categoryClickCb }) => {
   const { emoji, backgroundColor } = avatar;
-
-  if (!id) return null;
 
   return (
     <Styled.container onClick={() => categoryClickCb(id)}>

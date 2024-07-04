@@ -1,7 +1,8 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
+import { useSelector } from 'react-redux';
 import { ICategory } from '@/types/basic/Category.type';
 import { ITransaction } from '@/types/basic/Transaction.type';
-import { useAppSelector } from '../store.hooks';
+import { RootState } from '../store';
 export const initialState = {
   creditCategories: [] as ICategory[],
   debitCategories: [] as ICategory[],
@@ -42,32 +43,44 @@ export const dashboardSlice = createSlice({
     },
     setTransactions: (state, action: PayloadAction<ITransaction[]>) => {
       state.transactions = action.payload;
-
-      action.payload.reduce(
-        (acc, transaction) => {
-          if (!transaction.categoryId) return acc;
-
-          acc[transaction.categoryId] != transaction.amount;
-          return acc;
-        },
-        {} as Record<string, number>
-      );
+      state.budgetActuals = calculateCategoryActuals(state.transactions);
     },
     updateTransactionCategory: (
       state,
-      action: PayloadAction<{ id: string; categoryId: string }>
+      action: PayloadAction<{ id: string; categoryId?: string }>
     ) => {
       const transactionIndex = state.transactions.findIndex(
         (transaction) => transaction.id === action.payload.id
       );
       if (transactionIndex === -1) return;
 
+      if (!action.payload.categoryId) {
+        state.transactions[transactionIndex].categoryId = undefined;
+      }
+
       state.transactions[transactionIndex].categoryId = action.payload.categoryId;
+      state.budgetActuals = calculateCategoryActuals(state.transactions);
     },
   },
 });
 
-export const dashboardSelector = () => useAppSelector((state) => state.dashboard);
+function calculateCategoryActuals(transactions: ITransaction[]) {
+  return transactions.reduce(
+    (acc, transaction) => {
+      if (!transaction.categoryId) return acc;
+
+      const amount = parseFloat(transaction.amount.toString());
+
+      acc[transaction.categoryId] = acc[transaction.categoryId]
+        ? acc[transaction.categoryId] + amount
+        : amount;
+      return acc;
+    },
+    {} as Record<string, number>
+  );
+}
+
+export const dashboardSelector = () => useSelector((state: RootState) => state.dashboard);
 export const { setCategories, setTransactions, addNewCategory, updateTransactionCategory } =
   dashboardSlice.actions;
 export default dashboardSlice.reducer;

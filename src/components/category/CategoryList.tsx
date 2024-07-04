@@ -7,7 +7,7 @@ import { CategoryItem } from './CategoryItem';
 
 interface CategoryListProps {
   parentRef: React.RefObject<HTMLDivElement>;
-  categoryClickCb: (id: string) => void;
+  categoryClickCb: (id?: string) => void;
   outsideClickCb?: () => void;
 }
 
@@ -92,6 +92,14 @@ export const CategoryList: FC<CategoryListProps> = ({
       {expenseList.map((expense) => (
         <CategoryItem key={expense.id} {...expense} categoryClickCb={categoryClickCb} />
       ))}
+      <Styled.title>Remove</Styled.title>
+      <CategoryItem
+        label="Remove Category"
+        budgetType="credit"
+        amount={0}
+        avatar={{ emoji: '❌', backgroundColor: '' }}
+        categoryClickCb={categoryClickCb}
+      />
     </Styled.container>
   );
 };

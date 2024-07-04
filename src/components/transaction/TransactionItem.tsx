@@ -13,7 +13,7 @@ interface TransactionItemProps {
   description: string;
   id: string;
   isLast?: boolean;
-  categoryId: string | null;
+  categoryId?: string | null;
 }
 
 const Styled = {
@@ -61,13 +61,14 @@ export const TransactionItem: FC<TransactionItemProps> = ({
   const { transactionApi } = useContext(ApiContext);
   const [isAddCategoryOpen, setIsAddCategoryOpen] = useState(false);
   const parentRef = useRef<HTMLDivElement>(null);
-  const category = categoryId ? dashboardSelector().categoryDictionary[categoryId] : null;
+  const { categoryDictionary } = dashboardSelector();
+  const category = categoryId ? categoryDictionary[categoryId] : null;
 
   const toggleChipClick = () => {
     setIsAddCategoryOpen(!isAddCategoryOpen);
   };
 
-  const associateCategory = (categoryId: string) => {
+  const associateCategory = (categoryId?: string) => {
     setIsAddCategoryOpen(false);
     transactionApi.AssociateCategory(id, categoryId).then(() => {
       dispatch(updateTransactionCategory({ id, categoryId }));

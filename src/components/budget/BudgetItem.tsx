@@ -26,7 +26,7 @@ export const BudgetItem: FC<BudgetItemProps> = ({ category }) => {
         <AvatarEmoji emoji={avatar.emoji} backgroundColor={avatar.backgroundColor} />
         <Styled.title>{label}</Styled.title>
       </Styled.budgetContainer>
-      <Styled.budgetContainer>
+      <Styled.amountContainer>
         <Styled.amountCell>
           <Styled.input
             width={inputWidth}
@@ -38,7 +38,7 @@ export const BudgetItem: FC<BudgetItemProps> = ({ category }) => {
         <Styled.remainingCell isremaininggood={isRemainingGood ? 'true' : 'false'}>
           {formatAsMoney(remaining)}
         </Styled.remainingCell>
-      </Styled.budgetContainer>
+      </Styled.amountContainer>
     </Styled.container>
   );
 };
@@ -62,6 +62,7 @@ const Styled = {
     text-align: right;
     font-size: 16px;
     box-sizing: border-box;
+    min-width: 60%;
   `,
   budgetContainer: styled.div`
     display: flex;
@@ -70,9 +71,22 @@ const Styled = {
     gap: 1rem;
   `,
   title: styled.p``,
-  amountCell: styled.div``,
+  amountCell: styled.div`
+    width: 30%;
+    text-align: right;
+  `,
+  amountContainer: styled.div`
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    gap: 24px;
+    width: 40%;
+    min-width: 600px;
+  `,
   remainingCell: styled.div<{ isremaininggood: string }>`
     color: ${(props) => (props.isremaininggood == 'true' ? '#2AA64C' : '#CA4141')};
     font-weight: 600;
+    width: 30%;
+    text-align: right;
   `,
 };

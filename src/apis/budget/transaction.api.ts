@@ -10,7 +10,7 @@ export default class TransactionApi extends BaseRepository {
     return response;
   };
 
-  AssociateCategory = async (transactionId: string, categoryId: string) => {
+  AssociateCategory = async (transactionId: string, categoryId?: string) => {
     const response = await HttpClient.put<{ message: string }>(
       `${this.apiUrl}/api/transaction/${transactionId}/category/${categoryId}`
     );

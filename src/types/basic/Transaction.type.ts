@@ -11,7 +11,7 @@ export interface ITransaction {
   pending: boolean;
   paymentChannel: IPaymentChannel;
   addressId: string | null;
-  categoryId: string | null;
+  categoryId?: string | null;
   dateCreated: Date;
   dateUpdated: Date;
 }
