@@ -24,5 +24,6 @@ export const Default: Story = {
       backgroundColor: '#FDF9A9',
     },
     id: createShortGuid(),
+    categoryClickCb: (_id?: string) => {},
   },
 };
