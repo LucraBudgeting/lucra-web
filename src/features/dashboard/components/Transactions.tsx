@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, useState } from 'react';
 import styled from 'styled-components';
 import { TransactionList } from '@/components/transaction/TransactionList';
 import { ITransaction } from '@/types/basic/Transaction.type';
@@ -9,10 +9,26 @@ interface TransactionsProps {
 }
 
 export const Transactions: FC<TransactionsProps> = ({ transactions }) => {
+  const [filteredTransactions, setFilteredTransactions] = useState(() => transactions);
+  const [search, setSearch] = useState('');
+
+  const searchTransactions = (search: string) => {
+    setSearch(search);
+    setFilteredTransactions(
+      transactions.filter((transaction) =>
+        transaction.name
+          ? transaction.name.toLowerCase().includes(search.toLowerCase())
+          : false || transaction.merchantName
+            ? transaction.merchantName.toLowerCase().includes(search.toLowerCase())
+            : false
+      )
+    );
+  };
+
   return (
     <Styles.container>
-      <TransactionHeader />
-      <TransactionList transactions={transactions} />
+      <TransactionHeader searchValue={search} onSearchChange={searchTransactions} />
+      <TransactionList transactions={filteredTransactions} />
     </Styles.container>
   );
 };

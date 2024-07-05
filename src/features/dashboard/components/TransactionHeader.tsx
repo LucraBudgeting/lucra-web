@@ -1,17 +1,24 @@
 import { FC, useState } from 'react';
 import styled from 'styled-components';
+import { useAutoAnimate } from '@formkit/auto-animate/react';
 import { FilterIcon } from '@/assets/filter-icon';
 import { PlusIcon } from '@/assets/plus-icon';
 import { SpyGlassOutline } from '@/assets/spyglass-outline';
+import { SearchInput } from '@/atoms/input/SearchInput';
 
-interface TransactionHeaderProps {}
+interface TransactionHeaderProps {
+  searchValue: string;
+  onSearchChange: (search: string) => void;
+}
 
-export const TransactionHeader: FC<TransactionHeaderProps> = ({}) => {
+export const TransactionHeader: FC<TransactionHeaderProps> = ({ searchValue, onSearchChange }) => {
+  const [secondarySpaceRef] = useAutoAnimate();
+
   const [isAddOpen, setIsAddOpen] = useState(false);
-  const [isProfileOpen, setIsProfileOpen] = useState(false);
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
-  function toggleProfile() {
-    setIsProfileOpen(!isProfileOpen);
+  function toggleSearch() {
+    setIsSearchOpen(!isSearchOpen);
   }
 
   function toggleSettings() {
@@ -22,22 +29,36 @@ export const TransactionHeader: FC<TransactionHeaderProps> = ({}) => {
     setIsAddOpen(!isAddOpen);
   }
 
+  const isOptionsContainerOpen = !isSearchOpen;
+
   return (
     <Styles.container>
       <Styles.title>Transactions</Styles.title>
-      <Styles.optionsContainer>
-        <Styles.iconContainer>
-          <span onClick={toggleAdd}>
-            <PlusIcon />
-          </span>
-          <span onClick={toggleProfile}>
-            <SpyGlassOutline type="bold" />
-          </span>
-          <span onClick={toggleSettings}>
-            <FilterIcon />
-          </span>
-        </Styles.iconContainer>
-      </Styles.optionsContainer>
+      <span ref={secondarySpaceRef}>
+        {isOptionsContainerOpen && (
+          <Styles.optionsContainer>
+            <Styles.iconContainer>
+              <span onClick={toggleAdd}>
+                <PlusIcon />
+              </span>
+              <span onClick={toggleSearch}>
+                <SpyGlassOutline type="bold" />
+              </span>
+              <span onClick={toggleSettings}>
+                <FilterIcon />
+              </span>
+            </Styles.iconContainer>
+          </Styles.optionsContainer>
+        )}
+        {isSearchOpen && (
+          <SearchInput
+            showX={true}
+            onXClick={toggleSearch}
+            onChange={onSearchChange}
+            value={searchValue}
+          />
+        )}
+      </span>
     </Styles.container>
   );
 };
