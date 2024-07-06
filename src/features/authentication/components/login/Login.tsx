@@ -26,7 +26,6 @@ export const Login: FC<LoginProps> = ({}) => {
   const { isAuthenticated } = useAuth();
 
   useEffect(() => {
-    console.log('isAuthorized', isAuthorized, isAuthenticated);
     if (isAuthorized || isAuthenticated) {
       navigate(homeRoute);
     }
