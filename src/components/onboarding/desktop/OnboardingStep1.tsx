@@ -3,7 +3,7 @@ import { siteImageUrls } from '@/assets/site-image-urls';
 import { useAppDispatch } from '@/stores/store.hooks';
 import { onboardingSelector, setEmail, setFullName } from '@/stores/slices/Onboarding.slice';
 import { isValidEmail } from '@/utils/isValidEmail';
-import { ApiContext } from '@/apis/api.context';
+import { ApiContext } from '@/stores/contexts/api.context';
 import { styles } from './Styles';
 
 interface OnboardingStep1Props {}

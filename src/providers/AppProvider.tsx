@@ -3,7 +3,7 @@ import CircularProgress from '@mui/material/CircularProgress';
 import { Provider as ReduxProvider } from 'react-redux';
 
 import { store } from '@/stores/store';
-import { ApiContext, initializedApis } from '@/apis/api.context';
+import { ApiContext, initializedApis } from '@/stores/contexts/api.context';
 import { UserAgentContext, initializeUserAgent } from '@/stores/contexts/userAgent.context';
 
 type AppProviderProps = {

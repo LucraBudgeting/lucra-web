@@ -8,7 +8,7 @@ const avatarImgUrl =
 const name = 'Chandler Wescott';
 const email = 'chanwes@gmail.com';
 
-export const ProfileHeader: FC<ProfileHeaderProps> = ({}) => {
+export const SettingProfileHeader: FC<ProfileHeaderProps> = ({}) => {
   return (
     <Styled.container>
       <Styled.avatar srcSet={avatarImgUrl} />

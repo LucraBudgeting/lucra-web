@@ -1,7 +1,7 @@
 import { FC, useContext, useEffect, useState } from 'react';
 import { Outlet } from 'react-router-dom';
 import { isUserModelLocal, useAuth } from '@/hooks/authentication/useAuth.hook';
-import { ApiContext } from '@/apis/api.context';
+import { ApiContext } from '@/stores/contexts/api.context';
 import { useAppDispatch } from '@/stores/store.hooks';
 import { setAuthentication } from '@/stores/slices/Authentication.slice';
 import { Redirect } from '@/routes/redirect';

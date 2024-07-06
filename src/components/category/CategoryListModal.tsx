@@ -12,7 +12,7 @@ interface CategoryListProps {
   outsideClickCb?: () => void;
 }
 
-export const CategoryList: FC<CategoryListProps> = ({
+export const CategoryListModal: FC<CategoryListProps> = ({
   parentRef,
   categoryClickCb,
   outsideClickCb,

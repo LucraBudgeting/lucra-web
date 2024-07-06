@@ -1,5 +1,5 @@
 import { useContext, useEffect } from 'react';
-import { ApiContext } from '@/apis/api.context';
+import { ApiContext } from '@/stores/contexts/api.context';
 import { setSnackbarProps } from '@/stores/slices/SnackBar.slice';
 import { useAppDispatch } from '@/stores/store.hooks';
 import { Pokemon } from '@/types/models/pokemon/pokemon.type';

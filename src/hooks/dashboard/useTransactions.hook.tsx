@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from 'react';
-import { ApiContext } from '@/apis/api.context';
+import { ApiContext } from '@/stores/contexts/api.context';
 import { dashboardSelector, setTransactions } from '@/stores/slices/Dashboard.slice';
 import { useAppDispatch } from '@/stores/store.hooks';
 import { ITransaction } from '@/types/basic/Transaction.type';

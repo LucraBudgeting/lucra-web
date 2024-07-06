@@ -1,4 +1,4 @@
-import { FC, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { TransactionList } from '@/components/transaction/TransactionList';
 import { ITransaction } from '@/types/basic/Transaction.type';
@@ -9,11 +9,18 @@ interface TransactionsProps {
 }
 
 export const Transactions: FC<TransactionsProps> = ({ transactions }) => {
-  const [filteredTransactions, setFilteredTransactions] = useState(() => transactions);
+  const [filteredTransactions, setFilteredTransactions] = useState<ITransaction[]>([]);
   const [search, setSearch] = useState('');
+
+  useEffect(() => {
+    searchTransactions(search);
+  }, [transactions]);
 
   const searchTransactions = (search: string) => {
     setSearch(search);
+
+    if (!search) return setFilteredTransactions(transactions);
+
     setFilteredTransactions(
       transactions.filter((transaction) =>
         transaction.name

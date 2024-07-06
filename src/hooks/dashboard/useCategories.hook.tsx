@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from 'react';
-import { ApiContext } from '@/apis/api.context';
+import { ApiContext } from '@/stores/contexts/api.context';
 import { dashboardSelector, setCategories } from '@/stores/slices/Dashboard.slice';
 import { useAppDispatch } from '@/stores/store.hooks';
 import { ICategory } from '@/types/basic/Category.type';

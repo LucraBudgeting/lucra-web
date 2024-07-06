@@ -1,7 +1,7 @@
 import { FC, useContext, useState } from 'react';
 import styled from 'styled-components';
 import { EditOrAddCategory } from '@/components/dialog/EditOrAddCategory';
-import { ApiContext } from '@/apis/api.context';
+import { ApiContext } from '@/stores/contexts/api.context';
 import { LoadingComponent } from '@/atoms/loading/Loading.Component';
 import { ICategory } from '@/types/basic/Category.type';
 import { styles } from './Styles';

@@ -1,7 +1,7 @@
 import React, { FC, useCallback, useContext, useEffect, useState } from 'react';
 import { usePlaidLink } from 'react-plaid-link';
-import { ApiContext } from '@/apis/api.context';
 import { Button } from '@/atoms/button/Button';
+import { ApiContext } from '@/stores/contexts/api.context';
 
 interface LinkPlaidProps {
   children?: React.ReactNode;

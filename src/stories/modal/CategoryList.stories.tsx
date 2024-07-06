@@ -1,15 +1,15 @@
 import { Meta, StoryObj } from '@storybook/react';
 import { RefObject } from 'react';
-import { CategoryList } from '@/components/category/CategoryList';
+import { CategoryListModal } from '@/components/category/CategoryListModal';
 
 const meta = {
   title: 'modal/Category/List',
-  component: CategoryList,
+  component: CategoryListModal,
   parameters: {
     layout: 'centered',
   },
   tags: ['autodocs'],
-} satisfies Meta<typeof CategoryList>;
+} satisfies Meta<typeof CategoryListModal>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;

@@ -1,6 +1,6 @@
 import { ReactElement } from 'react';
 import { Provider as ReduxProvider } from 'react-redux';
-import { ApiContext, initializedApis } from '@/apis/api.context';
+import { ApiContext, initializedApis } from '@/stores/contexts/api.context';
 import { initialAuthenticationState } from '@/stores/slices/Authentication.slice';
 import { initialFeatureFlagState } from '@/stores/slices/FeatureFlag.slice';
 import { initialPokemonState } from '@/stores/slices/Pokemon.slice';

@@ -1,6 +1,6 @@
 import { FC, useContext, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { ApiContext } from '@/apis/api.context';
+import { ApiContext } from '@/stores/contexts/api.context';
 import { siteImageUrls } from '@/assets/site-image-urls';
 import { addCategories, onboardingSelector } from '@/stores/slices/Onboarding.slice';
 import { getCurrentYear, getFullMonth } from '@/utils/time.helper';

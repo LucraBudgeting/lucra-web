@@ -1,14 +1,14 @@
 import { Meta, StoryObj } from '@storybook/react';
-import { ProfileModal } from '@/components/profile/ProfileModal';
+import { SettingModal } from '@/components/profile/ProfileModal';
 
 const meta = {
   title: 'modal/Profile',
-  component: ProfileModal,
+  component: SettingModal,
   parameters: {
     layout: 'centered',
   },
   tags: ['autodocs'],
-} satisfies Meta<typeof ProfileModal>;
+} satisfies Meta<typeof SettingModal>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;

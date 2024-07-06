@@ -5,7 +5,7 @@ import { LoadingComponent } from '@/atoms/loading/Loading.Component';
 import { ProgressBar } from '@/atoms/progress/ProgressBar';
 import { authRoutes } from '@/routes/RouteConstants';
 import useClientDevice from '@/hooks/client/useClientDevice';
-import { ApiContext } from '@/apis/api.context';
+import { ApiContext } from '@/stores/contexts/api.context';
 import { useAppDispatch } from '@/stores/store.hooks';
 import { onboardingSelector, setIsCurrentPageLoading } from '@/stores/slices/Onboarding.slice';
 import localStorageRepository from '@/utils/localStorage.repository';

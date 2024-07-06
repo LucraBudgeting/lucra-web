@@ -1,13 +1,13 @@
 import { createContext } from 'react';
-import { PokemonApi } from './pokemon.api';
-import { AuthenticationApi } from './authentication/authentication.api';
-import { BillingApi } from './billing/billing.api';
-import { QsPlaidApi } from './bank/plaid.qs.api';
-import { PlaidApi } from './bank/plaid.api';
-import { OnboardingApi } from './onboarding/onboarding.api';
-import BankApi from './bank/bank.api';
-import CategoryApi from './budget/category.api';
-import TransactionApi from './budget/transaction.api';
+import { PokemonApi } from '../../apis/pokemon.api';
+import { AuthenticationApi } from '../../apis/authentication/authentication.api';
+import { BillingApi } from '../../apis/billing/billing.api';
+import { QsPlaidApi } from '../../apis/bank/plaid.qs.api';
+import { PlaidApi } from '../../apis/bank/plaid.api';
+import { OnboardingApi } from '../../apis/onboarding/onboarding.api';
+import BankApi from '../../apis/bank/bank.api';
+import CategoryApi from '../../apis/budget/category.api';
+import TransactionApi from '../../apis/budget/transaction.api';
 
 interface Apis {
   pokemon: PokemonApi;

@@ -6,7 +6,7 @@ interface ProfileSectionProps {
   title: string;
 }
 
-export const ProfileSection: FC<ProfileSectionProps> = ({ Icon, title }) => {
+export const SettingModalSection: FC<ProfileSectionProps> = ({ Icon, title }) => {
   return (
     <Styled.container>
       <Icon />

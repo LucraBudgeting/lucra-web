@@ -3,10 +3,10 @@ import styled from 'styled-components';
 import { useDispatch } from 'react-redux';
 import { dashboardSelector, updateTransactionCategory } from '@/stores/slices/Dashboard.slice';
 import { formatAsMoney } from '@/utils/formatAsMoney';
-import { ApiContext } from '@/apis/api.context';
+import { ApiContext } from '@/stores/contexts/api.context';
 import { Chip } from '../../atoms/chip/Chip';
 import { AddCategoryChip } from '../../atoms/chip/AddCategoryChip';
-import { CategoryList } from '../category/CategoryList';
+import { CategoryListModal } from '../category/CategoryListModal';
 
 interface TransactionItemProps {
   amount: number;
@@ -91,7 +91,7 @@ export const TransactionItem: FC<TransactionItemProps> = ({
           )}
         </span>
         {isAddCategoryOpen && (
-          <CategoryList
+          <CategoryListModal
             parentRef={parentRef}
             categoryClickCb={associateCategory}
             outsideClickCb={toggleChipClick}

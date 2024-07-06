@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from 'react';
-import { ApiContext } from '@/apis/api.context';
+import { ApiContext } from '@/stores/contexts/api.context';
 import { HttpStatusCodes } from '@/libs/http/http.config';
 import { setSnackbarProps } from '@/stores/slices/SnackBar.slice';
 import { useAppDispatch } from '@/stores/store.hooks';

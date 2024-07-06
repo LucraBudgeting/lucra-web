@@ -16,7 +16,7 @@ import { FC, useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { homeRoute } from '@/routes/RouteConstants';
 import { useAuth } from '@/hooks/authentication/useAuth.hook';
-import { ApiContext } from '@/apis/api.context';
+import { ApiContext } from '@/stores/contexts/api.context';
 import * as Styled from './Styles';
 
 interface coreNavbarProps {}

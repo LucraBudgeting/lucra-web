@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { ProfileOutline } from '@/assets/profile-outline';
 import { AccountsOutlineline } from '@/assets/accounts-outline';
@@ -7,26 +7,45 @@ import { NotificationsOutline } from '@/assets/notifications-outline';
 import { PaperOutline } from '@/assets/paper-outline';
 import { useOutsideClickRef } from '@/hooks/react/useOutsideClickRef';
 import { useAuth } from '@/hooks/authentication/useAuth.hook';
-import { ProfileSection } from './ProfileSection';
-import { ProfileHeader } from './ProfileHeader';
+import { SettingModalSection } from './SettingModalSection';
+import { SettingProfileHeader } from './SettingProfileHeader';
 
 interface ProfileModalProps {
   outsideClickCb?: () => void;
+  parentRef: React.RefObject<HTMLDivElement>;
 }
 
-export const ProfileModal: FC<ProfileModalProps> = ({ outsideClickCb }) => {
+export const SettingModal: FC<ProfileModalProps> = ({ outsideClickCb, parentRef }) => {
+  const [modalStyle, setModalStyle] = useState<React.CSSProperties>({
+    display: 'none',
+  });
+
+  useEffect(() => {
+    if (parentRef.current) {
+      const rect = parentRef.current.getBoundingClientRect();
+      let top = rect.bottom + window.scrollY + 10;
+      let left = rect.left - 250 / 2;
+
+      setModalStyle({
+        position: 'absolute',
+        top,
+        left,
+      });
+    }
+  }, [parentRef]);
+
   const modalRef = useOutsideClickRef(outsideClickCb);
   const { logout } = useAuth();
 
   return (
     <Styled.overlay>
-      <Styled.container ref={modalRef}>
-        <ProfileHeader />
-        <ProfileSection Icon={ProfileOutline} title="Profile" />
-        <ProfileSection Icon={AccountsOutlineline} title="Accounts" />
-        <ProfileSection Icon={ApperanceOutline} title="Appearance" />
-        <ProfileSection Icon={NotificationsOutline} title="Notifications" />
-        <ProfileSection Icon={PaperOutline} title="Privacy Policy" />
+      <Styled.container ref={modalRef} style={modalStyle}>
+        <SettingProfileHeader />
+        <SettingModalSection Icon={ProfileOutline} title="Profile" />
+        <SettingModalSection Icon={AccountsOutlineline} title="Accounts" />
+        <SettingModalSection Icon={ApperanceOutline} title="Appearance" />
+        <SettingModalSection Icon={NotificationsOutline} title="Notifications" />
+        <SettingModalSection Icon={PaperOutline} title="Privacy Policy" />
         <Styled.logout onClick={logout}>Log Out</Styled.logout>
       </Styled.container>
     </Styled.overlay>
@@ -48,7 +67,7 @@ const Styled = {
   `,
   container: styled.div`
     display: flex;
-    width: 15.625rem;
+    width: 250px;
     padding: 1.25rem;
     flex-direction: column;
     align-items: center;

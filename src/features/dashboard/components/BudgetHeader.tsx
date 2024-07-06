@@ -1,15 +1,29 @@
-import { FC, useState } from 'react';
+import { FC, useContext, useRef, useState } from 'react';
 import styled from 'styled-components';
 import { PlusIcon } from '@/assets/plus-icon';
 import { ProfileFilled } from '@/assets/profile-filled';
 import { SettingsCogFilled } from '@/assets/settings-cog-filled';
-import { ProfileModal } from '@/components/profile/ProfileModal';
-import { dashboardSelector } from '@/stores/slices/Dashboard.slice';
+import { addNewCategory, dashboardSelector } from '@/stores/slices/Dashboard.slice';
 import { getShortMonth, yearFromIso } from '@/utils/time.helper';
+import { SettingModal } from '@/components/setting/modal/SettingModal';
+import { FeatureFlagContext } from '@/stores/contexts/featureFlag.context';
+import { EditOrAddCategory } from '@/components/dialog/EditOrAddCategory';
+import categoryApi from '@/apis/budget/category.api';
+import { ICategory } from '@/types/basic/Category.type';
+import { ApiContext } from '@/stores/contexts/api.context';
+import { useDispatch } from 'react-redux';
 
 interface BudgetHeaderProps {}
 
 export const BudgetHeader: FC<BudgetHeaderProps> = ({}) => {
+  const { isBudgetHeaderProfileIconEnabled } = useContext(FeatureFlagContext);
+  const dispatch = useDispatch();
+
+  const { categoryApi } = useContext(ApiContext);
+
+  const settingCogRef = useRef<HTMLDivElement>(null);
+
+  const [isCategoryAdding, setIsCategoryAdding] = useState(false);
   const [isAddOpen, setIsAddOpen] = useState(false);
   const [isProfileOpen, setIsProfileOpen] = useState(false);
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
@@ -17,6 +31,19 @@ export const BudgetHeader: FC<BudgetHeaderProps> = ({}) => {
   const { dateRange } = dashboardSelector();
 
   const startDateStr = `${getShortMonth(dateRange.startDate)} ${yearFromIso(dateRange.startDate)}`;
+
+  const addBudgetCb = (newCategory: ICategory) => {
+    setIsCategoryAdding(true);
+    categoryApi
+      .AddCategory(newCategory)
+      .then((res) => {
+        dispatch(addNewCategory(res.category));
+      })
+      .finally(() => {
+        setIsCategoryAdding(false);
+      });
+    toggleAdd();
+  };
 
   function toggleProfile() {
     setIsProfileOpen(!isProfileOpen);
@@ -41,19 +68,31 @@ export const BudgetHeader: FC<BudgetHeaderProps> = ({}) => {
             <span onClick={toggleAdd}>
               <PlusIcon />
             </span>
-            <span onClick={toggleProfile}>
-              <ProfileFilled />
-            </span>
-            <span onClick={toggleSettings}>
+            {isBudgetHeaderProfileIconEnabled && (
+              <span onClick={toggleProfile}>
+                <ProfileFilled />
+              </span>
+            )}
+            <span onClick={toggleSettings} ref={settingCogRef}>
               <SettingsCogFilled />
             </span>
           </Styles.iconContainer>
         </Styles.optionsContainer>
       </Styles.container>
       <>
-        {isAddOpen && <div>add</div>}
-        {isProfileOpen && <ProfileModal outsideClickCb={toggleProfile} />}
-        {isSettingsOpen && <div>settings</div>}
+        {isAddOpen && (
+          <EditOrAddCategory
+            budgeted={0}
+            closeCb={toggleAdd}
+            closeOnOverlayClick={true}
+            successCb={addBudgetCb}
+            nextText="Add Category"
+          />
+        )}
+        {isProfileOpen && <div>PROFILE</div>}
+        {isSettingsOpen && (
+          <SettingModal outsideClickCb={toggleSettings} parentRef={settingCogRef} />
+        )}
       </>
     </>
   );
