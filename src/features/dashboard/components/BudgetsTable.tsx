@@ -100,14 +100,16 @@ export const BudgetsTable: FC<BudgetsTableProps> = ({ categories }) => {
         </Styles.sectionHeader>
         <span ref={incomeRef}>
           {!isIncomeCollapsed && (
-            <Styles.sectionRows>
-              {categories.credit.map((category) => (
-                <BudgetItem key={category.id} category={category} />
-              ))}
-            </Styles.sectionRows>
+            <>
+              <Styles.sectionRows>
+                {categories.credit.map((category) => (
+                  <BudgetItem key={category.id} category={category} />
+                ))}
+                <AddBudgetRow />
+              </Styles.sectionRows>
+            </>
           )}
         </span>
-        <AddBudgetRow />
       </Styles.budgetSection>
       <Styles.budgetSection>
         <Styles.sectionHeader>
@@ -123,14 +125,16 @@ export const BudgetsTable: FC<BudgetsTableProps> = ({ categories }) => {
         </Styles.sectionHeader>
         <span ref={expenseRef}>
           {!isExpenseCollapsed && (
-            <Styles.sectionRows>
-              {categories.debit.map((category) => (
-                <BudgetItem key={category.id} category={category} />
-              ))}
-            </Styles.sectionRows>
+            <>
+              <Styles.sectionRows>
+                {categories.debit.map((category) => (
+                  <BudgetItem key={category.id} category={category} />
+                ))}
+                <AddBudgetRow />
+              </Styles.sectionRows>
+            </>
           )}
         </span>
-        <AddBudgetRow />
       </Styles.budgetSection>
     </Styles.tableContainer>
   );
