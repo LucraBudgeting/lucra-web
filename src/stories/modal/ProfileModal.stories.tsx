@@ -1,5 +1,5 @@
 import { Meta, StoryObj } from '@storybook/react';
-import { SettingModal } from '@/components/profile/ProfileModal';
+import { SettingModal } from '@/components/setting/modal/SettingModal';
 
 const meta = {
   title: 'modal/Profile',
@@ -13,4 +13,11 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const Default: Story = {};
+export const Default: Story = {
+  args: {
+    outsideClickCb: () => {
+      console.log('outside click');
+    },
+    parentRef: { current: document.createElement('div') },
+  },
+};

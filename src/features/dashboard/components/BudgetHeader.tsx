@@ -1,5 +1,6 @@
 import { FC, useContext, useRef, useState } from 'react';
 import styled from 'styled-components';
+import { useDispatch } from 'react-redux';
 import { PlusIcon } from '@/assets/plus-icon';
 import { ProfileFilled } from '@/assets/profile-filled';
 import { SettingsCogFilled } from '@/assets/settings-cog-filled';
@@ -8,10 +9,8 @@ import { getShortMonth, yearFromIso } from '@/utils/time.helper';
 import { SettingModal } from '@/components/setting/modal/SettingModal';
 import { FeatureFlagContext } from '@/stores/contexts/featureFlag.context';
 import { EditOrAddCategory } from '@/components/dialog/EditOrAddCategory';
-import categoryApi from '@/apis/budget/category.api';
 import { ICategory } from '@/types/basic/Category.type';
 import { ApiContext } from '@/stores/contexts/api.context';
-import { useDispatch } from 'react-redux';
 
 interface BudgetHeaderProps {}
 
@@ -23,7 +22,7 @@ export const BudgetHeader: FC<BudgetHeaderProps> = ({}) => {
 
   const settingCogRef = useRef<HTMLDivElement>(null);
 
-  const [isCategoryAdding, setIsCategoryAdding] = useState(false);
+  const [_isCategoryAdding, setIsCategoryAdding] = useState(false);
   const [isAddOpen, setIsAddOpen] = useState(false);
   const [isProfileOpen, setIsProfileOpen] = useState(false);
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);

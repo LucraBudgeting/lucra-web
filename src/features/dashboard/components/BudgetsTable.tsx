@@ -5,6 +5,7 @@ import { BudgetItem } from '@/components/budget/BudgetItem';
 import { ICategoriesSplit } from '@/hooks/dashboard/useCategories.hook';
 import { Chevron } from '@/assets/chevron';
 import { dashboardSelector } from '@/stores/slices/Dashboard.slice';
+import { calcIsRemainingGood } from '@/components/budget/budgetCalculator';
 import { formatAsMoney } from '../../../utils/formatAsMoney';
 import { AddBudgetRow } from './AddBudgetRow';
 
@@ -27,6 +28,7 @@ const initialSectionTotals: ISectionTotals = {
 export const BudgetsTable: FC<BudgetsTableProps> = ({ categories }) => {
   const [incomeRef] = useAutoAnimate();
   const [expenseRef] = useAutoAnimate();
+  const [budgetsContainerRef] = useAutoAnimate();
 
   const { budgetActuals } = dashboardSelector();
 
@@ -41,10 +43,28 @@ export const BudgetsTable: FC<BudgetsTableProps> = ({ categories }) => {
         if (!category.id) return acc;
 
         const actual = budgetActuals[category.id] || 0;
+
+        const remaining = acc.remaining + category.amount - actual;
+
+        console.log(
+          'acc',
+          acc.remaining,
+          '\ncat amt',
+          category.amount,
+          '\ncat act',
+          actual,
+          '\nnew rem',
+          remaining
+        );
+
+        // if (remaining < 0) {
+        //   remaining = Math.abs(remaining);
+        // }
+
         return {
           actual: acc.actual + actual,
           budget: acc.budget + category.amount,
-          remaining: acc.remaining + category.amount - actual,
+          remaining: remaining,
         };
       },
       { actual: 0, budget: 0, remaining: 0 }
@@ -76,6 +96,17 @@ export const BudgetsTable: FC<BudgetsTableProps> = ({ categories }) => {
     setIsExpenseCollapsed(!isExpenseCollapsed);
   }
 
+  const isIncomeRemainingGood = calcIsRemainingGood(
+    incomeTotals.budget,
+    incomeTotals.actual,
+    'credit'
+  );
+  const isExpenseRemainingGood = calcIsRemainingGood(
+    expenseTotals.budget,
+    expenseTotals.actual,
+    'debit'
+  );
+
   return (
     <Styles.tableContainer>
       <Styles.headerContainer>
@@ -86,56 +117,62 @@ export const BudgetsTable: FC<BudgetsTableProps> = ({ categories }) => {
           <p>Remaining</p>
         </Styles.tableHeader>
       </Styles.headerContainer>
-      <Styles.budgetSection>
-        <Styles.sectionHeader>
-          <p className="section-title" onClick={toggleIncomeCollapse}>
-            Income
-            <Chevron direction={isIncomeCollapsed ? 'up' : 'down'} />
-          </p>
-          <Styles.sectionTotalsContainer>
-            <p>{formatAsMoney(incomeTotals.budget)}</p>
-            <p>{formatAsMoney(incomeTotals.actual)}</p>
-            <p>{formatAsMoney(incomeTotals.remaining)}</p>
-          </Styles.sectionTotalsContainer>
-        </Styles.sectionHeader>
-        <span ref={incomeRef}>
-          {!isIncomeCollapsed && (
-            <>
-              <Styles.sectionRows>
-                {categories.credit.map((category) => (
-                  <BudgetItem key={category.id} category={category} />
-                ))}
-                <AddBudgetRow />
-              </Styles.sectionRows>
-            </>
-          )}
-        </span>
-      </Styles.budgetSection>
-      <Styles.budgetSection>
-        <Styles.sectionHeader>
-          <p className="section-title" onClick={toggleExpenseCollapse}>
-            Expenses
-            <Chevron direction={isExpenseCollapsed ? 'up' : 'down'} />
-          </p>
-          <Styles.sectionTotalsContainer>
-            <p>{formatAsMoney(expenseTotals.budget)}</p>
-            <p>{formatAsMoney(expenseTotals.actual)}</p>
-            <p>{formatAsMoney(expenseTotals.remaining)}</p>
-          </Styles.sectionTotalsContainer>
-        </Styles.sectionHeader>
-        <span ref={expenseRef}>
-          {!isExpenseCollapsed && (
-            <>
-              <Styles.sectionRows>
-                {categories.debit.map((category) => (
-                  <BudgetItem key={category.id} category={category} />
-                ))}
-                <AddBudgetRow />
-              </Styles.sectionRows>
-            </>
-          )}
-        </span>
-      </Styles.budgetSection>
+      <Styles.budgetsContainer ref={budgetsContainerRef}>
+        <Styles.budgetSection>
+          <Styles.sectionHeader>
+            <p className="section-title" onClick={toggleIncomeCollapse}>
+              Income
+              <Chevron direction={isIncomeCollapsed ? 'up' : 'down'} />
+            </p>
+            <Styles.sectionTotalsContainer>
+              <Styles.sectionTotal>{formatAsMoney(incomeTotals.budget)}</Styles.sectionTotal>
+              <Styles.sectionTotal>{formatAsMoney(incomeTotals.actual)}</Styles.sectionTotal>
+              <Styles.sectionTotal isremaininggood={isIncomeRemainingGood ? 'true' : 'false'}>
+                {formatAsMoney(incomeTotals.remaining)}
+              </Styles.sectionTotal>
+            </Styles.sectionTotalsContainer>
+          </Styles.sectionHeader>
+          <span ref={incomeRef}>
+            {!isIncomeCollapsed && (
+              <span>
+                <Styles.sectionRows>
+                  {categories.credit.map((category) => (
+                    <BudgetItem key={category.id} category={category} />
+                  ))}
+                  <AddBudgetRow />
+                </Styles.sectionRows>
+              </span>
+            )}
+          </span>
+        </Styles.budgetSection>
+        <Styles.budgetSection>
+          <Styles.sectionHeader>
+            <p className="section-title" onClick={toggleExpenseCollapse}>
+              Expenses
+              <Chevron direction={isExpenseCollapsed ? 'up' : 'down'} />
+            </p>
+            <Styles.sectionTotalsContainer>
+              <Styles.sectionTotal>{formatAsMoney(expenseTotals.budget)}</Styles.sectionTotal>
+              <Styles.sectionTotal>{formatAsMoney(expenseTotals.actual)}</Styles.sectionTotal>
+              <Styles.sectionTotal isremaininggood={isExpenseRemainingGood ? 'true' : 'false'}>
+                {formatAsMoney(expenseTotals.remaining)}
+              </Styles.sectionTotal>
+            </Styles.sectionTotalsContainer>
+          </Styles.sectionHeader>
+          <span ref={expenseRef}>
+            {!isExpenseCollapsed && (
+              <span>
+                <Styles.sectionRows>
+                  {categories.debit.map((category) => (
+                    <BudgetItem key={category.id} category={category} />
+                  ))}
+                  <AddBudgetRow />
+                </Styles.sectionRows>
+              </span>
+            )}
+          </span>
+        </Styles.budgetSection>
+      </Styles.budgetsContainer>
     </Styles.tableContainer>
   );
 };
@@ -192,14 +229,18 @@ const Styles = {
   `,
   sectionTotalsContainer: styled.div`
     display: flex;
+    justify-content: space-between;
+    padding-right: 8px;
     width: 40%;
     min-width: 600px;
     gap: 24px;
-
-    p {
-      text-align: right;
-      width: 30%;
-    }
+  `,
+  sectionTotal: styled.p<{ isremaininggood?: string }>`
+    /* color: ${(props) => (props.isremaininggood === 'true' ? '#2AA64C' : '#CA4141')}; */
+    color: yellow;
+    font-weight: 600;
+    width: 30%;
+    text-align: right;
   `,
   budgetSection: styled.div``,
   headerContainer: styled.div`
@@ -216,4 +257,5 @@ const Styles = {
       color: #9b9b9b;
     }
   `,
+  budgetsContainer: styled.div``,
 };

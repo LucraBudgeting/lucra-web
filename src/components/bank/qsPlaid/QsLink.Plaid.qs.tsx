@@ -1,7 +1,7 @@
-import { ApiContext } from '@/stores/contexts/api.context';
 import { Button } from '@mui/material';
 import { FC, useCallback, useContext, useEffect, useState } from 'react';
 import { usePlaidLink } from 'react-plaid-link';
+import { ApiContext } from '@/stores/contexts/api.context';
 
 interface LinkPlaidProps {}
 

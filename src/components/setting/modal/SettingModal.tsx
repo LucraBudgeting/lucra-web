@@ -7,10 +7,10 @@ import { NotificationsOutline } from '@/assets/notifications-outline';
 import { PaperOutline } from '@/assets/paper-outline';
 import { useOutsideClickRef } from '@/hooks/react/useOutsideClickRef';
 import { useAuth } from '@/hooks/authentication/useAuth.hook';
-import { SettingModalSection } from './SettingModalSection';
-import { SettingProfileHeader } from './SettingProfileHeader';
 import { FeatureFlagContext } from '@/stores/contexts/featureFlag.context';
 import { CommitHash } from '@/utils/CommitHash';
+import { SettingModalSection } from './SettingModalSection';
+import { SettingProfileHeader } from './SettingProfileHeader';
 
 interface ProfileModalProps {
   outsideClickCb?: () => void;
@@ -39,8 +39,8 @@ export const SettingModal: FC<ProfileModalProps> = ({ outsideClickCb, parentRef 
   useEffect(() => {
     if (parentRef.current) {
       const rect = parentRef.current.getBoundingClientRect();
-      let top = rect.bottom + window.scrollY + 10;
-      let left = rect.left - 250 / 2;
+      const top = rect.bottom + window.scrollY + 10;
+      const left = rect.left - 250 / 2;
 
       setModalStyle({
         position: 'absolute',

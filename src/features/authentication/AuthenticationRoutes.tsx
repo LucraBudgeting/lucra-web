@@ -2,9 +2,9 @@ import { Navigate, Route } from 'react-router-dom';
 
 import { AuthenticatedLayout } from '@/layouts/authentication/Authenticated.layout';
 import { authRoutes } from '@/routes/RouteConstants';
+import { CommitHash } from '@/utils/CommitHash';
 import { Login } from './components/login/Login';
 import { Register } from './components/register/Register';
-import { CommitHash } from '@/utils/CommitHash';
 
 export const AuthenticationRoutes = () => {
   return (

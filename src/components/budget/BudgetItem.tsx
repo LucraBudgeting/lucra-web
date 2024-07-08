@@ -77,7 +77,8 @@ const Styled = {
   amountContainer: styled.div`
     display: flex;
     align-items: center;
-    justify-content: space-around;
+    justify-content: space-between;
+    padding-right: 8px;
     gap: 24px;
     width: 40%;
     min-width: 600px;

@@ -4,7 +4,6 @@ import { HttpInterceptor } from '@/libs/http/http.interceptor';
 import { snackBarSelector } from '@/stores/slices/SnackBar.slice';
 import { AuthenticatedRoutes } from './AuthenticatedRoutes';
 import { PublicRoutes } from './PublicRoutes';
-import { CommitHash } from '@/utils/CommitHash';
 
 export const MainRouter = () => {
   const snackbarProps = snackBarSelector();

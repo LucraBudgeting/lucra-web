@@ -1,8 +1,8 @@
 class envhelper {
   currentEnv = import.meta.env.VITE_ENV;
   isProd = import.meta.env.VITE_IS_PRODUCTION == 'true';
-
   isDev = this.currentEnv !== 'PROD';
+  isLocal = this.currentEnv?.toLowerCase() === 'local';
 }
 
 export default envhelper;

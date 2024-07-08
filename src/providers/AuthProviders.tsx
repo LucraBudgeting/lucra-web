@@ -7,6 +7,7 @@ import { setAuthentication } from '@/stores/slices/Authentication.slice';
 import { Redirect } from '@/routes/redirect';
 import LocalStorageRepository from '@/utils/localStorage.repository';
 import { LoadingComponent } from '@/atoms/loading/Loading.Component';
+import { envHelper } from '@/utils/env.helper';
 
 interface AuthCheckProviderProps {}
 
@@ -52,6 +53,9 @@ export const AuthCheckProvider: FC<AuthCheckProviderProps> = ({}) => {
   }, []);
 
   if (isLoading && hasAuthToken) return <LoadingComponent loadingText="Authenticating User" />;
+
+  //When in local environment, skip the authentication check (When saving changes to slices youll be redirected to login page even though youre authenticated due to race condition)
+  if (envHelper.isLocal) return <Outlet />;
 
   if (!isAuthenticated) {
     // LOGOUT REQUEST

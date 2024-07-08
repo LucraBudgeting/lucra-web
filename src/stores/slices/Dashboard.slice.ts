@@ -52,7 +52,7 @@ export const dashboardSlice = createSlice({
     },
     setTransactions: (state, action: PayloadAction<ITransaction[]>) => {
       state.transactions = action.payload;
-      state.budgetActuals = calculateCategoryActuals(state.transactions);
+      state.budgetActuals = calculateCategoryActuals(state);
     },
     updateTransactionCategory: (
       state,
@@ -68,21 +68,30 @@ export const dashboardSlice = createSlice({
       }
 
       state.transactions[transactionIndex].categoryId = action.payload.categoryId;
-      state.budgetActuals = calculateCategoryActuals(state.transactions);
+      state.budgetActuals = calculateCategoryActuals(state);
     },
   },
 });
 
-function calculateCategoryActuals(transactions: ITransaction[]) {
-  return transactions.reduce(
+function calculateCategoryActuals(state: typeof initialState): Record<string, number> {
+  return state.transactions.reduce(
     (acc, transaction) => {
       if (!transaction.categoryId) return acc;
 
       const amount = parseFloat(transaction.amount.toString());
 
-      acc[transaction.categoryId] = acc[transaction.categoryId]
-        ? acc[transaction.categoryId] + amount
-        : amount;
+      const categoryType = state.categoryDictionary[transaction.categoryId].budgetType;
+
+      if (categoryType === 'credit') {
+        acc[transaction.categoryId] = acc[transaction.categoryId]
+          ? acc[transaction.categoryId] + amount
+          : amount;
+      } else if (categoryType === 'debit') {
+        acc[transaction.categoryId] = acc[transaction.categoryId]
+          ? acc[transaction.categoryId] - amount
+          : -amount;
+      }
+
       return acc;
     },
     {} as Record<string, number>

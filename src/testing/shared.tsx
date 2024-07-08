@@ -2,13 +2,11 @@ import { ReactElement } from 'react';
 import { Provider as ReduxProvider } from 'react-redux';
 import { ApiContext, initializedApis } from '@/stores/contexts/api.context';
 import { initialAuthenticationState } from '@/stores/slices/Authentication.slice';
-import { initialFeatureFlagState } from '@/stores/slices/FeatureFlag.slice';
 import { initialPokemonState } from '@/stores/slices/Pokemon.slice';
 import { SnackBarState } from '@/stores/slices/SnackBar.slice';
 import { setupStore } from '@/stores/store';
 
 export const defaultStore = setupStore({
-  featureFlag: initialFeatureFlagState,
   authentication: initialAuthenticationState,
   snackBar: SnackBarState,
   pokemon: initialPokemonState,
