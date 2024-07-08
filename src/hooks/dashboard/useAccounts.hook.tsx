@@ -4,7 +4,7 @@ import { IBankAccount } from '@/types/models/bank/BankAccount';
 
 type useAccountsHookProps = [accounts: any, isFetching: boolean];
 
-export function useAccounts(): useAccountsHookProps {
+export function useAccounts(cacheBuster?: string): useAccountsHookProps {
   const [accounts, setAccounts] = useState<IBankAccount[]>([]);
   const [isFetchingAccounts, setIsFetchingAccounts] = useState(false);
   const { bankApi } = useContext(ApiContext);
@@ -24,7 +24,7 @@ export function useAccounts(): useAccountsHookProps {
     return () => {
       setIsFetchingAccounts(false);
     };
-  }, []);
+  }, [cacheBuster]);
 
   return [accounts, isFetchingAccounts];
 }

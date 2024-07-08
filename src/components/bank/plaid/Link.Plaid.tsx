@@ -3,9 +3,11 @@ import { usePlaidLink } from 'react-plaid-link';
 import { Button } from '@/atoms/button/Button';
 import { ApiContext } from '@/stores/contexts/api.context';
 
+export type informParentCbStatus = 'success' | 'error';
+
 interface LinkPlaidProps {
   children?: React.ReactNode;
-  informParent?: (status: 'success' | 'error') => void; // Only needed if parent needs to be informed or onSuccessCb is not present
+  informParent?: (status: informParentCbStatus) => void; // Only needed if parent needs to be informed or onSuccessCb is not present
   onSuccess?: (publicToken: string) => void;
 }
 
@@ -46,10 +48,8 @@ export const LinkPlaid: FC<LinkPlaidProps> = ({ children, informParent, onSucces
 
   const { open, ready } = usePlaidLink(config);
   return (
-    <div>
-      <Button onClick={() => open()} disabled={!ready}>
-        {children ? children : 'Link'}
-      </Button>
+    <div onClick={() => open()}>
+      {children ? children : <Button disabled={!ready}>Link</Button>}
     </div>
   );
 };

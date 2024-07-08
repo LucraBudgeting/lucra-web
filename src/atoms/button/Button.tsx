@@ -12,7 +12,7 @@ interface ButtonProps extends BaseButtonProps {
   primary?: boolean;
 
   label?: string;
-  onClick: () => void;
+  onClick?: () => void;
   disabled?: boolean;
   children?: React.ReactNode;
 }
