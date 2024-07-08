@@ -10,6 +10,7 @@ import { useAuth } from '@/hooks/authentication/useAuth.hook';
 import { SettingModalSection } from './SettingModalSection';
 import { SettingProfileHeader } from './SettingProfileHeader';
 import { FeatureFlagContext } from '@/stores/contexts/featureFlag.context';
+import { CommitHash } from '@/utils/CommitHash';
 
 interface ProfileModalProps {
   outsideClickCb?: () => void;
@@ -133,6 +134,7 @@ export const SettingModal: FC<ProfileModalProps> = ({ outsideClickCb, parentRef 
             onClick={onPrivacyPolicyClick}
           />
           <Styled.logout onClick={logout}>Log Out</Styled.logout>
+          <CommitHash />
         </Styled.container>
       </Styled.overlay>
       {modalStatus.isProfileOpen && <div>Profile</div>}

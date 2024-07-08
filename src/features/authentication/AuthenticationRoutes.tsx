@@ -4,13 +4,17 @@ import { AuthenticatedLayout } from '@/layouts/authentication/Authenticated.layo
 import { authRoutes } from '@/routes/RouteConstants';
 import { Login } from './components/login/Login';
 import { Register } from './components/register/Register';
+import { CommitHash } from '@/utils/CommitHash';
 
 export const AuthenticationRoutes = () => {
   return (
-    <AuthenticatedLayout>
-      <Route path={'login'} element={<Login />} />
-      <Route path={'register'} element={<Register />} />
-      <Route path={'*'} element={<Navigate to={authRoutes.login} />} />
-    </AuthenticatedLayout>
+    <>
+      <AuthenticatedLayout>
+        <Route path={'login'} element={<Login />} />
+        <Route path={'register'} element={<Register />} />
+        <Route path={'*'} element={<Navigate to={authRoutes.login} />} />
+      </AuthenticatedLayout>
+      <CommitHash />
+    </>
   );
 };
