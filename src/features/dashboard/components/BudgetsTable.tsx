@@ -44,22 +44,7 @@ export const BudgetsTable: FC<BudgetsTableProps> = ({ categories }) => {
 
         const actual = budgetActuals[category.id] || 0;
 
-        const remaining = acc.remaining + category.amount - actual;
-
-        console.log(
-          'acc',
-          acc.remaining,
-          '\ncat amt',
-          category.amount,
-          '\ncat act',
-          actual,
-          '\nnew rem',
-          remaining
-        );
-
-        // if (remaining < 0) {
-        //   remaining = Math.abs(remaining);
-        // }
+        const remaining = acc.remaining - category.amount + actual;
 
         return {
           actual: acc.actual + actual,
