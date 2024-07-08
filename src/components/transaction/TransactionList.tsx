@@ -49,7 +49,7 @@ export const TransactionList: FC<TransactionListProps> = ({ transactions }) => {
         <div key={date}>
           <Styled.dateHeader>{dayjs(date).format('MMM D, YYYY')}</Styled.dateHeader>
           <ul>
-            {groupedTransactions[date].map((transaction, i) => (
+            {sortTransactionsByName(groupedTransactions[date]).map((transaction, i) => (
               <TransactionItem
                 amount={transaction.amount}
                 description={transaction.merchantName || transaction.name || 'No Description'}
@@ -84,4 +84,16 @@ function groupTransactionsByDate(transactions: ITransaction[]): { [date: string]
   });
 
   return groupedTransactions;
+}
+
+function sortTransactionsByName(transactions: ITransaction[]): ITransaction[] {
+  return transactions.sort((a, b) => {
+    if (a.merchantName && b.merchantName) {
+      return a.merchantName.localeCompare(b.merchantName);
+    }
+    if (a.name && b.name) {
+      return a.name.localeCompare(b.name);
+    }
+    return 0;
+  });
 }

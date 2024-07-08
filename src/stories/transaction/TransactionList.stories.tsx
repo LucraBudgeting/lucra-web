@@ -4,7 +4,7 @@ import { createShortGuid } from '@/utils/guid.helper';
 import { ITransaction } from '@/types/basic/Transaction.type';
 import { IIsoCurrencyCode, IPaymentChannel } from '@/types/basic/_shared/db.enum';
 import { ParentContainer } from '../ParentContainer';
-import { mockTransactionList } from '../__mocks/TransactionList';
+import { mockTransactionList } from '../__mocks/MockTransactionList';
 
 const meta = {
   title: 'transaction/TransactionList',
