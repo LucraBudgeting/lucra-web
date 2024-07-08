@@ -209,7 +209,7 @@ const Styles = {
       font-size: 18px;
       font-weight: 600;
       line-height: 22px;
-      color: #333333;
+      /* color: #333333; */
     }
   `,
   sectionTotalsContainer: styled.div`
@@ -221,8 +221,10 @@ const Styles = {
     gap: 24px;
   `,
   sectionTotal: styled.p<{ isremaininggood?: string }>`
-    /* color: ${(props) => (props.isremaininggood === 'true' ? '#2AA64C' : '#CA4141')}; */
-    color: yellow;
+    color: ${(props) => {
+      if (!props.isremaininggood) return '#333333';
+      return props.isremaininggood === 'true' ? '#2AA64C' : '#CA4141';
+    }};
     font-weight: 600;
     width: 30%;
     text-align: right;
