@@ -4,11 +4,12 @@ import styled from 'styled-components';
 interface ProfileSectionProps {
   Icon: React.ElementType;
   title: string;
+  onClick: () => void;
 }
 
-export const SettingModalSection: FC<ProfileSectionProps> = ({ Icon, title }) => {
+export const SettingModalSection: FC<ProfileSectionProps> = ({ Icon, title, onClick }) => {
   return (
-    <Styled.container>
+    <Styled.container onClick={onClick}>
       <Icon />
       <Styled.title>{title}</Styled.title>
     </Styled.container>
@@ -26,6 +27,7 @@ const Styled = {
     border-bottom: 1px solid var(--Grey-Stroke, #e2e2e2);
     cursor: pointer;
     transition: background-color 0.5s ease;
+    user-select: none;
 
     &:hover {
       border-radius: 0.5rem;

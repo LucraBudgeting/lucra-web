@@ -5,6 +5,7 @@ import { Provider as ReduxProvider } from 'react-redux';
 import { store } from '@/stores/store';
 import { ApiContext, initializedApis } from '@/stores/contexts/api.context';
 import { UserAgentContext, initializeUserAgent } from '@/stores/contexts/userAgent.context';
+import { envHelper } from '@/utils/env.helper';
 
 type AppProviderProps = {
   children: React.ReactNode;
@@ -12,7 +13,13 @@ type AppProviderProps = {
 
 export const AppProvider = ({ children }: AppProviderProps) => {
   React.useEffect(() => {
-    document.title = 'Lucra Budgeting';
+    const isProd = envHelper.isProd;
+    const docTitle = 'Lucra Budgeting';
+    if (isProd) {
+      document.title = docTitle;
+    } else {
+      document.title = `${envHelper.currentEnv} - ${docTitle}`;
+    }
   }, []);
   return (
     <React.Suspense

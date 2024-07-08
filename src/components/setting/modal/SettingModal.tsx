@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from 'react';
+import { FC, useContext, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { ProfileOutline } from '@/assets/profile-outline';
 import { AccountsOutlineline } from '@/assets/accounts-outline';
@@ -9,13 +9,28 @@ import { useOutsideClickRef } from '@/hooks/react/useOutsideClickRef';
 import { useAuth } from '@/hooks/authentication/useAuth.hook';
 import { SettingModalSection } from './SettingModalSection';
 import { SettingProfileHeader } from './SettingProfileHeader';
+import { FeatureFlagContext } from '@/stores/contexts/featureFlag.context';
 
 interface ProfileModalProps {
   outsideClickCb?: () => void;
   parentRef: React.RefObject<HTMLDivElement>;
 }
 
+const initialModalStatus = {
+  isProfileOpen: false,
+  isAccountsOpen: false,
+  isAppearanceOpen: false,
+  isNotificationsOpen: false,
+};
+
 export const SettingModal: FC<ProfileModalProps> = ({ outsideClickCb, parentRef }) => {
+  const {
+    isSettingsModalAppearanceEnabled,
+    isSettingsModalNotificationsEnabled,
+    isSettingsModalProfileEnabled,
+  } = useContext(FeatureFlagContext);
+  const [modalStatus, setModalStatus] = useState(initialModalStatus);
+
   const [modalStyle, setModalStyle] = useState<React.CSSProperties>({
     display: 'none',
   });
@@ -37,18 +52,94 @@ export const SettingModal: FC<ProfileModalProps> = ({ outsideClickCb, parentRef 
   const modalRef = useOutsideClickRef(outsideClickCb);
   const { logout } = useAuth();
 
+  function toggleProfile() {
+    setModalStatus({ ...initialModalStatus, isProfileOpen: !modalStatus.isProfileOpen });
+  }
+
+  function toggleAccounts() {
+    setModalStatus({ ...initialModalStatus, isAccountsOpen: !modalStatus.isAccountsOpen });
+  }
+
+  function toggleAppearance() {
+    setModalStatus({ ...initialModalStatus, isAppearanceOpen: !modalStatus.isAppearanceOpen });
+  }
+
+  function toggleNotifications() {
+    setModalStatus({
+      ...initialModalStatus,
+      isNotificationsOpen: !modalStatus.isNotificationsOpen,
+    });
+  }
+
+  function closeAllModals() {
+    setModalStatus(initialModalStatus);
+  }
+
+  function onProfileClick() {
+    closeAllModals();
+    toggleProfile();
+  }
+
+  function onAccountsClick() {
+    closeAllModals();
+    toggleAccounts();
+  }
+
+  function onAppearanceClick() {
+    closeAllModals();
+    toggleAppearance();
+  }
+
+  function onNotificationsClick() {
+    closeAllModals();
+    toggleNotifications();
+  }
+
+  function onPrivacyPolicyClick() {
+    closeAllModals();
+    window.open('https://www.google.com/search?q=privacy+policy', '_blank');
+  }
+
   return (
-    <Styled.overlay>
-      <Styled.container ref={modalRef} style={modalStyle}>
-        <SettingProfileHeader />
-        <SettingModalSection Icon={ProfileOutline} title="Profile" />
-        <SettingModalSection Icon={AccountsOutlineline} title="Accounts" />
-        <SettingModalSection Icon={ApperanceOutline} title="Appearance" />
-        <SettingModalSection Icon={NotificationsOutline} title="Notifications" />
-        <SettingModalSection Icon={PaperOutline} title="Privacy Policy" />
-        <Styled.logout onClick={logout}>Log Out</Styled.logout>
-      </Styled.container>
-    </Styled.overlay>
+    <>
+      <Styled.overlay>
+        <Styled.container ref={modalRef} style={modalStyle}>
+          <SettingProfileHeader />
+          {isSettingsModalProfileEnabled && (
+            <SettingModalSection Icon={ProfileOutline} title="Profile" onClick={onProfileClick} />
+          )}
+          <SettingModalSection
+            Icon={AccountsOutlineline}
+            title="Accounts"
+            onClick={onAccountsClick}
+          />
+          {isSettingsModalAppearanceEnabled && (
+            <SettingModalSection
+              Icon={ApperanceOutline}
+              title="Appearance"
+              onClick={onAppearanceClick}
+            />
+          )}
+          {isSettingsModalNotificationsEnabled && (
+            <SettingModalSection
+              Icon={NotificationsOutline}
+              title="Notifications"
+              onClick={onNotificationsClick}
+            />
+          )}
+          <SettingModalSection
+            Icon={PaperOutline}
+            title="Privacy Policy"
+            onClick={onPrivacyPolicyClick}
+          />
+          <Styled.logout onClick={logout}>Log Out</Styled.logout>
+        </Styled.container>
+      </Styled.overlay>
+      {modalStatus.isProfileOpen && <div>Profile</div>}
+      {modalStatus.isAccountsOpen && <div>Accounts</div>}
+      {modalStatus.isAppearanceOpen && <div>Appearance</div>}
+      {modalStatus.isNotificationsOpen && <div>Notifications</div>}
+    </>
   );
 };
 

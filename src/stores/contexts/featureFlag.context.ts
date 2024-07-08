@@ -1,13 +1,12 @@
 import { createContext } from 'react';
 
-interface IFeatureFlags {
-  isBudgetHeaderProfileIconEnabled: boolean;
+const defaultValue = false;
 
-  [key: string]: boolean;
-}
-
-export const featureFlags: IFeatureFlags = {
-  isBudgetHeaderProfileIconEnabled: false,
+export const featureFlags = {
+  isBudgetHeaderProfileIconEnabled: defaultValue,
+  isSettingsModalProfileEnabled: defaultValue,
+  isSettingsModalAppearanceEnabled: defaultValue,
+  isSettingsModalNotificationsEnabled: defaultValue,
 };
 
-export const FeatureFlagContext = createContext<IFeatureFlags>(featureFlags);
+export const FeatureFlagContext = createContext(featureFlags);
