@@ -8,16 +8,16 @@ interface BankAccountItemProps {
 }
 
 export const BankAccountItem: FC<BankAccountItemProps> = ({ account }) => {
-  const { bankInstitution: bank } = account;
+  const { institution } = account;
   return (
     <Styles.container>
       <Styles.left>
-        <Styles.avatar outline={bank?.primaryColor}>
-          <img src={getBase64ImageString(bank?.logo)} />
+        <Styles.avatar outline={institution?.primaryColor}>
+          <img src={getBase64ImageString(institution?.logoUrl)} />
         </Styles.avatar>
         <Styles.titleContainer>
-          <h3>{account.institutionDisplayName}</h3>
-          <h6>{bank?.name}</h6>
+          <h3>{account.institution?.displayName}</h3>
+          <h6>{institution?.displayName}</h6>
         </Styles.titleContainer>
       </Styles.left>
 

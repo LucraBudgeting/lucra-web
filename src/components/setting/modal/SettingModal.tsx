@@ -20,7 +20,7 @@ interface ProfileModalProps {
 
 const initialModalStatus = {
   isProfileOpen: false,
-  isAccountsOpen: false,
+  isAccountsOpen: true,
   isAppearanceOpen: false,
   isNotificationsOpen: false,
 };

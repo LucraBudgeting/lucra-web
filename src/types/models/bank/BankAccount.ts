@@ -1,18 +1,24 @@
 export interface IBankAccount {
   id: string;
-  accessAccountId: string;
-  accountId: string;
-  institutionDisplayName: string;
-  institutionId: string;
+  linkSource: 'plaid';
   type: string;
   subType: string;
   mask: string;
-  bankInstitution?: IBankInstitution;
+  accountName: string;
+  institution?: IBankInstitution;
+  balance?: IBankBalance;
+}
+
+export interface IBankBalance {
+  currentBalance: number;
+  availableBalance: number;
+  currency: string;
+  lastUpdated: Date;
 }
 
 export interface IBankInstitution {
-  name?: string;
+  displayName?: string;
   website?: string;
-  logo?: string;
+  logoUrl?: string;
   primaryColor?: string;
 }
