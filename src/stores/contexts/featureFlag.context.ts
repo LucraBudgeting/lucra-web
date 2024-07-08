@@ -7,6 +7,7 @@ export const featureFlags = {
   isSettingsModalProfileEnabled: defaultValue,
   isSettingsModalAppearanceEnabled: defaultValue,
   isSettingsModalNotificationsEnabled: defaultValue,
+  isAccountsInvestmentEnabled: defaultValue,
 };
 
 export const FeatureFlagContext = createContext(featureFlags);

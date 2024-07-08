@@ -9,6 +9,7 @@ import { useOutsideClickRef } from '@/hooks/react/useOutsideClickRef';
 import { useAuth } from '@/hooks/authentication/useAuth.hook';
 import { FeatureFlagContext } from '@/stores/contexts/featureFlag.context';
 import { CommitHash } from '@/utils/CommitHash';
+import { AccountsDialog } from '@/components/dialog/Accounts/AccountsDialog';
 import { SettingModalSection } from './SettingModalSection';
 import { SettingProfileHeader } from './SettingProfileHeader';
 
@@ -50,7 +51,13 @@ export const SettingModal: FC<ProfileModalProps> = ({ outsideClickCb, parentRef 
     }
   }, [parentRef]);
 
-  const modalRef = useOutsideClickRef(outsideClickCb);
+  function handleOutsideClick() {
+    if (modalStatus.isAccountsOpen) return;
+
+    outsideClickCb && outsideClickCb();
+  }
+
+  const modalRef = useOutsideClickRef(handleOutsideClick);
   const { logout } = useAuth();
 
   function toggleProfile() {
@@ -138,7 +145,9 @@ export const SettingModal: FC<ProfileModalProps> = ({ outsideClickCb, parentRef 
         </Styled.container>
       </Styled.overlay>
       {modalStatus.isProfileOpen && <div>Profile</div>}
-      {modalStatus.isAccountsOpen && <div>Accounts</div>}
+      {modalStatus.isAccountsOpen && (
+        <AccountsDialog closeCb={toggleAccounts} closeOnOverlayClick={false} />
+      )}
       {modalStatus.isAppearanceOpen && <div>Appearance</div>}
       {modalStatus.isNotificationsOpen && <div>Notifications</div>}
     </>

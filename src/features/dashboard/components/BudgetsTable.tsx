@@ -6,7 +6,7 @@ import { ICategoriesSplit } from '@/hooks/dashboard/useCategories.hook';
 import { Chevron } from '@/assets/chevron';
 import { dashboardSelector } from '@/stores/slices/Dashboard.slice';
 import { calcIsRemainingGood } from '@/components/budget/budgetCalculator';
-import { formatAsMoney } from '../../../utils/formatAsMoney';
+import { formatAsMoney } from '@/utils/formatAsMoney';
 import { AddBudgetRow } from './AddBudgetRow';
 
 interface BudgetsTableProps {
@@ -209,7 +209,6 @@ const Styles = {
       font-size: 18px;
       font-weight: 600;
       line-height: 22px;
-      /* color: #333333; */
     }
   `,
   sectionTotalsContainer: styled.div`
