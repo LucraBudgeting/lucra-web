@@ -150,7 +150,11 @@ const Styled = {
     line-height: 1; // Normalizes line height to avoid unexpected sizing
     display: flex;
     gap: 20px;
-    cursor: pointer;
+
+    p {
+      cursor: pointer;
+      width: 0.5rem;
+    }
   `,
   footer: styled.div`
     display: flex;
