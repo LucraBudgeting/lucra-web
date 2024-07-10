@@ -5,8 +5,8 @@ import { DialogProps } from '@/atoms/dialog/Dialog.types';
 import { useAccounts } from '@/hooks/dashboard/useAccounts.hook';
 import { LoadingComponent } from '@/atoms/loading/Loading.Component';
 import { LinkPlaid, informParentCbStatus } from '@/components/bank/plaid/Link.Plaid';
-import { AccountsHeaderTabs } from './AccountsHeaderTabs';
 import { IBankAccount } from '@/types/models/bank/BankAccount';
+import { AccountsHeaderTabs } from './AccountsHeaderTabs';
 
 interface AccountsDialogProps extends DialogProps {}
 
