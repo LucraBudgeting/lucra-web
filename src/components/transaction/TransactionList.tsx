@@ -51,7 +51,7 @@ export const TransactionList: FC<TransactionListProps> = ({ transactions }) => {
           <ul>
             {sortTransactionsByName(groupedTransactions[date]).map((transaction, i) => (
               <TransactionItem
-                amount={transaction.amount}
+                amount={-transaction.amount}
                 description={transaction.merchantName || transaction.name || 'No Description'}
                 id={transaction.id}
                 categoryId={transaction.categoryId}

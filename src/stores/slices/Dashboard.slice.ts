@@ -84,12 +84,12 @@ function calculateCategoryActuals(state: typeof initialState): Record<string, nu
 
       if (categoryType === 'credit') {
         acc[transaction.categoryId] = acc[transaction.categoryId]
-          ? acc[transaction.categoryId] + amount
-          : amount;
-      } else if (categoryType === 'debit') {
-        acc[transaction.categoryId] = acc[transaction.categoryId]
           ? acc[transaction.categoryId] - amount
           : -amount;
+      } else if (categoryType === 'debit') {
+        acc[transaction.categoryId] = acc[transaction.categoryId]
+          ? acc[transaction.categoryId] + amount
+          : amount;
       }
 
       return acc;

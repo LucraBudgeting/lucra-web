@@ -6,6 +6,7 @@ import { useAccounts } from '@/hooks/dashboard/useAccounts.hook';
 import { LoadingComponent } from '@/atoms/loading/Loading.Component';
 import { LinkPlaid, informParentCbStatus } from '@/components/bank/plaid/Link.Plaid';
 import { AccountsHeaderTabs } from './AccountsHeaderTabs';
+import { IBankAccount } from '@/types/models/bank/BankAccount';
 
 interface AccountsDialogProps extends DialogProps {}
 
@@ -27,6 +28,16 @@ export const AccountsDialog: FC<AccountsDialogProps> = (props) => {
     }
   }
 
+  const temp = accounts.map((account: IBankAccount) => {
+    return {
+      id: account.id,
+      name: account.accountName,
+      instit: account.institution?.displayName,
+      type: account.type,
+      balance: account.balance?.currentBalance,
+    };
+  });
+
   return (
     <DialogContainer {...props} enableFooter={false} headerText="Accounts">
       <Styles.container>
@@ -36,7 +47,7 @@ export const AccountsDialog: FC<AccountsDialogProps> = (props) => {
           {!isFetchingAccounts && (
             <div>
               <pre>
-                <code>{JSON.stringify(accounts[0], null, 4)}</code>
+                <code>{JSON.stringify(temp, null, 4)}</code>
               </pre>
             </div>
           )}
