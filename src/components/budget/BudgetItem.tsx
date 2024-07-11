@@ -1,16 +1,19 @@
-import { FC } from 'react';
+import { FC, useState } from 'react';
 import styled from 'styled-components';
 import { formatAsMoney } from '@/utils/formatAsMoney';
 import { ICategory } from '@/types/basic/Category.type';
 import { dashboardSelector } from '@/stores/slices/Dashboard.slice';
 import { AvatarEmoji } from '../../atoms/avatar/AvatarEmoji';
 import { calcIsRemainingGood, calcRemaining } from './budgetCalculator';
+import { ViewBudgetDialog } from './ViewBudgetDialog';
 
 export interface BudgetItemProps {
   category: ICategory;
 }
 
 export const BudgetItem: FC<BudgetItemProps> = ({ category }) => {
+  const [isViewDialogOpen, setIsViewDialogOpen] = useState(false);
+
   const { id, label, avatar, amount, budgetType } = category;
   const actual = id ? dashboardSelector().budgetActuals[id] : 0;
 
@@ -20,26 +23,35 @@ export const BudgetItem: FC<BudgetItemProps> = ({ category }) => {
 
   const onBudgetChange = () => {};
 
+  const toggleViewBudgetDialog = () => {
+    setIsViewDialogOpen(!isViewDialogOpen);
+  };
+
   return (
-    <Styled.container>
-      <Styled.budgetContainer>
-        <AvatarEmoji emoji={avatar.emoji} backgroundColor={avatar.backgroundColor} align="left" />
-        <Styled.title>{label}</Styled.title>
-      </Styled.budgetContainer>
-      <Styled.amountContainer>
-        <Styled.amountCell>
-          <Styled.input
-            width={inputWidth}
-            value={formatAsMoney(amount)}
-            onChange={onBudgetChange}
-          />
-        </Styled.amountCell>
-        <Styled.amountCell>{formatAsMoney(actual)}</Styled.amountCell>
-        <Styled.remainingCell isremaininggood={isRemainingGood ? 'true' : 'false'}>
-          {formatAsMoney(remaining)}
-        </Styled.remainingCell>
-      </Styled.amountContainer>
-    </Styled.container>
+    <>
+      <Styled.container onClick={toggleViewBudgetDialog}>
+        <Styled.budgetContainer>
+          <AvatarEmoji emoji={avatar.emoji} backgroundColor={avatar.backgroundColor} align="left" />
+          <Styled.title>{label}</Styled.title>
+        </Styled.budgetContainer>
+        <Styled.amountContainer>
+          <Styled.amountCell>
+            <Styled.input
+              width={inputWidth}
+              value={formatAsMoney(amount)}
+              onChange={onBudgetChange}
+            />
+          </Styled.amountCell>
+          <Styled.amountCell>{formatAsMoney(actual)}</Styled.amountCell>
+          <Styled.remainingCell isremaininggood={isRemainingGood ? 'true' : 'false'}>
+            {formatAsMoney(remaining)}
+          </Styled.remainingCell>
+        </Styled.amountContainer>
+      </Styled.container>
+      {isViewDialogOpen && (
+        <ViewBudgetDialog category={category} closeCb={toggleViewBudgetDialog} />
+      )}
+    </>
   );
 };
 
@@ -50,6 +62,7 @@ const Styled = {
     justify-content: space-between;
     height: 50px;
     border-bottom: solid 1px #ccc;
+    cursor: pointer;
   `,
   input: styled.input<{ width: string }>`
     border: 1px solid #ccc;

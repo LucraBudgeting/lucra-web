@@ -1,8 +1,8 @@
 import { FC } from 'react';
 import styled from 'styled-components';
 import { ICategoriesSplit } from '@/hooks/dashboard/useCategories.hook';
-import { BudgetsTable } from './BudgetsTable';
-import { BudgetHeader } from './BudgetHeader';
+import { BudgetsTable } from '@/components/budget/BudgetsTable';
+import { BudgetHeader } from '@/components/budget/BudgetHeader';
 
 interface BudgetsProps {
   categories: ICategoriesSplit;

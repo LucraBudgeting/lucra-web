@@ -24,6 +24,7 @@ export const DialogContainer: FC<DiaglogContainerProps> = ({
   closeOnOverlayClick = false,
   width = '540px',
   height = 'auto',
+  forwardRef,
 }) => {
   const closeDialog = () => {
     if (closeCb) {
@@ -50,7 +51,7 @@ export const DialogContainer: FC<DiaglogContainerProps> = ({
 
   return (
     <Styled.overlay onClick={overLayClick}>
-      <Styled.dialog onClick={dialogClick} width={width}>
+      <Styled.dialog ref={forwardRef} onClick={dialogClick} width={width}>
         {enableHeader && (
           <Styled.header>
             <Styled.headerText>
@@ -58,9 +59,9 @@ export const DialogContainer: FC<DiaglogContainerProps> = ({
             </Styled.headerText>
             <Styled.headerActions>
               {editCb && (
-                <div onClick={editCb}>
+                <p onClick={editCb}>
                   <EditIcon />
-                </div>
+                </p>
               )}
               <p onClick={closeDialog}>X</p>
             </Styled.headerActions>
@@ -113,7 +114,7 @@ const Styled = {
     padding: 30px 30px 0px 30px;
     width: calc(100% - 60px);
     height: ${({ height }) => height};
-    max-height: 600px;
+    /* max-height: 600px; */
   `,
   header: styled.div`
     padding: 20px 24px;

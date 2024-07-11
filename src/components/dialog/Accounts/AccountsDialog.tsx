@@ -64,6 +64,7 @@ const Styles = {
   container: styled.div`
     width: 100%;
     padding-bottom: 1rem;
+    max-height: 600px;
   `,
   accountListContainer: styled.div``,
   addAccountButton: styled.div`

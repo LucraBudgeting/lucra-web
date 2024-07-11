@@ -1,4 +1,5 @@
 export interface DialogProps<T = any> {
+  forwardRef?: React.RefObject<HTMLDivElement>;
   headerText?: string;
   enableHeader?: boolean;
   enableFooter?: boolean;
