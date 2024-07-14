@@ -26,8 +26,6 @@ const initialSectionTotals: ISectionTotals = {
 };
 
 export const BudgetsTable: FC<BudgetsTableProps> = ({ categories }) => {
-  const [incomeRef] = useAutoAnimate();
-  const [expenseRef] = useAutoAnimate();
   const [budgetsContainerRef] = useAutoAnimate();
 
   const { budgetActuals } = dashboardSelector();
@@ -117,7 +115,7 @@ export const BudgetsTable: FC<BudgetsTableProps> = ({ categories }) => {
               </Styles.sectionTotal>
             </Styles.sectionTotalsContainer>
           </Styles.sectionHeader>
-          <span ref={incomeRef}>
+          <span>
             {!isIncomeCollapsed && (
               <span>
                 <Styles.sectionRows>
@@ -144,7 +142,7 @@ export const BudgetsTable: FC<BudgetsTableProps> = ({ categories }) => {
               </Styles.sectionTotal>
             </Styles.sectionTotalsContainer>
           </Styles.sectionHeader>
-          <span ref={expenseRef}>
+          <span>
             {!isExpenseCollapsed && (
               <span>
                 <Styles.sectionRows>

@@ -39,6 +39,8 @@ export const dashboardSlice = createSlice({
         },
         {} as Record<string, ICategory>
       );
+
+      state.budgetActuals = calculateCategoryActuals(state);
     },
     addNewCategory: (state, action: PayloadAction<ICategory>) => {
       if (!action.payload.id) return;
