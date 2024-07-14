@@ -4,7 +4,7 @@ export function calcIsRemainingGood(budgeted: number, actual: number, budgetType
   if (budgetType === 'debit') {
     return actual - budgeted < 0;
   } else {
-    return budgeted - actual < 0;
+    return budgeted - actual <= 0;
   }
 }
 
