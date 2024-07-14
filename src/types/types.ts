@@ -3,9 +3,9 @@ export type balanceEntry = 'credit' | 'debit' | 'transfer';
 export function balanceEntryToText(entry: balanceEntry): string {
   switch (entry.toLowerCase()) {
     case 'credit':
-      return 'Expense';
-    case 'debit':
       return 'Income';
+    case 'debit':
+      return 'Expense';
     case 'transfer':
       return 'Transfer';
     default:

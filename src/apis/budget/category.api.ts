@@ -17,4 +17,14 @@ export default class CategoryApi extends BaseRepository {
     );
     return response;
   };
+
+  UpdateCategory = async (
+    category: ICategory
+  ): Promise<{ categories: ICategory[]; message: string }> => {
+    const response = await HttpClient.put<{ categories: ICategory[]; message: string }>(
+      `${this.apiUrl}/api/category`,
+      category
+    );
+    return response;
+  };
 }

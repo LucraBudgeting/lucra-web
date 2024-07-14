@@ -1,11 +1,11 @@
 import { FC, useContext, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { ApiContext } from '@/stores/contexts/api.context';
-import { EditOrAddCategory } from '@/components/dialog/EditOrAddCategory';
 import { addNewCategory } from '@/stores/slices/Dashboard.slice';
 import { ICategory } from '@/types/basic/Category.type';
 import { LoadingComponent } from '@/atoms/loading/Loading.Component';
 import { Button } from '@/atoms/button/Button';
+import { EditOrAddCategoryDialog } from '../dialog/EditOrAddCategoryDialog';
 
 interface AddBudgetRowProps {}
 
@@ -46,7 +46,7 @@ export const AddBudgetRow: FC<AddBudgetRowProps> = ({}) => {
         </Button>
       )}
       {isModalOpen && (
-        <EditOrAddCategory
+        <EditOrAddCategoryDialog
           budgeted={0}
           closeCb={onBudgetDialogClose}
           closeOnOverlayClick={true}

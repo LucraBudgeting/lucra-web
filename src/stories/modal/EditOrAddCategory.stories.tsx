@@ -1,6 +1,6 @@
 import { Meta, StoryObj } from '@storybook/react';
-import { fn } from '@storybook/test';
-import { EditOrAddCategory } from '@/components/dialog/EditOrAddCategory';
+import { ChangeEvent } from 'react';
+import { EditOrAddCategory } from '@/components/budget/EditOrAddCategory';
 
 const meta = {
   title: 'modal/Category/EditOrAddCategory',
@@ -9,9 +9,7 @@ const meta = {
     layout: 'centered',
   },
   tags: ['autodocs'],
-  args: {
-    closeCb: fn(),
-  },
+  args: {},
 } satisfies Meta<typeof EditOrAddCategory>;
 
 export default meta;
@@ -19,43 +17,39 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   args: {
-    category: {
-      label: 'Eating Out',
-      avatar: {
-        emoji: '🍔',
-        backgroundColor: '#49CCCB',
-      },
-      budgetType: 'debit',
-      id: '1',
-      amount: 0,
-    },
-    budgeted: 0,
-    headerText: 'Edit Category',
-    successCb: fn(),
+    budgetType: '',
+    onBudgetTypeChange: (_budgetType: string) => {},
+    label: '',
+    onLabelChange: (_e: ChangeEvent<HTMLInputElement>) => {},
+    currentEmoji: '',
+    onEmojiChange: (_emoji: string) => {},
+    budgetedAmount: 0,
+    onBudgetedChange: (_budgeted: number) => {},
   },
 };
 
 export const InitialAmount: Story = {
   args: {
-    category: {
-      label: 'Eating Out',
-      avatar: {
-        emoji: '🍔',
-        backgroundColor: '#49CCCB',
-      },
-      id: '1',
-      budgetType: 'debit',
-      amount: 0,
-    },
-    budgeted: 4335,
-    headerText: 'Edit Category',
+    budgetType: '',
+    onBudgetTypeChange: (_budgetType: string) => {},
+    label: '',
+    onLabelChange: (_e: ChangeEvent<HTMLInputElement>) => {},
+    currentEmoji: '',
+    onEmojiChange: (_emoji: string) => {},
+    budgetedAmount: 0,
+    onBudgetedChange: (_budgeted: number) => {},
   },
 };
 
 export const AddCategory: Story = {
   args: {
-    headerText: 'Add Category',
-    budgeted: 0,
-    successCb: fn(),
+    budgetType: '',
+    onBudgetTypeChange: (_budgetType: string) => {},
+    label: '',
+    onLabelChange: (_e: ChangeEvent<HTMLInputElement>) => {},
+    currentEmoji: '',
+    onEmojiChange: (_emoji: string) => {},
+    budgetedAmount: 0,
+    onBudgetedChange: (_budgeted: number) => {},
   },
 };

@@ -3,9 +3,9 @@ import styled from 'styled-components';
 import { formatAsMoney } from '@/utils/formatAsMoney';
 import { ICategory } from '@/types/basic/Category.type';
 import { dashboardSelector } from '@/stores/slices/Dashboard.slice';
-import { AvatarEmoji } from '../../atoms/avatar/AvatarEmoji';
+import { AvatarEmoji } from '@/atoms/avatar/AvatarEmoji';
+import { ViewBudgetDialog } from '@/components/dialog/ViewBudgetDialog';
 import { calcIsRemainingGood, calcRemaining } from './budgetCalculator';
-import { ViewBudgetDialog } from './ViewBudgetDialog';
 
 export interface BudgetItemProps {
   category: ICategory;

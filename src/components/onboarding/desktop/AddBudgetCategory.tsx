@@ -1,9 +1,9 @@
 import { FC, useContext, useState } from 'react';
 import styled from 'styled-components';
-import { EditOrAddCategory } from '@/components/dialog/EditOrAddCategory';
 import { ApiContext } from '@/stores/contexts/api.context';
 import { LoadingComponent } from '@/atoms/loading/Loading.Component';
 import { ICategory } from '@/types/basic/Category.type';
+import { EditOrAddCategoryDialog } from '@/components/dialog/EditOrAddCategoryDialog';
 import { styles } from './Styles';
 
 interface AddBudgetCategoryProps {
@@ -59,7 +59,7 @@ export const AddBudgetCategory: FC<AddBudgetCategoryProps> = ({ type, isDone, is
       </Styled.container>
 
       {isModalOpen && (
-        <EditOrAddCategory
+        <EditOrAddCategoryDialog
           budgeted={0}
           closeCb={onBudgetDialogClose}
           closeOnOverlayClick={true}

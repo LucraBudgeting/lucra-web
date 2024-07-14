@@ -22,6 +22,10 @@ const colors = [
   'EDD715',
 ];
 
+export const RandomColor = () => {
+  return colors[Math.floor(Math.random() * colors.length)];
+};
+
 export const ColorPicker: FC<ColorPickerProps> = ({ onClick, selectedColor }) => {
   const [parent] = useAutoAnimate();
   const formattedSelectedColor = selectedColor?.replace('#', '');

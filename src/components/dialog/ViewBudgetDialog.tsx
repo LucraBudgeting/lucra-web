@@ -1,26 +1,36 @@
-import { FC, useState } from 'react';
+import { ChangeEvent, FC, useContext, useState } from 'react';
 import styled, { css } from 'styled-components';
+import { useDispatch } from 'react-redux';
 import { DialogContainer } from '@/atoms/dialog/DiaglogContainer';
 import { DialogProps } from '@/atoms/dialog/Dialog.types';
 import { useOutsideClickRef } from '@/hooks/react/useOutsideClickRef';
-import { dashboardSelector } from '@/stores/slices/Dashboard.slice';
+import { dashboardSelector, setCategories } from '@/stores/slices/Dashboard.slice';
 import { ICategory } from '@/types/basic/Category.type';
 import { formatAsMoney } from '@/utils/formatAsMoney';
 import { useTransactions } from '@/hooks/dashboard/useTransactions.hook';
 import { LoadingComponent } from '@/atoms/loading/Loading.Component';
+import { balanceEntryToText, textToBalanceEntry } from '@/types/types';
+import { ApiContext } from '@/stores/contexts/api.context';
 import { TransactionList } from '../transaction/TransactionList';
-import { calcRemaining, calcIsRemainingGood } from './budgetCalculator';
+import { calcRemaining, calcIsRemainingGood } from '../budget/budgetCalculator';
+import { EditOrAddCategory } from '../budget/EditOrAddCategory';
 
 interface ViewBudgetDialogProps extends DialogProps {
   category: ICategory;
 }
 
 export const ViewBudgetDialog: FC<ViewBudgetDialogProps> = (props) => {
-  const { category, closeCb } = props;
-  const { id, label, avatar, amount, budgetType } = category;
-
   const [isEditEnabled, setIsEditEnabled] = useState(false);
   const [transactions, isTransactionsFetching] = useTransactions();
+  const [category, setCategory] = useState<ICategory>(props.category);
+  const [isCategorySaving, setIsCategorySaving] = useState(false);
+
+  const dispatch = useDispatch();
+
+  const { categoryApi } = useContext(ApiContext);
+
+  const { closeCb } = props;
+  const { id, label, avatar, amount, budgetType } = category;
 
   const filterTransactions = () =>
     transactions.filter((transaction) => transaction.categoryId === id);
@@ -29,12 +39,42 @@ export const ViewBudgetDialog: FC<ViewBudgetDialogProps> = (props) => {
   const remaining = calcRemaining(amount, actual);
   const isRemainingGood = calcIsRemainingGood(amount, actual, budgetType);
 
-  const headerLabel = avatar.emoji + label;
+  const headerLabel = isEditEnabled ? 'Edit category' : avatar.emoji + label;
 
   const ref = useOutsideClickRef(closeCb);
 
   const toggleEdit = () => {
     setIsEditEnabled(!isEditEnabled);
+  };
+
+  const onBudgetTypeChange = (budgetTypeText: string) => {
+    const budgetType = textToBalanceEntry(budgetTypeText);
+    setCategory({ ...category, budgetType });
+  };
+
+  const onLabelChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setCategory({ ...category, label: e.target.value });
+  };
+
+  const onEmojiChange = (emoji: string) => {
+    setCategory({ ...category, avatar: { ...category.avatar, emoji } });
+  };
+
+  const onBudgetedChange = (budgeted: number) => {
+    setCategory({ ...category, amount: budgeted });
+  };
+
+  const saveCategory = () => {
+    setIsCategorySaving(true);
+    categoryApi
+      .UpdateCategory(category)
+      .then((res) => {
+        dispatch(setCategories(res.categories));
+        toggleEdit();
+      })
+      .finally(() => {
+        setIsCategorySaving(false);
+      });
   };
 
   return (
@@ -44,9 +84,25 @@ export const ViewBudgetDialog: FC<ViewBudgetDialogProps> = (props) => {
       editCb={toggleEdit}
       enableFooter={isEditEnabled}
       headerText={headerLabel}
+      successCb={saveCategory}
     >
       {isEditEnabled ? (
-        <div>Edit Budget</div>
+        <Styles.editContainer>
+          {isCategorySaving ? (
+            <LoadingComponent loadingText="Saving Category" />
+          ) : (
+            <EditOrAddCategory
+              budgetType={balanceEntryToText(category.budgetType)}
+              onBudgetTypeChange={onBudgetTypeChange}
+              label={category.label}
+              onLabelChange={onLabelChange}
+              currentEmoji={category.avatar.emoji}
+              onEmojiChange={onEmojiChange}
+              budgetedAmount={category.amount}
+              onBudgetedChange={onBudgetedChange}
+            />
+          )}
+        </Styles.editContainer>
       ) : (
         <Styles.detailsContainer>
           <Styles.infoBlock>
@@ -87,6 +143,16 @@ const baseInfoBlockStyles = css`
 `;
 
 const Styles = {
+  editContainer: styled.div`
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    width: 100%;
+    padding: 12px;
+  `,
+  toggleContainer: styled.div`
+    width: 100%;
+  `,
   detailsContainer: styled.div`
     display: flex;
     flex-direction: column;

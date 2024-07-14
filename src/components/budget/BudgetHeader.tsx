@@ -8,9 +8,9 @@ import { addNewCategory, dashboardSelector } from '@/stores/slices/Dashboard.sli
 import { getShortMonth, yearFromIso } from '@/utils/time.helper';
 import { SettingModal } from '@/components/setting/modal/SettingModal';
 import { FeatureFlagContext } from '@/stores/contexts/featureFlag.context';
-import { EditOrAddCategory } from '@/components/dialog/EditOrAddCategory';
 import { ICategory } from '@/types/basic/Category.type';
 import { ApiContext } from '@/stores/contexts/api.context';
+import { EditOrAddCategoryDialog } from '../dialog/EditOrAddCategoryDialog';
 
 interface BudgetHeaderProps {}
 
@@ -80,7 +80,7 @@ export const BudgetHeader: FC<BudgetHeaderProps> = ({}) => {
       </Styles.container>
       <>
         {isAddOpen && (
-          <EditOrAddCategory
+          <EditOrAddCategoryDialog
             budgeted={0}
             closeCb={toggleAdd}
             closeOnOverlayClick={true}
