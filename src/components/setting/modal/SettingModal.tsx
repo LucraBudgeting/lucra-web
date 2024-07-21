@@ -10,6 +10,8 @@ import { useAuth } from '@/hooks/authentication/useAuth.hook';
 import { FeatureFlagContext } from '@/stores/contexts/featureFlag.context';
 import { CommitHash } from '@/utils/CommitHash';
 import { AccountsDialog } from '@/components/dialog/Accounts/AccountsDialog';
+import { AutomationIcon } from '@/assets/Automation-outline';
+import { RulesDialog } from '@/components/dialog/Rules/RulesDialog';
 import { SettingModalSection } from './SettingModalSection';
 import { SettingProfileHeader } from './SettingProfileHeader';
 
@@ -23,6 +25,7 @@ const initialModalStatus = {
   isAccountsOpen: false,
   isAppearanceOpen: false,
   isNotificationsOpen: false,
+  isRulesOpen: false,
 };
 
 export const SettingModal: FC<ProfileModalProps> = ({ outsideClickCb, parentRef }) => {
@@ -52,7 +55,7 @@ export const SettingModal: FC<ProfileModalProps> = ({ outsideClickCb, parentRef 
   }, [parentRef]);
 
   function handleOutsideClick() {
-    if (modalStatus.isAccountsOpen) return;
+    if (modalStatus.isAccountsOpen || modalStatus.isRulesOpen) return;
 
     outsideClickCb && outsideClickCb();
   }
@@ -66,6 +69,10 @@ export const SettingModal: FC<ProfileModalProps> = ({ outsideClickCb, parentRef 
 
   function toggleAccounts() {
     setModalStatus({ ...initialModalStatus, isAccountsOpen: !modalStatus.isAccountsOpen });
+  }
+
+  function toggleRules() {
+    setModalStatus({ ...initialModalStatus, isRulesOpen: !modalStatus.isRulesOpen });
   }
 
   function toggleAppearance() {
@@ -91,6 +98,11 @@ export const SettingModal: FC<ProfileModalProps> = ({ outsideClickCb, parentRef 
   function onAccountsClick() {
     closeAllModals();
     toggleAccounts();
+  }
+
+  function onRulesClick() {
+    closeAllModals();
+    toggleRules();
   }
 
   function onAppearanceClick() {
@@ -121,6 +133,7 @@ export const SettingModal: FC<ProfileModalProps> = ({ outsideClickCb, parentRef 
             title="Accounts"
             onClick={onAccountsClick}
           />
+          <SettingModalSection Icon={AutomationIcon} title="Rules" onClick={onRulesClick} />
           {isSettingsModalAppearanceEnabled && (
             <SettingModalSection
               Icon={ApperanceOutline}
@@ -148,6 +161,7 @@ export const SettingModal: FC<ProfileModalProps> = ({ outsideClickCb, parentRef 
       {modalStatus.isAccountsOpen && (
         <AccountsDialog closeCb={toggleAccounts} closeOnOverlayClick={false} />
       )}
+      {modalStatus.isRulesOpen && <RulesDialog closeCb={toggleRules} closeOnOverlayClick={false} />}
       {modalStatus.isAppearanceOpen && <div>Appearance</div>}
       {modalStatus.isNotificationsOpen && <div>Notifications</div>}
     </>
