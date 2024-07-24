@@ -21,33 +21,32 @@ export const RulesDialog: FC<RulesDialogProps> = (props) => {
   };
 
   function SaveRuleCb(rule: ITransactionRule) {
-    console.log('SAVE RULE', rule);
     rulesApi.SaveTransactionRule(rule).then(() => {
       setIsNewRule(false);
     });
   }
 
-  if (isFetchingRules) {
-    return <LoadingComponent loadingText="Fetching Rules..." />;
-  }
-
   return (
     <DialogContainer {...props} width="auto" enableFooter={false} headerText="Rules">
-      <Styles.container>
-        <h1>Rules Dialog</h1>
+      {isFetchingRules ? (
+        <LoadingComponent loadingText="Fetching Rules..." />
+      ) : (
+        <Styles.container>
+          <h1>Rules Dialog</h1>
 
-        <Styles.rulesContainer>
-          {rules.map((rule) => {
-            return (
-              <Styles.ruleContainer key={rule.id}>
-                <EditOrAddRule rule={rule} saveRuleCb={SaveRuleCb} />
-              </Styles.ruleContainer>
-            );
-          })}
-          {isNewRule && <EditOrAddRule saveRuleCb={SaveRuleCb} />}
-          <Button onClick={toggleNewRule}>New Rule</Button>
-        </Styles.rulesContainer>
-      </Styles.container>
+          <Styles.rulesContainer>
+            {rules.map((rule) => {
+              return (
+                <Styles.ruleContainer key={rule.id}>
+                  <EditOrAddRule rule={rule} saveRuleCb={SaveRuleCb} />
+                </Styles.ruleContainer>
+              );
+            })}
+            {isNewRule && <EditOrAddRule saveRuleCb={SaveRuleCb} />}
+            <Button onClick={toggleNewRule}>New Rule</Button>
+          </Styles.rulesContainer>
+        </Styles.container>
+      )}
     </DialogContainer>
   );
 };

@@ -166,8 +166,6 @@ export const EditOrAddRule: FC<EditOrAddRuleProps> = ({ rule, saveRuleCb }) => {
     setRuleName(updatedValue);
   }
 
-  console.log('condition groups', conditionGroups);
-
   return (
     <Styles.newRuleContainer>
       <BasicInput
