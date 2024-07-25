@@ -1,6 +1,18 @@
 window.NREUM || (NREUM = {});
 NREUM.init = {
-  distributed_tracing: { enabled: true },
+  session_replay: {
+    enabled: true,
+    block_selector: '',
+    mask_text_selector: '*',
+    sampling_rate: 10.0,
+    error_sampling_rate: 100.0,
+    mask_all_inputs: true,
+    collect_fonts: true,
+    inline_images: false,
+    inline_stylesheet: true,
+    mask_input_options: {},
+  },
+  distributed_tracing: { enabled: true, exclude_newrelic_header: true },
   privacy: { cookies_enabled: true },
   ajax: { deny_list: ['bam.nr-data.net'] },
 };
@@ -1611,10 +1623,7 @@ NREUM.info = {
             IMPORT: { message: 'Recorder failed to import', sm: 'Import' },
             TOO_MANY: { message: '429: Too Many Requests', sm: 'Too-Many' },
             TOO_BIG: { message: 'Payload was too large', sm: 'Too-Big' },
-            CROSS_TAB: {
-              message: 'Session Entity was set to OFF on another tab',
-              sm: 'Cross-Tab',
-            },
+            CROSS_TAB: { message: 'Session Entity was set to OFF on another tab', sm: 'Cross-Tab' },
             ENTITLEMENTS: {
               message: 'Session Replay is not allowed and will not be started',
               sm: 'Entitlement',
@@ -2907,11 +2916,7 @@ NREUM.info = {
                 let n;
                 (this.params.status = t ? t.status : 0),
                   'string' == typeof this.rxSize && this.rxSize.length > 0 && (n = +this.rxSize);
-                const i = {
-                  txSize: this.txSize,
-                  rxSize: n,
-                  duration: (0, C.t)() - this.startTime,
-                };
+                const i = { txSize: this.txSize, rxSize: n, duration: (0, C.t)() - this.startTime };
                 r('xhr', [this.params, i, this.startTime, this.endTime, 'fetch'], this, a.K.ajax);
               }
               function R(e) {
