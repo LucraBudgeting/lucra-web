@@ -43,7 +43,7 @@ export const dashboardSlice = createSlice({
       state.budgetActuals = calculateCategoryActuals(state);
     },
     addNewCategory: (state, action: PayloadAction<ICategory>) => {
-      if (!action.payload.id) return;
+      if (!action.payload.id || !action.payload.budgetType) return;
 
       if (action.payload.budgetType === 'credit') {
         state.creditCategories.push(action.payload);
