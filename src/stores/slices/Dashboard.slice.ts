@@ -82,7 +82,7 @@ function calculateCategoryActuals(state: typeof initialState): Record<string, nu
 
       const amount = parseFloat(transaction.amount.toString());
 
-      const categoryType = state.categoryDictionary[transaction.categoryId].budgetType;
+      const categoryType = state.categoryDictionary[transaction.categoryId]?.budgetType;
 
       if (categoryType === 'credit') {
         acc[transaction.categoryId] = acc[transaction.categoryId]
