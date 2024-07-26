@@ -1,7 +1,7 @@
 import { defineConfig } from 'vite';
 import * as path from 'path';
 import react from '@vitejs/plugin-react-swc';
-import { VitePWA } from 'vite-plugin-pwa';
+// import { VitePWA } from 'vite-plugin-pwa';
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -11,10 +11,6 @@ export default defineConfig({
 
   preview: {
     port: 8080,
-  },
-
-  define: {
-    'process.env.DEVELOPER_MODE': JSON.stringify(process.env.DEVELOPER_MODE),
   },
 
   plugins: [
