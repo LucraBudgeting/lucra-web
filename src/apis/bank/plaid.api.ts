@@ -1,3 +1,4 @@
+import { PlaidLinkOnSuccessMetadata } from 'react-plaid-link';
 import HttpClient from '@/libs/http/http.client';
 import { BaseRepository } from '../base.repository';
 
@@ -9,9 +10,13 @@ export class PlaidApi extends BaseRepository {
     return linkToken.linkToken;
   };
 
-  syncLinkedAccounts = async (publicToken: string): Promise<any> => {
-    const response = await HttpClient.get<any>(
-      `${this.apiUrl}/api/plaid/sync_accounts/${publicToken}`
+  syncLinkedAccounts = async (
+    publicToken: string,
+    metaData: PlaidLinkOnSuccessMetadata
+  ): Promise<any> => {
+    const response = await HttpClient.post<any>(
+      `${this.apiUrl}/api/plaid/sync_accounts/${publicToken}`,
+      metaData
     );
     return response;
   };

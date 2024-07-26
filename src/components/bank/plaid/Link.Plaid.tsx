@@ -1,5 +1,5 @@
 import React, { FC, useCallback, useContext, useEffect, useState } from 'react';
-import { usePlaidLink } from 'react-plaid-link';
+import { PlaidLinkOnSuccessMetadata, usePlaidLink } from 'react-plaid-link';
 import { Button } from '@/atoms/button/Button';
 import { ApiContext } from '@/stores/contexts/api.context';
 
@@ -24,22 +24,25 @@ export const LinkPlaid: FC<LinkPlaidProps> = ({ children, informParent, onSucces
     fetchLinkToken();
   }, [tokenHash]);
 
-  const plaidOnSuccess = useCallback(async (publicToken: string) => {
-    setTokenHash(publicToken);
+  const plaidOnSuccess = useCallback(
+    async (publicToken: string, metaData: PlaidLinkOnSuccessMetadata) => {
+      setTokenHash(publicToken);
 
-    if (onSuccess) {
-      return onSuccess(publicToken);
-    }
+      if (onSuccess) {
+        return onSuccess(publicToken);
+      }
 
-    await bankApi
-      .syncLinkedAccounts(publicToken)
-      .then(() => {
-        informParent && informParent('success');
-      })
-      .catch(() => {
-        informParent && informParent('error');
-      });
-  }, []);
+      await bankApi
+        .syncLinkedAccounts(publicToken, metaData)
+        .then(() => {
+          informParent && informParent('success');
+        })
+        .catch(() => {
+          informParent && informParent('error');
+        });
+    },
+    []
+  );
 
   const config: Parameters<typeof usePlaidLink>[0] = {
     token: linkToken,
