@@ -13,6 +13,10 @@ export default defineConfig({
     port: 8080,
   },
 
+  define: {
+    'process.env.DEVELOPER_MODE': JSON.stringify(process.env.DEVELOPER_MODE),
+  },
+
   plugins: [
     react(),
     // VitePWA({
