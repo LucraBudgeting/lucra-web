@@ -26,9 +26,9 @@ const SplitViewPane = styled.div<{ width: number }>`
 `;
 
 const Divider = styled.div`
-  width: 5px;
+  width: 1px;
   background-color: #ccc;
-  height: 98%;
+  height: 100%;
   cursor: ew-resize;
   position: relative;
   border-radius: 10px;
