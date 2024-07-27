@@ -3,9 +3,9 @@ import styled from 'styled-components';
 import { SpyGlassOutline } from '@/assets/spyglass-outline';
 import { dashboardSelector } from '@/stores/slices/Dashboard.slice';
 import { useOutsideClickRef } from '@/hooks/react/useOutsideClickRef';
+import { maxZIndex } from '@/utils/domConstants';
 import { ICategory } from '../../types/basic/Category.type';
 import { CategoryItem } from './CategoryItem';
-import { maxZIndex } from '@/utils/domConstants';
 
 interface CategoryListProps {
   parentRef: React.RefObject<HTMLDivElement>;
