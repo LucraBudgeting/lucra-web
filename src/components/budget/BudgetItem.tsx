@@ -95,6 +95,11 @@ const Styled = {
     gap: 24px;
     width: 40%;
     min-width: 600px;
+
+    @media (max-width: 600px) {
+      min-width: 60%;
+      max-width: 70%;
+    }
   `,
   remainingCell: styled.div<{ isremaininggood: string }>`
     color: ${(props) => (props.isremaininggood == 'true' ? '#2AA64C' : '#CA4141')};
