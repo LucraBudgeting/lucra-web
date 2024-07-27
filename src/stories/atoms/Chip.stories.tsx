@@ -11,7 +11,6 @@ const meta = {
   tags: ['autodocs'],
   argTypes: {
     emoji: { control: 'text' },
-    backgroundColor: { control: 'color' },
     label: { control: 'text' },
   },
   args: { onClick: fn() },
@@ -24,13 +23,11 @@ export const Default: Story = {
   args: {
     label: 'Eating Out',
     emoji: '🍔',
-    backgroundColor: '#FDF9A9',
   },
 };
 
 export const WithoutEmoji: Story = {
   args: {
     label: 'Eating Out',
-    backgroundColor: '#FDF9A9',
   },
 };
