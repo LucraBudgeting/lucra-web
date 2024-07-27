@@ -97,7 +97,7 @@ const StyledInput = styled.input`
   color: #333;
   font-size: 16px;
   border: 2px solid #cccccc;
-  border-radius: 5px;
+  border-radius: 8px;
   width: 100%;
   box-sizing: border-box;
   &:focus {

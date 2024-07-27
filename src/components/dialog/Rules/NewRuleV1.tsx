@@ -6,7 +6,7 @@ import { BasicSelect } from '@/atoms/select/BasicSelect';
 import { AddIcon, CancelIcon } from '@/common/style';
 import { dashboardSelector } from '@/stores/slices/Dashboard.slice';
 import { ICategory } from '@/types/basic/Category.type';
-import { conditionOperator, conditionType } from '@/types/models/rules/rule.type';
+import { eConditionOperator, eConditionType } from '@/types/models/rules/rule.type';
 import {
   ITransactionCondition,
   ITransactionConditionGroup,
@@ -37,12 +37,12 @@ const conditionOperatorOptions = [
 
 const newCondition: ITransactionCondition = {
   field: transactionFieldOptions[0].value,
-  operator: conditionOperator.contains,
+  operator: eConditionOperator.contains,
   value: '',
 };
 
 const newConditionGroup: ITransactionConditionGroup = {
-  type: conditionType.and,
+  type: eConditionType.and,
   conditions: [newCondition],
 };
 
@@ -90,7 +90,7 @@ export const EditOrAddRule: FC<EditOrAddRuleProps> = ({ rule, saveRuleCb }) => {
 
   function changeConditionType(updatedValue: string, groupIndex: number): void {
     const group = conditionGroups[groupIndex];
-    group.type = updatedValue as conditionType;
+    group.type = updatedValue as eConditionType;
     setConditionGroups([...conditionGroups]);
   }
 
@@ -117,7 +117,7 @@ export const EditOrAddRule: FC<EditOrAddRuleProps> = ({ rule, saveRuleCb }) => {
     ] as ITransactionCondition;
     tempConditionGroup[groupIndex].conditions[conditionIndex] = {
       ...condition,
-      operator: updatedValue as conditionOperator,
+      operator: updatedValue as eConditionOperator,
     };
     setConditionGroups(tempConditionGroup);
   }

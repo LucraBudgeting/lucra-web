@@ -26,23 +26,23 @@ enum RuleModels {
 
 export interface ICondition {
   field: string;
-  operator: conditionOperator;
+  operator: eConditionOperator;
   value: any;
 }
 
 export interface IConditionGroup {
-  type: conditionType;
+  type: eConditionType;
   conditions: ICondition[];
 }
 
-export enum conditionOperator {
+export enum eConditionOperator {
   contains = 'contains',
   equals = 'equals',
   starts_with = 'starts_with',
   ends_with = 'ends_with',
 }
 
-export enum conditionType {
+export enum eConditionType {
   and = 'and',
   or = 'or',
 }
