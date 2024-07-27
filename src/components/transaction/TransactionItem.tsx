@@ -32,7 +32,6 @@ const Styled = {
     width: 40%;
     text-overflow: ellipsis;
     white-space: nowrap;
-    overflow: hidden;
   `,
   amount: styled.p<{ amount: number }>`
     font-weight: 600;
