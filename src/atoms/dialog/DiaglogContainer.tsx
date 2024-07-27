@@ -1,5 +1,6 @@
 import { FC } from 'react';
 import { EditIcon } from '@/assets/edit-icon';
+import { CrossIcon } from '@/assets/cross-icon';
 import { Button } from '../button/Button';
 import { Styled } from './Dialog.styles';
 import { DialogProps } from './Dialog.types';
@@ -63,7 +64,9 @@ export const DialogContainer: FC<DiaglogContainerProps> = ({
                   <EditIcon />
                 </p>
               )}
-              <p onClick={closeDialog}>X</p>
+              <p onClick={closeDialog}>
+                <CrossIcon />
+              </p>
             </Styled.headerActions>
           </Styled.header>
         )}

@@ -59,7 +59,7 @@ export const Styled = {
   `,
   headerActions: styled.div`
     position: absolute;
-    right: 0; // Positions the close button on the far right within the header
+    right: 1rem; // Positions the close button on the far right within the header
     top: 50%; // Vertically centers the button
     transform: translateY(-50%); // Ensures the button is perfectly centered vertically
     border: none;
@@ -68,6 +68,8 @@ export const Styled = {
     padding: 10px 20px; // Adequate padding for clickable area
     line-height: 1; // Normalizes line height to avoid unexpected sizing
     display: flex;
+    align-items: center;
+    justify-content: space-between;
     gap: 20px;
 
     p {

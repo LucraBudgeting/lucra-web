@@ -1,4 +1,4 @@
-import { FC, useContext, useState } from 'react';
+import { FC, useContext, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { useAutoAnimate } from '@formkit/auto-animate/react';
 import { DialogContainer } from '@/atoms/dialog/DiaglogContainer';
@@ -7,18 +7,26 @@ import { useTransactionRules } from '@/hooks/dashboard/useTranscriptionRules.hoo
 import { LoadingComponent } from '@/atoms/loading/Loading.Component';
 import { ITransactionRule } from '@/types/models/rules/transaction.rule.type';
 import { ApiContext } from '@/stores/contexts/api.context';
-import { dashboardSelector } from '@/stores/slices/Dashboard.slice';
 import { EditOrAddRuleV2 } from './NewRuleV2';
-import { getConditionDisplayName } from './rule.utils';
+import { RuleContainer } from './RuleContainer';
 
 interface RulesDialogProps extends DialogProps {}
 
 export const RulesDialog: FC<RulesDialogProps> = (props) => {
-  const { categoryDictionary } = dashboardSelector();
   const [containerRef] = useAutoAnimate();
+
+  const [rulesCacheBuster, setRulesCacheBuster] = useState<string>();
   const [isNewOrEdit, setIsNewOrEdit] = useState(false);
+  const [ruleToEdit, setRuleToEdit] = useState<ITransactionRule>();
+
   const { rulesApi } = useContext(ApiContext);
-  const [rules, isFetchingRules] = useTransactionRules();
+  const [rules, isFetchingRules] = useTransactionRules(rulesCacheBuster);
+
+  useEffect(() => {
+    if (!isNewOrEdit) {
+      setRuleToEdit(undefined);
+    }
+  }, [isNewOrEdit]);
 
   const toggleNewOrEditRule = () => {
     setIsNewOrEdit((prev) => !prev);
@@ -42,9 +50,15 @@ export const RulesDialog: FC<RulesDialogProps> = (props) => {
     }
   };
 
+  function editRuleCb(ruleIndex: number) {
+    setRuleToEdit(rules[ruleIndex]);
+    toggleNewOrEditRule();
+  }
+
   function SaveRuleCb(rule: ITransactionRule) {
     rulesApi.SaveTransactionRule(rule).then(() => {
       setIsNewOrEdit(false);
+      setRulesCacheBuster(new Date().getTime().toString());
     });
   }
 
@@ -63,23 +77,16 @@ export const RulesDialog: FC<RulesDialogProps> = (props) => {
           <LoadingComponent loadingText="Fetching Rules..." />
         ) : (
           <Styles.rulesContainer>
-            {isNewOrEdit && <EditOrAddRuleV2 saveRuleCb={SaveRuleCb} cancelCb={cancelCb} />}
-            {!isNewOrEdit &&
-              rules.map((rule) => {
-                const { operator, value } =
-                  rule?.parsedCondition?.conditionGroups[0]?.conditions[0] ?? {};
-                return (
-                  <Styles.ruleContainer key={rule.id}>
-                    <p>{rule.name}</p>
-                    <p>
-                      Merchant <code>{getConditionDisplayName(operator)}</code>: {value}
-                    </p>
-                    <p>
-                      Category: {categoryDictionary[rule.parsedCondition.categoryId]?.label ?? ''}
-                    </p>
-                  </Styles.ruleContainer>
-                );
-              })}
+            {isNewOrEdit && (
+              <EditOrAddRuleV2 saveRuleCb={SaveRuleCb} cancelCb={cancelCb} rule={ruleToEdit} />
+            )}
+            {!isNewOrEdit && (
+              <Styles.rulesList>
+                {rules.map((rule, index) => (
+                  <RuleContainer index={index} key={rule.id} rule={rule} editCb={editRuleCb} />
+                ))}
+              </Styles.rulesList>
+            )}
           </Styles.rulesContainer>
         )}
       </Styles.container>
@@ -101,13 +108,11 @@ const Styles = {
   rulesContainer: styled.div`
     width: 100%;
   `,
-  ruleContainer: styled.div`
-    width: Fill (452px) px;
-    height: Hug (115px) px;
-    padding: 20px 24px 20px 24px;
-    gap: 20px;
-    border-radius: 16px;
-    opacity: 0px;
-    background-color: #fbfafa;
+  rulesList: styled.div`
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    overflow-y: auto;
+    max-height: 40vh;
   `,
 };
