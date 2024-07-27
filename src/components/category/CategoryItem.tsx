@@ -23,10 +23,7 @@ const Styled = {
     width: 100%;
     align-items: center;
     gap: 14px;
-
-    :hover {
-      cursor: pointer;
-    }
+    cursor: pointer;
   `,
   title: styled.h1`
     color: var(--Grey-Dark, #333);
