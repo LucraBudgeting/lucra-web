@@ -10,7 +10,7 @@ export const LoginFooter = styled.p`
   text-decoration: underline;
 `;
 
-export const RegisterFooter = styled.p`
+export const RegisterFooter = styled.div`
   color: #707070;
   font-size: 14px;
   margin-top: 0.5rem;

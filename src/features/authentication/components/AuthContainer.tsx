@@ -32,10 +32,10 @@ export const AuthContainer: FC<AuthContainerProps> = ({
   children,
   isCbDisabled,
 }) => {
-  const showBackBtn = showBackPaths.includes(window.location.pathname);
+  const showBackBtn = showBackPaths.includes(location.pathname);
 
   function onBackClick() {
-    window.location.href = 'https://lucrabudgeting.com';
+    location.href = 'https://lucrabudgeting.com';
   }
 
   return (

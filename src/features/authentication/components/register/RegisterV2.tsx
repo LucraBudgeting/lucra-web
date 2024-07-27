@@ -3,10 +3,9 @@ import { FC, useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { BaseInput, Error } from '@/atoms/input/BaseInput';
 import { LoadingComponent } from '@/atoms/loading/Loading.Component';
-import { authRoutes, homeRoute } from '@/routes/RouteConstants';
+import { authRoutes } from '@/routes/RouteConstants';
 import { ApiContext } from '@/stores/contexts/api.context';
-import { setAuthentication } from '@/stores/slices/Authentication.slice';
-import { useAppDispatch } from '@/stores/store.hooks';
+import localStorageRepository from '@/utils/localStorage.repository';
 import * as Styles from '../auth.styles';
 import { validateEmail, validatePassword } from '../../validation';
 import { AuthContainer } from '../AuthContainer';
@@ -15,8 +14,7 @@ interface RegisterV2Props {}
 
 export const RegisterV2: FC<RegisterV2Props> = ({}) => {
   const navigate = useNavigate();
-  const { authApi } = useContext(ApiContext);
-  const dispatch = useAppDispatch();
+  const { onboardingApi } = useContext(ApiContext);
   const [parentRef] = useAutoAnimate();
 
   const [name, setName] = useState<string>('');
@@ -56,8 +54,22 @@ export const RegisterV2: FC<RegisterV2Props> = ({}) => {
 
   function onEmailBlur() {
     const errors = validateEmail(email);
-    setEmailErrors(errors);
-    validateRegistrationForm();
+
+    function blurActions(errorList: string[]) {
+      setEmailErrors(errorList);
+      validateRegistrationForm();
+    }
+
+    if (errors.length === 0) {
+      onboardingApi
+        .doesAccountWithEmailExist(email)
+        .catch((res) => {
+          errors.push(res.message);
+        })
+        .finally(() => {
+          blurActions(errors);
+        });
+    }
   }
 
   function onPasswordChange(e: React.ChangeEvent<HTMLInputElement>) {
@@ -104,23 +116,12 @@ export const RegisterV2: FC<RegisterV2Props> = ({}) => {
     }
 
     setIsAuthorizing(true);
-    authApi
-      .login(email, password)
+
+    onboardingApi
+      .createAccount(email, name, password)
       .then((res) => {
-        const { user, accessToken } = res;
-
-        dispatch(
-          setAuthentication({
-            userId: user.userId,
-            token: accessToken,
-            phoneNumber: user.phoneNumber,
-            email: user.email,
-          })
-        );
-
-        setTimeout(() => {
-          navigate(homeRoute);
-        }, 50);
+        localStorageRepository.setUserToken(res.token);
+        location.href = res.checkoutUrl;
       })
       .catch((res) => {
         setRegistrationError(res.message);
