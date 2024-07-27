@@ -12,6 +12,7 @@ import { CommitHash } from '@/utils/CommitHash';
 import { AccountsDialog } from '@/components/dialog/Accounts/AccountsDialog';
 import { AutomationIcon } from '@/assets/Automation-outline';
 import { RulesDialog } from '@/components/dialog/Rules/RulesDialog';
+import useClientDevice from '@/hooks/client/useClientDevice';
 import { SettingModalSection } from './SettingModalSection';
 import { SettingProfileHeader } from './SettingProfileHeader';
 
@@ -34,6 +35,7 @@ export const SettingModal: FC<ProfileModalProps> = ({ outsideClickCb, parentRef 
     isSettingsModalNotificationsEnabled,
     isSettingsModalProfileEnabled,
   } = useContext(FeatureFlagContext);
+  const { windowSize, isMobile } = useClientDevice();
   const [modalStatus, setModalStatus] = useState(initialModalStatus);
 
   const [modalStyle, setModalStyle] = useState<React.CSSProperties>({
@@ -41,6 +43,18 @@ export const SettingModal: FC<ProfileModalProps> = ({ outsideClickCb, parentRef 
   });
 
   useEffect(() => {
+    if (isMobile) {
+      // Set style to be center of screen
+      setModalStyle({
+        position: 'fixed',
+        top: '50%',
+        left: '50%',
+        transform: 'translate(-50%, -50%)',
+      });
+
+      return;
+    }
+
     if (parentRef.current) {
       const rect = parentRef.current.getBoundingClientRect();
       const top = rect.bottom + window.scrollY + 10;
@@ -52,7 +66,7 @@ export const SettingModal: FC<ProfileModalProps> = ({ outsideClickCb, parentRef 
         left,
       });
     }
-  }, [parentRef]);
+  }, [parentRef, windowSize, isMobile]);
 
   function handleOutsideClick() {
     if (modalStatus.isAccountsOpen || modalStatus.isRulesOpen) return;

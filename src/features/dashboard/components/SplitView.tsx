@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
+import useClientDevice from '@/hooks/client/useClientDevice';
 
 interface SplitViewProps {
   left: React.ReactNode;
@@ -50,7 +51,14 @@ const SplitView: React.FC<SplitViewProps> = ({
   rightMinContainerWidth = 25,
   initialLeftContainerWidth = 75,
 }) => {
+  const { windowSize, isMobile } = useClientDevice();
   const [leftWidth, setLeftWidth] = useState(initialLeftContainerWidth);
+
+  useEffect(() => {
+    if (isMobile) {
+      setLeftWidth(100);
+    }
+  }, [windowSize, isMobile]);
 
   const handleDrag = (e: MouseEvent) => {
     const newLeftWidth = (e.clientX / window.innerWidth) * 100;
@@ -74,10 +82,14 @@ const SplitView: React.FC<SplitViewProps> = ({
   return (
     <SplitViewContainer>
       <SplitViewPane width={leftWidth}>{left}</SplitViewPane>
-      <Divider onMouseDown={(e) => e.preventDefault()}>
-        <Handle onMouseDown={handleMouseDown} />
-      </Divider>
-      <SplitViewPane width={100 - leftWidth}>{right}</SplitViewPane>
+      {isMobile ? null : (
+        <>
+          <Divider onMouseDown={(e) => e.preventDefault()}>
+            <Handle onMouseDown={handleMouseDown} />
+          </Divider>
+          <SplitViewPane width={100 - leftWidth}>{right}</SplitViewPane>
+        </>
+      )}
     </SplitViewContainer>
   );
 };

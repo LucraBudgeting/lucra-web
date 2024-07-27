@@ -170,6 +170,11 @@ const Styles = {
     gap: 24px;
     min-width: 600px;
 
+    @media (max-width: 600px) {
+      min-width: 60%;
+      max-width: 70%;
+    }
+
     p {
       width: 30%;
       text-align: right;
@@ -216,6 +221,11 @@ const Styles = {
     width: 40%;
     min-width: 600px;
     gap: 24px;
+
+    @media (max-width: 600px) {
+      min-width: 60%;
+      max-width: 70%;
+    }
   `,
   sectionTotal: styled.p<{ isremaininggood?: string }>`
     color: ${(props) => {
