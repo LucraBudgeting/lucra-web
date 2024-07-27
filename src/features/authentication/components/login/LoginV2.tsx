@@ -1,15 +1,15 @@
 import { FC, useContext, useState } from 'react';
-import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import { useAutoAnimate } from '@formkit/auto-animate/react';
 import { BaseInput, Error } from '@/atoms/input/BaseInput';
 import { authRoutes, homeRoute } from '@/routes/RouteConstants';
-import { isValidEmail } from '@/utils/isValidEmail';
 import { ApiContext } from '@/stores/contexts/api.context';
 import { useAppDispatch } from '@/stores/store.hooks';
 import { setAuthentication } from '@/stores/slices/Authentication.slice';
 import { LoadingComponent } from '@/atoms/loading/Loading.Component';
+import * as Styles from '../auth.styles';
 import { AuthContainer } from '../AuthContainer';
+import { validateEmail, validatePassword } from '../../validation';
 
 interface LoginV2Props {}
 
@@ -100,9 +100,9 @@ export const LoginV2: FC<LoginV2Props> = ({}) => {
       cb={submitLogin}
       cbTabIndex={4}
       footer={
-        <Styles.footer onClick={redirectToRegister} tabIndex={5}>
+        <Styles.LoginFooter onClick={redirectToRegister} tabIndex={5}>
           Register Here
-        </Styles.footer>
+        </Styles.LoginFooter>
       }
     >
       {isAuthorizing ? (
@@ -110,87 +110,32 @@ export const LoginV2: FC<LoginV2Props> = ({}) => {
       ) : (
         <>
           <BaseInput
-            label="Email"
+            label="Email*"
             tabIndex={1}
             value={email}
             onChange={onEmailChange}
             onBlur={onEmailBlur}
             errors={emailErrors}
-            name="email"
+            name="login email"
           />
           <BaseInput
-            label="Password"
+            label="Password*"
             issecret={true.toString()}
             tabIndex={2}
             value={password}
             onChange={onPasswordChange}
             onBlur={onPasswordBlur}
             errors={passwordErrors}
-            name="password"
+            name="login password"
           />
           {loginError && <Error>{loginError}</Error>}
-          <Styles.ctaContainer>
-            <Styles.forgotPassword onClick={redirectToForgotPassword} tabIndex={3}>
+          <Styles.CtaContainer>
+            <Styles.ForgotPassword onClick={redirectToForgotPassword} tabIndex={3}>
               Forgot Password?
-            </Styles.forgotPassword>
-          </Styles.ctaContainer>
+            </Styles.ForgotPassword>
+          </Styles.CtaContainer>
         </>
       )}
     </AuthContainer>
   );
 };
-
-const Styles = {
-  footer: styled.p`
-    color: #333;
-    font-size: 14px;
-    margin-top: 0.5rem;
-    cursor: pointer;
-    text-decoration: underline;
-  `,
-  ctaContainer: styled.div``,
-  forgotPassword: styled.p`
-    color: #136df4;
-    font-size: 12px;
-    cursor: pointer;
-    font-weight: 600;
-  `,
-};
-
-function validatePassword(password: string): string[] {
-  const errors = [];
-  const hasNumber = /\d/.test(password);
-  const hasSymbol = /[^a-zA-Z0-9]/.test(password);
-  const hasLength = password.length >= 8;
-
-  if (!password) {
-    errors.push('Password is required');
-  }
-
-  if (!hasNumber) {
-    errors.push('Password must contain at least one number');
-  }
-
-  if (!hasSymbol) {
-    errors.push('Password must contain at least one symbol');
-  }
-
-  if (!hasLength) {
-    errors.push('Password must be at least 8 characters long');
-  }
-
-  return errors;
-}
-
-function validateEmail(email: string): string[] {
-  const errors = [];
-  if (!email) {
-    errors.push('Email is required');
-  }
-
-  if (!isValidEmail(email)) {
-    errors.push('Email is invalid');
-  }
-
-  return errors;
-}

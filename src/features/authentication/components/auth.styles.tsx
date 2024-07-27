@@ -1,23 +1,35 @@
+import styled from 'styled-components';
+
 export * from '@/common/style';
 
-import { Button, Card, styled } from '@mui/material';
+export const LoginFooter = styled.p`
+  color: #707070;
+  font-size: 14px;
+  margin-top: 0.5rem;
+  cursor: pointer;
+  text-decoration: underline;
+`;
 
-export const LoginButton = styled(Button)(({ theme }) => ({
-  backgroundColor: theme.palette.primary.main,
-  color: theme.typography.button.color,
-  textAlign: 'center',
-  cursor: 'pointer',
-  textDecoration: 'none',
-}));
+export const RegisterFooter = styled.p`
+  color: #707070;
+  font-size: 14px;
+  margin-top: 0.5rem;
+  cursor: pointer;
+  display: flex;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  width: 100%;
 
-export const AuthCardContainer = styled(Card)(({ theme }) => ({
-  display: 'flex',
-  flexDirection: 'column',
-  alignItems: 'center',
-  gap: theme.spacing(2),
-  minWidth: '300px',
-}));
-
-export const LogoContainer = styled('img')(({}) => ({
-  maxWidth: '140px',
-}));
+  p {
+    color: #136df4;
+    margin-left: 0.25rem;
+  }
+`;
+export const CtaContainer = styled.div``;
+export const ForgotPassword = styled.p`
+  color: #136df4;
+  font-size: 12px;
+  cursor: pointer;
+  font-weight: 600;
+`;

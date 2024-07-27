@@ -30,8 +30,6 @@ export const SnackBarComponent: FC<SnackBarComponentProps> = ({ open, message, s
     }, 250);
   }
 
-  console.log('SnackBarComponent', { open, message, severity });
-
   return (
     <Snackbar
       data-cy="snackbar-component"
