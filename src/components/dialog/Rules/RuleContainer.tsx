@@ -4,6 +4,7 @@ import { ITransactionRule } from '@/types/models/rules/transaction.rule.type';
 import { dashboardSelector } from '@/stores/slices/Dashboard.slice';
 import { EditIcon } from '@/assets/edit-icon';
 import { TrashIcon } from '@/assets/trash-icon';
+import { ElipsesIcon } from '@/assets/elipses-icon';
 import { getConditionDisplayName } from './rule.utils';
 
 interface RuleContainerProps {
@@ -24,6 +25,7 @@ export const RuleContainer: FC<RuleContainerProps> = ({ index, rule, editCb }) =
   return (
     <Styled.ruleContainer>
       <Styled.actionIcons>
+        <ElipsesIcon />
         <EditIcon onClick={onEditClick} />
         <TrashIcon />
       </Styled.actionIcons>
