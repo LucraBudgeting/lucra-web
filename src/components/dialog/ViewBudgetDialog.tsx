@@ -106,7 +106,7 @@ export const ViewBudgetDialog: FC<ViewBudgetDialogProps> = (props) => {
       ) : (
         <Styles.detailsContainer>
           <Styles.infoBlock>
-            <h2>Amount</h2>
+            <h2>Budget</h2>
             <h3>{formatAsMoney(amount, true)}</h3>
           </Styles.infoBlock>
           <Styles.infoBlock>
