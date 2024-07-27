@@ -23,7 +23,7 @@ export const AuthCheckProvider: FC<AuthCheckProviderProps> = ({}) => {
   useEffect(() => {
     let isMounted = true;
     if (!isUserModelLocal(user)) {
-      apis.authentication
+      apis.authApi
         .getLoggedInUser()
         .then((res) => {
           if (!isMounted) return;

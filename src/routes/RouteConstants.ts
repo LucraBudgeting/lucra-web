@@ -16,6 +16,7 @@ export const authRoutes = {
   base: authBase,
   login: `/${authBase}/login`,
   register: `/${authBase}/register`,
+  forgotPassword: `/${authBase}/login/forgot-password`,
 };
 
 export const bankRoutes = {

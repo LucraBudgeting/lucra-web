@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import * as Styled from './auth.styles';
+import { Button, styled } from '@mui/material';
 
 interface LoginButtonProps {
   onClick: () => void;
@@ -7,5 +7,13 @@ interface LoginButtonProps {
 }
 
 export const AuthButton: FC<LoginButtonProps> = ({ onClick, text }) => {
-  return <Styled.LoginButton onClick={onClick}>{text}</Styled.LoginButton>;
+  return <LoginButton onClick={onClick}>{text}</LoginButton>;
 };
+
+const LoginButton = styled(Button)(({ theme }) => ({
+  backgroundColor: theme.palette.primary.main,
+  color: theme.typography.button.color,
+  textAlign: 'center',
+  cursor: 'pointer',
+  textDecoration: 'none',
+}));

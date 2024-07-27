@@ -161,3 +161,14 @@ input {
   background-color: transparent;
   color: #333333;
 }
+
+/* Override autofill styles */
+input:-webkit-autofill,
+textarea:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0px 1000px white inset !important;
+  box-shadow: 0 0 0px 1000px white inset !important;
+  -webkit-text-fill-color: black !important;
+  caret-color: black !important;
+  background-color: transparent !important;
+  color: #333333 !important;
+}

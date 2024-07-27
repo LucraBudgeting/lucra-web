@@ -58,7 +58,7 @@ const mapToHttpClientErrorResponse = <HttpClientError>(
 };
 
 const getErrorMessage = (axiosError: AxiosError): string => {
-  return axiosError?.response?.data?.msg ?? defaultErrorMessage;
+  return axiosError?.response?.data?.message ?? defaultErrorMessage;
 };
 
 const createConfig = (config?: HttpConfig): AxiosRequestConfig => {
