@@ -8,10 +8,18 @@ interface BaseInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   error?: string;
   errors?: string[];
   issecret?: string;
+  alwaysshowlabel?: boolean;
 }
 
 export const BaseInput: FC<BaseInputProps> = (props) => {
-  const { value, label, error, issecret: isSecret, errors } = props;
+  const {
+    value,
+    label,
+    error,
+    issecret: isSecret,
+    errors,
+    alwaysshowlabel: alwaysShowLabel = true,
+  } = props;
 
   if (!props.label) {
     return (
@@ -21,7 +29,7 @@ export const BaseInput: FC<BaseInputProps> = (props) => {
     );
   }
 
-  const [isActive, setIsActive] = useState(false);
+  const [isActive, setIsActive] = useState(alwaysShowLabel);
   const [showSecret, setShowSecret] = useState(false);
   const [parent] = useAutoAnimate();
   const inputRef = useRef<HTMLInputElement>(null);
@@ -31,7 +39,7 @@ export const BaseInput: FC<BaseInputProps> = (props) => {
   };
 
   const handleBlur = (e: React.FocusEvent<HTMLInputElement>) => {
-    if (e.target.value === '') {
+    if (e.target.value === '' && !alwaysShowLabel) {
       setIsActive(false);
     }
     props.onBlur && props.onBlur(e);
