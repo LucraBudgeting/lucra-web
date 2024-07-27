@@ -28,7 +28,7 @@ export function useRegister(userPayload: RegisterUserPayload): hookResponse {
 
     setIsFetching(true);
 
-    apis.authentication
+    apis.authApi
       .registerNewUser(userPayload)
       .then((res) => {
         if (!isMounted) return;

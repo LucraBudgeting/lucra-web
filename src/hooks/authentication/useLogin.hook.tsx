@@ -36,7 +36,7 @@ export function useLogin(email: string, password: string): hookResponse {
 
     setIsFetching(true);
 
-    apis.authentication
+    apis.authApi
       .login(email, password)
       .then((res) => {
         if (!isMounted) return;

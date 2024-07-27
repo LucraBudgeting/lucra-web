@@ -6,6 +6,7 @@ interface BaseButtonProps {
 
   backgroundColor?: string;
   size?: 'small' | 'medium' | 'large';
+  tabIndex?: number;
 }
 
 interface ButtonProps extends BaseButtonProps {
@@ -14,6 +15,7 @@ interface ButtonProps extends BaseButtonProps {
   label?: string;
   onClick?: () => void;
   disabled?: boolean;
+  className?: string;
   children?: React.ReactNode;
 }
 
@@ -25,15 +27,19 @@ export const Button: FC<ButtonProps> = ({
   onClick,
   disabled = false,
   children,
+  className,
+  tabIndex,
 }) => {
   return (
     <Styled.button
+      tabIndex={tabIndex}
       type="button"
       size={size}
       primaryb={primary.toString()}
       backgroundColor={backgroundColor}
       onClick={onClick}
       disabled={disabled}
+      className={className}
     >
       {children ? children : label}
     </Styled.button>

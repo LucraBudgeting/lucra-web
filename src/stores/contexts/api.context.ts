@@ -14,7 +14,7 @@ interface Apis {
   pokemon: PokemonApi;
   billingApi: BillingApi;
   onboardingApi: OnboardingApi;
-  authentication: AuthenticationApi;
+  authApi: AuthenticationApi;
   qsPlaidApi: QsPlaidApi;
   PlaidApi: PlaidApi;
   apiUrl: string;
@@ -29,7 +29,7 @@ const { VITE_ENV } = import.meta.env;
 export const initializedApis: Apis = {
   pokemon: new PokemonApi(),
   billingApi: new BillingApi(),
-  authentication: new AuthenticationApi(),
+  authApi: new AuthenticationApi(),
   qsPlaidApi: new QsPlaidApi(),
   PlaidApi: new PlaidApi(),
   onboardingApi: new OnboardingApi(),

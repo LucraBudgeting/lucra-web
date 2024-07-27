@@ -23,7 +23,7 @@ export function useAuth(): hookResponse {
   }, [authSlice]);
 
   async function logout(): Promise<void> {
-    apis.authentication.logout().finally(() => {
+    apis.authApi.logout().finally(() => {
       setIsAuthenticated(false);
       dispatch(removeAuthentication());
       navigate('/');

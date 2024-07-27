@@ -6,11 +6,12 @@ import { Eye } from '@/assets/eye';
 interface BaseInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   label?: string;
   error?: string;
-  isSecret?: boolean;
+  errors?: string[];
+  issecret?: string;
 }
 
 export const BaseInput: FC<BaseInputProps> = (props) => {
-  const { value, label, error, isSecret } = props;
+  const { value, label, error, issecret: isSecret, errors } = props;
 
   if (!props.label) {
     return (
@@ -47,29 +48,38 @@ export const BaseInput: FC<BaseInputProps> = (props) => {
   const inputType = isSecret ? (showSecret ? 'text' : 'password') : 'text';
 
   return (
-    <InputContainer ref={parent}>
-      <StyledInput
-        {...props}
-        type={inputType}
-        onFocus={handleFocus}
-        onBlur={handleBlur}
-        ref={inputRef}
-      />
-      <Label isActive={isActive || value !== ''} onClick={handleLabelClick}>
-        {label}
-      </Label>
-      {isSecret && (
-        <VisibilityToggle onClick={toggleSecretVisibility}>
-          <Eye showCross={showSecret} />
-        </VisibilityToggle>
-      )}
-      {error?.split('\n').map((error, i) => <Error key={i}>{error}</Error>)}
-    </InputContainer>
+    <Container>
+      <InputContainer ref={parent}>
+        <StyledInput
+          {...props}
+          type={inputType}
+          onFocus={handleFocus}
+          onBlur={handleBlur}
+          ref={inputRef}
+        />
+        <Label isactive={(isActive || value !== '').toString()} onClick={handleLabelClick}>
+          {label}
+        </Label>
+        {isSecret && (
+          <VisibilityToggle onClick={toggleSecretVisibility}>
+            <Eye showCross={showSecret} />
+          </VisibilityToggle>
+        )}
+      </InputContainer>
+      <ErrorContainer>
+        {error?.split('\n').map((error, i) => <Error key={i}>{error}</Error>)}
+        {errors?.map((error, i) => <Error key={i}>{error}</Error>)}
+      </ErrorContainer>
+    </Container>
   );
 };
 
 const InputContainer = styled.div`
   position: relative;
+  width: 100%;
+`;
+
+const Container = styled.div`
   width: 100%;
 `;
 
@@ -89,26 +99,31 @@ const StyledInput = styled.input`
   z-index: 2;
 `;
 
-const Label = styled.label<{ isActive: boolean }>`
+const Label = styled.label<{ isactive: string }>`
   position: absolute;
   z-index: 1;
   left: 12px;
-  top: ${(props) => (props.isActive ? '-10px' : '18px')};
-  cursor: ${(props) => (props.isActive ? 'auto' : 'text')};
+  top: ${(props) => (props.isactive == 'true' ? '-10px' : '18px')};
+  cursor: ${(props) => (props.isactive == 'true' ? 'auto' : 'text')};
   background: white;
   padding: 0 5px;
   transition:
     top 0.2s,
     font-size 0.2s;
-  font-size: ${(props) => (props.isActive ? '14px' : '16px')};
+  font-size: ${(props) => (props.isactive == 'true' ? '14px' : '16px')};
   color: #999;
 `;
 
-const Error = styled.div`
+export const Error = styled.div`
   color: #fe5151;
-  margin-top: 8px;
-  margin-left: 4px;
   font-family: monospace;
+`;
+
+const ErrorContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  margin: 0.5rem 0;
 `;
 
 const VisibilityToggle = styled.button`

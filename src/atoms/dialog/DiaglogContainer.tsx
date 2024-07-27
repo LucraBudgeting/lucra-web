@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { EditIcon } from '@/assets/edit-icon';
 import { Button } from '../button/Button';
 import { DialogProps } from './Dialog.types';
+import { maxZIndex } from '@/utils/domConstants';
 
 interface DiaglogContainerProps extends DialogProps {
   children?: React.ReactNode;
@@ -92,7 +93,7 @@ const Styled = {
     justify-content: center;
     align-items: center;
     background-color: rgba(139, 139, 139, 0.057); // Semi-transparent background
-    z-index: 1000; // High z-index to be on top of other content
+    z-index: ${maxZIndex}; // High z-index to be on top of other content
   `,
   dialog: styled.div<{ width: string }>`
     width: ${({ width }) => width};
@@ -102,7 +103,6 @@ const Styled = {
     flex-direction: column;
     align-items: center;
     border-radius: 24px;
-    border: 1px solid var(--Grey-Stroke, #e2e2e2);
     box-shadow: 0px 8px 30px 0px rgba(0, 0, 0, 0.12);
   `,
   content: styled.div<{ height: string }>`
@@ -110,7 +110,6 @@ const Styled = {
     flex-direction: column;
     align-items: center;
     overflow-y: auto;
-    border: 1px solid var(--Grey-Stroke, #e2e2e2);
     padding: 30px 30px 0px 30px;
     width: calc(100% - 60px);
     height: ${({ height }) => height};
