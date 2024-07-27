@@ -45,7 +45,7 @@ const Styles = {
     display: flex;
     flex-direction: column;
     width: 100%;
-    height: calc(100vh - 5rem);
+    height: calc(100vh - 2.5rem);
     padding-top: 1vh;
   `,
 };

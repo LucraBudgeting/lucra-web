@@ -181,7 +181,7 @@ const Styles = {
     }
   `,
   sectionRows: styled.div`
-    max-height: 30vh;
+    max-height: 35vh;
     overflow-y: auto;
 
     ::-webkit-scrollbar-thumb {
