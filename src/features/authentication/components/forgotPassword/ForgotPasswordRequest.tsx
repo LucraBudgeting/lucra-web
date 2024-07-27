@@ -20,6 +20,7 @@ export const ForgotPasswordRequest: FC<ForgotPasswordProps> = ({}) => {
       cb={() => {}}
       cbTabIndex={1}
       footer={<Styles.footer onClick={redirectToLogin}>Back To Login</Styles.footer>}
+      isCbDisabled={false}
     >
       ForgotPassword
     </AuthContainer>
