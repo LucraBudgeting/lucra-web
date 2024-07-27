@@ -1,15 +1,15 @@
 import { FC, useContext, useState } from 'react';
-import { AuthContainer } from '../AuthContainer';
 import styled from 'styled-components';
-import { BaseInput, Error } from '@/atoms/input/BaseInput';
 import { useNavigate } from 'react-router-dom';
+import { useAutoAnimate } from '@formkit/auto-animate/react';
+import { BaseInput, Error } from '@/atoms/input/BaseInput';
 import { authRoutes, homeRoute } from '@/routes/RouteConstants';
 import { isValidEmail } from '@/utils/isValidEmail';
 import { ApiContext } from '@/stores/contexts/api.context';
 import { useAppDispatch } from '@/stores/store.hooks';
 import { setAuthentication } from '@/stores/slices/Authentication.slice';
 import { LoadingComponent } from '@/atoms/loading/Loading.Component';
-import { useAutoAnimate } from '@formkit/auto-animate/react';
+import { AuthContainer } from '../AuthContainer';
 
 interface LoginV2Props {}
 

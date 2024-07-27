@@ -1,9 +1,9 @@
 import { FC } from 'react';
 import styled from 'styled-components';
 import { EditIcon } from '@/assets/edit-icon';
+import { maxZIndex } from '@/utils/domConstants';
 import { Button } from '../button/Button';
 import { DialogProps } from './Dialog.types';
-import { maxZIndex } from '@/utils/domConstants';
 
 interface DiaglogContainerProps extends DialogProps {
   children?: React.ReactNode;

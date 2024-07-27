@@ -1,8 +1,8 @@
 import { FC } from 'react';
-import { AuthContainer } from '../AuthContainer';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import { authRoutes } from '@/routes/RouteConstants';
+import { AuthContainer } from '../AuthContainer';
 
 interface ForgotPasswordProps {}
 

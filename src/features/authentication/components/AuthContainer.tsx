@@ -1,11 +1,11 @@
+import { FC } from 'react';
+import styled from 'styled-components';
 import { BackArrow } from '@/assets/back-arrow';
 import { DarkLogo } from '@/assets/logos/Dark_Logo';
 import { Button } from '@/atoms/button/Button';
 import { DialogContainer } from '@/atoms/dialog/DiaglogContainer';
 import { authRoutes } from '@/routes/RouteConstants';
 import { maxZIndex } from '@/utils/domConstants';
-import { FC } from 'react';
-import styled from 'styled-components';
 
 interface AuthContainerProps {
   forwardRef?: React.ForwardedRef<HTMLDivElement>;
