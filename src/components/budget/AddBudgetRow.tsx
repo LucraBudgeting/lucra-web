@@ -5,11 +5,14 @@ import { addNewCategory } from '@/stores/slices/Dashboard.slice';
 import { ICategory } from '@/types/basic/Category.type';
 import { LoadingComponent } from '@/atoms/loading/Loading.Component';
 import { Button } from '@/atoms/button/Button';
+import { balanceEntry } from '@/types/types';
 import { EditOrAddCategoryDialog } from '../dialog/EditOrAddCategoryDialog';
 
-interface AddBudgetRowProps {}
+interface AddBudgetRowProps {
+  initialBudgetType?: balanceEntry;
+}
 
-export const AddBudgetRow: FC<AddBudgetRowProps> = ({}) => {
+export const AddBudgetRow: FC<AddBudgetRowProps> = ({ initialBudgetType }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isCategoryAdding, setIsCategoryAdding] = useState(false);
   const dispatch = useDispatch();
@@ -52,6 +55,7 @@ export const AddBudgetRow: FC<AddBudgetRowProps> = ({}) => {
           closeOnOverlayClick={true}
           successCb={addBudgetCb}
           nextText="Add Category"
+          initialBudgetType={initialBudgetType}
         />
       )}
     </div>

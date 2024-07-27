@@ -122,7 +122,7 @@ export const BudgetsTable: FC<BudgetsTableProps> = ({ categories }) => {
                   {categories.credit.map((category) => (
                     <BudgetItem key={category.id} category={category} />
                   ))}
-                  <AddBudgetRow />
+                  <AddBudgetRow initialBudgetType="credit" />
                 </Styles.sectionRows>
               </span>
             )}
@@ -149,7 +149,7 @@ export const BudgetsTable: FC<BudgetsTableProps> = ({ categories }) => {
                   {categories.debit.map((category) => (
                     <BudgetItem key={category.id} category={category} />
                   ))}
-                  <AddBudgetRow />
+                  <AddBudgetRow initialBudgetType="debit" />
                 </Styles.sectionRows>
               </span>
             )}
