@@ -2,10 +2,12 @@ import { FC } from 'react';
 
 interface chevronProps {
   direction?: 'up' | 'down';
+  color?: string;
 }
 
-export const Chevron: FC<chevronProps> = ({ direction = 'up' }) => {
+export const Chevron: FC<chevronProps> = ({ direction = 'up', color }) => {
   const rotate = direction === 'up' ? 180 : 0;
+  const strokeColor = color ? color : '#E2E2E2';
 
   return (
     <svg
@@ -18,7 +20,7 @@ export const Chevron: FC<chevronProps> = ({ direction = 'up' }) => {
     >
       <path
         d="M2.3999 4.20005L5.9999 7.80005L9.5999 4.20005"
-        stroke="#E2E2E2"
+        stroke={strokeColor}
         strokeWidth="2"
         strokeLinecap="round"
         strokeLinejoin="round"

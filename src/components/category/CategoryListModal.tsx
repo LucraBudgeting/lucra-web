@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from 'react';
+import { FC, useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import { SpyGlassOutline } from '@/assets/spyglass-outline';
 import { dashboardSelector } from '@/stores/slices/Dashboard.slice';
@@ -10,18 +10,22 @@ interface CategoryListProps {
   parentRef: React.RefObject<HTMLDivElement>;
   categoryClickCb: (id?: string) => void;
   outsideClickCb?: () => void;
+  currentCategoryId?: string;
 }
 
 export const CategoryListModal: FC<CategoryListProps> = ({
   parentRef,
   categoryClickCb,
   outsideClickCb,
+  currentCategoryId,
 }) => {
   const [modalStyle, setModalStyle] = useState<React.CSSProperties>({
     display: 'none',
   });
+  const [isVisible, setIsVisible] = useState(false);
 
   const modalRef = useOutsideClickRef(outsideClickCb);
+  const searchInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     if (parentRef.current) {
@@ -47,10 +51,18 @@ export const CategoryListModal: FC<CategoryListProps> = ({
         position: 'absolute',
         top,
         left,
-        height: `${modalHeight}px`,
+        maxHeight: `${modalHeight}px`,
       });
+      setIsVisible(true);
     }
   }, [parentRef]);
+
+  useEffect(() => {
+    //AUTO FOCUS SEARCH WHEN RENDERED
+    if (isVisible && searchInputRef.current) {
+      searchInputRef.current.focus();
+    }
+  }, [searchInputRef, isVisible]);
 
   const { debitCategories, creditCategories } = dashboardSelector();
   const [searchValue, setSearchValue] = useState('');
@@ -75,27 +87,32 @@ export const CategoryListModal: FC<CategoryListProps> = ({
       <Styled.searchContainer>
         <SpyGlassOutline />
         <Styled.searchInput
+          ref={searchInputRef}
           placeholder="Search..."
           value={searchValue}
           onChange={(e) => filterCategories(e.target.value)}
         />
       </Styled.searchContainer>
-      <Styled.title>Income</Styled.title>
+      {incomeList.length > 0 && <Styled.title>Income</Styled.title>}
       {incomeList.map((income) => (
         <CategoryItem key={income.id} {...income} categoryClickCb={categoryClickCb} />
       ))}
-      <Styled.title>Expense</Styled.title>
+      {expenseList.length > 0 && <Styled.title>Expense</Styled.title>}
       {expenseList.map((expense) => (
         <CategoryItem key={expense.id} {...expense} categoryClickCb={categoryClickCb} />
       ))}
-      <Styled.title>Remove</Styled.title>
-      <CategoryItem
-        label="Remove Category"
-        budgetType="credit"
-        amount={0}
-        avatar={{ emoji: '❌', backgroundColor: '' }}
-        categoryClickCb={categoryClickCb}
-      />
+      {currentCategoryId && (
+        <>
+          <Styled.title>Remove</Styled.title>
+          <CategoryItem
+            label="Remove Category"
+            budgetType="credit"
+            amount={0}
+            avatar={{ emoji: '❌', backgroundColor: '' }}
+            categoryClickCb={categoryClickCb}
+          />
+        </>
+      )}
     </Styled.container>
   );
 };
@@ -104,7 +121,7 @@ const Styled = {
   container: styled.div`
     display: flex;
     width: 250px;
-    height: 500px;
+    max-height: 500px;
     padding: 20px;
     flex-direction: column;
     align-items: flex-start;

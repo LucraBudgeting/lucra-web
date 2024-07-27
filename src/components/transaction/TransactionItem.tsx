@@ -81,11 +81,7 @@ export const TransactionItem: FC<TransactionItemProps> = ({
         <Styled.title>{description}</Styled.title>
         <span onClick={toggleChipClick}>
           {category ? (
-            <Chip
-              emoji={category.avatar.emoji}
-              label={category.label}
-              backgroundColor={category.avatar.backgroundColor}
-            />
+            <Chip emoji={category.avatar.emoji} label={category.label} />
           ) : (
             <AddCategoryChip />
           )}
@@ -95,6 +91,7 @@ export const TransactionItem: FC<TransactionItemProps> = ({
             parentRef={parentRef}
             categoryClickCb={associateCategory}
             outsideClickCb={toggleChipClick}
+            currentCategoryId={id}
           />
         )}
       </Styled.descriptionContainer>
