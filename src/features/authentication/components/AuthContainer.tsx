@@ -90,6 +90,16 @@ const Styles = {
     gap: 1rem;
     width: 30vw;
     max-width: 400px;
+
+    @media (max-width: 600px) {
+      width: 90vw;
+      max-width: 100%;
+    }
+
+    @media (max-width: 1000px) {
+      width: 50vw;
+      max-width: 100%;
+    }
   `,
   backBtn: styled(Button)`
     position: fixed;
