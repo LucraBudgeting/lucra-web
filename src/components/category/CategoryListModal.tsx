@@ -5,6 +5,7 @@ import { dashboardSelector } from '@/stores/slices/Dashboard.slice';
 import { useOutsideClickRef } from '@/hooks/react/useOutsideClickRef';
 import { ICategory } from '../../types/basic/Category.type';
 import { CategoryItem } from './CategoryItem';
+import { maxZIndex } from '@/utils/domConstants';
 
 interface CategoryListProps {
   parentRef: React.RefObject<HTMLDivElement>;
@@ -52,6 +53,7 @@ export const CategoryListModal: FC<CategoryListProps> = ({
         top,
         left,
         maxHeight: `${modalHeight}px`,
+        zIndex: maxZIndex,
       });
       setIsVisible(true);
     }
