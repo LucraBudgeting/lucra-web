@@ -85,6 +85,7 @@ export const RulesDialog: FC<RulesDialogProps> = (props) => {
                 {rules.map((rule, index) => (
                   <RuleContainer index={index} key={rule.id} rule={rule} editCb={editRuleCb} />
                 ))}
+                {rules.length === 0 && <p>No rules found</p>}
               </Styles.rulesList>
             )}
           </Styles.rulesContainer>
