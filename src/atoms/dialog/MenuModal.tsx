@@ -87,6 +87,7 @@ const Styled = {
     padding: 24px;
     display: flex;
     gap: 1rem;
+    border-radius: 12px;
     min-width: 10rem;
     border-bottom: 1px solid #e2e2e2;
 

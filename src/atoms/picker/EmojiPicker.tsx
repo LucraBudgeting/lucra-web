@@ -2,6 +2,7 @@ import { FC, createElement, useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 // eslint-disable-next-line
 import 'https://cdn.skypack.dev/emoji-picker-element@^1';
+import { maxZIndex } from '@/utils/domConstants';
 
 interface EmojiPickerProps {
   onSelect?: (emoji: string) => void;
@@ -33,10 +34,10 @@ export const EmojiPicker: FC<EmojiPickerProps> = ({ onSelect, currentEmoji = '^'
   };
 
   return (
-    <Styled.container ref={containerRef}>
+    <Styled.container ref={containerRef} id="emoji-container">
       <Styled.currentEmoji onClick={() => setIsOpen(!isOpen)}>{currentEmoji}</Styled.currentEmoji>
       {isOpen && containerRef.current && (
-        <Styled.selectorContainer>
+        <Styled.selectorContainer id="emoji-selector-container">
           <EmojiSelector onSelect={handleSelect} />
         </Styled.selectorContainer>
       )}
@@ -63,7 +64,8 @@ const EmojiSelector: FC<{ onSelect?: (val: string) => void }> = ({ onSelect }) =
 
 const Styled = {
   container: styled.div`
-    /* position: relative; */
+    /* position: relative;
+    z-index: ${maxZIndex + 4000}; */
   `,
   currentEmoji: styled.p`
     color: var(--Grey-Dark, #333);
@@ -76,10 +78,9 @@ const Styled = {
     cursor: pointer;
   `,
   selectorContainer: styled.div`
-    position: absolute;
+    position: fixed;
     width: 300px; // Adjust width as needed
-    z-index: 2000; // Ensures it is on top of other elements
-    left: calc((100vw / 2.5));
-    border-radius: 8px;
+    left: calc(100vw / 2.5);
+    z-index: ${maxZIndex + 2};
   `,
 };

@@ -32,7 +32,7 @@ export const Styled = {
     align-items: center;
     align-self: stretch;
     position: relative; // Needed for absolute positioning of the close button
-    z-index: ${maxZIndex + 5};
+    z-index: ${maxZIndex + 3};
   `,
   headerText: styled.div`
     flex: 1; // Allows the header text to expand and helps in centering
@@ -85,7 +85,7 @@ export const Styled = {
     padding: 30px 30px 0px 30px;
     width: calc(100% - 60px);
     height: ${({ height }) => height};
-    z-index: -10;
+    /* z-index: -10; */
     /* max-height: 600px; */
   `,
 };
