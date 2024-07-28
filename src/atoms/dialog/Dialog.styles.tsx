@@ -17,22 +17,13 @@ export const Styled = {
   dialog: styled.div<{ width: string }>`
     width: ${({ width }) => width};
     background: white;
-    z-index: 1001; // Ensures content is above the overlay
+    z-index: ${maxZIndex + 1}; // Ensures content is above the overlay
     display: flex;
     flex-direction: column;
     align-items: center;
     border-radius: 24px;
     box-shadow: 0px 8px 30px 0px rgba(0, 0, 0, 0.12);
-  `,
-  content: styled.div<{ height: string }>`
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    overflow-y: auto;
-    padding: 30px 30px 0px 30px;
-    width: calc(100% - 60px);
-    height: ${({ height }) => height};
-    /* max-height: 600px; */
+    position: relative;
   `,
   header: styled.div`
     padding: 20px 24px;
@@ -41,6 +32,7 @@ export const Styled = {
     align-items: center;
     align-self: stretch;
     position: relative; // Needed for absolute positioning of the close button
+    z-index: ${maxZIndex + 5};
   `,
   headerText: styled.div`
     flex: 1; // Allows the header text to expand and helps in centering
@@ -83,5 +75,17 @@ export const Styled = {
     justify-content: space-between;
     align-items: center;
     align-self: stretch;
+  `,
+  content: styled.div<{ height: string }>`
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow-y: auto;
+    padding: 30px 30px 0px 30px;
+    width: calc(100% - 60px);
+    height: ${({ height }) => height};
+    z-index: -10;
+    /* max-height: 600px; */
   `,
 };

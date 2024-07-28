@@ -121,6 +121,7 @@ export const CategoryListModal: FC<CategoryListProps> = ({
 
 const Styled = {
   container: styled.div`
+    position: relative;
     display: flex;
     width: 250px;
     max-height: 500px;

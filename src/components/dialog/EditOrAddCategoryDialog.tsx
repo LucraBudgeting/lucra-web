@@ -66,6 +66,7 @@ export const EditOrAddCategoryDialog: FC<EditOrAddCategoryDialogProps> = (props)
       headerText={headerText ? headerText : 'Add Category'}
       successCb={saveCategory}
       disableSave={isSaveDisabled()}
+      menuButtons={[{ text: 'Cancel', onClick: () => null }]}
     >
       <EditOrAddCategory
         budgetType={budgetType}

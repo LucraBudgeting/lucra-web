@@ -46,3 +46,7 @@ export enum eConditionType {
   and = 'and',
   or = 'or',
 }
+
+export interface IRuleSettings {
+  autoApplyCategories: boolean;
+}

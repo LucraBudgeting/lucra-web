@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { useDispatch } from 'react-redux';
 import { PlusIcon } from '@/assets/plus-icon';
 import { ProfileFilled } from '@/assets/profile-filled';
-import { SettingsCogFilled } from '@/assets/settings-cog-filled';
+import { SettingsCogFilledIcon } from '@/assets/settings-cog-filled';
 import { addNewCategory, dashboardSelector } from '@/stores/slices/Dashboard.slice';
 import { getShortMonth, yearFromIso } from '@/utils/time.helper';
 import { SettingModal } from '@/components/setting/modal/SettingModal';
@@ -73,7 +73,7 @@ export const BudgetHeader: FC<BudgetHeaderProps> = ({}) => {
               </span>
             )}
             <span onClick={toggleSettings} ref={settingCogRef}>
-              <SettingsCogFilled />
+              <SettingsCogFilledIcon />
             </span>
           </Styles.iconContainer>
         </Styles.optionsContainer>

@@ -1,12 +1,15 @@
 import HttpClient from '@/libs/http/http.client';
 import { ITransactionRule } from '@/types/models/rules/transaction.rule.type';
+import { IRuleSettings } from '@/types/models/rules/rule.type';
 import { BaseRepository } from '../base.repository';
 
 export default class RulesApi extends BaseRepository {
   GetTransactionRules = async () => {
-    const response = await HttpClient.get<{ message: string; rules: ITransactionRule[] }>(
-      `${this.apiUrl}/api/rule/transaction`
-    );
+    const response = await HttpClient.get<{
+      message: string;
+      rules: ITransactionRule[];
+      settings: IRuleSettings;
+    }>(`${this.apiUrl}/api/rule/transaction`);
     return response;
   };
 

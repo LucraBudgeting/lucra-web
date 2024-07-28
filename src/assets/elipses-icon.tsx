@@ -2,11 +2,13 @@ import { FC } from 'react';
 
 interface ElipsesIconProps {
   onClick?: () => void;
+  forwardRef?: React.LegacyRef<SVGSVGElement>;
 }
 
-export const ElipsesIcon: FC<ElipsesIconProps> = ({ onClick }) => {
+export const ElipsesIcon: FC<ElipsesIconProps> = ({ onClick, forwardRef }) => {
   return (
     <svg
+      ref={forwardRef}
       width="20"
       height="20"
       viewBox="0 0 20 20"

@@ -1,1 +1,1 @@
-export const maxZIndex = 1000;
+export const maxZIndex = 500;

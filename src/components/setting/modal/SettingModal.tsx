@@ -13,6 +13,7 @@ import { AccountsDialog } from '@/components/dialog/Accounts/AccountsDialog';
 import { AutomationIcon } from '@/assets/Automation-outline';
 import { RulesDialog } from '@/components/dialog/Rules/RulesDialog';
 import useClientDevice from '@/hooks/client/useClientDevice';
+import { maxZIndex } from '@/utils/domConstants';
 import { SettingModalSection } from './SettingModalSection';
 import { SettingProfileHeader } from './SettingProfileHeader';
 
@@ -193,7 +194,7 @@ const Styled = {
     justify-content: center;
     align-items: center;
     background-color: rgba(139, 139, 139, 0.057); // Semi-transparent background
-    z-index: 1000; // High z-index to be on top of other content
+    z-index: ${maxZIndex - 1}; // High z-index to be on top of other content
   `,
   container: styled.div`
     display: flex;

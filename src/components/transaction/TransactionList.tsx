@@ -29,7 +29,7 @@ const Styled = {
     align-items: center;
     padding: 20px;
     border-radius: 8px;
-    background-color: #fafcd5;
+    background-color: #fbfceb35;
   `,
 };
 

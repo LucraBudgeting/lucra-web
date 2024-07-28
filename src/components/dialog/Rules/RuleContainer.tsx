@@ -57,7 +57,6 @@ const Styled = {
     flex-direction: column;
     gap: 0.5rem;
     border-radius: 16px;
-    opacity: 0px;
     background-color: #fbfafa;
     position: relative;
   `,

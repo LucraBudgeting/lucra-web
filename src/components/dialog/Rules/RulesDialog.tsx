@@ -7,6 +7,8 @@ import { useTransactionRules } from '@/hooks/dashboard/useTranscriptionRules.hoo
 import { LoadingComponent } from '@/atoms/loading/Loading.Component';
 import { ITransactionRule } from '@/types/models/rules/transaction.rule.type';
 import { ApiContext } from '@/stores/contexts/api.context';
+import { SettingsCogFilledIcon } from '@/assets/settings-cog-filled';
+import { Checkbox } from '@/assets/checkbox';
 import { EditOrAddRuleV2 } from './NewRuleV2';
 import { RuleContainer } from './RuleContainer';
 
@@ -17,10 +19,15 @@ export const RulesDialog: FC<RulesDialogProps> = (props) => {
 
   const [rulesCacheBuster, setRulesCacheBuster] = useState<string>();
   const [isNewOrEdit, setIsNewOrEdit] = useState(false);
+  const [showSettings, setShowSettings] = useState(false);
   const [ruleToEdit, setRuleToEdit] = useState<ITransactionRule>();
 
   const { rulesApi } = useContext(ApiContext);
-  const [rules, isFetchingRules] = useTransactionRules(rulesCacheBuster);
+  const {
+    transactionRules: rules,
+    isFetching: isFetchingRules,
+    ruleSettings,
+  } = useTransactionRules(rulesCacheBuster);
 
   useEffect(() => {
     if (!isNewOrEdit) {
@@ -62,9 +69,20 @@ export const RulesDialog: FC<RulesDialogProps> = (props) => {
     });
   }
 
+  function onSettingsClick() {
+    setShowSettings(!showSettings);
+  }
+
   return (
     <DialogContainer
       {...props}
+      menuButtons={[
+        {
+          icon: <SettingsCogFilledIcon />,
+          text: 'Settings',
+          onClick: onSettingsClick,
+        },
+      ]}
       enableFooter={!isNewOrEdit}
       headerText="Rules"
       closeText="Cancel"
@@ -75,6 +93,11 @@ export const RulesDialog: FC<RulesDialogProps> = (props) => {
       <Styles.container ref={containerRef}>
         {isFetchingRules ? (
           <LoadingComponent loadingText="Fetching Rules..." />
+        ) : showSettings ? (
+          <span style={{ display: 'flex', alignItems: 'center', gap: '1rem', cursor: 'pointer' }}>
+            <Checkbox status={ruleSettings?.autoApplyCategories ? 'success' : ''} /> Auto Apply
+            Categories
+          </span>
         ) : (
           <Styles.rulesContainer>
             {isNewOrEdit && (
@@ -115,5 +138,6 @@ const Styles = {
     gap: 1rem;
     overflow-y: auto;
     max-height: 40vh;
+    background-color: white;
   `,
 };

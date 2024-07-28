@@ -4,6 +4,7 @@ import { CrossIcon } from '@/assets/cross-icon';
 import { Button } from '../button/Button';
 import { Styled } from './Dialog.styles';
 import { DialogProps } from './Dialog.types';
+import { MenuModal } from './MenuModal';
 
 interface DiaglogContainerProps extends DialogProps {
   children?: React.ReactNode;
@@ -21,6 +22,7 @@ export const DialogContainer: FC<DiaglogContainerProps> = ({
   closeCb,
   successCb,
   editCb,
+  menuButtons,
   children,
   closeOnOverlayClick = false,
   width = '540px',
@@ -51,14 +53,15 @@ export const DialogContainer: FC<DiaglogContainerProps> = ({
   };
 
   return (
-    <Styled.overlay onClick={overLayClick}>
-      <Styled.dialog ref={forwardRef} onClick={dialogClick} width={width}>
+    <Styled.overlay onClick={overLayClick} id="dialog-overlay">
+      <Styled.dialog ref={forwardRef} onClick={dialogClick} width={width} id="dialog-container">
         {enableHeader && (
-          <Styled.header>
+          <Styled.header id="dialog-header">
             <Styled.headerText>
               <p>{headerText}</p>
             </Styled.headerText>
             <Styled.headerActions>
+              {menuButtons && <MenuModal buttons={menuButtons} />}
               {editCb && (
                 <p onClick={editCb}>
                   <EditIcon />
@@ -70,7 +73,9 @@ export const DialogContainer: FC<DiaglogContainerProps> = ({
             </Styled.headerActions>
           </Styled.header>
         )}
-        <Styled.content height={height}>{children}</Styled.content>
+        <Styled.content id="dialog-content" height={height}>
+          {children}
+        </Styled.content>
         {enableFooter && (
           <Styled.footer>
             {closeButton && <Button onClick={closeDialog} label={closeText} primary={false} />}
