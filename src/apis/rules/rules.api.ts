@@ -44,7 +44,7 @@ export default class RulesApi extends BaseRepository {
   };
 
   ApplyRulesToTransactions = async () => {
-    const response = await HttpClient.post<{ message: string }>(
+    const response = await HttpClient.put<{ message: string }>(
       `${this.apiUrl}/api/rule/transaction/overwrite/apply-rules`
     );
     return response;

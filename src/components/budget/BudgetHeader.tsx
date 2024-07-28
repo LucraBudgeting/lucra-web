@@ -62,21 +62,19 @@ export const BudgetHeader: FC<BudgetHeaderProps> = ({}) => {
         <Styles.dateContainer>
           <h2>{startDateStr}</h2>
         </Styles.dateContainer>
-        <Styles.optionsContainer>
-          <Styles.iconContainer>
-            <span onClick={toggleAdd}>
-              <PlusIcon />
+        <Styles.iconContainer id="budget-header-icons-container">
+          <span onClick={toggleAdd}>
+            <PlusIcon />
+          </span>
+          {isBudgetHeaderProfileIconEnabled && (
+            <span onClick={toggleProfile}>
+              <ProfileFilled />
             </span>
-            {isBudgetHeaderProfileIconEnabled && (
-              <span onClick={toggleProfile}>
-                <ProfileFilled />
-              </span>
-            )}
-            <span onClick={toggleSettings} ref={settingCogRef}>
-              <SettingsCogFilledIcon />
-            </span>
-          </Styles.iconContainer>
-        </Styles.optionsContainer>
+          )}
+          <span onClick={toggleSettings} ref={settingCogRef}>
+            <SettingsCogFilledIcon />
+          </span>
+        </Styles.iconContainer>
       </Styles.container>
       <>
         {isAddOpen && (
@@ -118,10 +116,11 @@ const Styles = {
       text-align: left;
     }
   `,
-  optionsContainer: styled.div``,
+
   iconContainer: styled.div`
     display: flex;
     align-items: center;
     gap: 1rem;
+    cursor: pointer;
   `,
 };
