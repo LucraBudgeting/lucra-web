@@ -124,11 +124,22 @@ export const EditOrAddRuleV2: FC<EditOrAddRuleProps> = ({
 
   function saveRule() {
     const conditionOp = getConditionOperatorFromName(conditionOperator);
-    const conditions = merchantNameValues.map((value) => ({
-      field: merchantNameField,
-      operator: conditionOp,
-      value,
-    }));
+    const merchantConditions = merchantNameValues
+      .filter((value) => value)
+      .map((value) => ({
+        field: merchantNameField,
+        operator: conditionOp,
+        value,
+      }));
+    const aiTagConditions = aiTagValues
+      .filter((value) => value)
+      .map((value) => ({
+        field: aiTagField,
+        operator: eConditionOperator.equals,
+        value,
+      }));
+
+    const saveConditions = [...merchantConditions, ...aiTagConditions];
 
     const ruleToSave = {
       ...rule,
@@ -137,7 +148,7 @@ export const EditOrAddRuleV2: FC<EditOrAddRuleProps> = ({
         conditionGroups: [
           {
             type: 'and',
-            conditions,
+            conditions: saveConditions,
           },
         ],
         categoryId: selectedCategory,
