@@ -1,19 +1,22 @@
-import { FC } from 'react';
+import { FC, useContext } from 'react';
 import styled from 'styled-components';
 import { ITransactionRule } from '@/types/models/rules/transaction.rule.type';
 import { dashboardSelector } from '@/stores/slices/Dashboard.slice';
 import { EditIcon } from '@/assets/edit-icon';
 import { TrashIcon } from '@/assets/trash-icon';
 import { ElipsesIcon } from '@/assets/elipses-icon';
+import { ApiContext } from '@/stores/contexts/api.context';
 import { getConditionDisplayName } from './rule.utils';
 
 interface RuleContainerProps {
   index: number;
   rule: ITransactionRule;
   editCb: (ruleIndex: number) => void;
+  cacheBustCb: () => void;
 }
 
-export const RuleContainer: FC<RuleContainerProps> = ({ index, rule, editCb }) => {
+export const RuleContainer: FC<RuleContainerProps> = ({ index, rule, editCb, cacheBustCb }) => {
+  const { rulesApi } = useContext(ApiContext);
   const { categoryDictionary } = dashboardSelector();
 
   const { operator, value } = rule?.parsedCondition?.conditionGroups[0]?.conditions[0] ?? {};
@@ -22,12 +25,20 @@ export const RuleContainer: FC<RuleContainerProps> = ({ index, rule, editCb }) =
     editCb(index);
   }
 
+  function onDeleteClick() {
+    if (!rule.id) return;
+
+    rulesApi.DeleteTransactionRule(rule.id).finally(() => {
+      cacheBustCb();
+    });
+  }
+
   return (
     <Styled.ruleContainer>
       <Styled.actionIcons>
         <ElipsesIcon />
         <EditIcon onClick={onEditClick} />
-        <TrashIcon />
+        <TrashIcon onClick={onDeleteClick} />
       </Styled.actionIcons>
       <Styled.name>{rule.name}</Styled.name>
       <Styled.ruleInfoRow>

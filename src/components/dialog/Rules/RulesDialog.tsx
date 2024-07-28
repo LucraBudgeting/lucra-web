@@ -8,9 +8,9 @@ import { LoadingComponent } from '@/atoms/loading/Loading.Component';
 import { ITransactionRule } from '@/types/models/rules/transaction.rule.type';
 import { ApiContext } from '@/stores/contexts/api.context';
 import { SettingsCogFilledIcon } from '@/assets/settings-cog-filled';
-import { Checkbox } from '@/assets/checkbox';
 import { EditOrAddRuleV2 } from './NewRuleV2';
 import { RuleContainer } from './RuleContainer';
+import { RulesSettings } from './RulesSettings';
 
 interface RulesDialogProps extends DialogProps {}
 
@@ -52,6 +52,8 @@ export const RulesDialog: FC<RulesDialogProps> = (props) => {
   const cancelCb = () => {
     if (isNewOrEdit) {
       toggleNewOrEditRule();
+    } else if (showSettings) {
+      setShowSettings(false);
     } else {
       props.closeCb();
     }
@@ -65,8 +67,12 @@ export const RulesDialog: FC<RulesDialogProps> = (props) => {
   function SaveRuleCb(rule: ITransactionRule) {
     rulesApi.SaveTransactionRule(rule).then(() => {
       setIsNewOrEdit(false);
-      setRulesCacheBuster(new Date().getTime().toString());
+      cacheBustCb();
     });
+  }
+
+  function cacheBustCb() {
+    setRulesCacheBuster(new Date().getTime().toString());
   }
 
   function onSettingsClick() {
@@ -94,10 +100,7 @@ export const RulesDialog: FC<RulesDialogProps> = (props) => {
         {isFetchingRules ? (
           <LoadingComponent loadingText="Fetching Rules..." />
         ) : showSettings ? (
-          <span style={{ display: 'flex', alignItems: 'center', gap: '1rem', cursor: 'pointer' }}>
-            <Checkbox status={ruleSettings?.autoApplyCategories ? 'success' : ''} /> Auto Apply
-            Categories
-          </span>
+          <RulesSettings settings={ruleSettings} />
         ) : (
           <Styles.rulesContainer>
             {isNewOrEdit && (
@@ -106,7 +109,13 @@ export const RulesDialog: FC<RulesDialogProps> = (props) => {
             {!isNewOrEdit && (
               <Styles.rulesList>
                 {rules.map((rule, index) => (
-                  <RuleContainer index={index} key={rule.id} rule={rule} editCb={editRuleCb} />
+                  <RuleContainer
+                    index={index}
+                    key={rule.id}
+                    rule={rule}
+                    editCb={editRuleCb}
+                    cacheBustCb={cacheBustCb}
+                  />
                 ))}
                 {rules.length === 0 && <p>No rules found</p>}
               </Styles.rulesList>

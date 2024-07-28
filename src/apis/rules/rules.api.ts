@@ -17,7 +17,11 @@ export default class RulesApi extends BaseRepository {
     if (rule.id) {
       const response = await HttpClient.put<{ message: string; rule: ITransactionRule }>(
         `${this.apiUrl}/api/rule/transaction`,
-        { ...rule, rule: rule.parsedCondition }
+        {
+          name: rule.name,
+          rule: rule.parsedCondition,
+          id: rule.id,
+        }
       );
       return response;
     } else {
@@ -30,5 +34,12 @@ export default class RulesApi extends BaseRepository {
       );
       return response;
     }
+  };
+
+  DeleteTransactionRule = async (ruleId: string) => {
+    const response = await HttpClient.delete<{ message: string }>(
+      `${this.apiUrl}/api/rule/transaction/${ruleId}`
+    );
+    return response;
   };
 }
