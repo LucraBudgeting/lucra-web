@@ -2,7 +2,7 @@ import { ChangeEvent, FC, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { dashboardSelector } from '@/stores/slices/Dashboard.slice';
 import { ICategory } from '@/types/basic/Category.type';
-import { eConditionOperator } from '@/types/models/rules/rule.type';
+import { eConditionOperator, eConditionType } from '@/types/models/rules/rule.type';
 import {
   ITransactionCondition,
   ITransactionRule,
@@ -147,7 +147,7 @@ export const EditOrAddRuleV2: FC<EditOrAddRuleProps> = ({
       parsedCondition: {
         conditionGroups: [
           {
-            type: 'and',
+            type: eConditionType.or,
             conditions: saveConditions,
           },
         ],
