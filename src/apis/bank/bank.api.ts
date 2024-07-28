@@ -9,4 +9,11 @@ export default class BankApi extends BaseRepository {
     );
     return response;
   };
+
+  getBankCategoryList = async (): Promise<{ categoryList: Record<string, string> }> => {
+    const response = await HttpClient.get<{ categoryList: Record<string, string> }>(
+      `${this.apiUrl}/api/bank/category-list`
+    );
+    return response;
+  };
 }

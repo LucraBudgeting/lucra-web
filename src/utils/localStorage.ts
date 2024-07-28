@@ -1,5 +1,6 @@
 enum LocalKeys {
   ADMIN_USER_TOKEN = 'ADMIN_USER_TOKEN',
+  CATEGORY_LIST = 'CATEGORY_LIST',
 }
 
 const setLocal = (key: LocalKeys | string, value: string) => {
