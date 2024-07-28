@@ -2,9 +2,14 @@ import { ChangeEvent, FC } from 'react';
 import styled from 'styled-components';
 import { Chevron } from '@/assets/chevron';
 
+export interface ISelectOptions {
+  value: string | number;
+  displayName?: string;
+}
+
 interface BaseSelectProps extends React.SelectHTMLAttributes<HTMLSelectElement> {
   onValueChange: (updatedValue: string) => void;
-  options: { value: string | number; displayName?: string }[];
+  options: ISelectOptions[];
   sz?: Size;
 }
 
@@ -33,6 +38,8 @@ export const BaseSelect: FC<BaseSelectProps> = (props) => {
 
 const Styles = {
   container: styled.div<{ size: Size }>`
+    display: flex;
+    align-items: center;
     position: relative;
     width: ${({ size }) =>
       size === 'small' ? '25%' : size === 'medium' ? '50%' : size === 'large' ? '100%' : 'auto'};

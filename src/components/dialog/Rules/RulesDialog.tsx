@@ -25,6 +25,7 @@ export const RulesDialog: FC<RulesDialogProps> = (props) => {
   const { rulesApi } = useContext(ApiContext);
   const {
     transactionRules: rules,
+    categoryList,
     isFetching: isFetchingRules,
     ruleSettings,
   } = useTransactionRules(rulesCacheBuster);
@@ -104,7 +105,12 @@ export const RulesDialog: FC<RulesDialogProps> = (props) => {
         ) : (
           <Styles.rulesContainer>
             {isNewOrEdit && (
-              <EditOrAddRuleV2 saveRuleCb={SaveRuleCb} cancelCb={cancelCb} rule={ruleToEdit} />
+              <EditOrAddRuleV2
+                saveRuleCb={SaveRuleCb}
+                cancelCb={cancelCb}
+                rule={ruleToEdit}
+                categoryList={categoryList}
+              />
             )}
             {!isNewOrEdit && (
               <Styles.rulesList>
@@ -131,7 +137,7 @@ const Styles = {
   container: styled.div`
     width: 100%;
     padding-bottom: 1rem;
-    max-height: 600px;
+    max-height: 80vh;
 
     display: flex;
     flex-direction: column;

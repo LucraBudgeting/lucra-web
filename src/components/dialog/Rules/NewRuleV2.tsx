@@ -3,29 +3,48 @@ import styled from 'styled-components';
 import { dashboardSelector } from '@/stores/slices/Dashboard.slice';
 import { ICategory } from '@/types/basic/Category.type';
 import { eConditionOperator } from '@/types/models/rules/rule.type';
-import { ITransactionRule } from '@/types/models/rules/transaction.rule.type';
+import {
+  ITransactionCondition,
+  ITransactionRule,
+} from '@/types/models/rules/transaction.rule.type';
 import { BaseInput } from '@/atoms/input/BaseInput';
-import { BaseSelect } from '@/atoms/select/BaseSelect';
+import { BaseSelect, ISelectOptions } from '@/atoms/select/BaseSelect';
 import { Button } from '@/atoms/button/Button';
 import { Styled } from '@/atoms/dialog/Dialog.styles';
 import {
   conditionOperatorOptions,
   getConditionOperatorFromName,
-  getFieldValueFromName,
   newCondition,
+  newConditionGroup,
 } from './rule.utils';
 
 interface EditOrAddRuleProps {
   rule?: ITransactionRule;
   saveRuleCb: (rule: ITransactionRule) => void;
   cancelCb: () => void;
+  categoryList: Record<string, string>;
 }
 
-export const EditOrAddRuleV2: FC<EditOrAddRuleProps> = ({ rule, saveRuleCb, cancelCb }) => {
-  const { operator, value } =
-    rule?.parsedCondition?.conditionGroups[0]?.conditions[0] ?? newCondition;
+const merchantNameField = 'name';
+const aiTagField = 'categoryDetailed';
+const maxAllowedValues = 4;
+
+export const EditOrAddRuleV2: FC<EditOrAddRuleProps> = ({
+  rule,
+  saveRuleCb,
+  cancelCb,
+  categoryList,
+}) => {
+  const categoryListOptions = categoryListToOptions(categoryList);
+  const { conditions } = rule?.parsedCondition?.conditionGroups[0] ?? newConditionGroup;
+  const { operator } = conditions[0] ?? newCondition;
+
   const { debitCategories, creditCategories } = dashboardSelector();
-  const [merchantName, setMerchantName] = useState<string>(value ?? '');
+  // const [merchantName, setMerchantName] = useState<string>('');
+  const [merchantNameValues, setMerchantNameValues] = useState<string[]>(
+    getMerchantValues(conditions)
+  );
+  const [aiTagValues, setAiTagValues] = useState<string[]>(getAiTagValues(conditions));
   const [conditionOperator, setConditionOperator] = useState<eConditionOperator>(
     operator ?? eConditionOperator.equals
   );
@@ -69,13 +88,48 @@ export const EditOrAddRuleV2: FC<EditOrAddRuleProps> = ({ rule, saveRuleCb, canc
     setConditionOperator(updatedValue as eConditionOperator);
   }
 
-  function onMerchantNameChange(e: ChangeEvent<HTMLInputElement>) {
+  function onAiTagChange(value: string, index: number) {
+    setAiTagValues((prevArray) => {
+      const newArray = [...prevArray];
+      console.log('value', value, newArray, index, index < newArray.length);
+      if (index >= 0 && index <= newArray.length) {
+        newArray[index] = value;
+      }
+      return newArray;
+    });
+  }
+
+  function addAiTagValue() {
+    if (aiTagValues.length > maxAllowedValues) return;
+
+    setAiTagValues((prevArray) => [...prevArray, '']);
+  }
+
+  function onMerchantNameChange(e: ChangeEvent<HTMLInputElement>, index: number) {
     const value = e.target.value;
 
-    setMerchantName(value as string);
+    setMerchantNameValues((prevArray) => {
+      const newArray = [...prevArray];
+      if (value.length <= 35 && index >= 0 && index <= newArray.length) {
+        newArray[index] = value;
+      }
+      return newArray;
+    });
+  }
+
+  function addMerchantValue() {
+    if (merchantNameValues.length >= maxAllowedValues) return;
+    setMerchantNameValues((prevArray) => [...prevArray, '']);
   }
 
   function saveRule() {
+    const conditionOp = getConditionOperatorFromName(conditionOperator);
+    const conditions = merchantNameValues.map((value) => ({
+      field: merchantNameField,
+      operator: conditionOp,
+      value,
+    }));
+
     const ruleToSave = {
       ...rule,
       name: ruleName,
@@ -83,13 +137,7 @@ export const EditOrAddRuleV2: FC<EditOrAddRuleProps> = ({ rule, saveRuleCb, canc
         conditionGroups: [
           {
             type: 'and',
-            conditions: [
-              {
-                field: getFieldValueFromName('name'),
-                operator: getConditionOperatorFromName(conditionOperator),
-                value: merchantName,
-              },
-            ],
+            conditions,
           },
         ],
         categoryId: selectedCategory,
@@ -114,11 +162,48 @@ export const EditOrAddRuleV2: FC<EditOrAddRuleProps> = ({ rule, saveRuleCb, canc
             value={getConditionOperatorFromName(conditionOperator)}
             onValueChange={onConditionChange}
           />
-          <BaseInput
-            placeholder="Enter merchant name"
-            value={merchantName}
-            onChange={onMerchantNameChange}
-          />
+          <Styles.inputColumn>
+            <BaseInput
+              placeholder="Enter merchant name"
+              value={merchantNameValues[0]}
+              onChange={(e) => onMerchantNameChange(e, 0)}
+            />
+            {merchantNameValues.slice(1).map((value, index) => (
+              <BaseInput
+                key={index}
+                placeholder="Enter merchant name"
+                value={value}
+                onChange={(e) => onMerchantNameChange(e, index + 1)}
+              />
+            ))}
+            {merchantNameValues.length < maxAllowedValues &&
+              merchantNameValues[merchantNameValues.length - 1] && (
+                <AddValueBtn onClick={addMerchantValue} />
+              )}
+          </Styles.inputColumn>
+        </Styles.row>
+      </Styles.instructionSection>
+      <Styles.instructionSection>
+        <p>AI Auto-Tags </p>
+        <Styles.row>
+          <Styles.inputColumn width="100%">
+            <BaseSelect
+              value={aiTagValues[0]}
+              onValueChange={(value) => onAiTagChange(value, 0)}
+              options={categoryListOptions}
+            />
+            {aiTagValues.slice(1).map((value, index) => (
+              <BaseSelect
+                key={index}
+                value={value}
+                onValueChange={(value) => onAiTagChange(value, index + 1)}
+                options={categoryListOptions}
+              />
+            ))}
+            {aiTagValues.length < maxAllowedValues && aiTagValues[aiTagValues.length - 1] && (
+              <AddValueBtn onClick={addAiTagValue} />
+            )}
+          </Styles.inputColumn>
         </Styles.row>
       </Styles.instructionSection>
       <Styles.instructionSection>
@@ -139,6 +224,10 @@ export const EditOrAddRuleV2: FC<EditOrAddRuleProps> = ({ rule, saveRuleCb, canc
   );
 };
 
+function AddValueBtn({ onClick }: { onClick: () => void }) {
+  return <Button label="+ Add" onClick={onClick} primary={false} />;
+}
+
 const Styles = {
   newRuleContainer: styled.div`
     width: 100%;
@@ -158,6 +247,7 @@ const Styles = {
   `,
   row: styled.div`
     display: flex;
+    align-items: flex-start;
     gap: 16px;
   `,
   column: styled.div`
@@ -166,5 +256,38 @@ const Styles = {
     flex-direction: column;
     gap: 16px;
   `,
+  inputColumn: styled.div<{ width?: string }>`
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+    width: ${({ width }) => width ?? 'auto'};
+  `,
   ...Styled,
 };
+
+function getMerchantValues(conditions: ITransactionCondition[]): string[] {
+  if (!conditions.length) return [];
+
+  return conditions
+    .filter((condition) => condition.field == merchantNameField)
+    .map((condition) => condition.value);
+}
+
+function getAiTagValues(conditions: ITransactionCondition[]): string[] {
+  if (!conditions.length) return [];
+
+  return conditions
+    .filter((condition) => condition.field == aiTagField)
+    .map((condition) => condition.value);
+}
+
+function categoryListToOptions(categoryList: Record<string, string>): ISelectOptions[] {
+  const options = Object.keys(categoryList).map((key) => ({
+    value: key,
+    displayName: categoryList[key],
+  }));
+  options.unshift({ value: '', displayName: 'Select category' });
+
+  return options;
+}
