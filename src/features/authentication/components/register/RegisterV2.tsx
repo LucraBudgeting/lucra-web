@@ -147,7 +147,7 @@ export const RegisterV2: FC<RegisterV2Props> = ({}) => {
       }
     >
       {isAuthorizing ? (
-        <LoadingComponent loadingText="Logging in..." />
+        <LoadingComponent loadingText="Creating account..." />
       ) : (
         <>
           <BaseInput

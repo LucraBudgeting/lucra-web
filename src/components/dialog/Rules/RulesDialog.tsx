@@ -89,6 +89,8 @@ export const RulesDialog: FC<RulesDialogProps> = (props) => {
     setShowSettings(!showSettings);
   }
 
+  console.log(hasCategories, 'hasCategories', debitCategories, creditCategories);
+
   return (
     <DialogContainer
       {...props}
@@ -123,6 +125,7 @@ export const RulesDialog: FC<RulesDialogProps> = (props) => {
             )}
             {!isNewOrEdit && (
               <Styles.rulesList>
+                {!hasCategories && <p>Add a category please</p>}
                 {rules.map((rule, index) => (
                   <RuleContainer
                     index={index}
@@ -133,7 +136,6 @@ export const RulesDialog: FC<RulesDialogProps> = (props) => {
                   />
                 ))}
                 {rules.length === 0 && <p>No rules found</p>}
-                {rules.length === 0 && !hasCategories && <p>Add a category please</p>}
               </Styles.rulesList>
             )}
           </Styles.rulesContainer>
