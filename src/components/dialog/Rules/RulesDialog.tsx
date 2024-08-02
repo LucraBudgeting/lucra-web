@@ -33,7 +33,7 @@ export const RulesDialog: FC<RulesDialogProps> = (props) => {
   const { debitCategories, creditCategories } = dashboardSelector();
 
   const hasCategories =
-    Object.keys(debitCategories).length > 0 && Object.keys(creditCategories).length > 0;
+    Object.keys(debitCategories).length > 0 || Object.keys(creditCategories).length > 0;
 
   useEffect(() => {
     if (!isNewOrEdit) {
