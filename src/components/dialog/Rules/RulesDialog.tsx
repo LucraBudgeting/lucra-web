@@ -11,6 +11,7 @@ import { SettingsCogFilledIcon } from '@/assets/settings-cog-filled';
 import { EditOrAddRuleV2 } from './NewRuleV2';
 import { RuleContainer } from './RuleContainer';
 import { RulesSettings } from './RulesSettings';
+import { dashboardSelector } from '@/stores/slices/Dashboard.slice';
 
 interface RulesDialogProps extends DialogProps {}
 
@@ -29,6 +30,10 @@ export const RulesDialog: FC<RulesDialogProps> = (props) => {
     isFetching: isFetchingRules,
     ruleSettings,
   } = useTransactionRules(rulesCacheBuster);
+  const { debitCategories, creditCategories } = dashboardSelector();
+
+  const hasCategories =
+    Object.keys(debitCategories).length > 0 && Object.keys(creditCategories).length > 0;
 
   useEffect(() => {
     if (!isNewOrEdit) {
@@ -41,6 +46,10 @@ export const RulesDialog: FC<RulesDialogProps> = (props) => {
   };
 
   const succesCb = (rule?: ITransactionRule) => {
+    if (!hasCategories) {
+      return;
+    }
+
     if (!isNewOrEdit) {
       toggleNewOrEditRule();
     } else if (rule) {
@@ -124,6 +133,7 @@ export const RulesDialog: FC<RulesDialogProps> = (props) => {
                   />
                 ))}
                 {rules.length === 0 && <p>No rules found</p>}
+                {rules.length === 0 && !hasCategories && <p>Add a category please</p>}
               </Styles.rulesList>
             )}
           </Styles.rulesContainer>
