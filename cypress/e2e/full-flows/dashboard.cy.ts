@@ -39,8 +39,7 @@ describe('dashboard', () => {
     cy.loginUser(user.email, user.password);
     cy.get('#settings_cog_budget_header_icon').click();
     cy.get('#settings_accounts').click();
-    cy.wait(2000);
-    cy.get('#plaid_add_account_btn', { timeout: baseTimeout }).click();
+    cy.get('#plaid_add_account_btn', { timeout: baseTimeout }).should('not.be.disabled').click();
 
     cy.frameLoaded('[id*="plaid-link-iframe-"]', { timeout: baseTimeout }).first();
 

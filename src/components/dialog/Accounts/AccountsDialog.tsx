@@ -17,6 +17,7 @@ export const AccountsDialog: FC<AccountsDialogProps> = (props) => {
   const [accounts, isFetchingAccounts] = useAccounts(accountsCacheBuster);
 
   const [currentTab, setCurrentTab] = useState<accountHeaderTabs>('depository');
+  const [isPlaidReady, setIsPlaidReady] = useState<boolean>(false);
 
   function changeTab(tabType: accountHeaderTabs) {
     setCurrentTab(tabType);
@@ -26,6 +27,10 @@ export const AccountsDialog: FC<AccountsDialogProps> = (props) => {
     if (status === 'success') {
       setAccountsCacheBuster(new Date().getTime().toString());
     }
+  }
+
+  function isReadyCb(ready: boolean) {
+    setIsPlaidReady(ready);
   }
 
   const temp = accounts.map((account: IBankAccount) => {
@@ -52,8 +57,8 @@ export const AccountsDialog: FC<AccountsDialogProps> = (props) => {
             </div>
           )}
         </Styles.accountListContainer>
-        <LinkPlaid informParent={accountLinkStatusCb}>
-          <Styles.addAccountButton id="plaid_add_account_btn">
+        <LinkPlaid informParent={accountLinkStatusCb} isReadyCb={isReadyCb}>
+          <Styles.addAccountButton disabled={!isPlaidReady} id="plaid_add_account_btn">
             + Add account
           </Styles.addAccountButton>
         </LinkPlaid>
@@ -69,7 +74,7 @@ const Styles = {
     max-height: 600px;
   `,
   accountListContainer: styled.div``,
-  addAccountButton: styled.div`
+  addAccountButton: styled.button`
     background-color: #333;
     border-radius: 0.5rem;
     color: white;

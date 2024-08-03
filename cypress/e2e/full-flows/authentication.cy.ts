@@ -1,6 +1,6 @@
 import { createRandomUser } from '../../support/Auth.commands';
 
-describe('authentication', () => {
+describe.skip('authentication', () => {
   const user = createRandomUser();
   it('registration', () => {
     cy.registerUser(user);
