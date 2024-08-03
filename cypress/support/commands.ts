@@ -1,5 +1,7 @@
 /// <reference types="cypress" />
 import { mount } from 'cypress/react18';
+import './Auth.commands';
+import { ITestUser } from './Auth.commands';
 
 declare global {
   // eslint-disable-next-line @typescript-eslint/no-namespace
@@ -10,6 +12,8 @@ declare global {
       isOutsideViewport(): Subject;
       mount: typeof mount;
       getByDataCy(dataCy: string): Chainable<JQuery<HTMLElement>>;
+      loginUser(email: string, password: string): Chainable<void>;
+      registerUser(user: ITestUser): Chainable<void>;
     }
   }
 }

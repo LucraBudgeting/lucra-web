@@ -100,7 +100,7 @@ export const LoginV2: FC<LoginV2Props> = ({}) => {
       cb={submitLogin}
       cbTabIndex={4}
       footer={
-        <Styles.LoginFooter onClick={redirectToRegister} tabIndex={5}>
+        <Styles.LoginFooter id="login-register-footer" onClick={redirectToRegister} tabIndex={5}>
           Register Here
         </Styles.LoginFooter>
       }
@@ -117,6 +117,7 @@ export const LoginV2: FC<LoginV2Props> = ({}) => {
             onBlur={onEmailBlur}
             errors={emailErrors}
             name="login email"
+            id="login-email"
           />
           <BaseInput
             label="Password*"
@@ -127,6 +128,7 @@ export const LoginV2: FC<LoginV2Props> = ({}) => {
             onBlur={onPasswordBlur}
             errors={passwordErrors}
             name="login password"
+            id="login-password"
           />
           {loginError && <Error>{loginError}</Error>}
           <Styles.CtaContainer>

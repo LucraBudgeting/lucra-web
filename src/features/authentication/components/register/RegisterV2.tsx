@@ -141,8 +141,11 @@ export const RegisterV2: FC<RegisterV2Props> = ({}) => {
       cb={submitRegister}
       cbTabIndex={5}
       footer={
-        <Styles.RegisterFooter tabIndex={5}>
-          Already have an account? <p onClick={redirectToLogin}>Log in</p>
+        <Styles.RegisterFooter tabIndex={5} id="login-register-footer">
+          Already have an account?{' '}
+          <p onClick={redirectToLogin} id="login-register-back-to-login-btn">
+            Log in
+          </p>
         </Styles.RegisterFooter>
       }
     >
@@ -158,6 +161,7 @@ export const RegisterV2: FC<RegisterV2Props> = ({}) => {
             onBlur={onNameBlur}
             errors={nameErrors}
             name="name"
+            id="registration-full-name"
           />
           <BaseInput
             label="Email*"
@@ -167,6 +171,7 @@ export const RegisterV2: FC<RegisterV2Props> = ({}) => {
             onBlur={onEmailBlur}
             errors={emailErrors}
             name="registration email"
+            id="registration-email"
           />
           <BaseInput
             label="Password*"
@@ -177,6 +182,7 @@ export const RegisterV2: FC<RegisterV2Props> = ({}) => {
             onBlur={onPasswordBlur}
             errors={passwordErrors}
             name="registration password"
+            id="registration-password"
           />
           <BaseInput
             label="Confirm Password*"
@@ -187,6 +193,7 @@ export const RegisterV2: FC<RegisterV2Props> = ({}) => {
             onBlur={onConfirmPasswordBlur}
             errors={confirmPasswordErrors}
             name="confirm password"
+            id="registration-confirm-password"
           />
           {registrationError && <Error>{registrationError}</Error>}
         </>
