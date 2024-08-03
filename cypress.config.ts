@@ -15,6 +15,7 @@ export default defineConfig({
 
   env: {
     ...env,
+    ...process.env,
   },
 
   e2e: {
