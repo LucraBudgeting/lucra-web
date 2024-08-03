@@ -89,8 +89,6 @@ export const RulesDialog: FC<RulesDialogProps> = (props) => {
     setShowSettings(!showSettings);
   }
 
-  console.log(hasCategories, 'hasCategories', debitCategories, creditCategories);
-
   return (
     <DialogContainer
       {...props}
