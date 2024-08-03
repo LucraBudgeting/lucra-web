@@ -60,5 +60,13 @@ Cypress.Commands.add('registerUser', (user: ITestUser) => {
     cy.get('.SubmitButton', { timeout: 10000 }).click();
   });
 
-  cy.url({ timeout: 10000 }).should('include', '/auth/login');
+  // cy.url({ timeout: 10000 }).should('include', '/auth/login');
+  // Dynamically get the current origin and switch context
+  cy.url().then((url) => {
+    const newOrigin = new URL(url).origin;
+    cy.origin(newOrigin, () => {
+      // Perform actions and assertions on the new origin
+      cy.url({ timeout: 10000 }).should('include', '/auth/login');
+    });
+  });
 });
