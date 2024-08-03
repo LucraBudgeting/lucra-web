@@ -46,7 +46,7 @@ export const AuthContainer: FC<AuthContainerProps> = ({
         </Styles.backBtn>
       )}
       <DialogContainer width="auto" closeCb={() => {}} enableFooter={false} enableHeader={false}>
-        <Styles.container ref={ref}>
+        <Styles.container ref={ref} id="auth-dialog-container">
           <DarkLogo />
           <Styles.group>
             <Styles.title>{title}</Styles.title>
@@ -54,7 +54,13 @@ export const AuthContainer: FC<AuthContainerProps> = ({
           </Styles.group>
           {children}
           <Styles.group>
-            <Styles.cbButton disabled={isCbDisabled} primary onClick={cb} tabIndex={cbTabIndex}>
+            <Styles.cbButton
+              disabled={isCbDisabled}
+              primary
+              onClick={cb}
+              tabIndex={cbTabIndex}
+              id="auth-dialog-cb-btn"
+            >
               {cbText}
             </Styles.cbButton>
             {footer && footer}

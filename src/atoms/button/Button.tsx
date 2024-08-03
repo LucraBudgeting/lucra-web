@@ -17,6 +17,7 @@ interface ButtonProps extends BaseButtonProps {
   disabled?: boolean;
   className?: string;
   children?: React.ReactNode;
+  id?: string;
 }
 
 export const Button: FC<ButtonProps> = ({
@@ -29,9 +30,11 @@ export const Button: FC<ButtonProps> = ({
   children,
   className,
   tabIndex,
+  id,
 }) => {
   return (
     <Styled.button
+      id={id}
       tabIndex={tabIndex}
       type="button"
       size={size}
