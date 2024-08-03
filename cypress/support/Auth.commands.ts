@@ -3,7 +3,7 @@ import { faker } from '@faker-js/faker';
 const env = Cypress.env('VITE_ENV');
 const feDomain = Cypress.env(`VITE_BASE_URL_${env}`);
 
-const TEST_PREPEND = 'TEST_5NhSgd';
+const TEST_PREPEND = 'TEST_5NhSgd_';
 
 export function createRandomUser(): ITestUser {
   return {
@@ -63,8 +63,13 @@ Cypress.Commands.add('registerUser', (user: ITestUser) => {
     cy.get('.SubmitButton', { timeout: 10000 }).click();
   });
 
-  // Dynamically get the current origin and switch context
-  cy.origin(feDomain, () => {
+  cy.log('User registered', { feDomain, env });
+
+  if (feDomain.includes('localhost')) {
     cy.url({ timeout: 10000 }).should('include', '/auth/login');
-  });
+  } else {
+    cy.origin(feDomain, () => {
+      cy.url({ timeout: 10000 }).should('include', '/auth/login');
+    });
+  }
 });

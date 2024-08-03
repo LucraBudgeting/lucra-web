@@ -8,10 +8,10 @@ import { LoadingComponent } from '@/atoms/loading/Loading.Component';
 import { ITransactionRule } from '@/types/models/rules/transaction.rule.type';
 import { ApiContext } from '@/stores/contexts/api.context';
 import { SettingsCogFilledIcon } from '@/assets/settings-cog-filled';
+import { dashboardSelector } from '@/stores/slices/Dashboard.slice';
 import { EditOrAddRuleV2 } from './NewRuleV2';
 import { RuleContainer } from './RuleContainer';
 import { RulesSettings } from './RulesSettings';
-import { dashboardSelector } from '@/stores/slices/Dashboard.slice';
 
 interface RulesDialogProps extends DialogProps {}
 

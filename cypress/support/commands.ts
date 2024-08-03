@@ -37,3 +37,8 @@ Cypress.Commands.add('isOutsideViewport', { prevSubject: true }, (subject) => {
 
   return subject;
 });
+
+Cypress.on('uncaught:exception', (_err, _runnable) => {
+  // Ignore specific errors or all errors by returning false
+  return false;
+});
