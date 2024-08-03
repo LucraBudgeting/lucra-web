@@ -37,3 +37,4 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           VITE_ENV: TEST
           VITE_API_BASE_URL_TEST: https://api.dev.lucrabudgeting.com
+          VITE_BASE_URL_TEST: https://app.dev.lucrabudgeting.com

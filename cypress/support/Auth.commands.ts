@@ -1,5 +1,8 @@
 import { faker } from '@faker-js/faker';
 
+const env = Cypress.env('VITE_ENV');
+const feDomain = Cypress.env(`VITE_BASE_URL_${env}`);
+
 const TEST_PREPEND = 'TEST_5NhSgd';
 
 export function createRandomUser(): ITestUser {
@@ -60,13 +63,8 @@ Cypress.Commands.add('registerUser', (user: ITestUser) => {
     cy.get('.SubmitButton', { timeout: 10000 }).click();
   });
 
-  // cy.url({ timeout: 10000 }).should('include', '/auth/login');
   // Dynamically get the current origin and switch context
-  cy.url().then((url) => {
-    const newOrigin = new URL(url).origin;
-    cy.origin(newOrigin, () => {
-      // Perform actions and assertions on the new origin
-      cy.url({ timeout: 10000 }).should('include', '/auth/login');
-    });
+  cy.origin(feDomain, () => {
+    cy.url({ timeout: 10000 }).should('include', '/auth/login');
   });
 });

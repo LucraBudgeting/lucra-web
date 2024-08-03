@@ -1,4 +1,7 @@
 import { defineConfig } from 'cypress';
+import dotenv from 'dotenv';
+
+const env = dotenv.config().parsed;
 
 export default defineConfig({
   projectId: 'h6518p',
@@ -10,10 +13,15 @@ export default defineConfig({
     specPattern: '**/*.cy.{ts,tsx}',
   },
 
+  env: {
+    ...env,
+  },
+
   e2e: {
     setupNodeEvents(on, config) {
       // implement node event listeners here
     },
     experimentalModifyObstructiveThirdPartyCode: true,
+    chromeWebSecurity: false,
   },
 });
