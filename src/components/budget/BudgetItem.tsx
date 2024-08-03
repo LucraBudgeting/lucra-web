@@ -29,7 +29,7 @@ export const BudgetItem: FC<BudgetItemProps> = ({ category }) => {
 
   return (
     <>
-      <Styled.container onClick={toggleViewBudgetDialog}>
+      <Styled.container onClick={toggleViewBudgetDialog} id={`budget_item_${category.id}`}>
         <Styled.budgetContainer>
           <AvatarEmoji emoji={avatar.emoji} backgroundColor={avatar.backgroundColor} align="left" />
           <Styled.title>{label}</Styled.title>

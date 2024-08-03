@@ -1,10 +1,19 @@
 import { FC } from 'react';
 
-interface PlusIconProps {}
+interface PlusIconProps {
+  id?: string;
+}
 
-export const PlusIcon: FC<PlusIconProps> = ({}) => {
+export const PlusIcon: FC<PlusIconProps> = ({ id }) => {
   return (
-    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <svg
+      id={id}
+      width="16"
+      height="16"
+      viewBox="0 0 16 16"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
       <path
         d="M8 2.3999V13.5999"
         stroke="#707070"

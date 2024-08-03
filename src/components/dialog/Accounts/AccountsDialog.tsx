@@ -53,7 +53,9 @@ export const AccountsDialog: FC<AccountsDialogProps> = (props) => {
           )}
         </Styles.accountListContainer>
         <LinkPlaid informParent={accountLinkStatusCb}>
-          <Styles.addAccountButton>+ Add account</Styles.addAccountButton>
+          <Styles.addAccountButton id="plaid_add_account_btn">
+            + Add account
+          </Styles.addAccountButton>
         </LinkPlaid>
       </Styles.container>
     </DialogContainer>

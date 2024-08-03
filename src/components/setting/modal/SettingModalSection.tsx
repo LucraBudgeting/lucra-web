@@ -5,11 +5,12 @@ interface ProfileSectionProps {
   Icon: React.ElementType;
   title: string;
   onClick: () => void;
+  id?: string;
 }
 
-export const SettingModalSection: FC<ProfileSectionProps> = ({ Icon, title, onClick }) => {
+export const SettingModalSection: FC<ProfileSectionProps> = ({ Icon, title, onClick, id }) => {
   return (
-    <Styled.container onClick={onClick}>
+    <Styled.container onClick={onClick} id={id}>
       <Icon />
       <Styled.title>{title}</Styled.title>
     </Styled.container>

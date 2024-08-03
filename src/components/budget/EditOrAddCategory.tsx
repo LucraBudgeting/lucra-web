@@ -50,11 +50,17 @@ export const EditOrAddCategory: FC<EditCategoryProps> = ({
         </Styled.sectionItem>
         <DividerSvg width={dividerWidth} height="1" />
         <Styled.sectionItem>
-          <Styled.sectionInput placeholder="Category Name" value={label} onChange={onLabelChange} />
+          <Styled.sectionInput
+            id="category_name_input"
+            placeholder="Category Name"
+            value={label}
+            onChange={onLabelChange}
+          />
         </Styled.sectionItem>
         <DividerSvg width={dividerWidth} height="1" />
         <Styled.sectionItem>
           <Styled.sectionCurrencyInput
+            id="category_currency_input"
             initialValue={budgetedAmount}
             handleChange={onBudgetedChange}
             isempty={(budgetedAmount <= 0.0).toString()}

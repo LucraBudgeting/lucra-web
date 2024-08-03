@@ -5,12 +5,14 @@ interface CurrencyInputProps extends React.InputHTMLAttributes<HTMLInputElement>
   initialValue: number;
   handleChange: (value: number) => void;
   className?: string; // Optional prop for className
+  id?: string;
 }
 
 export const CurrencyInput: React.FC<CurrencyInputProps> = ({
   initialValue,
   handleChange,
   className,
+  id,
 }) => {
   // Format value without decimals
   const formatValue = (value: number) => {
@@ -37,6 +39,7 @@ export const CurrencyInput: React.FC<CurrencyInputProps> = ({
 
   return (
     <BaseInput
+      id={id}
       type="text"
       className={className} // Apply className prop to the styled component
       value={`$${displayValue}`}

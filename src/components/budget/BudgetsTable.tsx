@@ -118,7 +118,7 @@ export const BudgetsTable: FC<BudgetsTableProps> = ({ categories }) => {
           <span>
             {!isIncomeCollapsed && (
               <span>
-                <Styles.sectionRows>
+                <Styles.sectionRows id="budget_income_categories">
                   {categories.credit.map((category) => (
                     <BudgetItem key={category.id} category={category} />
                   ))}
@@ -145,7 +145,7 @@ export const BudgetsTable: FC<BudgetsTableProps> = ({ categories }) => {
           <span>
             {!isExpenseCollapsed && (
               <span>
-                <Styles.sectionRows>
+                <Styles.sectionRows id="budget_expense_categories">
                   {categories.debit.map((category) => (
                     <BudgetItem key={category.id} category={category} />
                   ))}

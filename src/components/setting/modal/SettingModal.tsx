@@ -147,6 +147,7 @@ export const SettingModal: FC<ProfileModalProps> = ({ outsideClickCb, parentRef 
             Icon={AccountsOutlineline}
             title="Accounts"
             onClick={onAccountsClick}
+            id="settings_accounts"
           />
           <SettingModalSection Icon={AutomationIcon} title="Rules" onClick={onRulesClick} />
           {isSettingsModalAppearanceEnabled && (
@@ -154,6 +155,7 @@ export const SettingModal: FC<ProfileModalProps> = ({ outsideClickCb, parentRef 
               Icon={ApperanceOutline}
               title="Appearance"
               onClick={onAppearanceClick}
+              id="settings_appearance"
             />
           )}
           {isSettingsModalNotificationsEnabled && (
@@ -161,12 +163,14 @@ export const SettingModal: FC<ProfileModalProps> = ({ outsideClickCb, parentRef 
               Icon={NotificationsOutline}
               title="Notifications"
               onClick={onNotificationsClick}
+              id="settings_notifications"
             />
           )}
           <SettingModalSection
             Icon={PaperOutline}
             title="Privacy Policy"
             onClick={onPrivacyPolicyClick}
+            id="settings_privacy"
           />
           <Styled.logout onClick={logout}>Log Out</Styled.logout>
           <CommitHash />
