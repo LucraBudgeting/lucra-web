@@ -1,6 +1,7 @@
 import { defineConfig } from 'cypress';
 
 export default defineConfig({
+  projectId: 'h6518p',
   component: {
     devServer: {
       framework: 'react',

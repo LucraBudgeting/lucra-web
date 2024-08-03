@@ -1,9 +1,11 @@
 import { faker } from '@faker-js/faker';
 
+const TEST_PREPEND = 'TEST_5NhSgd';
+
 export function createRandomUser(): ITestUser {
   return {
-    fullName: faker.person.fullName(),
-    email: faker.internet.email(),
+    fullName: TEST_PREPEND + faker.person.fullName(),
+    email: TEST_PREPEND + faker.internet.email(),
     password: 'Password98!',
   };
 }
