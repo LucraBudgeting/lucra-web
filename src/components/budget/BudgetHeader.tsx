@@ -133,11 +133,19 @@ const Styles = {
   dateContainer: styled.div`
     display: flex;
     align-items: center;
-    /* gap: 24px; */
+    user-select: none;
 
     span {
+      display: flex;
+      align-items: center;
+      justify-content: center;
       cursor: pointer;
       width: 24px;
+      height: 22px;
+
+      &:hover {
+        background-color: #efefef;
+      }
     }
 
     h2 {

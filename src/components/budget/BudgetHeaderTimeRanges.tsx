@@ -50,6 +50,7 @@ const Styled = {
     opacity: 0px;
     border: 1px solid #e2e2e2;
     display: flex;
+    user-select: none;
   `,
   timeBtn: styled.div<{ active: string }>`
     display: flex;
