@@ -58,5 +58,6 @@ const Styles = {
   `,
   listContainer: styled.div`
     width: 100%;
+    overflow-y: scroll;
   `,
 };
