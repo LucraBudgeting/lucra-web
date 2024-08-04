@@ -45,6 +45,8 @@ describe('dashboard', () => {
     cy.get('#settings_accounts').click();
     cy.get('#plaid_add_account_btn', { timeout: baseTimeout }).should('not.be.disabled').click();
 
+    cy.frameLoaded('[id*="plaid-link-iframe-"]', { timeout: baseTimeout * 3 });
+
     cy.iframe('[id*="plaid-link-iframe-"]', { timeout: baseTimeout * 3 })
       .first()
       .within(() => {
