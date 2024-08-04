@@ -64,14 +64,14 @@ export const BudgetHeader: FC<BudgetHeaderProps> = ({}) => {
         </Styles.dateContainer>
         <Styles.iconContainer id="budget-header-icons-container">
           <span onClick={toggleAdd}>
-            <PlusIcon />
+            <PlusIcon id="add_new_budget_header_icon" />
           </span>
           {isBudgetHeaderProfileIconEnabled && (
             <span onClick={toggleProfile}>
               <ProfileFilled />
             </span>
           )}
-          <span onClick={toggleSettings} ref={settingCogRef}>
+          <span onClick={toggleSettings} ref={settingCogRef} id="settings_cog_budget_header_icon">
             <SettingsCogFilledIcon />
           </span>
         </Styles.iconContainer>

@@ -13,6 +13,9 @@ export default defineConfig({
     specPattern: '**/*.cy.{ts,tsx}',
   },
 
+  viewportHeight: 1080,
+  viewportWidth: 1920,
+
   env: {
     ...env,
     ...process.env,

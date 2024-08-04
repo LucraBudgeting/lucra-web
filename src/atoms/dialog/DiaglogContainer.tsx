@@ -63,7 +63,7 @@ export const DialogContainer: FC<DiaglogContainerProps> = ({
             <Styled.headerActions>
               {menuButtons && <MenuModal buttons={menuButtons} />}
               {editCb && (
-                <p onClick={editCb}>
+                <p onClick={editCb} id="dialog_edit_icon">
                   <EditIcon />
                 </p>
               )}
@@ -78,9 +78,21 @@ export const DialogContainer: FC<DiaglogContainerProps> = ({
         </Styled.content>
         {enableFooter && (
           <Styled.footer>
-            {closeButton && <Button onClick={closeDialog} label={closeText} primary={false} />}
+            {closeButton && (
+              <Button
+                onClick={closeDialog}
+                label={closeText}
+                primary={false}
+                id="dialog_close_btn"
+              />
+            )}
             {successButton && (
-              <Button onClick={successDialog} label={nextText} disabled={disableSave} />
+              <Button
+                onClick={successDialog}
+                label={nextText}
+                disabled={disableSave}
+                id="dialog_success_btn"
+              />
             )}
           </Styled.footer>
         )}

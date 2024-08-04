@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
+import { makeSafeForHTMLID } from '../../utils/to_id_safe';
 
 interface ToggleSwitchProps {
   options: string[];
@@ -29,13 +30,14 @@ const ToggleSwitch: React.FC<ToggleSwitchProps> = ({ options, defaultValue, onTo
   };
 
   return (
-    <Styled.container ref={switchRef}>
+    <Styled.container ref={switchRef} id="switch_container">
       <Styled.marker width={`${100 / options.length}%`} ref={markerRef}></Styled.marker>
       {options.map((option, index) => (
         <Styled.toggleButton
           width={`${100 / options.length}%`}
           key={option}
           onClick={() => handleToggle(index)}
+          id={`${makeSafeForHTMLID(option)}_toggle_button`}
         >
           {option}
         </Styled.toggleButton>

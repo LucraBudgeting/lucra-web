@@ -6,6 +6,12 @@ const feDomain = Cypress.env(`VITE_BASE_URL_${env}`);
 const TEST_PREPEND = 'TEST_5NhSgd_';
 
 export function createRandomUser(): ITestUser {
+  // return {
+  //   fullName: TEST_PREPEND + faker.person.fullName(),
+  //   email: 'TEST_5NhSgd_Paxton.Balistreri@yahoo.com',
+  //   password: 'Password98!',
+  // };
+
   return {
     fullName: TEST_PREPEND + faker.person.fullName(),
     email: TEST_PREPEND + faker.internet.email(),
@@ -20,9 +26,9 @@ export interface ITestUser {
 }
 
 Cypress.Commands.add('loginUser', (email: string, password: string) => {
-  cy.visit('http://localhost:3030/auth/login');
+  cy.visit('http://localhost:3030/auth/login', { timeout: 10000 });
 
-  cy.get('#login-email').type(email);
+  cy.get('#login-email', { timeout: 10000 }).type(email);
   cy.get('#login-password').type(password);
 
   cy.get('#auth-dialog-container').click();
@@ -34,7 +40,7 @@ Cypress.Commands.add('loginUser', (email: string, password: string) => {
 
 Cypress.Commands.add('registerUser', (user: ITestUser) => {
   // Visit the login page and navigate to the registration page
-  cy.visit('http://localhost:3030/auth/login');
+  cy.visit('http://localhost:3030/auth/login', { timeout: 10000 });
   cy.get('#login-register-footer').click();
 
   // Fill in the registration form
