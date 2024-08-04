@@ -41,12 +41,10 @@ describe('dashboard', () => {
     cy.get('#settings_accounts').click();
     cy.get('#plaid_add_account_btn', { timeout: baseTimeout }).should('not.be.disabled').click();
 
-    cy.frameLoaded('[id*="plaid-link-iframe-"]', { timeout: baseTimeout }).first();
-
-    cy.iframe('[id*="plaid-link-iframe-"]', { timeout: baseTimeout })
+    cy.iframe('[id*="plaid-link-iframe-"]', { timeout: baseTimeout * 3 })
       .first()
       .within(() => {
-        cy.get('#aut-button', { timeout: baseTimeout }).click();
+        cy.get('#aut-button', { timeout: baseTimeout * 3 }).click();
         cy.get('#search-input', { timeout: baseTimeout }).type('first credit');
         cy.get('#aut-ins_120013', { timeout: baseTimeout }).click();
         cy.get('#aut-input-0', { timeout: baseTimeout }).type('user_good');
