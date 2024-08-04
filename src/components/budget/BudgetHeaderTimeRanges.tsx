@@ -62,7 +62,7 @@ const Styled = {
     font-weight: 600;
     line-height: 18px;
     text-align: left;
-    background-color: ${({ active }) => (active === 'true' ? 'darkgray' : 'transparent')};
+    background-color: ${({ active }) => (active === 'true' ? '#a9a9a968' : 'transparent')};
     color: ${({ active }) => (active === 'true' ? '#333333' : '#707070')};
 
     &:not(:first-child):not(:last-child) {
@@ -82,7 +82,7 @@ const Styled = {
 
     &:hover {
       cursor: pointer;
-      background-color: #a9a9a968;
+      background-color: #a9a9a91d;
       color: #333333;
     }
   `,
