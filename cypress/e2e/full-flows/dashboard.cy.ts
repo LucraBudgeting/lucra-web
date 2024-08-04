@@ -43,11 +43,12 @@ describe('dashboard', () => {
     cy.loginUser(user.email, user.password);
     cy.get('#settings_cog_budget_header_icon').click();
     cy.get('#settings_accounts').click();
+    cy.wait(3000);
     cy.get('#plaid_add_account_btn', { timeout: baseTimeout }).should('not.be.disabled').click();
 
-    cy.frameLoaded('[id*="plaid-link-iframe-"]', { timeout: baseTimeout * 3 });
-
-    cy.iframe('[id*="plaid-link-iframe-"]', { timeout: baseTimeout * 3 })
+    cy.iframe('iframe[src*="plaid.com/link/v2/stable/link.html"][title="Plaid Link"]', {
+      timeout: baseTimeout * 3,
+    })
       .first()
       .within(() => {
         cy.get('#aut-button', { timeout: baseTimeout * 3 })
