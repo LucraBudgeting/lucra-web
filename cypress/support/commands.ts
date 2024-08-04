@@ -14,9 +14,28 @@ declare global {
       getByDataCy(dataCy: string): Chainable<JQuery<HTMLElement>>;
       loginUser(email: string, password: string): Chainable<void>;
       registerUser(user: ITestUser): Chainable<void>;
+      deleteTestUser(): Chainable<void>;
+      blockTrackingRequests(): Chainable<void>;
     }
   }
 }
+
+Cypress.Commands.add('blockTrackingRequests', () => {
+  const trackingUrls = [
+    '**/google-analytics.com/**',
+    '**/facebook.com/tr/**',
+    '**/analytics.**',
+    '**/newrelic.com/**',
+    '**/nr-data.net/**',
+  ];
+
+  trackingUrls.forEach((urlPattern) => {
+    cy.intercept(urlPattern, {
+      statusCode: 204,
+      body: {},
+    }).as('blockedRequest');
+  });
+});
 
 Cypress.Commands.add('getByDataCy', (dataCy) => {
   return cy.get(`[data-cy=${dataCy}]`);
