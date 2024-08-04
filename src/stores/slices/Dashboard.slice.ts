@@ -61,27 +61,40 @@ export const dashboardSlice = createSlice({
       state.budgetActuals = calculateCategoryActuals(state);
     },
     goForward1Month: (state) => {
-      const startDate = new Date(state.dateRange.startDate);
-      const endDate = new Date(state.dateRange.endDate);
+      const currentEndDate = new Date(state.dateRange.endDate);
 
-      if (endDate >= now) {
+      // Calculate the next startDate as the first day of the next month
+      const nextStartDate = new Date(
+        currentEndDate.getFullYear(),
+        currentEndDate.getMonth() + 1,
+        1
+      );
+
+      // Calculate the next endDate as the last day of the next month
+      const nextEndDate = new Date(currentEndDate.getFullYear(), currentEndDate.getMonth() + 2, 0);
+
+      // Ensure that the nextEndDate does not go into the future
+      if (nextStartDate > now) {
         return;
       }
 
-      startDate.setMonth(startDate.getMonth() + 1);
-      endDate.setMonth(endDate.getMonth() + 1);
-
       state.dateRange = {
-        startDate: startDate.toISOString(),
-        endDate: endDate.toISOString(),
+        startDate: nextStartDate.toISOString(),
+        endDate: (nextEndDate > now ? now : nextEndDate).toISOString(),
       };
     },
     goBack1Month: (state) => {
-      const startDate = new Date(state.dateRange.startDate);
-      const endDate = new Date(state.dateRange.endDate);
+      const currentStartDate = new Date(state.dateRange.startDate);
 
-      startDate.setMonth(startDate.getMonth() - 1);
-      endDate.setMonth(endDate.getMonth() - 1);
+      // Set the startDate to the first day of the previous month
+      const startDate = new Date(
+        currentStartDate.getFullYear(),
+        currentStartDate.getMonth() - 1,
+        1
+      );
+
+      // Set the endDate to the last day of the previous month
+      const endDate = new Date(currentStartDate.getFullYear(), currentStartDate.getMonth(), 0);
 
       state.dateRange = {
         startDate: startDate.toISOString(),
