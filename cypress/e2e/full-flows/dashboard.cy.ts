@@ -5,6 +5,10 @@ const baseTimeout = 10000;
 describe('dashboard', () => {
   const user = createRandomUser();
 
+  beforeEach(() => {
+    cy.blockTrackingRequests();
+  });
+
   it('creates user', () => {
     cy.registerUser(user);
   });
@@ -44,14 +48,19 @@ describe('dashboard', () => {
     cy.iframe('[id*="plaid-link-iframe-"]', { timeout: baseTimeout * 3 })
       .first()
       .within(() => {
-        cy.get('#aut-button', { timeout: baseTimeout * 3 }).click();
-        cy.get('#search-input', { timeout: baseTimeout }).type('first credit');
-        cy.get('#aut-ins_120013', { timeout: baseTimeout }).click();
-        cy.get('#aut-input-0', { timeout: baseTimeout }).type('user_good');
-        cy.get('#aut-input-1', { timeout: baseTimeout }).type('pass_good');
-        cy.get('#aut-button', { timeout: baseTimeout }).click();
-        cy.get('#aut-button', { timeout: baseTimeout }).click();
-        cy.get('#aut-button', { timeout: baseTimeout }).click();
+        cy.get('#aut-button', { timeout: baseTimeout * 3 })
+          .should('be.visible')
+          .click();
+        cy.get('#search-input', { timeout: baseTimeout }).should('be.visible').type('first credit');
+        cy.get('#aut-ins_120013', { timeout: baseTimeout }).should('be.visible').click();
+        cy.get('#aut-input-0', { timeout: baseTimeout }).should('be.visible').type('user_good');
+        cy.get('#aut-input-1', { timeout: baseTimeout }).should('be.visible').type('pass_good');
+        cy.get('#aut-button', { timeout: baseTimeout }).should('be.visible').click();
+        cy.get('#aut-button', { timeout: baseTimeout }).should('be.visible').click();
+        cy.get('#aut-button', { timeout: baseTimeout })
+          .should('be.visible')
+          .should('not.be.disabled')
+          .click();
       });
 
     cy.url().should('include', '/dashboard');
