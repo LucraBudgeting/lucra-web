@@ -2,13 +2,15 @@ import { FC, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { TransactionList } from '@/components/transaction/TransactionList';
 import { ITransaction } from '@/types/basic/Transaction.type';
+import { LoadingComponent } from '@/atoms/loading/Loading.Component';
 import { TransactionHeader } from './TransactionHeader';
 
 interface TransactionsProps {
   transactions: ITransaction[];
+  isFetching: boolean;
 }
 
-export const Transactions: FC<TransactionsProps> = ({ transactions }) => {
+export const Transactions: FC<TransactionsProps> = ({ transactions, isFetching }) => {
   const [filteredTransactions, setFilteredTransactions] = useState<ITransaction[]>([]);
   const [search, setSearch] = useState('');
 
@@ -35,7 +37,13 @@ export const Transactions: FC<TransactionsProps> = ({ transactions }) => {
   return (
     <Styles.container>
       <TransactionHeader searchValue={search} onSearchChange={searchTransactions} />
-      <TransactionList transactions={filteredTransactions} />
+      <Styles.listContainer>
+        {isFetching ? (
+          <LoadingComponent loadingText="Loading Transactions" />
+        ) : (
+          <TransactionList transactions={filteredTransactions} />
+        )}
+      </Styles.listContainer>
     </Styles.container>
   );
 };
@@ -47,5 +55,9 @@ const Styles = {
     width: 100%;
     height: calc(100vh - 2.5rem);
     padding-top: 1vh;
+  `,
+  listContainer: styled.div`
+    width: 100%;
+    overflow-y: scroll;
   `,
 };

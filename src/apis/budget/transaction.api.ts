@@ -3,9 +3,12 @@ import { ITransaction } from '@/types/basic/Transaction.type';
 import { BaseRepository } from '../base.repository';
 
 export default class TransactionApi extends BaseRepository {
-  GetTransactions = async (): Promise<{ message: string; transactions: ITransaction[] }> => {
+  GetTransactions = async (
+    startDate: string,
+    endDate: string
+  ): Promise<{ message: string; transactions: ITransaction[] }> => {
     const response = await HttpClient.get<{ message: string; transactions: ITransaction[] }>(
-      `${this.apiUrl}/api/transaction`
+      `${this.apiUrl}/api/transaction?start=${startDate}&end=${endDate}`
     );
     return response;
   };

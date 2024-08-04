@@ -11,16 +11,16 @@ export function useTransactions(): UseTransactionsResponseType {
   const apis = useContext(ApiContext);
 
   const [isFetching, setIsFetching] = useState(true);
-  const { transactions } = dashboardSelector();
+  const { transactions, dateRange } = dashboardSelector();
 
   useEffect(() => {
-    if (transactions.length) {
-      setIsFetching(false);
-      return;
-    }
+    // if (transactions.length) {
+    //   setIsFetching(false);
+    //   return;
+    // }
 
     apis.transactionApi
-      .GetTransactions()
+      .GetTransactions(dateRange.startDate, dateRange.endDate)
       .then((data) => {
         dispatch(setTransactions(data.transactions));
       })
@@ -31,7 +31,7 @@ export function useTransactions(): UseTransactionsResponseType {
     return () => {
       setIsFetching(true);
     };
-  }, []);
+  }, [dateRange]);
 
   return [transactions, isFetching];
 }

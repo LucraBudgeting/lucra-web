@@ -9,14 +9,21 @@ interface IDateRange {
   endDate: string;
 }
 
+const now = new Date();
+const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
+
+export type budgetHeaderTimeRanges = '1mo' | '6mo' | '12mo';
+
 export const initialState = {
   creditCategories: [] as ICategory[],
   debitCategories: [] as ICategory[],
   categoryDictionary: {} as Record<string, ICategory>,
   transactions: [] as ITransaction[],
   budgetActuals: {} as Record<string, number>,
+  currentRange: '1mo' as budgetHeaderTimeRanges,
   dateRange: {
-    startDate: new Date().toISOString(),
+    startDate: startOfMonth.toISOString(),
+    endDate: now.toISOString(),
   } as IDateRange,
 };
 
@@ -55,6 +62,79 @@ export const dashboardSlice = createSlice({
     setTransactions: (state, action: PayloadAction<ITransaction[]>) => {
       state.transactions = action.payload;
       state.budgetActuals = calculateCategoryActuals(state);
+    },
+    setNewRange: (state, action: PayloadAction<budgetHeaderTimeRanges>) => {
+      state.currentRange = action.payload;
+
+      switch (action.payload) {
+        case '1mo':
+          state.dateRange = {
+            startDate: startOfMonth.toISOString(),
+            endDate: now.toISOString(),
+          };
+          break;
+        case '6mo':
+          state.dateRange = {
+            startDate: new Date(now.getFullYear(), now.getMonth() - 5, 1).toISOString(),
+            endDate: now.toISOString(),
+          };
+          break;
+        case '12mo':
+          state.dateRange = {
+            startDate: new Date(now.getFullYear(), now.getMonth() - 11, 1).toISOString(),
+            endDate: now.toISOString(),
+          };
+      }
+    },
+    goForward1Month: (state) => {
+      if (state.currentRange !== '1mo') {
+        state.currentRange = '1mo';
+        state.dateRange = initialState.dateRange;
+      }
+
+      const currentEndDate = new Date(state.dateRange.endDate);
+
+      // Calculate the next startDate as the first day of the next month
+      const nextStartDate = new Date(
+        currentEndDate.getFullYear(),
+        currentEndDate.getMonth() + 1,
+        1
+      );
+
+      // Calculate the next endDate as the last day of the next month
+      const nextEndDate = new Date(currentEndDate.getFullYear(), currentEndDate.getMonth() + 2, 0);
+
+      // Ensure that the nextEndDate does not go into the future
+      if (nextStartDate > now) {
+        return;
+      }
+
+      state.dateRange = {
+        startDate: nextStartDate.toISOString(),
+        endDate: (nextEndDate > now ? now : nextEndDate).toISOString(),
+      };
+    },
+    goBack1Month: (state) => {
+      if (state.currentRange !== '1mo') {
+        state.currentRange = '1mo';
+        state.dateRange = initialState.dateRange;
+      }
+      const currentStartDate = new Date(state.dateRange.startDate);
+
+      // Set the startDate to the first day of the previous month
+      const startDate = new Date(
+        currentStartDate.getFullYear(),
+        currentStartDate.getMonth() - 1,
+        1
+      );
+
+      // Set the endDate to the last day of the previous month
+      const endDate = new Date(currentStartDate.getFullYear(), currentStartDate.getMonth(), 0);
+
+      state.dateRange = {
+        startDate: startDate.toISOString(),
+        endDate: endDate.toISOString(),
+      };
     },
     updateTransactionCategory: (
       state,
@@ -101,6 +181,13 @@ function calculateCategoryActuals(state: typeof initialState): Record<string, nu
 }
 
 export const dashboardSelector = () => useSelector((state: RootState) => state.dashboard);
-export const { setCategories, setTransactions, addNewCategory, updateTransactionCategory } =
-  dashboardSlice.actions;
+export const {
+  setCategories,
+  setTransactions,
+  addNewCategory,
+  updateTransactionCategory,
+  goForward1Month,
+  goBack1Month,
+  setNewRange,
+} = dashboardSlice.actions;
 export default dashboardSlice.reducer;
