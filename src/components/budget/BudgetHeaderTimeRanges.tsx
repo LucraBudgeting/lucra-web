@@ -1,11 +1,11 @@
+import { FC } from 'react';
+import { useDispatch } from 'react-redux';
+import styled from 'styled-components';
 import {
   budgetHeaderTimeRanges,
   dashboardSelector,
   setNewRange,
 } from '@/stores/slices/Dashboard.slice';
-import { FC } from 'react';
-import { useDispatch } from 'react-redux';
-import styled from 'styled-components';
 
 interface BudgetHeaderTimeRangesProps {}
 
