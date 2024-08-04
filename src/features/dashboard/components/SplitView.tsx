@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import useClientDevice from '@/hooks/client/useClientDevice';
 import { useAutoAnimate } from '@formkit/auto-animate/react';
+import useClientDevice from '@/hooks/client/useClientDevice';
 
 interface SplitViewProps {
   left: React.ReactNode;
