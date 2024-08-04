@@ -13,14 +13,23 @@ export const DashboardPage: FC<DashboardPageProps> = ({}) => {
   const [categories, isCategoriesFetching] = useCategories();
   const [transactions, isTransactionsFetching] = useTransactions();
 
-  if (isCategoriesFetching || isTransactionsFetching)
-    return <LoadingComponent loadingText="Loading Dashboard" />;
-
   return (
     <Styled.container>
       <SplitView
-        left={<Budgets categories={categories} />}
-        right={<Transactions transactions={transactions} />}
+        left={
+          isCategoriesFetching ? (
+            <LoadingComponent loadingText="Loading Budgets" />
+          ) : (
+            <Budgets categories={categories} />
+          )
+        }
+        right={
+          isTransactionsFetching ? (
+            <LoadingComponent loadingText="Loading Transactions" />
+          ) : (
+            <Transactions transactions={transactions} />
+          )
+        }
       />
     </Styled.container>
   );

@@ -4,13 +4,19 @@ import { useDispatch } from 'react-redux';
 import { PlusIcon } from '@/assets/plus-icon';
 import { ProfileFilled } from '@/assets/profile-filled';
 import { SettingsCogFilledIcon } from '@/assets/settings-cog-filled';
-import { addNewCategory, dashboardSelector } from '@/stores/slices/Dashboard.slice';
+import {
+  addNewCategory,
+  dashboardSelector,
+  goBack1Month,
+  goForward1Month,
+} from '@/stores/slices/Dashboard.slice';
 import { getShortMonth, yearFromIso } from '@/utils/time.helper';
 import { SettingModal } from '@/components/setting/modal/SettingModal';
 import { FeatureFlagContext } from '@/stores/contexts/featureFlag.context';
 import { ICategory } from '@/types/basic/Category.type';
 import { ApiContext } from '@/stores/contexts/api.context';
 import { EditOrAddCategoryDialog } from '../dialog/EditOrAddCategoryDialog';
+import { SideArrowFilledIcon } from '../../assets/side-arrow-filled-icon';
 
 interface BudgetHeaderProps {}
 
@@ -29,7 +35,7 @@ export const BudgetHeader: FC<BudgetHeaderProps> = ({}) => {
 
   const { dateRange } = dashboardSelector();
 
-  const startDateStr = `${getShortMonth(dateRange.startDate)} ${yearFromIso(dateRange.startDate)}`;
+  const startDateStr = `${getShortMonth(dateRange.endDate)} ${yearFromIso(dateRange.endDate)}`;
 
   const addBudgetCb = (newCategory: ICategory) => {
     setIsCategoryAdding(true);
@@ -56,11 +62,25 @@ export const BudgetHeader: FC<BudgetHeaderProps> = ({}) => {
     setIsAddOpen(!isAddOpen);
   }
 
+  function forward1Month() {
+    dispatch(goForward1Month());
+  }
+
+  function backward1Month() {
+    dispatch(goBack1Month());
+  }
+
   return (
     <>
       <Styles.container>
         <Styles.dateContainer>
           <h2>{startDateStr}</h2>
+          <span onClick={backward1Month}>
+            <SideArrowFilledIcon />
+          </span>
+          <span onClick={forward1Month}>
+            <SideArrowFilledIcon direction="right" />
+          </span>
         </Styles.dateContainer>
         <Styles.iconContainer id="budget-header-icons-container">
           <span onClick={toggleAdd}>
@@ -109,11 +129,21 @@ const Styles = {
     }
   `,
   dateContainer: styled.div`
+    display: flex;
+    align-items: center;
+    /* gap: 24px; */
+
+    span {
+      cursor: pointer;
+      width: 24px;
+    }
+
     h2 {
       font-size: 18px;
       font-weight: 700;
       line-height: 22px;
       text-align: left;
+      width: 100px;
     }
   `,
 

@@ -9,6 +9,9 @@ interface IDateRange {
   endDate: string;
 }
 
+const now = new Date();
+const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
+
 export const initialState = {
   creditCategories: [] as ICategory[],
   debitCategories: [] as ICategory[],
@@ -16,7 +19,8 @@ export const initialState = {
   transactions: [] as ITransaction[],
   budgetActuals: {} as Record<string, number>,
   dateRange: {
-    startDate: new Date().toISOString(),
+    startDate: startOfMonth.toISOString(),
+    endDate: now.toISOString(),
   } as IDateRange,
 };
 
@@ -55,6 +59,34 @@ export const dashboardSlice = createSlice({
     setTransactions: (state, action: PayloadAction<ITransaction[]>) => {
       state.transactions = action.payload;
       state.budgetActuals = calculateCategoryActuals(state);
+    },
+    goForward1Month: (state) => {
+      const startDate = new Date(state.dateRange.startDate);
+      const endDate = new Date(state.dateRange.endDate);
+
+      if (endDate >= now) {
+        return;
+      }
+
+      startDate.setMonth(startDate.getMonth() + 1);
+      endDate.setMonth(endDate.getMonth() + 1);
+
+      state.dateRange = {
+        startDate: startDate.toISOString(),
+        endDate: endDate.toISOString(),
+      };
+    },
+    goBack1Month: (state) => {
+      const startDate = new Date(state.dateRange.startDate);
+      const endDate = new Date(state.dateRange.endDate);
+
+      startDate.setMonth(startDate.getMonth() - 1);
+      endDate.setMonth(endDate.getMonth() - 1);
+
+      state.dateRange = {
+        startDate: startDate.toISOString(),
+        endDate: endDate.toISOString(),
+      };
     },
     updateTransactionCategory: (
       state,
@@ -101,6 +133,12 @@ function calculateCategoryActuals(state: typeof initialState): Record<string, nu
 }
 
 export const dashboardSelector = () => useSelector((state: RootState) => state.dashboard);
-export const { setCategories, setTransactions, addNewCategory, updateTransactionCategory } =
-  dashboardSlice.actions;
+export const {
+  setCategories,
+  setTransactions,
+  addNewCategory,
+  updateTransactionCategory,
+  goForward1Month,
+  goBack1Month,
+} = dashboardSlice.actions;
 export default dashboardSlice.reducer;

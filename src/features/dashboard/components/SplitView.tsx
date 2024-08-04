@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import useClientDevice from '@/hooks/client/useClientDevice';
+import { useAutoAnimate } from '@formkit/auto-animate/react';
 
 interface SplitViewProps {
   left: React.ReactNode;
@@ -54,6 +55,9 @@ const SplitView: React.FC<SplitViewProps> = ({
   const { windowSize, isMobile } = useClientDevice();
   const [leftWidth, setLeftWidth] = useState(initialLeftContainerWidth);
 
+  const [leftRef] = useAutoAnimate();
+  const [rightRef] = useAutoAnimate();
+
   useEffect(() => {
     if (isMobile) {
       setLeftWidth(100);
@@ -81,13 +85,17 @@ const SplitView: React.FC<SplitViewProps> = ({
 
   return (
     <SplitViewContainer>
-      <SplitViewPane width={leftWidth}>{left}</SplitViewPane>
+      <SplitViewPane width={leftWidth} ref={leftRef}>
+        {left}
+      </SplitViewPane>
       {isMobile ? null : (
         <>
           <Divider onMouseDown={(e) => e.preventDefault()}>
             <Handle onMouseDown={handleMouseDown} />
           </Divider>
-          <SplitViewPane width={100 - leftWidth}>{right}</SplitViewPane>
+          <SplitViewPane width={100 - leftWidth} ref={rightRef}>
+            {right}
+          </SplitViewPane>
         </>
       )}
     </SplitViewContainer>
