@@ -80,7 +80,7 @@ Cypress.Commands.add('registerUser', (user: ITestUser) => {
   if (feDomain.includes('localhost')) {
     cy.url({ timeout: baseTimeout }).should('include', '/auth/login');
   } else {
-    cy.origin(feDomain, () => {
+    cy.origin(feDomain, { args: { baseTimeout } }, ({ baseTimeout }) => {
       cy.url({ timeout: baseTimeout }).should('include', '/auth/login');
     });
   }
