@@ -2,7 +2,7 @@ import { faker } from '@faker-js/faker';
 
 const env = Cypress.env('VITE_ENV');
 const feDomain = Cypress.env(`VITE_BASE_URL_${env}`);
-
+const apiDomain = Cypress.env(`VITE_API_BASE_URL_${env}`);
 const TEST_PREPEND = 'TEST_5NhSgd_';
 
 export function createRandomUser(): ITestUser {
@@ -79,3 +79,40 @@ Cypress.Commands.add('registerUser', (user: ITestUser) => {
     });
   }
 });
+
+Cypress.Commands.add('deleteTestUser', () => {
+  cy.window().then((win) => {
+    const token = win.localStorage.getItem('ADMIN_USER_TOKEN');
+
+    if (!token) {
+      throw new Error('No token found');
+    }
+
+    const decoded = decodeJWT(token);
+
+    cy.request({
+      method: 'DELETE',
+      url: `${apiDomain}/api/automation/test/${decoded.user.id}`,
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }).then((response) => {
+      expect(response.status).to.eq(200);
+    });
+  });
+});
+
+const decodeJWT = (token: string) => {
+  const base64Url = token.split('.')[1];
+  const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+  const jsonPayload = decodeURIComponent(
+    atob(base64)
+      .split('')
+      .map(function (c) {
+        return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+      })
+      .join('')
+  );
+
+  return JSON.parse(jsonPayload);
+};

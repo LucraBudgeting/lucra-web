@@ -14,6 +14,7 @@ declare global {
       getByDataCy(dataCy: string): Chainable<JQuery<HTMLElement>>;
       loginUser(email: string, password: string): Chainable<void>;
       registerUser(user: ITestUser): Chainable<void>;
+      deleteTestUser(): Chainable<void>;
     }
   }
 }

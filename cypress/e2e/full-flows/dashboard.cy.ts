@@ -58,4 +58,8 @@ describe('dashboard', () => {
 
     cy.url().should('include', '/dashboard');
   });
+
+  after(() => {
+    cy.deleteTestUser();
+  });
 });
