@@ -12,12 +12,15 @@ interface IDateRange {
 const now = new Date();
 const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
 
+export type budgetHeaderTimeRanges = '1mo' | '6mo' | '12mo';
+
 export const initialState = {
   creditCategories: [] as ICategory[],
   debitCategories: [] as ICategory[],
   categoryDictionary: {} as Record<string, ICategory>,
   transactions: [] as ITransaction[],
   budgetActuals: {} as Record<string, number>,
+  currentRange: '1mo' as budgetHeaderTimeRanges,
   dateRange: {
     startDate: startOfMonth.toISOString(),
     endDate: now.toISOString(),
@@ -60,7 +63,35 @@ export const dashboardSlice = createSlice({
       state.transactions = action.payload;
       state.budgetActuals = calculateCategoryActuals(state);
     },
+    setNewRange: (state, action: PayloadAction<budgetHeaderTimeRanges>) => {
+      state.currentRange = action.payload;
+
+      switch (action.payload) {
+        case '1mo':
+          state.dateRange = {
+            startDate: startOfMonth.toISOString(),
+            endDate: now.toISOString(),
+          };
+          break;
+        case '6mo':
+          state.dateRange = {
+            startDate: new Date(now.getFullYear(), now.getMonth() - 5, 1).toISOString(),
+            endDate: now.toISOString(),
+          };
+          break;
+        case '12mo':
+          state.dateRange = {
+            startDate: new Date(now.getFullYear(), now.getMonth() - 11, 1).toISOString(),
+            endDate: now.toISOString(),
+          };
+      }
+    },
     goForward1Month: (state) => {
+      if (state.currentRange !== '1mo') {
+        state.currentRange = '1mo';
+        state.dateRange = initialState.dateRange;
+      }
+
       const currentEndDate = new Date(state.dateRange.endDate);
 
       // Calculate the next startDate as the first day of the next month
@@ -84,6 +115,10 @@ export const dashboardSlice = createSlice({
       };
     },
     goBack1Month: (state) => {
+      if (state.currentRange !== '1mo') {
+        state.currentRange = '1mo';
+        state.dateRange = initialState.dateRange;
+      }
       const currentStartDate = new Date(state.dateRange.startDate);
 
       // Set the startDate to the first day of the previous month
@@ -153,5 +188,6 @@ export const {
   updateTransactionCategory,
   goForward1Month,
   goBack1Month,
+  setNewRange,
 } = dashboardSlice.actions;
 export default dashboardSlice.reducer;

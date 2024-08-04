@@ -17,6 +17,7 @@ import { ICategory } from '@/types/basic/Category.type';
 import { ApiContext } from '@/stores/contexts/api.context';
 import { EditOrAddCategoryDialog } from '../dialog/EditOrAddCategoryDialog';
 import { SideArrowFilledIcon } from '../../assets/side-arrow-filled-icon';
+import { BudgetHeaderTimeRanges } from './BudgetHeaderTimeRanges';
 
 interface BudgetHeaderProps {}
 
@@ -94,6 +95,7 @@ export const BudgetHeader: FC<BudgetHeaderProps> = ({}) => {
           <span onClick={toggleSettings} ref={settingCogRef} id="settings_cog_budget_header_icon">
             <SettingsCogFilledIcon />
           </span>
+          <BudgetHeaderTimeRanges />
         </Styles.iconContainer>
       </Styles.container>
       <>
