@@ -79,5 +79,11 @@ const Styled = {
       border-top-right-radius: 7px;
       border-bottom-right-radius: 7px;
     }
+
+    &:hover {
+      cursor: pointer;
+      background-color: #a9a9a968;
+      color: #333333;
+    }
   `,
 };
