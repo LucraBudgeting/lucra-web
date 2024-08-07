@@ -5,10 +5,6 @@ import react from '@vitejs/plugin-react-swc';
 
 // https://vitejs.dev/config/
 export default defineConfig(() => {
-  const isHosted =
-    process.env.VITE_IS_PRODUCTION == 'true' ||
-    process.env.VITE_ENV?.toLowerCase()?.includes('prod') ||
-    process.env.VITE_ENV?.toLowerCase()?.includes('dev');
   return {
     server: {
       port: 3030,
@@ -41,7 +37,7 @@ export default defineConfig(() => {
     },
 
     build: {
-      sourcemap: isHosted,
+      sourcemap: false,
 
       rollupOptions: {
         onLog(level, log, handler) {
