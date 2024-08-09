@@ -51,9 +51,9 @@ export const CategoryListModal: FC<CategoryListProps> = ({
       setModalStyle({
         position: 'absolute',
         top,
-        left,
+        // left,
         maxHeight: `${modalHeight}px`,
-        zIndex: maxZIndex,
+        zIndex: maxZIndex + 1,
       });
       setIsVisible(true);
     }
@@ -84,6 +84,11 @@ export const CategoryListModal: FC<CategoryListProps> = ({
     setSearchValue(value);
   };
 
+  function categoryClick(event: React.MouseEvent, id?: string) {
+    event.stopPropagation();
+    categoryClickCb(id);
+  }
+
   return (
     <Styled.container ref={modalRef} style={modalStyle}>
       <Styled.searchContainer>
@@ -97,11 +102,11 @@ export const CategoryListModal: FC<CategoryListProps> = ({
       </Styled.searchContainer>
       {incomeList.length > 0 && <Styled.title>Income</Styled.title>}
       {incomeList.map((income) => (
-        <CategoryItem key={income.id} {...income} categoryClickCb={categoryClickCb} />
+        <CategoryItem key={income.id} {...income} categoryClickCb={categoryClick} />
       ))}
       {expenseList.length > 0 && <Styled.title>Expense</Styled.title>}
       {expenseList.map((expense) => (
-        <CategoryItem key={expense.id} {...expense} categoryClickCb={categoryClickCb} />
+        <CategoryItem key={expense.id} {...expense} categoryClickCb={categoryClick} />
       ))}
       {currentCategoryId && (
         <>
@@ -111,7 +116,7 @@ export const CategoryListModal: FC<CategoryListProps> = ({
             budgetType="credit"
             amount={0}
             avatar={{ emoji: '❌', backgroundColor: '' }}
-            categoryClickCb={categoryClickCb}
+            categoryClickCb={categoryClick}
           />
         </>
       )}

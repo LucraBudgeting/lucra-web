@@ -3,14 +3,14 @@ import styled from 'styled-components';
 import { ICategory } from '../../types/basic/Category.type';
 
 interface categoryProps extends ICategory {
-  categoryClickCb: (id?: string) => void;
+  categoryClickCb: (event: React.MouseEvent, id?: string) => void;
 }
 
 export const CategoryItem: FC<categoryProps> = ({ label, id, avatar, categoryClickCb }) => {
   const { emoji, backgroundColor } = avatar;
 
   return (
-    <Styled.container onClick={() => categoryClickCb(id)}>
+    <Styled.container onClick={(e) => categoryClickCb(e, id)}>
       <Styled.emoji color={backgroundColor}>{emoji}</Styled.emoji>
       <Styled.title>{label}</Styled.title>
     </Styled.container>

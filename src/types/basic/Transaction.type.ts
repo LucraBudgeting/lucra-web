@@ -3,6 +3,7 @@ import { IIsoCurrencyCode, IPaymentChannel } from './_shared/db.enum';
 export interface ITransaction {
   id: string;
   userId: string;
+  accountId?: string;
   amount: number;
   date: string;
   isoCurrencyCode: IIsoCurrencyCode;

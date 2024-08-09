@@ -14,11 +14,6 @@ export function useTransactions(): UseTransactionsResponseType {
   const { transactions, dateRange } = dashboardSelector();
 
   useEffect(() => {
-    // if (transactions.length) {
-    //   setIsFetching(false);
-    //   return;
-    // }
-
     apis.transactionApi
       .GetTransactions(dateRange.startDate, dateRange.endDate)
       .then((data) => {

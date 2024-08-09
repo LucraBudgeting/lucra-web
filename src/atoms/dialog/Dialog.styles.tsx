@@ -37,7 +37,7 @@ export const Styled = {
   headerText: styled.div`
     flex: 1; // Allows the header text to expand and helps in centering
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
     text-align: center;
 
