@@ -10,6 +10,7 @@ export interface ITransaction {
   merchantName: string | null;
   name: string | null;
   pending: boolean;
+  isExcludedFromBudget: boolean;
   isExcluded: boolean;
   paymentChannel: string;
   addressId: string | null;
@@ -18,4 +19,9 @@ export interface ITransaction {
   categoryDetailed?: string | null;
   dateCreated: Date;
   dateUpdated: Date;
+}
+
+export interface ITransactionPatchDto {
+  categoryId?: string;
+  excludeFromBudget?: boolean;
 }

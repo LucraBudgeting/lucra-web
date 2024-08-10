@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 interface ProfileHeaderProps {}
 
-const avatarImgUrl =
+const _avatarImgUrl =
   'https://images.squarespace-cdn.com/content/v1/6204821bfe06b76898b431c5/1660858625934-ZVWEMZYZHLWTVCXC19E3/Brandon+Andre+-+Headshot+Los+Angeles+na4-3.jpg';
 const name = 'Chandler Wescott';
 const email = 'chanwes@gmail.com';
@@ -11,7 +11,7 @@ const email = 'chanwes@gmail.com';
 export const SettingProfileHeader: FC<ProfileHeaderProps> = ({}) => {
   return (
     <Styled.container>
-      <Styled.avatar srcSet={avatarImgUrl} />
+      {/* <Styled.avatar srcSet={avatarImgUrl} /> */}
       <Styled.name>{name}</Styled.name>
       <Styled.email>{email}</Styled.email>
     </Styled.container>

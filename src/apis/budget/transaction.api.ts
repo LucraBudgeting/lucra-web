@@ -1,5 +1,5 @@
 import HttpClient from '@/libs/http/http.client';
-import { ITransaction } from '@/types/basic/Transaction.type';
+import { ITransaction, ITransactionPatchDto } from '@/types/basic/Transaction.type';
 import { BaseRepository } from '../base.repository';
 
 export default class TransactionApi extends BaseRepository {
@@ -18,6 +18,17 @@ export default class TransactionApi extends BaseRepository {
   ): Promise<{ message: string; transaction: ITransaction }> => {
     const response = await HttpClient.get<{ message: string; transaction: ITransaction }>(
       `${this.apiUrl}/api/transaction/${transactionId}`
+    );
+    return response;
+  };
+
+  PatchTransaction = async (
+    transactionId: string,
+    patch: ITransactionPatchDto
+  ): Promise<{ message: string }> => {
+    const response = await HttpClient.patch<{ message: string }>(
+      `${this.apiUrl}/api/transaction/${transactionId}`,
+      patch
     );
     return response;
   };

@@ -4,7 +4,7 @@ import { ITransaction } from '@/types/basic/Transaction.type';
 
 type UseTransactionResponseType = [transaction: ITransaction | undefined, isFetching: boolean];
 
-export function useTransaction(id: string): UseTransactionResponseType {
+export function useTransaction(id: string, cacheBuster?: string): UseTransactionResponseType {
   const apis = useContext(ApiContext);
 
   const [isFetching, setIsFetching] = useState(true);
@@ -23,7 +23,7 @@ export function useTransaction(id: string): UseTransactionResponseType {
     return () => {
       setIsFetching(true);
     };
-  }, [id]);
+  }, [id, cacheBuster]);
 
   return [transaction, isFetching];
 }

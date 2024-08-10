@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from 'react';
+import { FC, useContext, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { useAutoAnimate } from '@formkit/auto-animate/react';
 import { DialogContainer } from '@/atoms/dialog/DiaglogContainer';
@@ -13,6 +13,7 @@ import { getBase64ImageString } from '@/utils/base64Img';
 import { BaseSelect, ISelectOptions } from '@/atoms/select/BaseSelect';
 import { BaseToggle } from '@/atoms/toggle/BaseToggle';
 import { LoadingComponent } from '@/atoms/loading/Loading.Component';
+import { ApiContext } from '@/stores/contexts/api.context';
 import { categoriesToOptions } from '../category/category.utils';
 
 interface TransactionDetailsProps extends DialogProps {
@@ -21,8 +22,10 @@ interface TransactionDetailsProps extends DialogProps {
 
 export const TransactionDetails: FC<TransactionDetailsProps> = (props) => {
   const [containerRef] = useAutoAnimate();
-  const [transaction, isFetching] = useTransaction(props.id);
+  const { transactionApi } = useContext(ApiContext);
   const { bankAccounts, debitCategories, creditCategories } = dashboardSelector();
+  const [cacheBuster, setCacheBuster] = useState('');
+  const [transaction, isFetching] = useTransaction(props.id, cacheBuster);
 
   const [isExcluded, setIsExcluded] = useState(false);
   const [isShowingDetails, setIsShowingDetails] = useState(false);
@@ -39,6 +42,7 @@ export const TransactionDetails: FC<TransactionDetailsProps> = (props) => {
 
   useEffect(() => {
     setSelectedCategory(transaction?.categoryId ?? '');
+    setIsExcluded(transaction?.isExcludedFromBudget ?? false);
   }, [transaction]);
 
   if (transaction?.accountId) {
@@ -57,12 +61,25 @@ export const TransactionDetails: FC<TransactionDetailsProps> = (props) => {
     setIsExcluded(updatedValue);
   }
 
+  function saveTransaction() {
+    transactionApi
+      .PatchTransaction(props.id, {
+        categoryId: selectedCategory,
+        excludeFromBudget: isExcluded,
+      })
+      .then(() => {
+        setCacheBuster(new Date().getTime().toString());
+      });
+  }
+
   return (
     <DialogContainer
       {...props}
       enableHeader={true}
-      enableFooter={false}
+      enableFooter={true}
       headerText={transaction?.merchantName || 'Transaction Details'}
+      successCb={saveTransaction}
+      closeCb={props.closeCb}
     >
       <Styled.container ref={containerRef}>
         {isFetching ? (
