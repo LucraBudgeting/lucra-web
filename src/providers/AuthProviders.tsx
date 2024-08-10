@@ -36,6 +36,7 @@ export const AuthCheckProvider: FC<AuthCheckProviderProps> = ({}) => {
               token: accessToken,
               phoneNumber: user.phoneNumber,
               email: user.email,
+              name: user.name,
             })
           );
         })
