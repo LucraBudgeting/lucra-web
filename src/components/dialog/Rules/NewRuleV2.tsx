@@ -1,7 +1,6 @@
 import { ChangeEvent, FC, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { dashboardSelector } from '@/stores/slices/Dashboard.slice';
-import { ICategory } from '@/types/basic/Category.type';
 import { eConditionOperator, eConditionType } from '@/types/models/rules/rule.type';
 import {
   ITransactionCondition,
@@ -11,6 +10,7 @@ import { BaseInput } from '@/atoms/input/BaseInput';
 import { BaseSelect, ISelectOptions } from '@/atoms/select/BaseSelect';
 import { Button } from '@/atoms/button/Button';
 import { Styled } from '@/atoms/dialog/Dialog.styles';
+import { categoriesToOptions, categoryListToOptions } from '@/components/category/category.utils';
 import {
   conditionOperatorOptions,
   getConditionOperatorFromName,
@@ -40,7 +40,6 @@ export const EditOrAddRuleV2: FC<EditOrAddRuleProps> = ({
   const { operator } = conditions[0] ?? newCondition;
 
   const { debitCategories, creditCategories } = dashboardSelector();
-  // const [merchantName, setMerchantName] = useState<string>('');
   const [merchantNameValues, setMerchantNameValues] = useState<string[]>(
     getMerchantValues(conditions)
   );
@@ -51,24 +50,16 @@ export const EditOrAddRuleV2: FC<EditOrAddRuleProps> = ({
   const [selectedCategory, setSelectedCategory] = useState<string>(
     rule?.parsedCondition?.categoryId ?? ''
   );
-  const [categoryOptionList, setCategoryOptionList] = useState<
-    {
-      value: string;
-      displayName: string;
-    }[]
-  >([]);
+  const [categoryOptionList, setCategoryOptionList] = useState<ISelectOptions[]>([]);
   const [ruleName, setRuleName] = useState<string>(rule?.name ?? '');
 
   useEffect(() => {
     const categories = [...debitCategories, ...creditCategories];
-    const options = categories.map((category: ICategory) => ({
-      value: category.id!,
-      displayName: category.label,
-    }));
+    const options = categoriesToOptions(categories);
     setCategoryOptionList(options);
 
     if (!rule?.parsedCondition?.categoryId) {
-      setSelectedCategory(options[0].value);
+      setSelectedCategory(options[0].value?.toString());
     }
   }, [debitCategories, creditCategories]);
 
@@ -291,14 +282,4 @@ function getAiTagValues(conditions: ITransactionCondition[]): string[] {
   return conditions
     .filter((condition) => condition.field == aiTagField)
     .map((condition) => condition.value);
-}
-
-function categoryListToOptions(categoryList: Record<string, string>): ISelectOptions[] {
-  const options = Object.keys(categoryList).map((key) => ({
-    value: key,
-    displayName: categoryList[key],
-  }));
-  options.unshift({ value: '', displayName: 'Select category' });
-
-  return options;
 }

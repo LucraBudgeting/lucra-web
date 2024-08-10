@@ -1,12 +1,13 @@
 export interface IBankAccount {
   id: string;
-  linkSource: 'plaid';
+  accountName: string;
+  accessAccountId: string;
+  institutionId: string;
   type: string;
   subType: string;
   mask: string;
-  accountName: string;
-  institution?: IBankInstitution;
-  balance?: IBankBalance;
+  accountBalance?: IBankBalance;
+  bankInstitution?: IBankInstitution;
 }
 
 export interface IBankBalance {
@@ -17,7 +18,7 @@ export interface IBankBalance {
 }
 
 export interface IBankInstitution {
-  displayName?: string;
+  name?: string;
   website?: string;
   logoUrl?: string;
   primaryColor?: string;

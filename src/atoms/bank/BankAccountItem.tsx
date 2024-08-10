@@ -8,7 +8,7 @@ interface BankAccountItemProps {
 }
 
 export const BankAccountItem: FC<BankAccountItemProps> = ({ account }) => {
-  const { institution } = account;
+  const { bankInstitution: institution } = account;
   return (
     <Styles.container>
       <Styles.left>
@@ -16,8 +16,8 @@ export const BankAccountItem: FC<BankAccountItemProps> = ({ account }) => {
           <img src={getBase64ImageString(institution?.logoUrl)} />
         </Styles.avatar>
         <Styles.titleContainer>
-          <h3>{account.institution?.displayName}</h3>
-          <h6>{institution?.displayName}</h6>
+          <h3>{account?.accountName}</h3>
+          <h6>{institution?.name}</h6>
         </Styles.titleContainer>
       </Styles.left>
 

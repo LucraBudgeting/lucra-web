@@ -19,6 +19,21 @@ export const convertEpochToDateFormat = (
   return convertEpochToDate(date).toLocaleDateString('en-us', options);
 };
 
+export function toLongDateFormat(dateString?: string): string {
+  const date = dateString ? new Date(dateString) : new Date();
+
+  // Options for formatting the date
+  const options: Intl.DateTimeFormatOptions = {
+    weekday: 'long',
+    year: 'numeric',
+    month: 'short',
+    day: 'numeric',
+  };
+
+  // Format the date using toLocaleDateString with the specified options
+  return date.toLocaleDateString('en-US', options);
+}
+
 export function getFullMonth(): string {
   const monthNames = [
     'January',

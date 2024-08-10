@@ -1,4 +1,4 @@
-import { IIsoCurrencyCode, IPaymentChannel } from './_shared/db.enum';
+import { IIsoCurrencyCode } from './_shared/db.enum';
 
 export interface ITransaction {
   id: string;
@@ -10,9 +10,12 @@ export interface ITransaction {
   merchantName: string | null;
   name: string | null;
   pending: boolean;
-  paymentChannel: IPaymentChannel;
+  isExcluded: boolean;
+  paymentChannel: string;
   addressId: string | null;
   categoryId?: string | null;
+  categoryPrimary?: string | null;
+  categoryDetailed?: string | null;
   dateCreated: Date;
   dateUpdated: Date;
 }
