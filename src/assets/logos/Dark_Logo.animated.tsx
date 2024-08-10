@@ -17,12 +17,12 @@ const growShrink2 = keyframes`
 `;
 
 const AnimatedPath1 = styled.path`
-  animation: ${growShrink1} 3s infinite ease-in-out;
+  animation: ${growShrink1} 1.5s infinite ease-in-out;
   transform-origin: bottom;
 `;
 
 const AnimatedPath2 = styled.path`
-  animation: ${growShrink2} 3s infinite ease-in-out;
+  animation: ${growShrink2} 1.75s infinite ease-in-out;
   transform-origin: top;
 `;
 
