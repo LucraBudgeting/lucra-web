@@ -1,5 +1,6 @@
 import { FC, useContext, useEffect, useState } from 'react';
 import { Outlet } from 'react-router-dom';
+import styled from 'styled-components';
 import { isUserModelLocal, useAuth } from '@/hooks/authentication/useAuth.hook';
 import { ApiContext } from '@/stores/contexts/api.context';
 import { useAppDispatch } from '@/stores/store.hooks';
@@ -35,6 +36,7 @@ export const AuthCheckProvider: FC<AuthCheckProviderProps> = ({}) => {
               token: accessToken,
               phoneNumber: user.phoneNumber,
               email: user.email,
+              name: user.name,
             })
           );
         })
@@ -52,7 +54,12 @@ export const AuthCheckProvider: FC<AuthCheckProviderProps> = ({}) => {
     };
   }, []);
 
-  if (isLoading && hasAuthToken) return <LoadingComponent loadingText="Authenticating User" />;
+  if (isLoading && hasAuthToken)
+    return (
+      <LoadingContainer>
+        <LoadingComponent maxHeight="30vh" />
+      </LoadingContainer>
+    );
 
   //When in local environment, skip the authentication check (When saving changes to slices youll be redirected to login page even though youre authenticated due to race condition)
   if (envHelper.isLocal) return <Outlet />;
@@ -64,3 +71,11 @@ export const AuthCheckProvider: FC<AuthCheckProviderProps> = ({}) => {
 
   return <Outlet />;
 };
+
+const LoadingContainer = styled.div`
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;

@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 import { TransactionList } from '@/components/transaction/TransactionList';
 import { createShortGuid } from '@/utils/guid.helper';
 import { ITransaction } from '@/types/basic/Transaction.type';
-import { IIsoCurrencyCode, IPaymentChannel } from '@/types/basic/_shared/db.enum';
+import { IIsoCurrencyCode } from '@/types/basic/_shared/db.enum';
 import { ParentContainer } from '../ParentContainer';
 import { mockTransactionList } from '../__mocks/MockTransactionList';
 
@@ -28,7 +28,7 @@ export const Default: Story = {
 function generateFakeTransactions(count: number): ITransaction[] {
   const transactions: ITransaction[] = [];
   const isoCurrencyCodes: IIsoCurrencyCode[] = ['USD', 'EUR', 'GBP'];
-  const paymentChannels: IPaymentChannel[] = ['ONLINE', 'IN_STORE'];
+  const paymentChannels: string[] = ['ONLINE', 'IN_STORE'];
 
   for (let i = 0; i < count; i++) {
     const currentDate = new Date(`2021-08-27`);
@@ -48,8 +48,10 @@ function generateFakeTransactions(count: number): ITransaction[] {
         paymentChannel: paymentChannels[Math.floor(Math.random() * paymentChannels.length)],
         addressId: Math.random() > 0.5 ? createShortGuid() : null,
         categoryId: Math.random() > 0.5 ? createShortGuid() : null,
+        isExcluded: Math.random() > 0.5,
         dateCreated: new Date(),
         dateUpdated: new Date(),
+        isExcludedFromBudget: false,
       };
 
       transactions.push(newTransaction);

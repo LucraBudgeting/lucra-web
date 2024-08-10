@@ -1,17 +1,15 @@
 import { FC } from 'react';
 import styled from 'styled-components';
+import { authenticationSelector } from '@/stores/slices/Authentication.slice';
 
 interface ProfileHeaderProps {}
 
-const avatarImgUrl =
-  'https://images.squarespace-cdn.com/content/v1/6204821bfe06b76898b431c5/1660858625934-ZVWEMZYZHLWTVCXC19E3/Brandon+Andre+-+Headshot+Los+Angeles+na4-3.jpg';
-const name = 'Chandler Wescott';
-const email = 'chanwes@gmail.com';
-
 export const SettingProfileHeader: FC<ProfileHeaderProps> = ({}) => {
+  const { name, email } = authenticationSelector();
+
   return (
     <Styled.container>
-      <Styled.avatar srcSet={avatarImgUrl} />
+      {/* <Styled.avatar srcSet={avatarImgUrl} /> */}
       <Styled.name>{name}</Styled.name>
       <Styled.email>{email}</Styled.email>
     </Styled.container>

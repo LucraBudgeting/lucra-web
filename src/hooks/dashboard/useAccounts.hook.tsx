@@ -1,12 +1,16 @@
 import { useContext, useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { ApiContext } from '@/stores/contexts/api.context';
+import { dashboardSelector, setBankAccounts } from '@/stores/slices/Dashboard.slice';
 import { IBankAccount } from '@/types/models/bank/BankAccount';
 
-type useAccountsHookProps = [accounts: any, isFetching: boolean];
+type useAccountsHookProps = [accounts: IBankAccount[], isFetching: boolean];
 
 export function useAccounts(cacheBuster?: string): useAccountsHookProps {
-  const [accounts, setAccounts] = useState<IBankAccount[]>([]);
   const [isFetchingAccounts, setIsFetchingAccounts] = useState(false);
+  const { bankAccounts } = dashboardSelector();
+
+  const dispatch = useDispatch();
   const { bankApi } = useContext(ApiContext);
 
   useEffect(() => {
@@ -15,7 +19,7 @@ export function useAccounts(cacheBuster?: string): useAccountsHookProps {
     bankApi
       .getBankAccounts()
       .then((data) => {
-        setAccounts(data.bankAccounts);
+        dispatch(setBankAccounts(data.bankAccounts));
       })
       .finally(() => {
         setIsFetchingAccounts(false);
@@ -26,5 +30,6 @@ export function useAccounts(cacheBuster?: string): useAccountsHookProps {
     };
   }, [cacheBuster]);
 
-  return [accounts, isFetchingAccounts];
+  const bankAccountsArray = Object.values(bankAccounts);
+  return [bankAccountsArray, isFetchingAccounts];
 }

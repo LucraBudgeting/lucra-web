@@ -7,6 +7,7 @@ import { ApiContext } from '@/stores/contexts/api.context';
 import { Chip } from '../../atoms/chip/Chip';
 import { AddCategoryChip } from '../../atoms/chip/AddCategoryChip';
 import { CategoryListModal } from '../category/CategoryListModal';
+import { TransactionDetails } from './TransactionDetails';
 
 interface TransactionItemProps {
   amount: number;
@@ -23,6 +24,7 @@ const Styled = {
     padding: 16px;
     height: 40px;
     border-bottom: ${(props) => (props.islast === 'true' ? 'none' : '1px solid #d3d3d399')};
+    cursor: pointer;
   `,
   title: styled.h3`
     margin-bottom: 8px;
@@ -61,13 +63,17 @@ export const TransactionItem: FC<TransactionItemProps> = ({
 }) => {
   const dispatch = useDispatch();
 
-  const { transactionApi } = useContext(ApiContext);
   const [isAddCategoryOpen, setIsAddCategoryOpen] = useState(false);
+  const [isDetailsOpen, setIsDetailsOpen] = useState(false);
+  const { transactionApi } = useContext(ApiContext);
   const parentRef = useRef<HTMLDivElement>(null);
   const { categoryDictionary } = dashboardSelector();
   const category = categoryId ? categoryDictionary[categoryId] : null;
 
-  const toggleChipClick = () => {
+  const toggleChipClick = (event?: React.MouseEvent) => {
+    if (event) {
+      event.stopPropagation();
+    }
     setIsAddCategoryOpen(!isAddCategoryOpen);
   };
 
@@ -78,29 +84,39 @@ export const TransactionItem: FC<TransactionItemProps> = ({
     });
   };
 
+  const toggleDetails = () => {
+    if (isAddCategoryOpen) {
+      return;
+    }
+    setIsDetailsOpen(!isDetailsOpen);
+  };
+
   return (
-    <Styled.container islast={isLast ? 'true' : 'false'}>
-      <Styled.descriptionContainer ref={parentRef}>
-        <Styled.title>{description}</Styled.title>
-        <span onClick={toggleChipClick}>
-          {category ? (
-            <Chip emoji={category.avatar.emoji} label={category.label} />
-          ) : (
-            <AddCategoryChip />
+    <>
+      <Styled.container islast={isLast ? 'true' : 'false'} onClick={toggleDetails}>
+        <Styled.descriptionContainer ref={parentRef}>
+          <Styled.title>{description}</Styled.title>
+          <span onClick={(e) => toggleChipClick(e)}>
+            {category ? (
+              <Chip emoji={category.avatar.emoji} label={category.label} />
+            ) : (
+              <AddCategoryChip />
+            )}
+          </span>
+          {isAddCategoryOpen && (
+            <CategoryListModal
+              parentRef={parentRef}
+              categoryClickCb={associateCategory}
+              outsideClickCb={toggleChipClick}
+              currentCategoryId={id}
+            />
           )}
-        </span>
-        {isAddCategoryOpen && (
-          <CategoryListModal
-            parentRef={parentRef}
-            categoryClickCb={associateCategory}
-            outsideClickCb={toggleChipClick}
-            currentCategoryId={id}
-          />
-        )}
-      </Styled.descriptionContainer>
-      <Styled.amountContainer>
-        <Styled.amount amount={amount}>{formatAsMoney(amount, true)}</Styled.amount>
-      </Styled.amountContainer>
-    </Styled.container>
+        </Styled.descriptionContainer>
+        <Styled.amountContainer>
+          <Styled.amount amount={amount}>{formatAsMoney(amount, true)}</Styled.amount>
+        </Styled.amountContainer>
+      </Styled.container>
+      {isDetailsOpen && <TransactionDetails closeCb={toggleDetails} id={id} />}
+    </>
   );
 };

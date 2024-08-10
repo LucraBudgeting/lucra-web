@@ -7,6 +7,7 @@ export const initialAuthenticationState: IAuthenticationState = {
   userId: '',
   phoneNumber: null,
   token: '',
+  name: '',
   email: '',
 };
 

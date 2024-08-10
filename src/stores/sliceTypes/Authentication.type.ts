@@ -3,4 +3,5 @@ export interface IAuthenticationState {
   phoneNumber: string | null;
   token: string;
   email: string;
+  name: string;
 }

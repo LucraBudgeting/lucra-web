@@ -2,6 +2,7 @@ import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { useSelector } from 'react-redux';
 import { ICategory } from '@/types/basic/Category.type';
 import { ITransaction } from '@/types/basic/Transaction.type';
+import { IBankAccount } from '@/types/models/bank/BankAccount';
 import { RootState } from '../store';
 
 interface IDateRange {
@@ -19,6 +20,7 @@ export const initialState = {
   debitCategories: [] as ICategory[],
   categoryDictionary: {} as Record<string, ICategory>,
   transactions: [] as ITransaction[],
+  bankAccounts: {} as Record<string, IBankAccount>,
   budgetActuals: {} as Record<string, number>,
   currentRange: '1mo' as budgetHeaderTimeRanges,
   dateRange: {
@@ -58,6 +60,17 @@ export const dashboardSlice = createSlice({
         state.debitCategories.push(action.payload);
       }
       state.categoryDictionary[action.payload.id] = action.payload;
+    },
+    setBankAccounts: (state, action: PayloadAction<IBankAccount[]>) => {
+      state.bankAccounts = action.payload.reduce(
+        (acc, account) => {
+          if (!account.id) return acc;
+
+          acc[account.id] = account;
+          return acc;
+        },
+        {} as Record<string, IBankAccount>
+      );
     },
     setTransactions: (state, action: PayloadAction<ITransaction[]>) => {
       state.transactions = action.payload;
@@ -189,5 +202,6 @@ export const {
   goForward1Month,
   goBack1Month,
   setNewRange,
+  setBankAccounts,
 } = dashboardSlice.actions;
 export default dashboardSlice.reducer;

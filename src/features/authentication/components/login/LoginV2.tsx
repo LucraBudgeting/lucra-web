@@ -75,6 +75,7 @@ export const LoginV2: FC<LoginV2Props> = ({}) => {
             token: accessToken,
             phoneNumber: user.phoneNumber,
             email: user.email,
+            name: user.name,
           })
         );
 

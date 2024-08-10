@@ -10,6 +10,7 @@ export function useOutsideClickRef<T extends HTMLElement = HTMLDivElement>(
       if (!callback) return;
 
       if (ref.current && !ref.current.contains(event.target as Node)) {
+        event.stopPropagation();
         callback();
       }
     },

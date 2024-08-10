@@ -2,6 +2,7 @@ import { FC } from 'react';
 import styled from 'styled-components';
 import { useCategories } from '@/hooks/dashboard/useCategories.hook';
 import { useTransactions } from '@/hooks/dashboard/useTransactions.hook';
+import { useAccounts } from '@/hooks/dashboard/useAccounts.hook';
 import { Budgets } from '../components/Budgets';
 import { Transactions } from '../components/Transactions';
 import SplitView from '../components/SplitView';
@@ -9,6 +10,7 @@ import SplitView from '../components/SplitView';
 interface DashboardPageProps {}
 
 export const DashboardPage: FC<DashboardPageProps> = ({}) => {
+  const [_, isAccountsFetching] = useAccounts();
   const [categories, isCategoriesFetching] = useCategories();
   const [transactions, isTransactionsFetching] = useTransactions();
 
@@ -16,7 +18,12 @@ export const DashboardPage: FC<DashboardPageProps> = ({}) => {
     <Styled.container>
       <SplitView
         left={<Budgets categories={categories} isFetching={isCategoriesFetching} />}
-        right={<Transactions transactions={transactions} isFetching={isTransactionsFetching} />}
+        right={
+          <Transactions
+            transactions={transactions}
+            isFetching={isTransactionsFetching || isAccountsFetching}
+          />
+        }
       />
     </Styled.container>
   );
