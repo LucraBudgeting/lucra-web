@@ -38,14 +38,14 @@ export const CategoryListModal: FC<CategoryListProps> = ({
       const modalWidth = 50;
 
       let top = rect.bottom + window.scrollY;
-      let left = rect.left + window.scrollX;
+      let _left = rect.left + window.scrollX;
 
       if (availableHeightBelow < modalHeight && availableHeightAbove > modalHeight) {
         top = rect.top + window.scrollY - modalHeight;
       }
 
       if (availableWidthRight < modalWidth) {
-        left = rect.left + window.scrollX - modalWidth;
+        _left = rect.left + window.scrollX - modalWidth;
       }
 
       setModalStyle({

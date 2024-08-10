@@ -37,9 +37,9 @@ export const AccountsDialog: FC<AccountsDialogProps> = (props) => {
     return {
       id: account.id,
       name: account.accountName,
-      instit: account.institution?.displayName,
+      instit: account.bankInstitution?.name,
       type: account.type,
-      balance: account.balance?.currentBalance,
+      balance: account.accountBalance?.currentBalance,
     };
   });
 
