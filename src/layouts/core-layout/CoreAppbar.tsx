@@ -41,7 +41,7 @@ export const CoreAppbar: FC<coreNavbarProps> = ({}) => {
   };
 
   const gotoBilling = async () => {
-    const billingUrl = await billingApi.getBillingUrl('');
+    const billingUrl = await billingApi.getBillingUrl();
     location.href = billingUrl;
   };
 

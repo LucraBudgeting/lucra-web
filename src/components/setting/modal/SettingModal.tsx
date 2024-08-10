@@ -14,6 +14,8 @@ import { AutomationIcon } from '@/assets/Automation-outline';
 import { RulesDialog } from '@/components/dialog/Rules/RulesDialog';
 import useClientDevice from '@/hooks/client/useClientDevice';
 import { maxZIndex } from '@/utils/domConstants';
+import { BillingIcon } from '@/assets/billing-icon';
+import { ApiContext } from '@/stores/contexts/api.context';
 import { SettingModalSection } from './SettingModalSection';
 import { SettingProfileHeader } from './SettingProfileHeader';
 
@@ -36,6 +38,7 @@ export const SettingModal: FC<ProfileModalProps> = ({ outsideClickCb, parentRef 
     isSettingsModalNotificationsEnabled,
     isSettingsModalProfileEnabled,
   } = useContext(FeatureFlagContext);
+  const { billingApi } = useContext(ApiContext);
   const { windowSize, isMobile } = useClientDevice();
   const [modalStatus, setModalStatus] = useState(initialModalStatus);
 
@@ -94,6 +97,12 @@ export const SettingModal: FC<ProfileModalProps> = ({ outsideClickCb, parentRef 
     setModalStatus({ ...initialModalStatus, isAppearanceOpen: !modalStatus.isAppearanceOpen });
   }
 
+  function goToBilling() {
+    billingApi.getBillingUrl().then((billingUrl) => {
+      location.href = billingUrl;
+    });
+  }
+
   function toggleNotifications() {
     setModalStatus({
       ...initialModalStatus,
@@ -148,6 +157,12 @@ export const SettingModal: FC<ProfileModalProps> = ({ outsideClickCb, parentRef 
             title="Accounts"
             onClick={onAccountsClick}
             id="settings_accounts"
+          />
+          <SettingModalSection
+            Icon={BillingIcon}
+            title="Billing"
+            onClick={goToBilling}
+            id="settings_billing"
           />
           <SettingModalSection Icon={AutomationIcon} title="Rules" onClick={onRulesClick} />
           {isSettingsModalAppearanceEnabled && (
