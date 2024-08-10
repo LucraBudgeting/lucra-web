@@ -51,6 +51,7 @@ function generateFakeTransactions(count: number): ITransaction[] {
         isExcluded: Math.random() > 0.5,
         dateCreated: new Date(),
         dateUpdated: new Date(),
+        isExcludedFromBudget: false,
       };
 
       transactions.push(newTransaction);
