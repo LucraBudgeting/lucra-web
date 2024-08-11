@@ -69,12 +69,16 @@ export const Styled = {
       width: 0.5rem;
     }
   `,
-  footer: styled.div`
+  footer: styled.div<{ right?: string }>`
     display: flex;
     padding: 24px;
-    justify-content: space-between;
+    justify-content: ${({ right }) => (right === 'true' ? 'space-between' : 'flex-end')};
     align-items: center;
     align-self: stretch;
+  `,
+  footerButtonContainer: styled.div`
+    display: flex;
+    gap: 1rem;
   `,
   content: styled.div<{ height: string }>`
     position: relative;

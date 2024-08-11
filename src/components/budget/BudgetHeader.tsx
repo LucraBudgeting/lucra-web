@@ -9,12 +9,15 @@ import {
   dashboardSelector,
   goBack1Month,
   goForward1Month,
+  resetDateRange,
 } from '@/stores/slices/Dashboard.slice';
 import { getShortMonth, yearFromIso } from '@/utils/time.helper';
 import { SettingModal } from '@/components/setting/modal/SettingModal';
 import { FeatureFlagContext } from '@/stores/contexts/featureFlag.context';
 import { ICategory } from '@/types/basic/Category.type';
 import { ApiContext } from '@/stores/contexts/api.context';
+import colors from '@/assets/theme/colors';
+import { Button } from '@/atoms/button/Button';
 import { EditOrAddCategoryDialog } from '../dialog/EditOrAddCategoryDialog';
 import { SideArrowFilledIcon } from '../../assets/side-arrow-filled-icon';
 import { BudgetHeaderTimeRanges } from './BudgetHeaderTimeRanges';
@@ -34,9 +37,15 @@ export const BudgetHeader: FC<BudgetHeaderProps> = ({}) => {
   const [isProfileOpen, setIsProfileOpen] = useState(false);
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
 
-  const { dateRange } = dashboardSelector();
+  const { dateRange, currentRange } = dashboardSelector();
 
-  const startDateStr = `${getShortMonth(dateRange.endDate)} ${yearFromIso(dateRange.endDate)}`;
+  const isNotInCurrentMonth = !isInCurrentMonth(new Date(dateRange.endDate));
+
+  let startDateStr = `${getShortMonth(dateRange.endDate)} ${yearFromIso(dateRange.endDate)}`;
+
+  if (currentRange !== '1mo') {
+    startDateStr = `${getShortMonth(dateRange.startDate)} ${yearFromIso(dateRange.startDate)} - ${getShortMonth(dateRange.endDate)} ${yearFromIso(dateRange.endDate)}`;
+  }
 
   const addBudgetCb = (newCategory: ICategory) => {
     setIsCategoryAdding(true);
@@ -50,6 +59,10 @@ export const BudgetHeader: FC<BudgetHeaderProps> = ({}) => {
       });
     toggleAdd();
   };
+
+  function goToCurrentMonth() {
+    dispatch(resetDateRange());
+  }
 
   function toggleProfile() {
     setIsProfileOpen(!isProfileOpen);
@@ -84,6 +97,11 @@ export const BudgetHeader: FC<BudgetHeaderProps> = ({}) => {
           </span>
         </Styles.dateContainer>
         <Styles.iconContainer id="budget-header-icons-container">
+          {isNotInCurrentMonth && (
+            <Button type="empty" onClick={goToCurrentMonth}>
+              Current month
+            </Button>
+          )}
           <span onClick={toggleAdd}>
             <PlusIcon id="add_new_budget_header_icon" />
           </span>
@@ -144,7 +162,8 @@ const Styles = {
       height: 22px;
 
       &:hover {
-        background-color: #efefef;
+        background-color: ${colors.grey[300]};
+        border-radius: 30%;
       }
     }
 
@@ -153,7 +172,7 @@ const Styles = {
       font-weight: 700;
       line-height: 22px;
       text-align: left;
-      width: 100px;
+      min-width: 100px;
     }
   `,
 
@@ -162,5 +181,23 @@ const Styles = {
     align-items: center;
     gap: 1rem;
     cursor: pointer;
+
+    span {
+      padding: 5px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      &:hover {
+        background-color: ${colors.grey[300]};
+        border-radius: 30%;
+      }
+    }
   `,
+  currentMonthButton: styled.div``,
 };
+
+function isInCurrentMonth(date: Date) {
+  const now = new Date();
+  return date.getFullYear() === now.getFullYear() && date.getMonth() === now.getMonth();
+}

@@ -11,7 +11,6 @@ export interface ITransaction {
   name: string | null;
   pending: boolean;
   isExcludedFromBudget: boolean;
-  isExcluded: boolean;
   paymentChannel: string;
   addressId: string | null;
   categoryId?: string | null;

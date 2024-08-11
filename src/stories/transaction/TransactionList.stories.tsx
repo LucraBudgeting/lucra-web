@@ -48,10 +48,9 @@ function generateFakeTransactions(count: number): ITransaction[] {
         paymentChannel: paymentChannels[Math.floor(Math.random() * paymentChannels.length)],
         addressId: Math.random() > 0.5 ? createShortGuid() : null,
         categoryId: Math.random() > 0.5 ? createShortGuid() : null,
-        isExcluded: Math.random() > 0.5,
         dateCreated: new Date(),
         dateUpdated: new Date(),
-        isExcludedFromBudget: false,
+        isExcludedFromBudget: Math.random() > 0.5,
       };
 
       transactions.push(newTransaction);

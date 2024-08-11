@@ -6,7 +6,9 @@ export interface DialogProps<T = any> {
   enableHeader?: boolean;
   enableFooter?: boolean;
   closeButton?: boolean;
+  deleteButton?: boolean;
   successButton?: boolean;
+  deleteCb?: () => void;
   closeCb: () => void;
   successCb?: (param?: T) => void;
   editCb?: () => void;

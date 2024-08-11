@@ -18,10 +18,12 @@ export type budgetHeaderTimeRanges = '1mo' | '6mo' | '12mo';
 export const initialState = {
   creditCategories: [] as ICategory[],
   debitCategories: [] as ICategory[],
+  transferCategory: {} as ICategory,
   categoryDictionary: {} as Record<string, ICategory>,
   transactions: [] as ITransaction[],
   bankAccounts: {} as Record<string, IBankAccount>,
   budgetActuals: {} as Record<string, number>,
+  budgetAverage: {} as Record<string, number>,
   currentRange: '1mo' as budgetHeaderTimeRanges,
   dateRange: {
     startDate: startOfMonth.toISOString(),
@@ -38,6 +40,8 @@ export const dashboardSlice = createSlice({
         (category) => category.budgetType === 'credit'
       );
       state.debitCategories = action.payload.filter((category) => category.budgetType === 'debit');
+      state.transferCategory =
+        action.payload.find((category) => category.budgetType === 'transfer') || ({} as ICategory);
 
       state.categoryDictionary = action.payload.reduce(
         (acc, category) => {
@@ -75,6 +79,7 @@ export const dashboardSlice = createSlice({
     setTransactions: (state, action: PayloadAction<ITransaction[]>) => {
       state.transactions = action.payload;
       state.budgetActuals = calculateCategoryActuals(state);
+      state.budgetAverage = calculateCategoryAverage(state);
     },
     setNewRange: (state, action: PayloadAction<budgetHeaderTimeRanges>) => {
       state.currentRange = action.payload;
@@ -98,6 +103,10 @@ export const dashboardSlice = createSlice({
             endDate: now.toISOString(),
           };
       }
+    },
+    resetDateRange: (state) => {
+      state.currentRange = '1mo';
+      state.dateRange = initialState.dateRange;
     },
     goForward1Month: (state) => {
       if (state.currentRange !== '1mo') {
@@ -172,6 +181,7 @@ function calculateCategoryActuals(state: typeof initialState): Record<string, nu
   return state.transactions.reduce(
     (acc, transaction) => {
       if (!transaction.categoryId) return acc;
+      if (transaction.isExcludedFromBudget) return acc;
 
       const amount = parseFloat(transaction.amount.toString());
 
@@ -193,6 +203,32 @@ function calculateCategoryActuals(state: typeof initialState): Record<string, nu
   );
 }
 
+function calculateCategoryAverage(state: typeof initialState): Record<string, number> {
+  const sums: Record<string, number> = {};
+  const counts: Record<string, number> = {};
+
+  state.transactions.forEach((transaction) => {
+    if (!transaction.categoryId) return;
+    if (transaction.isExcludedFromBudget) return;
+
+    const amount = parseFloat(transaction.amount.toString());
+
+    if (!sums[transaction.categoryId]) {
+      sums[transaction.categoryId] = 0;
+      counts[transaction.categoryId] = 0;
+    }
+    sums[transaction.categoryId] += amount;
+    counts[transaction.categoryId] += 1;
+  });
+
+  const averages: Record<string, number> = {};
+  for (const categoryId in sums) {
+    averages[categoryId] = sums[categoryId] / counts[categoryId];
+  }
+
+  return averages;
+}
+
 export const dashboardSelector = () => useSelector((state: RootState) => state.dashboard);
 export const {
   setCategories,
@@ -203,5 +239,6 @@ export const {
   goBack1Month,
   setNewRange,
   setBankAccounts,
+  resetDateRange,
 } = dashboardSlice.actions;
 export default dashboardSlice.reducer;

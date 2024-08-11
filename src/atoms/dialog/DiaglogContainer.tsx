@@ -15,12 +15,14 @@ export const DialogContainer: FC<DiaglogContainerProps> = ({
   enableHeader = true,
   enableFooter = true,
   closeButton = true,
+  deleteButton = false,
   successButton = true,
   disableSave = false,
   closeText = 'Close',
   nextText = 'Save',
   closeCb,
   successCb,
+  deleteCb,
   editCb,
   menuButtons,
   children,
@@ -38,6 +40,12 @@ export const DialogContainer: FC<DiaglogContainerProps> = ({
   const successDialog = () => {
     if (successCb) {
       successCb();
+    }
+  };
+
+  const deleteBtn = () => {
+    if (deleteCb) {
+      deleteCb();
     }
   };
 
@@ -77,23 +85,28 @@ export const DialogContainer: FC<DiaglogContainerProps> = ({
           {children}
         </Styled.content>
         {enableFooter && (
-          <Styled.footer>
-            {closeButton && (
-              <Button
-                onClick={closeDialog}
-                label={closeText}
-                primary={false}
-                id="dialog_close_btn"
-              />
+          <Styled.footer id="dialog-footer" right={deleteButton.toString()}>
+            {deleteButton && (
+              <Button onClick={deleteBtn} label="Delete" type="error" id="dialog_delete_btn" />
             )}
-            {successButton && (
-              <Button
-                onClick={successDialog}
-                label={nextText}
-                disabled={disableSave}
-                id="dialog_success_btn"
-              />
-            )}
+            <Styled.footerButtonContainer>
+              {closeButton && (
+                <Button
+                  onClick={closeDialog}
+                  label={closeText}
+                  type="secondary"
+                  id="dialog_close_btn"
+                />
+              )}
+              {successButton && (
+                <Button
+                  onClick={successDialog}
+                  label={nextText}
+                  disabled={disableSave}
+                  id="dialog_success_btn"
+                />
+              )}
+            </Styled.footerButtonContainer>
           </Styled.footer>
         )}
       </Styled.dialog>

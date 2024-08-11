@@ -19,7 +19,10 @@ export const RuleContainer: FC<RuleContainerProps> = ({ index, rule, editCb, cac
   const { rulesApi } = useContext(ApiContext);
   const { categoryDictionary } = dashboardSelector();
 
-  const { operator, value } = rule?.parsedCondition?.conditionGroups[0]?.conditions[0] ?? {};
+  const { operator } = rule?.parsedCondition?.conditionGroups[0]?.conditions[0] ?? {};
+
+  const values =
+    rule?.parsedCondition?.conditionGroups[0]?.conditions.map((condition) => condition.value) ?? [];
 
   function onEditClick() {
     editCb(index);
@@ -40,13 +43,22 @@ export const RuleContainer: FC<RuleContainerProps> = ({ index, rule, editCb, cac
         <EditIcon onClick={onEditClick} />
         <TrashIcon onClick={onDeleteClick} />
       </Styled.actionIcons>
-      <Styled.name>{rule.name}</Styled.name>
+      <Styled.name>
+        <p className="name">Name: </p>
+        {rule.name}
+      </Styled.name>
       <Styled.ruleInfoRow>
-        <p className="start">Merchant {getConditionDisplayName(operator)}:</p>
-        <p className="value">{value}</p>
+        <p className="start">If merchant name {getConditionDisplayName(operator)}:</p>
+        <Styled.valuesContainer>
+          {values.map((value, index) => (
+            <Styled.valueChip key={index} color={generateChalkColors(1)[0]}>
+              {value}
+            </Styled.valueChip>
+          ))}
+        </Styled.valuesContainer>
       </Styled.ruleInfoRow>
       <Styled.ruleInfoRow>
-        <p className="start">Category:</p>
+        <p className="start">Then categorize as:</p>
         <p className="value">{categoryDictionary[rule.parsedCondition.categoryId]?.label ?? ''}</p>
       </Styled.ruleInfoRow>
     </Styled.ruleContainer>
@@ -54,6 +66,16 @@ export const RuleContainer: FC<RuleContainerProps> = ({ index, rule, editCb, cac
 };
 
 const Styled = {
+  valueChip: styled.div<{ color: string }>`
+    padding: 6px;
+    border-radius: 6px;
+    background-color: ${(props) => props.color};
+  `,
+  valuesContainer: styled.div`
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  `,
   actionIcons: styled.div`
     position: absolute;
     top: 10px; /* Adjust position as needed */
@@ -71,24 +93,45 @@ const Styled = {
     background-color: #fbfafa;
     position: relative;
   `,
-  name: styled.h3``,
+  name: styled.h3`
+    display: flex;
+    .name {
+      color: #707070;
+      margin-right: 0.25rem;
+    }
+  `,
   ruleInfoRow: styled.div`
     display: flex;
+    flex-direction: column;
     .start {
       color: #707070;
       margin-right: 0.25rem;
     }
-
-    .value {
-      font-weight: 500;
-    }
   `,
 };
 
-// {
-//     return (
-//       <Styles.ruleContainer key={rule.id}>
-//
-//       </Styles.ruleContainer>
-//     );
-//   }
+function generateChalkColors(count: number): string[] {
+  const baseColors = ['#FDFFE7', '#FFEEE4', '#E3F5FF', '#FFF8E1', '#E8F5E9', '#F3E5F5'];
+
+  const lightenColor = (hex: string, percent: number): string => {
+    const num = parseInt(hex.slice(1), 16);
+    const amt = Math.round(2.55 * percent);
+    const R = (num >> 16) + amt;
+    const G = ((num >> 8) & 0x00ff) + amt;
+    const B = (num & 0x0000ff) + amt;
+
+    return `#${(
+      0x1000000 +
+      (R < 255 ? (R < 1 ? 0 : R) : 255) * 0x10000 +
+      (G < 255 ? (G < 1 ? 0 : G) : 255) * 0x100 +
+      (B < 255 ? (B < 1 ? 0 : B) : 255)
+    )
+      .toString(16)
+      .slice(1)}`;
+  };
+
+  return Array.from({ length: count }, () => {
+    const baseColor = baseColors[Math.floor(Math.random() * baseColors.length)];
+    return lightenColor(baseColor, Math.random() * 10 - 5); // Slightly randomize the lightness
+  });
+}

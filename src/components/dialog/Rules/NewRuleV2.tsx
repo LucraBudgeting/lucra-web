@@ -82,7 +82,6 @@ export const EditOrAddRuleV2: FC<EditOrAddRuleProps> = ({
   function onAiTagChange(value: string, index: number) {
     setAiTagValues((prevArray) => {
       const newArray = [...prevArray];
-      console.log('value', value, newArray, index, index < newArray.length);
       if (index >= 0 && index <= newArray.length) {
         newArray[index] = value;
       }
@@ -219,7 +218,7 @@ export const EditOrAddRuleV2: FC<EditOrAddRuleProps> = ({
       </Styles.instructionSection>
 
       <Styles.footer style={{ padding: '24px 0 0' }}>
-        <Button label="Cancel" primary={false} onClick={cancelCb} />
+        <Button label="Cancel" type="secondary" onClick={cancelCb} />
         <Button label="Save" onClick={saveRule} />
       </Styles.footer>
     </Styles.newRuleContainer>
@@ -227,7 +226,7 @@ export const EditOrAddRuleV2: FC<EditOrAddRuleProps> = ({
 };
 
 function AddValueBtn({ onClick }: { onClick: () => void }) {
-  return <Button label="+ Add" onClick={onClick} primary={false} />;
+  return <Button label="+ Add" onClick={onClick} type="secondary" />;
 }
 
 const Styles = {

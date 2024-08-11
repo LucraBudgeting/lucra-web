@@ -1,10 +1,11 @@
 import { FC, useContext, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { useAutoAnimate } from '@formkit/auto-animate/react';
+import { useDispatch } from 'react-redux';
 import { DialogContainer } from '@/atoms/dialog/DiaglogContainer';
 import { DialogProps } from '@/atoms/dialog/Dialog.types';
 import { useTransaction } from '@/hooks/dashboard/useTransaction.hook';
-import { dashboardSelector } from '@/stores/slices/Dashboard.slice';
+import { dashboardSelector, setTransactions } from '@/stores/slices/Dashboard.slice';
 import { IBankAccount } from '@/types/models/bank/BankAccount';
 import colors from '@/assets/theme/colors';
 import { formatAsMoney } from '@/utils/formatAsMoney';
@@ -23,7 +24,9 @@ interface TransactionDetailsProps extends DialogProps {
 export const TransactionDetails: FC<TransactionDetailsProps> = (props) => {
   const [containerRef] = useAutoAnimate();
   const { transactionApi } = useContext(ApiContext);
-  const { bankAccounts, debitCategories, creditCategories } = dashboardSelector();
+  const { bankAccounts, debitCategories, creditCategories, transferCategory, dateRange } =
+    dashboardSelector();
+  const dispatch = useDispatch();
   const [cacheBuster, setCacheBuster] = useState('');
   const [transaction, isFetching] = useTransaction(props.id, cacheBuster);
 
@@ -35,7 +38,7 @@ export const TransactionDetails: FC<TransactionDetailsProps> = (props) => {
   let bankAccount = {} as IBankAccount;
 
   useEffect(() => {
-    const categories = [...debitCategories, ...creditCategories];
+    const categories = [...debitCategories, ...creditCategories, transferCategory];
     const options = categoriesToOptions(categories);
     setCategoryOptionList(options);
   }, [debitCategories, creditCategories]);
@@ -61,14 +64,20 @@ export const TransactionDetails: FC<TransactionDetailsProps> = (props) => {
     setIsExcluded(updatedValue);
   }
 
-  function saveTransaction() {
-    transactionApi
+  async function saveTransaction() {
+    await transactionApi
       .PatchTransaction(props.id, {
         categoryId: selectedCategory,
         excludeFromBudget: isExcluded,
       })
       .then(() => {
         setCacheBuster(new Date().getTime().toString());
+      });
+
+    await transactionApi
+      .GetTransactions(dateRange.startDate, dateRange.endDate)
+      .then((response) => {
+        dispatch(setTransactions(response.transactions));
       });
   }
 

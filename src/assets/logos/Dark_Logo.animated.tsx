@@ -13,7 +13,7 @@ const growShrink1 = keyframes`
 
 const growShrink2 = keyframes`
   0%, 100% { transform: scaleY(1); opacity: 0.45; }
-  50% { transform: scaleY(0.88); opacity: 1; }
+  50% { transform: scaleY(0.86); opacity: 1; }
 `;
 
 const AnimatedPath1 = styled.path`

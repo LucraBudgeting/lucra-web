@@ -14,6 +14,7 @@ import { ApiContext } from '@/stores/contexts/api.context';
 import { TransactionList } from '../transaction/TransactionList';
 import { calcRemaining, calcIsRemainingGood } from '../budget/budgetCalculator';
 import { EditOrAddCategory } from '../budget/EditOrAddCategory';
+import { DestroyDialog } from './Destroy/DestroyDialog';
 
 interface ViewBudgetDialogProps extends DialogProps {
   category: ICategory;
@@ -24,6 +25,7 @@ export const ViewBudgetDialog: FC<ViewBudgetDialogProps> = (props) => {
   const [transactions, isTransactionsFetching] = useTransactions();
   const [category, setCategory] = useState<ICategory>(props.category);
   const [isCategorySaving, setIsCategorySaving] = useState(false);
+  const [showDeleteDialog, setShowDeleteDialog] = useState(false);
 
   const dispatch = useDispatch();
 
@@ -77,14 +79,35 @@ export const ViewBudgetDialog: FC<ViewBudgetDialogProps> = (props) => {
       });
   };
 
+  const deleteCategoryCb = () => {
+    if (!category.id) return;
+
+    setIsCategorySaving(true);
+    categoryApi
+      .DeleteCategory(category.id)
+      .then((res) => {
+        dispatch(setCategories(res.categories));
+      })
+      .finally(() => {
+        setIsCategorySaving(false);
+        closeCb();
+      });
+  };
+
+  const toggleDeleteDialog = () => {
+    setShowDeleteDialog(!showDeleteDialog);
+  };
+
   return (
     <DialogContainer
       forwardRef={ref}
       {...props}
       editCb={toggleEdit}
       enableFooter={isEditEnabled}
+      deleteButton={isEditEnabled}
       headerText={headerLabel}
       successCb={saveCategory}
+      deleteCb={toggleDeleteDialog}
     >
       {isEditEnabled ? (
         <Styles.editContainer>
@@ -126,6 +149,16 @@ export const ViewBudgetDialog: FC<ViewBudgetDialogProps> = (props) => {
             )}
           </Styles.transactionListContainer>
         </Styles.detailsContainer>
+      )}
+      {showDeleteDialog && (
+        <DestroyDialog
+          topText={'Delete category'}
+          bottomText={
+            'Are you sure you want to delete this category? This action cannot be undone.'
+          }
+          successCb={deleteCategoryCb}
+          closeCb={toggleDeleteDialog}
+        />
       )}
     </DialogContainer>
   );

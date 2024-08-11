@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import colors from '@/assets/theme/colors';
 
 export default {
   chip: styled.div`
@@ -6,14 +7,17 @@ export default {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    border-radius: 30px;
     padding: 6px 12px;
     cursor: pointer;
-    transition: background-color 0.3s ease;
-    transition: opacity 0.5s ease;
+    transition:
+      background-color 0.5s ease-in-out,
+      border-radius 0.25s ease-in-out;
+    background-color: transparent;
+    border-radius: 16px;
 
     &:hover {
-      opacity: 0.5;
+      border-radius: 8px;
+      background-color: ${colors.grey[300]};
     }
   `,
   emoji: styled.span`

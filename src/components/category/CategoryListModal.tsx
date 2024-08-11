@@ -4,8 +4,10 @@ import { SpyGlassOutline } from '@/assets/spyglass-outline';
 import { dashboardSelector } from '@/stores/slices/Dashboard.slice';
 import { useOutsideClickRef } from '@/hooks/react/useOutsideClickRef';
 import { maxZIndex } from '@/utils/domConstants';
-import { ICategory } from '../../types/basic/Category.type';
+import colors from '@/assets/theme/colors';
+import { ICategory, transferCategoryId } from '../../types/basic/Category.type';
 import { CategoryItem } from './CategoryItem';
+import { FixedCategoryItem } from './FixedCategoryItem';
 
 interface CategoryListProps {
   parentRef: React.RefObject<HTMLDivElement>;
@@ -89,6 +91,11 @@ export const CategoryListModal: FC<CategoryListProps> = ({
     categoryClickCb(id);
   }
 
+  function setAsTransfer(event: React.MouseEvent) {
+    event.stopPropagation();
+    categoryClickCb(transferCategoryId);
+  }
+
   return (
     <Styled.container ref={modalRef} style={modalStyle}>
       <Styled.searchContainer>
@@ -100,26 +107,40 @@ export const CategoryListModal: FC<CategoryListProps> = ({
           onChange={(e) => filterCategories(e.target.value)}
         />
       </Styled.searchContainer>
-      {incomeList.length > 0 && <Styled.title>Income</Styled.title>}
-      {incomeList.map((income) => (
-        <CategoryItem key={income.id} {...income} categoryClickCb={categoryClick} />
-      ))}
-      {expenseList.length > 0 && <Styled.title>Expense</Styled.title>}
-      {expenseList.map((expense) => (
-        <CategoryItem key={expense.id} {...expense} categoryClickCb={categoryClick} />
-      ))}
-      {currentCategoryId && (
-        <>
-          <Styled.title>Remove</Styled.title>
-          <CategoryItem
+      <Styled.categoryConatainer>
+        {incomeList.length > 0 && <Styled.title>Income</Styled.title>}
+        {incomeList.map((income) => (
+          <CategoryItem key={income.id} {...income} categoryClickCb={categoryClick} />
+        ))}
+      </Styled.categoryConatainer>
+      <Styled.categoryConatainer>
+        {expenseList.length > 0 && <Styled.title>Expense</Styled.title>}
+        {expenseList.map((expense) => (
+          <CategoryItem key={expense.id} {...expense} categoryClickCb={categoryClick} />
+        ))}
+      </Styled.categoryConatainer>
+      <Styled.categoryConatainer>
+        <Styled.title>Transfer</Styled.title>
+        <CategoryItem
+          label="Transfer"
+          budgetType="transfer"
+          amount={0}
+          avatar={{ emoji: '🔀', backgroundColor: '' }}
+          categoryClickCb={setAsTransfer}
+        />
+      </Styled.categoryConatainer>
+      {/* <Styled.title>Transfer</Styled.title> */}
+      <Styled.fixedContainer>
+        {currentCategoryId && (
+          <FixedCategoryItem
             label="Remove Category"
             budgetType="credit"
             amount={0}
             avatar={{ emoji: '❌', backgroundColor: '' }}
             categoryClickCb={categoryClick}
           />
-        </>
-      )}
+        )}
+      </Styled.fixedContainer>
     </Styled.container>
   );
 };
@@ -140,12 +161,31 @@ const Styled = {
     overflow: auto;
     box-shadow: 0px 2px 8px -1px rgba(0, 0, 0, 0.1);
   `,
+  categoryConatainer: styled.div`
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  `,
+  fixedContainer: styled.div`
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    border-top: 1px solid ${colors.grey[300]};
+
+    /* & > div:not(:last-child) {
+      border-bottom: 1px solid #ccc;
+      border-top: 1px solid #ccc;
+      padding-bottom: 10px;
+    }
+
+    div {
+      padding-top: 10px;
+    } */
+  `,
   title: styled.h1`
-    color: var(--Grey-Dark, #333);
-    font-family: Inter;
+    color: ${colors.grey[500]};
     font-size: 16px;
-    font-style: normal;
-    font-weight: 600;
+    font-weight: 500;
     line-height: 20px;
   `,
   searchContainer: styled.div`

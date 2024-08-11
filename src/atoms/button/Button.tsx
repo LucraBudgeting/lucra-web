@@ -2,16 +2,13 @@ import { FC } from 'react';
 import styled from 'styled-components';
 
 interface BaseButtonProps {
-  primaryb?: string;
-
+  type?: 'primary' | 'secondary' | 'error' | 'empty';
   backgroundColor?: string;
   size?: 'small' | 'medium' | 'large';
   tabIndex?: number;
 }
 
 interface ButtonProps extends BaseButtonProps {
-  primary?: boolean;
-
   label?: string;
   onClick?: () => void;
   disabled?: boolean;
@@ -21,7 +18,7 @@ interface ButtonProps extends BaseButtonProps {
 }
 
 export const Button: FC<ButtonProps> = ({
-  primary = true,
+  type = 'primary',
   backgroundColor,
   size = 'medium',
   label,
@@ -36,9 +33,8 @@ export const Button: FC<ButtonProps> = ({
     <Styled.button
       id={id}
       tabIndex={tabIndex}
-      type="button"
+      type={type}
       size={size}
-      primaryb={primary.toString()}
       backgroundColor={backgroundColor}
       onClick={onClick}
       disabled={disabled}
@@ -56,18 +52,26 @@ const Styled = {
         return props.backgroundColor;
       }
 
-      if (props.primaryb == 'true') {
-        return '#333';
+      switch (props.type) {
+        case 'primary':
+          return '#333';
+        case 'secondary':
+        case 'error':
+        default:
+          return 'transparent';
       }
-
-      return 'transparent';
     }};
-    color: ${({ primaryb }) => {
-      if (primaryb == 'true') {
-        return '#fff';
+    color: ${({ type }) => {
+      switch (type) {
+        case 'primary':
+          return '#fff';
+        case 'secondary':
+          return '#333';
+        case 'error':
+          return '#CA4141';
+        default:
+          return '#333';
       }
-
-      return '#333';
     }};
     font-size: ${(props) => {
       switch (props.size) {
@@ -79,7 +83,14 @@ const Styled = {
           return '16px';
       }
     }};
-    border: none;
+    border: ${(props) => {
+      switch (props.type) {
+        case 'empty':
+          return 'none';
+        default:
+          return 'solid 1px #e2e2e2';
+      }
+    }};
     border-radius: 8px;
     padding: ${(props) => {
       switch (props.size) {
@@ -91,16 +102,29 @@ const Styled = {
           return '10px 20px';
       }
     }};
+    box-shadow: ${(props) => {
+      switch (props.type) {
+        case 'empty':
+          return 'none';
+        default:
+          return '0px 2px 6px 0px #0000000f';
+      }
+    }};
     cursor: pointer;
     transition: background-color 0.5s;
 
     &:disabled {
       background-color: ${(props) => {
-        if (props.primaryb == 'true') {
-          return '#f3f3f3';
+        switch (props.type) {
+          case 'primary':
+            return '#f3f3f3';
+          case 'secondary':
+            return 'transparent';
+          case 'error':
+            return '#f3f3f3';
+          default:
+            return '#f3f3f3';
         }
-
-        return 'transparent';
       }};
       color: #9b9b9b;
       cursor: not-allowed;
@@ -108,19 +132,31 @@ const Styled = {
 
     &:hover {
       background-color: ${(props) => {
-        if (props.primaryb == 'true') {
-          return '#44444441';
+        switch (props.type) {
+          case 'primary':
+            return '#6e6e6e';
+          case 'secondary':
+            return '#f3f3f3';
+          case 'error':
+            return '#ff3b3b66';
+          case 'empty':
+            return '#EFEFEF';
+          default:
+            return 'transparent';
         }
-
-        return '#f3f3f3a5';
       }};
 
       color: ${(props) => {
-        if (props.primaryb == 'true') {
-          return '#fff';
+        switch (props.type) {
+          case 'primary':
+            return '#cecece';
+          case 'secondary':
+            return '#333';
+          case 'error':
+            return '#ffffffba141';
+          default:
+            return '#333';
         }
-
-        return '#333';
       }};
     }
   `,

@@ -4,7 +4,7 @@ interface FilterIconProps {}
 
 export const FilterIcon: FC<FilterIconProps> = ({}) => {
   return (
-    <svg width="14" height="14" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path
         d="M1.2002 1.80005H10.8002"
         stroke="#707070"
