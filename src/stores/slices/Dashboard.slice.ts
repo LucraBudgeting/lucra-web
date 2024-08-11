@@ -172,6 +172,7 @@ function calculateCategoryActuals(state: typeof initialState): Record<string, nu
   return state.transactions.reduce(
     (acc, transaction) => {
       if (!transaction.categoryId) return acc;
+      if (transaction.isExcludedFromBudget) return acc;
 
       const amount = parseFloat(transaction.amount.toString());
 
