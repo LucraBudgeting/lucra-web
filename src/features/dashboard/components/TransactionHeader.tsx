@@ -5,11 +5,18 @@ import { FilterIcon } from '@/assets/filter-icon';
 import { PlusIcon } from '@/assets/plus-icon';
 import { SpyGlassOutline } from '@/assets/spyglass-outline';
 import { SearchInput } from '@/atoms/input/SearchInput';
+import colors from '@/assets/theme/colors';
 
 interface TransactionHeaderProps {
   searchValue: string;
   onSearchChange: (search: string) => void;
 }
+
+const enableFeature = {
+  add: false,
+  search: true,
+  settings: false,
+};
 
 export const TransactionHeader: FC<TransactionHeaderProps> = ({ searchValue, onSearchChange }) => {
   const [secondarySpaceRef] = useAutoAnimate();
@@ -38,15 +45,21 @@ export const TransactionHeader: FC<TransactionHeaderProps> = ({ searchValue, onS
         {isOptionsContainerOpen && (
           <Styles.optionsContainer>
             <Styles.iconContainer>
-              <span onClick={toggleAdd}>
-                <PlusIcon />
-              </span>
-              <span onClick={toggleSearch}>
-                <SpyGlassOutline type="bold" />
-              </span>
-              <span onClick={toggleSettings}>
-                <FilterIcon />
-              </span>
+              {enableFeature.add && (
+                <span onClick={toggleAdd}>
+                  <PlusIcon />
+                </span>
+              )}
+              {enableFeature.search && (
+                <span onClick={toggleSearch}>
+                  <SpyGlassOutline type="bold" />
+                </span>
+              )}
+              {enableFeature.settings && (
+                <span onClick={toggleSettings}>
+                  <FilterIcon />
+                </span>
+              )}
             </Styles.iconContainer>
           </Styles.optionsContainer>
         )}
@@ -69,6 +82,7 @@ const Styles = {
     justify-content: space-between;
     align-items: center;
     margin-bottom: 1rem;
+    margin-top: -0.75rem;
   `,
   title: styled.h2`
     font-size: 18px;
@@ -83,7 +97,16 @@ const Styles = {
     gap: 1rem;
 
     span {
+      padding: 5px;
       cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      &:hover {
+        background-color: ${colors.grey[300]};
+        border-radius: 30%;
+      }
     }
   `,
 };

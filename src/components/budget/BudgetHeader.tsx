@@ -15,6 +15,7 @@ import { SettingModal } from '@/components/setting/modal/SettingModal';
 import { FeatureFlagContext } from '@/stores/contexts/featureFlag.context';
 import { ICategory } from '@/types/basic/Category.type';
 import { ApiContext } from '@/stores/contexts/api.context';
+import colors from '@/assets/theme/colors';
 import { EditOrAddCategoryDialog } from '../dialog/EditOrAddCategoryDialog';
 import { SideArrowFilledIcon } from '../../assets/side-arrow-filled-icon';
 import { BudgetHeaderTimeRanges } from './BudgetHeaderTimeRanges';
@@ -144,7 +145,8 @@ const Styles = {
       height: 22px;
 
       &:hover {
-        background-color: #efefef;
+        background-color: ${colors.grey[300]};
+        border-radius: 30%;
       }
     }
 
@@ -162,5 +164,17 @@ const Styles = {
     align-items: center;
     gap: 1rem;
     cursor: pointer;
+
+    span {
+      padding: 5px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      &:hover {
+        background-color: ${colors.grey[300]};
+        border-radius: 30%;
+      }
+    }
   `,
 };
