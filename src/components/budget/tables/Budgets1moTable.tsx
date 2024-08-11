@@ -8,6 +8,7 @@ import { calcIsRemainingGood } from '@/components/budget/budgetCalculator';
 import { formatAsMoney } from '@/utils/formatAsMoney';
 import { AddBudgetRow } from '../AddBudgetRow';
 import { Styles } from './Styles';
+import { NetRow } from './NetRow';
 
 interface BudgetsTableProps {
   categories: ICategoriesSplit;
@@ -159,6 +160,14 @@ export const Budgets1moTable: FC<BudgetsTableProps> = ({ categories }) => {
             )}
           </span>
         </Styles.budgetSection>
+        <NetRow
+          incomeTotal={incomeTotals.actual}
+          expenseTotal={expenseTotals.actual}
+          incomeRemaining={incomeTotals.remaining}
+          expenseRemaining={expenseTotals.remaining}
+          incomeBudgetTotal={incomeTotals.budget}
+          expenseBudgetTotal={expenseTotals.budget}
+        />
       </Styles.budgetsContainer>
     </Styles.tableContainer>
   );

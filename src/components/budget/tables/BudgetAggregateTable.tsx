@@ -6,6 +6,7 @@ import { formatAsMoney } from '@/utils/formatAsMoney';
 import { AddBudgetRow } from '../AddBudgetRow';
 import { BudgetItem } from '../BudgetItem';
 import { Styles } from './Styles';
+import { NetRow } from './NetRow';
 
 interface BudgetAggregateTableProps {
   categories: ICategoriesSplit;
@@ -131,6 +132,12 @@ export const BudgetAggregateTable: FC<BudgetAggregateTableProps> = ({ categories
             )}
           </span>
         </Styles.budgetSection>
+        <NetRow
+          incomeTotal={incomeTotals.total}
+          expenseTotal={expenseTotals.total}
+          incomeAverage={incomeTotals.average}
+          expenseAverage={expenseTotals.average}
+        />
       </Styles.budgetsContainer>
     </Styles.tableContainer>
   );
