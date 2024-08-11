@@ -1,15 +1,11 @@
 import { combineReducers, configureStore, PreloadedState } from '@reduxjs/toolkit';
 
 import authenticationReducer from './slices/Authentication.slice';
-import snackBarReducer from './slices/SnackBar.slice';
-import pokemonReducer from './slices/Pokemon.slice';
 import onboardingSliceReducer from './slices/Onboarding.slice';
 import dashboardSliceReducer from './slices/Dashboard.slice';
 
 const rootReducer = combineReducers({
   authentication: authenticationReducer,
-  snackBar: snackBarReducer,
-  pokemon: pokemonReducer,
   onboarding: onboardingSliceReducer,
   dashboard: dashboardSliceReducer,
 });

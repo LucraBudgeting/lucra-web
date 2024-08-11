@@ -1,5 +1,4 @@
 import { createContext } from 'react';
-import { PokemonApi } from '@/apis/pokemon.api';
 import { AuthenticationApi } from '@/apis/authentication/authentication.api';
 import { BillingApi } from '@/apis/billing/billing.api';
 import { QsPlaidApi } from '@/apis/bank/plaid.qs.api';
@@ -11,7 +10,6 @@ import TransactionApi from '@/apis/budget/transaction.api';
 import RulesApi from '@/apis/rules/rules.api';
 
 interface Apis {
-  pokemon: PokemonApi;
   billingApi: BillingApi;
   onboardingApi: OnboardingApi;
   authApi: AuthenticationApi;
@@ -27,7 +25,6 @@ interface Apis {
 const { VITE_ENV } = import.meta.env;
 
 export const initializedApis: Apis = {
-  pokemon: new PokemonApi(),
   billingApi: new BillingApi(),
   authApi: new AuthenticationApi(),
   qsPlaidApi: new QsPlaidApi(),

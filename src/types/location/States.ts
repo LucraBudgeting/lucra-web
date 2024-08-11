@@ -1,5 +1,3 @@
-import { FormFilledSelectValueMapping } from '@/libs/forms/formFilledComponents';
-
 export enum statesFull {
   'AL' = 'Alabama',
   'AK' = 'Alaska',
@@ -370,11 +368,3 @@ export const statesArray: stateType[] = [
 
 export const getState = (state: string): stateType =>
   statesArray.filter((item) => item.name === state || item.abbreviation === state)[0];
-
-export const getStateValueMap = (): FormFilledSelectValueMapping[] =>
-  statesArray.map((e) => {
-    return {
-      displayName: e.name,
-      value: e.abbreviation,
-    };
-  });

@@ -1,6 +1,6 @@
 import { FC } from 'react';
 import { Routes } from 'react-router-dom';
-import * as Styled from './auth.styles';
+import styled from 'styled-components';
 
 interface AuthenticatedLayoutProps {
   children: React.ReactNode;
@@ -12,4 +12,10 @@ export const AuthenticatedLayout: FC<AuthenticatedLayoutProps> = ({ children }) 
       <Routes>{children}</Routes>
     </Styled.AuthOutletContainer>
   );
+};
+
+const Styled = {
+  AuthOutletContainer: styled.div`
+    width: 100vw;
+  `,
 };

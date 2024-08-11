@@ -1,7 +1,5 @@
 import styled from 'styled-components';
 
-export * from '@/common/style';
-
 export const LoginFooter = styled.p`
   color: #707070;
   font-size: 14px;
