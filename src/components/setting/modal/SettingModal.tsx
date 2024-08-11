@@ -16,6 +16,7 @@ import useClientDevice from '@/hooks/client/useClientDevice';
 import { maxZIndex } from '@/utils/domConstants';
 import { BillingIcon } from '@/assets/billing-icon';
 import { ApiContext } from '@/stores/contexts/api.context';
+import { DarkLogoAnimatedIcon } from '@/assets/logos/Dark_Logo.animated';
 import { SettingModalSection } from './SettingModalSection';
 import { SettingProfileHeader } from './SettingProfileHeader';
 
@@ -41,6 +42,7 @@ export const SettingModal: FC<ProfileModalProps> = ({ outsideClickCb, parentRef 
   const { billingApi } = useContext(ApiContext);
   const { windowSize, isMobile } = useClientDevice();
   const [modalStatus, setModalStatus] = useState(initialModalStatus);
+  const [isFetchingBillingUrl, setIsFetchingBillingUrl] = useState(false);
 
   const [modalStyle, setModalStyle] = useState<React.CSSProperties>({
     display: 'none',
@@ -98,9 +100,15 @@ export const SettingModal: FC<ProfileModalProps> = ({ outsideClickCb, parentRef 
   }
 
   function goToBilling() {
-    billingApi.getBillingUrl().then((billingUrl) => {
-      location.href = billingUrl;
-    });
+    setIsFetchingBillingUrl(true);
+    billingApi
+      .getBillingUrl()
+      .then((billingUrl) => {
+        location.href = billingUrl;
+      })
+      .finally(() => {
+        setIsFetchingBillingUrl(false);
+      });
   }
 
   function toggleNotifications() {
@@ -159,7 +167,7 @@ export const SettingModal: FC<ProfileModalProps> = ({ outsideClickCb, parentRef 
             id="settings_accounts"
           />
           <SettingModalSection
-            Icon={BillingIcon}
+            Icon={isFetchingBillingUrl ? DarkLogoAnimatedIcon : BillingIcon}
             title="Billing"
             onClick={goToBilling}
             id="settings_billing"

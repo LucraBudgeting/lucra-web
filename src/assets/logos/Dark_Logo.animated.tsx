@@ -26,6 +26,10 @@ const AnimatedPath2 = styled.path`
   transform-origin: top;
 `;
 
+export const DarkLogoAnimatedIcon = () => {
+  return <DarkLogoAnimated height="24px" width="24px" />;
+};
+
 export const DarkLogoAnimated: FC<DarkLogoProps> = ({ width = '100%', height = '100%' }) => {
   return (
     <svg
