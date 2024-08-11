@@ -12,10 +12,12 @@ export interface BudgetItemProps {
 }
 
 export const BudgetItem: FC<BudgetItemProps> = ({ category }) => {
+  const { budgetActuals, budgetAverage, currentRange } = dashboardSelector();
+  const isAggregate = currentRange !== '1mo';
   const [isViewDialogOpen, setIsViewDialogOpen] = useState(false);
 
   const { id, label, avatar, amount, budgetType } = category;
-  const actual = id ? dashboardSelector().budgetActuals[id] : 0;
+  const actual = id ? budgetActuals[id] : 0;
 
   const remaining = calcRemaining(amount, actual);
   const isRemainingGood = calcIsRemainingGood(amount, actual, budgetType);
@@ -35,17 +37,23 @@ export const BudgetItem: FC<BudgetItemProps> = ({ category }) => {
           <Styled.title>{label}</Styled.title>
         </Styled.budgetContainer>
         <Styled.amountContainer>
-          <Styled.amountCell>
-            <Styled.input
-              width={inputWidth}
-              value={formatAsMoney(amount)}
-              onChange={onBudgetChange}
-            />
-          </Styled.amountCell>
+          {!isAggregate && (
+            <Styled.amountCell>
+              <Styled.input
+                width={inputWidth}
+                value={formatAsMoney(amount)}
+                onChange={onBudgetChange}
+              />
+            </Styled.amountCell>
+          )}
           <Styled.amountCell>{formatAsMoney(actual)}</Styled.amountCell>
-          <Styled.remainingCell isremaininggood={isRemainingGood ? 'true' : 'false'}>
-            {formatAsMoney(remaining)}
-          </Styled.remainingCell>
+          {isAggregate && category.id ? (
+            <Styled.amountCell>{formatAsMoney(-budgetAverage[category.id] || 0)}</Styled.amountCell>
+          ) : (
+            <Styled.remainingCell isremaininggood={isRemainingGood ? 'true' : 'false'}>
+              {formatAsMoney(remaining)}
+            </Styled.remainingCell>
+          )}
         </Styled.amountContainer>
       </Styled.container>
       {isViewDialogOpen && (
@@ -90,8 +98,8 @@ const Styled = {
   amountContainer: styled.div`
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    padding-right: 8px;
+    justify-content: flex-end;
+    padding-right: 6px;
     gap: 24px;
     width: 40%;
     min-width: 600px;

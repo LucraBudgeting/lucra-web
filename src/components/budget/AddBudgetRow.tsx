@@ -45,7 +45,7 @@ export const AddBudgetRow: FC<AddBudgetRowProps> = ({ initialBudgetType }) => {
         <LoadingComponent />
       ) : (
         <Button onClick={openBudget} type="empty">
-          + New Category
+          + New
         </Button>
       )}
       {isModalOpen && (

@@ -23,6 +23,7 @@ export const initialState = {
   transactions: [] as ITransaction[],
   bankAccounts: {} as Record<string, IBankAccount>,
   budgetActuals: {} as Record<string, number>,
+  budgetAverage: {} as Record<string, number>,
   currentRange: '1mo' as budgetHeaderTimeRanges,
   dateRange: {
     startDate: startOfMonth.toISOString(),
@@ -78,6 +79,7 @@ export const dashboardSlice = createSlice({
     setTransactions: (state, action: PayloadAction<ITransaction[]>) => {
       state.transactions = action.payload;
       state.budgetActuals = calculateCategoryActuals(state);
+      state.budgetAverage = calculateCategoryAverage(state);
     },
     setNewRange: (state, action: PayloadAction<budgetHeaderTimeRanges>) => {
       state.currentRange = action.payload;
@@ -195,6 +197,32 @@ function calculateCategoryActuals(state: typeof initialState): Record<string, nu
     },
     {} as Record<string, number>
   );
+}
+
+function calculateCategoryAverage(state: typeof initialState): Record<string, number> {
+  const sums: Record<string, number> = {};
+  const counts: Record<string, number> = {};
+
+  state.transactions.forEach((transaction) => {
+    if (!transaction.categoryId) return;
+    if (transaction.isExcludedFromBudget) return;
+
+    const amount = parseFloat(transaction.amount.toString());
+
+    if (!sums[transaction.categoryId]) {
+      sums[transaction.categoryId] = 0;
+      counts[transaction.categoryId] = 0;
+    }
+    sums[transaction.categoryId] += amount;
+    counts[transaction.categoryId] += 1;
+  });
+
+  const averages: Record<string, number> = {};
+  for (const categoryId in sums) {
+    averages[categoryId] = sums[categoryId] / counts[categoryId];
+  }
+
+  return averages;
 }
 
 export const dashboardSelector = () => useSelector((state: RootState) => state.dashboard);
