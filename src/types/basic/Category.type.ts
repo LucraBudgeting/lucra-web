@@ -9,4 +9,5 @@ export interface ICategory {
   amount: number;
 }
 
+export const transferCategoryId = 'transfer';
 export interface ICategoryAvatar extends IAvatar {}
