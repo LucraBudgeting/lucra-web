@@ -18,6 +18,7 @@ export type budgetHeaderTimeRanges = '1mo' | '6mo' | '12mo';
 export const initialState = {
   creditCategories: [] as ICategory[],
   debitCategories: [] as ICategory[],
+  transferCategory: {} as ICategory,
   categoryDictionary: {} as Record<string, ICategory>,
   transactions: [] as ITransaction[],
   bankAccounts: {} as Record<string, IBankAccount>,
@@ -38,6 +39,8 @@ export const dashboardSlice = createSlice({
         (category) => category.budgetType === 'credit'
       );
       state.debitCategories = action.payload.filter((category) => category.budgetType === 'debit');
+      state.transferCategory =
+        action.payload.find((category) => category.budgetType === 'transfer') || ({} as ICategory);
 
       state.categoryDictionary = action.payload.reduce(
         (acc, category) => {
