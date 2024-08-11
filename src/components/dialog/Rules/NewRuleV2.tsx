@@ -82,7 +82,6 @@ export const EditOrAddRuleV2: FC<EditOrAddRuleProps> = ({
   function onAiTagChange(value: string, index: number) {
     setAiTagValues((prevArray) => {
       const newArray = [...prevArray];
-      console.log('value', value, newArray, index, index < newArray.length);
       if (index >= 0 && index <= newArray.length) {
         newArray[index] = value;
       }
