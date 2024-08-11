@@ -104,6 +104,10 @@ export const dashboardSlice = createSlice({
           };
       }
     },
+    resetDateRange: (state) => {
+      state.currentRange = '1mo';
+      state.dateRange = initialState.dateRange;
+    },
     goForward1Month: (state) => {
       if (state.currentRange !== '1mo') {
         state.currentRange = '1mo';
@@ -235,5 +239,6 @@ export const {
   goBack1Month,
   setNewRange,
   setBankAccounts,
+  resetDateRange,
 } = dashboardSlice.actions;
 export default dashboardSlice.reducer;
