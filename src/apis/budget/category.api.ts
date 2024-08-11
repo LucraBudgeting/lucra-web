@@ -27,4 +27,11 @@ export default class CategoryApi extends BaseRepository {
     );
     return response;
   };
+
+  DeleteCategory = async (id: string): Promise<{ message: string; categories: ICategory[] }> => {
+    const response = await HttpClient.delete<{ message: string; categories: ICategory[] }>(
+      `${this.apiUrl}/api/category/${id}`
+    );
+    return response;
+  };
 }

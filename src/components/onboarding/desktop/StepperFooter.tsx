@@ -16,12 +16,12 @@ export const StepperFooter: FC<StepperFooterProps> = ({ prevPage, nextPage, isLa
 
   return (
     <Styled.stepperFooter id="stepper-footer">
-      <Button onClick={prevPage} primary={false}>
+      <Button onClick={prevPage} type="secondary">
         <BackArrow /> Back
       </Button>
       <Button
         onClick={nextPage}
-        primary={false}
+        type="secondary"
         disabled={isNextStepLoading || isCurrentPageDisabled}
       >
         {isNextStepLoading ? 'Loading...' : isLastPage ? 'Finish' : 'Continue'} <ForwardArrow />

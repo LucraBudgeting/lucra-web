@@ -41,7 +41,7 @@ export const AuthContainer: FC<AuthContainerProps> = ({
   return (
     <>
       {showBackBtn && (
-        <Styles.backBtn primary={false} onClick={onBackClick}>
+        <Styles.backBtn type="secondary" onClick={onBackClick}>
           <BackArrow /> Back
         </Styles.backBtn>
       )}
@@ -56,7 +56,7 @@ export const AuthContainer: FC<AuthContainerProps> = ({
           <Styles.group>
             <Styles.cbButton
               disabled={isCbDisabled}
-              primary
+              type="primary"
               onClick={cb}
               tabIndex={cbTabIndex}
               id="auth-dialog-cb-btn"

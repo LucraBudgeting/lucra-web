@@ -44,7 +44,7 @@ export const AddBudgetRow: FC<AddBudgetRowProps> = ({ initialBudgetType }) => {
       {isCategoryAdding ? (
         <LoadingComponent />
       ) : (
-        <Button onClick={openBudget} primary={false}>
+        <Button onClick={openBudget} type="empty">
           + New Category
         </Button>
       )}

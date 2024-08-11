@@ -20,13 +20,13 @@ type Story = StoryObj<typeof meta>;
 
 export const Primary: Story = {
   args: {
-    primary: true,
+    type: 'primary',
     label: 'Button',
   },
 };
 export const NotPrimary: Story = {
   args: {
-    primary: false,
+    type: 'secondary',
     label: 'Button',
   },
 };
@@ -61,7 +61,7 @@ export const Disabled: Story = {
 export const DisableNonPrimaru: Story = {
   args: {
     label: 'Button',
-    primary: false,
+    type: 'secondary',
     disabled: true,
   },
 };
