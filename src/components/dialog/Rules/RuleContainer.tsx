@@ -6,6 +6,7 @@ import { EditIcon } from '@/assets/edit-icon';
 import { TrashIcon } from '@/assets/trash-icon';
 import { ElipsesIcon } from '@/assets/elipses-icon';
 import { ApiContext } from '@/stores/contexts/api.context';
+import colors from '@/assets/theme/colors';
 import { getConditionDisplayName } from './rule.utils';
 
 interface RuleContainerProps {
@@ -18,6 +19,8 @@ interface RuleContainerProps {
 export const RuleContainer: FC<RuleContainerProps> = ({ index, rule, editCb, cacheBustCb }) => {
   const { rulesApi } = useContext(ApiContext);
   const { categoryDictionary } = dashboardSelector();
+
+  const category = categoryDictionary[rule.parsedCondition.categoryId] ?? {};
 
   const { operator } = rule?.parsedCondition?.conditionGroups[0]?.conditions[0] ?? {};
 
@@ -59,7 +62,9 @@ export const RuleContainer: FC<RuleContainerProps> = ({ index, rule, editCb, cac
       </Styled.ruleInfoRow>
       <Styled.ruleInfoRow>
         <p className="start">Then categorize as:</p>
-        <p className="value">{categoryDictionary[rule.parsedCondition.categoryId]?.label ?? ''}</p>
+        <p className="value">
+          {category?.avatar?.emoji} {category?.label ?? ''}
+        </p>
       </Styled.ruleInfoRow>
     </Styled.ruleContainer>
   );
@@ -69,6 +74,7 @@ const Styled = {
   valueChip: styled.div<{ color: string }>`
     padding: 6px;
     border-radius: 6px;
+    border: 1px solid ${colors.grey[200]};
     background-color: ${(props) => props.color};
   `,
   valuesContainer: styled.div`
@@ -90,13 +96,13 @@ const Styled = {
     flex-direction: column;
     gap: 0.5rem;
     border-radius: 16px;
-    background-color: #fbfafa;
+    background-color: ${colors.grey[100]};
     position: relative;
   `,
   name: styled.h3`
     display: flex;
     .name {
-      color: #707070;
+      color: ${colors.grey[600]};
       margin-right: 0.25rem;
     }
   `,
@@ -106,6 +112,14 @@ const Styled = {
     .start {
       color: #707070;
       margin-right: 0.25rem;
+    }
+
+    .value {
+      width: fit-content;
+      padding: 6px 8px;
+      border-radius: 6px;
+      border: 1px solid ${colors.grey[200]};
+      background-color: ${colors.white.main};
     }
   `,
 };
