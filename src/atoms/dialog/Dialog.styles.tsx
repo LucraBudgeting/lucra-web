@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { maxZIndex } from '@/utils/domConstants';
+import colors from '@/assets/theme/colors';
 
 export const Styled = {
   overlay: styled.div`
@@ -33,6 +34,7 @@ export const Styled = {
     align-self: stretch;
     position: relative; // Needed for absolute positioning of the close button
     z-index: ${maxZIndex + 3};
+    border-bottom: ${colors.grey[300]} solid 1px;
   `,
   headerText: styled.div`
     flex: 1; // Allows the header text to expand and helps in centering
