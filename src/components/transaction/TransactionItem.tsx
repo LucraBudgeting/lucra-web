@@ -8,6 +8,7 @@ import { Chip } from '../../atoms/chip/Chip';
 import { AddCategoryChip } from '../../atoms/chip/AddCategoryChip';
 import { CategoryListModal } from '../category/CategoryListModal';
 import { TransactionDetails } from './TransactionDetails';
+import colors from '@/assets/theme/colors';
 
 interface TransactionItemProps {
   amount: number;
@@ -38,7 +39,7 @@ const Styled = {
   `,
   amount: styled.p<{ amount: number }>`
     font-weight: 600;
-    color: ${(props) => (props.amount > 0 ? 'green' : 'red')};
+    color: ${(props) => (props.amount > 0 ? colors.success.main : colors.error.main)};
     font-size: 16px;
   `,
   descriptionContainer: styled.div`

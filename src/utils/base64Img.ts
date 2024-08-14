@@ -27,7 +27,7 @@ export function getBase64ImageString(base64?: string): string {
     return '';
   }
   if (!isValidBase64(base64)) {
-    return 'Invalid base64 string';
+    return base64;
   }
 
   const mimeType = getMimeType(base64);

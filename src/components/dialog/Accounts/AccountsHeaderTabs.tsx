@@ -1,12 +1,13 @@
 import { FC, useContext } from 'react';
 import styled from 'styled-components';
 import { FeatureFlagContext } from '@/stores/contexts/featureFlag.context';
-import { accountHeaderTabs } from './AccountsDialog';
 
 interface AccountsHeaderTabsProps {
   currentTab: accountHeaderTabs;
   changeTab: (tabType: accountHeaderTabs) => void;
 }
+
+export type accountHeaderTabs = 'depository' | 'credit' | 'investment';
 
 export const AccountsHeaderTabs: FC<AccountsHeaderTabsProps> = ({ changeTab, currentTab }) => {
   const { isAccountsInvestmentEnabled } = useContext(FeatureFlagContext);

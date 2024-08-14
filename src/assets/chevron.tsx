@@ -1,12 +1,25 @@
 import { FC } from 'react';
 
 interface chevronProps {
-  direction?: 'up' | 'down';
+  direction?: 'up' | 'down' | 'right' | 'left';
   color?: string;
 }
 
 export const Chevron: FC<chevronProps> = ({ direction = 'up', color }) => {
-  const rotate = direction === 'up' ? 180 : 0;
+  let rotate;
+  switch (direction) {
+    case 'down':
+      rotate = 180;
+      break;
+    case 'left':
+      rotate = 90;
+      break;
+    case 'right':
+      rotate = -90;
+      break;
+    default:
+      rotate = 0;
+  }
   const strokeColor = color ? color : '#E2E2E2';
 
   return (
