@@ -4,11 +4,11 @@ import { useDispatch } from 'react-redux';
 import { dashboardSelector, updateTransactionCategory } from '@/stores/slices/Dashboard.slice';
 import { formatAsMoney } from '@/utils/formatAsMoney';
 import { ApiContext } from '@/stores/contexts/api.context';
+import colors from '@/assets/theme/colors';
 import { Chip } from '../../atoms/chip/Chip';
 import { AddCategoryChip } from '../../atoms/chip/AddCategoryChip';
 import { CategoryListModal } from '../category/CategoryListModal';
 import { TransactionDetails } from './TransactionDetails';
-import colors from '@/assets/theme/colors';
 
 interface TransactionItemProps {
   amount: number;

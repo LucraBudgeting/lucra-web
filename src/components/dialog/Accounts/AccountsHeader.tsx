@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import styled from 'styled-components';
-import { formatAsMoney } from '../../../utils/formatAsMoney';
 import colors from '@/assets/theme/colors';
+import { formatAsMoney } from '../../../utils/formatAsMoney';
 
 interface AccountsHeaderProps {
   totalDepository: number;

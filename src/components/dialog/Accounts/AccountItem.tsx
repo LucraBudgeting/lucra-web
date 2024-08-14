@@ -1,9 +1,9 @@
+import { FC } from 'react';
+import styled from 'styled-components';
 import colors from '@/assets/theme/colors';
 import { IBankAccount } from '@/types/models/bank/BankAccount';
 import { getBase64ImageString } from '@/utils/base64Img';
 import { formatAsMoney } from '@/utils/formatAsMoney';
-import { FC } from 'react';
-import styled from 'styled-components';
 
 interface AccountItemProps {
   account: IBankAccount;
@@ -19,7 +19,7 @@ export const AccountItem: FC<AccountItemProps> = ({ account }) => {
       break;
     case 'loan':
     case 'creditcard':
-      amountType = 'available';
+      amountType = 'Available';
       break;
     default:
       amountType = '';
@@ -30,7 +30,7 @@ export const AccountItem: FC<AccountItemProps> = ({ account }) => {
       <Styled.accountDetailsContainer>
         <img srcSet={getBase64ImageString(bankInstitution?.logoUrl)} />
         <Styled.accountNameContainer>
-          <p>{accountName}</p>
+          {accountName && accountName.toLowerCase() !== 'unknown' && <p>{accountName}</p>}
           <div>
             <p>{bankInstitution?.name}</p>
             <p>({mask})</p>
@@ -38,7 +38,7 @@ export const AccountItem: FC<AccountItemProps> = ({ account }) => {
         </Styled.accountNameContainer>
       </Styled.accountDetailsContainer>
       <Styled.accountBalanceContainer>
-        <h1>{formatAsMoney(accountBalance?.currentBalance ?? 0)}</h1>
+        <h1>{formatAsMoney(accountBalance?.availableBalance ?? 0)}</h1>
         <p>{amountType}</p>
       </Styled.accountBalanceContainer>
     </Styled.container>

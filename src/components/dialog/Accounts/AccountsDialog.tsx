@@ -1,16 +1,15 @@
 import { FC, useState } from 'react';
 import styled from 'styled-components';
+import { useAutoAnimate } from '@formkit/auto-animate/react';
 import { DialogContainer } from '@/atoms/dialog/DiaglogContainer';
 import { DialogProps } from '@/atoms/dialog/Dialog.types';
 import { useAccounts } from '@/hooks/dashboard/useAccounts.hook';
 import { LoadingComponent } from '@/atoms/loading/Loading.Component';
 import { LinkPlaid, informParentCbStatus } from '@/components/bank/plaid/Link.Plaid';
-import { IBankAccount } from '@/types/models/bank/BankAccount';
-import { AccountsHeader } from './AccountsHeader';
 import { Chevron } from '@/assets/chevron';
 import { formatAsMoney } from '@/utils/formatAsMoney';
 import colors from '@/assets/theme/colors';
-import { useAutoAnimate } from '@formkit/auto-animate/react';
+import { AccountsHeader } from './AccountsHeader';
 import { AccountItem } from './AccountItem';
 
 interface AccountsDialogProps extends DialogProps {}
