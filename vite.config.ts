@@ -37,6 +37,10 @@ export default defineConfig(() => {
     },
 
     build: {
+      esbuild: {
+        exclude: ['**/*.stories.tsx'],
+      },
+
       sourcemap: false,
 
       rollupOptions: {
