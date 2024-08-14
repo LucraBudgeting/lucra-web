@@ -40,10 +40,14 @@ export const AccountItem: FC<AccountItemProps> = ({ account, type }) => {
         </Styled.accountNameContainer>
       </Styled.accountDetailsContainer>
       <Styled.accountBalanceContainer>
-        <h1>
-          {type === 'credit' && `${formatAsMoney(accountBalance?.availableBalance ?? 0)} / `}
-          {formatAsMoney(accountBalance?.limit ?? 0)}
-        </h1>
+        {type === 'credit' ? (
+          <h1>
+            {formatAsMoney(accountBalance?.availableBalance ?? 0)} /
+            {formatAsMoney(accountBalance?.limit ?? 0)}
+          </h1>
+        ) : (
+          <h1>{formatAsMoney(accountBalance?.availableBalance ?? 0)}</h1>
+        )}
         <p>{amountType}</p>
       </Styled.accountBalanceContainer>
     </Styled.container>

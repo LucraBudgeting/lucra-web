@@ -26,6 +26,7 @@ export const Default: Story = {
       accountName: 'Plaid Silver Standard 0.1% Interest Saving',
       mask: '1111',
       accountBalance: {
+        limit: 1000,
         currentBalance: 210,
         availableBalance: 200,
         currency: 'USD',
