@@ -19,6 +19,8 @@ const debtAccounts = ['creditcard', 'loan'];
 
 const startOpen = false;
 
+export type accountTypes = 'depository' | 'credit';
+
 export const AccountsDialog: FC<AccountsDialogProps> = (props) => {
   const [containerRef] = useAutoAnimate();
   const [depositoryContainerRef] = useAutoAnimate();
@@ -82,7 +84,7 @@ export const AccountsDialog: FC<AccountsDialogProps> = (props) => {
                   {showDepository && (
                     <Styles.accountListContainer>
                       {depositoryAccountsList.map((account, i) => (
-                        <AccountItem key={i} account={account} />
+                        <AccountItem key={i} account={account} type="depository" />
                       ))}
                     </Styles.accountListContainer>
                   )}
@@ -96,7 +98,7 @@ export const AccountsDialog: FC<AccountsDialogProps> = (props) => {
                   {showCredit && (
                     <Styles.accountListContainer>
                       {creditAccountsList.map((account, i) => (
-                        <AccountItem key={i} account={account} />
+                        <AccountItem key={i} account={account} type="credit" />
                       ))}
                     </Styles.accountListContainer>
                   )}
@@ -131,6 +133,7 @@ const Styles = {
     align-items: center;
     gap: 8px;
     cursor: pointer;
+    margin-bottom: 1rem;
 
     h3 {
       color: ${colors.black.main};

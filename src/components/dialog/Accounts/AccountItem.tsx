@@ -4,12 +4,14 @@ import colors from '@/assets/theme/colors';
 import { IBankAccount } from '@/types/models/bank/BankAccount';
 import { getBase64ImageString } from '@/utils/base64Img';
 import { formatAsMoney } from '@/utils/formatAsMoney';
+import { accountTypes } from './AccountsDialog';
 
 interface AccountItemProps {
   account: IBankAccount;
+  type: accountTypes;
 }
 
-export const AccountItem: FC<AccountItemProps> = ({ account }) => {
+export const AccountItem: FC<AccountItemProps> = ({ account, type }) => {
   const { bankInstitution, mask, accountName, accountBalance } = account;
   let amountType;
   switch (account.type?.toLowerCase()) {
@@ -38,7 +40,10 @@ export const AccountItem: FC<AccountItemProps> = ({ account }) => {
         </Styled.accountNameContainer>
       </Styled.accountDetailsContainer>
       <Styled.accountBalanceContainer>
-        <h1>{formatAsMoney(accountBalance?.availableBalance ?? 0)}</h1>
+        <h1>
+          {type === 'credit' && `${formatAsMoney(accountBalance?.availableBalance ?? 0)} / `}
+          {formatAsMoney(accountBalance?.currentBalance ?? 0)}
+        </h1>
         <p>{amountType}</p>
       </Styled.accountBalanceContainer>
     </Styled.container>
@@ -65,7 +70,7 @@ const Styled = {
     }
   `,
   accountNameContainer: styled.div`
-    max-width: 80%;
+    max-width: 70%;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -101,6 +106,7 @@ const Styled = {
       font-weight: 600;
       color: ${colors.black.main};
       font-size: 16px;
+      text-align: right;
     }
     p {
       font-weight: 500;
