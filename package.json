@@ -25,7 +25,7 @@
     "@formkit/auto-animate": "^0.8.2",
     "@hookform/resolvers": "^3.3.2",
     "@reduxjs/toolkit": "^1.9.7",
-    "axios": "^1.6.8",
+    "axios": "^1.7.4",
     "chroma-js": "^2.4.2",
     "dayjs": "^1.11.11",
     "dotenv": "^16.3.1",
