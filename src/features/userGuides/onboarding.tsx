@@ -54,7 +54,6 @@ export function OnboardingGuide() {
 
     function nextStep(nextQuerySelector: string) {
       const element = document.querySelector(nextQuerySelector);
-      console.log('nextStep', nextQuerySelector, element);
       if (element) {
         setStepIndex((prevIndex) => prevIndex + 1);
       } else {
