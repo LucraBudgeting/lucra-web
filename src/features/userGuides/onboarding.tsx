@@ -10,7 +10,7 @@ const steps: Step[] = [
     target: '#settings_cog_budget_header_icon',
     title: 'Add an account',
     content: 'You need to add a bank account to get started.',
-    placement: 'right',
+    placement: 'bottom',
   },
   {
     target: '#settings_accounts',
@@ -30,7 +30,7 @@ export function OnboardingGuide() {
   const dispatch = useDispatch();
 
   const handleJoyrideCallback = (data: CallBackProps) => {
-    const { status, index, type } = data;
+    const { status, index, type, action } = data;
     const finishedStatuses = [STATUS.FINISHED, STATUS.SKIPPED, STATUS.ERROR, STATUS.IDLE];
 
     // @ts-expect-error - TS doesn't know about the STATUS enum
@@ -39,7 +39,14 @@ export function OnboardingGuide() {
       return;
     }
 
-    if (type === 'step:after') {
+    if (action === 'prev') {
+      console.log('Joyride callback:', data);
+
+      setStepIndex((prevIndex) => prevIndex - 1);
+      return;
+    }
+
+    if (type === 'step:after' && action === 'next') {
       const querySelector = steps[index].target as string;
       const element = document.querySelector(querySelector);
       if (element) {
@@ -50,6 +57,7 @@ export function OnboardingGuide() {
       if (steps.length > index + 1) {
         nextStep(steps[index + 1].target as string);
       }
+      return;
     }
 
     function nextStep(nextQuerySelector: string) {
@@ -75,7 +83,6 @@ export function OnboardingGuide() {
       stepIndex={stepIndex}
       callback={handleJoyrideCallback}
       continuous
-      showSkipButton
       showProgress
       disableOverlayClose
       disableScrolling
@@ -88,6 +95,12 @@ export function OnboardingGuide() {
         },
         tooltip: {
           zIndex: 10001, // Adjust this if you need the tooltip to be above the modal
+        },
+        buttonBack: {
+          display: 'none', // Hides the back button
+        },
+        buttonClose: {
+          display: 'none', // Hides the close button
         },
       }}
     />
