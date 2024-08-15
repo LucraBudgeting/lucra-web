@@ -29,12 +29,16 @@ export const initialState = {
     startDate: startOfMonth.toISOString(),
     endDate: now.toISOString(),
   } as IDateRange,
+  isInTour: false,
 };
 
 export const dashboardSlice = createSlice({
   name: 'dashboardSlice',
   initialState,
   reducers: {
+    setIsInTour: (state, action: PayloadAction<boolean>) => {
+      state.isInTour = action.payload;
+    },
     setCategories: (state, action: PayloadAction<ICategory[]>) => {
       state.creditCategories = action.payload.filter(
         (category) => category.budgetType === 'credit'
@@ -240,5 +244,6 @@ export const {
   setNewRange,
   setBankAccounts,
   resetDateRange,
+  setIsInTour,
 } = dashboardSlice.actions;
 export default dashboardSlice.reducer;

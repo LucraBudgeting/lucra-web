@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { useCategories } from '@/hooks/dashboard/useCategories.hook';
 import { useTransactions } from '@/hooks/dashboard/useTransactions.hook';
 import { useAccounts } from '@/hooks/dashboard/useAccounts.hook';
+import { OnboardingGuide } from '@/features/userGuides/onboarding';
 import { Budgets } from '../components/Budgets';
 import { Transactions } from '../components/Transactions';
 import SplitView from '../components/SplitView';
@@ -15,19 +16,22 @@ export const DashboardPage: FC<DashboardPageProps> = ({}) => {
   const [transactions, isTransactionsFetching] = useTransactions();
 
   return (
-    <Styled.container>
-      <SplitView
-        left={<Budgets categories={categories} isFetching={isCategoriesFetching} />}
-        right={
-          <Styled.transactionContainer>
-            <Transactions
-              transactions={transactions}
-              isFetching={isTransactionsFetching || isAccountsFetching}
-            />
-          </Styled.transactionContainer>
-        }
-      />
-    </Styled.container>
+    <>
+      <Styled.container>
+        <SplitView
+          left={<Budgets categories={categories} isFetching={isCategoriesFetching} />}
+          right={
+            <Styled.transactionContainer>
+              <Transactions
+                transactions={transactions}
+                isFetching={isTransactionsFetching || isAccountsFetching}
+              />
+            </Styled.transactionContainer>
+          }
+        />
+      </Styled.container>
+      <OnboardingGuide />
+    </>
   );
 };
 

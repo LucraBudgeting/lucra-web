@@ -12,6 +12,7 @@ import colors from '@/assets/theme/colors';
 import { Button } from '@/atoms/button/Button';
 import { IBankAccount } from '@/types/models/bank/BankAccount';
 import { ArrowIcon } from '@/assets/arrow-icon';
+import { dashboardSelector } from '@/stores/slices/Dashboard.slice';
 import { AccountsHeader } from './AccountsHeader';
 import { AccountItem } from './AccountItem';
 import { AccountDetails } from './AccountDetails';
@@ -21,11 +22,11 @@ interface AccountsDialogProps extends DialogProps {}
 const depositoryAccounts = ['checking', 'savings', 'investment'];
 const debtAccounts = ['creditcard', 'loan'];
 
-const startOpen = true;
-
 export type accountTypes = 'depository' | 'credit';
 
 export const AccountsDialog: FC<AccountsDialogProps> = (props) => {
+  const { isInTour } = dashboardSelector();
+  const startOpen = !isInTour;
   const [containerRef] = useAutoAnimate();
   const [depositoryContainerRef] = useAutoAnimate();
   const [creditContainerRef] = useAutoAnimate();
