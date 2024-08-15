@@ -47,6 +47,10 @@ export function OnboardingGuide() {
     }
 
     if (type === 'step:after' && action === 'next') {
+      if (steps.length === stepIndex + 1) {
+        setRun(false);
+      }
+
       const querySelector = steps[index].target as string;
       const element = document.querySelector(querySelector);
       if (element) {
