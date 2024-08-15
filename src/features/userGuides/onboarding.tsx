@@ -40,14 +40,28 @@ export function OnboardingGuide() {
     }
 
     if (type === 'step:after') {
-      const element = document.querySelector(steps[index].target as string);
+      const querySelector = steps[index].target as string;
+      const element = document.querySelector(querySelector);
       if (element) {
         // @ts-expect-error - TS doesn't know about the click method
         element.click();
       }
-      setTimeout(() => {
+
+      if (steps.length > index + 1) {
+        nextStep(steps[index + 1].target as string);
+      }
+    }
+
+    function nextStep(nextQuerySelector: string) {
+      const element = document.querySelector(nextQuerySelector);
+      console.log('nextStep', nextQuerySelector, element);
+      if (element) {
         setStepIndex((prevIndex) => prevIndex + 1);
-      }, 100);
+      } else {
+        setTimeout(() => {
+          nextStep(nextQuerySelector);
+        }, 10);
+      }
     }
   };
 
