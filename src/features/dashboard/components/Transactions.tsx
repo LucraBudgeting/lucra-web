@@ -53,7 +53,7 @@ const Styles = {
     display: flex;
     flex-direction: column;
     width: 100%;
-    height: calc(100vh - 2.5rem);
+    max-height: 100%;
   `,
   listContainer: styled.div`
     width: 100%;

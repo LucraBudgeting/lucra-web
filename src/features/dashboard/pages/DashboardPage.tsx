@@ -19,10 +19,12 @@ export const DashboardPage: FC<DashboardPageProps> = ({}) => {
       <SplitView
         left={<Budgets categories={categories} isFetching={isCategoriesFetching} />}
         right={
-          <Transactions
-            transactions={transactions}
-            isFetching={isTransactionsFetching || isAccountsFetching}
-          />
+          <Styled.transactionContainer>
+            <Transactions
+              transactions={transactions}
+              isFetching={isTransactionsFetching || isAccountsFetching}
+            />
+          </Styled.transactionContainer>
         }
       />
     </Styled.container>
@@ -35,5 +37,8 @@ const Styled = {
     width: 100%;
     padding-top: 1vh;
     height: 99vh;
+  `,
+  transactionContainer: styled.div`
+    height: 98vh;
   `,
 };

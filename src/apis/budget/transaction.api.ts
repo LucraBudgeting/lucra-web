@@ -13,6 +13,17 @@ export default class TransactionApi extends BaseRepository {
     return response;
   };
 
+  GetAccountTransactions = async (
+    accountId: string,
+    startDate: string,
+    endDate: string
+  ): Promise<{ message: string; transactions: ITransaction[] }> => {
+    const response = await HttpClient.get<{ message: string; transactions: ITransaction[] }>(
+      `${this.apiUrl}/api/transaction?start=${startDate}&end=${endDate}&accountId=${accountId}`
+    );
+    return response;
+  };
+
   GetTransaction = async (
     transactionId: string
   ): Promise<{ message: string; transaction: ITransaction }> => {

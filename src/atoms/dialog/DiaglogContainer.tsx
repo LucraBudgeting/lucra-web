@@ -12,6 +12,7 @@ interface DiaglogContainerProps extends DialogProps {
 
 export const DialogContainer: FC<DiaglogContainerProps> = ({
   headerText,
+  headerElement,
   enableHeader = true,
   enableFooter = true,
   closeButton = true,
@@ -66,7 +67,7 @@ export const DialogContainer: FC<DiaglogContainerProps> = ({
         {enableHeader && (
           <Styled.header id="dialog-header">
             <Styled.headerText>
-              <p>{headerText}</p>
+              {headerElement ? headerElement : <p>{headerText}</p>}
             </Styled.headerText>
             <Styled.headerActions>
               {menuButtons && <MenuModal buttons={menuButtons} />}

@@ -9,10 +9,11 @@ import { accountTypes } from './AccountsDialog';
 interface AccountItemProps {
   account: IBankAccount;
   type: accountTypes;
+  onClick: (account: IBankAccount) => void;
 }
 
-export const AccountItem: FC<AccountItemProps> = ({ account, type }) => {
-  const { bankInstitution, mask, accountName, accountBalance } = account;
+export const AccountItem: FC<AccountItemProps> = ({ account, type, onClick }) => {
+  const { bankInstitution, mask, accountName, accountBalance, id } = account;
   let amountType;
   switch (account.type?.toLowerCase()) {
     case 'checking':
@@ -28,7 +29,7 @@ export const AccountItem: FC<AccountItemProps> = ({ account, type }) => {
   }
 
   return (
-    <Styled.container>
+    <Styled.container id={`account-${type}-${id}`} onClick={() => onClick(account)}>
       <Styled.accountDetailsContainer>
         <img srcSet={getBase64ImageString(bankInstitution?.logoUrl)} />
         <Styled.accountNameContainer>
@@ -63,6 +64,12 @@ const Styled = {
     justify-content: space-between;
     min-height: 98px;
     padding: 0 16px;
+    cursor: pointer;
+    transition: background-color 0.25s ease-in-out;
+
+    &:hover {
+      background-color: ${colors.grey[200]};
+    }
   `,
   accountDetailsContainer: styled.div`
     display: flex;

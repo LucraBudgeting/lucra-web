@@ -3,6 +3,7 @@ import { menuButtonProps } from './MenuModal';
 export interface DialogProps<T = any> {
   forwardRef?: React.RefObject<HTMLDivElement>;
   headerText?: string;
+  headerElement?: React.ReactNode;
   enableHeader?: boolean;
   enableFooter?: boolean;
   closeButton?: boolean;
