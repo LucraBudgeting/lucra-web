@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import Joyride, { Step, CallBackProps, STATUS } from 'react-joyride';
 import { useDispatch } from 'react-redux';
 import { setIsInTour } from '@/stores/slices/Dashboard.slice';
+import colors from '@/assets/theme/colors';
 
 const hasOnboarded = false;
 
@@ -92,19 +93,23 @@ export function OnboardingGuide() {
       disableScrolling
       styles={{
         options: {
-          zIndex: 10000, // Adjust this value to ensure the tour is above the modal
+          zIndex: 10000,
+          primaryColor: colors.brand.main,
+          textColor: colors.brand.dark,
+          backgroundColor: '#FFFFFF',
+          overlayColor: 'rgba(0, 0, 0, 0.65)',
         },
         overlay: {
-          zIndex: 9999, // Adjust this if you also need the overlay to be above the modal
+          zIndex: 9999,
         },
         tooltip: {
-          zIndex: 10001, // Adjust this if you need the tooltip to be above the modal
+          zIndex: 10001,
         },
         buttonBack: {
-          display: 'none', // Hides the back button
+          display: 'none',
         },
         buttonClose: {
-          display: 'none', // Hides the close button
+          display: 'none',
         },
       }}
     />

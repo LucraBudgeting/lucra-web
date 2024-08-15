@@ -1,4 +1,9 @@
 const colors = {
+  brand: {
+    main: '#28E8A2',
+    light: '#E2E2E2',
+    dark: '#333333',
+  },
   background: {
     default: '#f8f9fa',
     dark: '#172b4d',
