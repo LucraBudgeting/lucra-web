@@ -45,7 +45,9 @@ export function OnboardingGuide() {
         // @ts-expect-error - TS doesn't know about the click method
         element.click();
       }
-      setStepIndex((prevIndex) => prevIndex + 1);
+      setTimeout(() => {
+        setStepIndex((prevIndex) => prevIndex + 1);
+      }, 100);
     }
   };
 
