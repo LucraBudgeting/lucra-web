@@ -93,6 +93,10 @@ const Styled = {
     }};
     border-radius: 8px;
     padding: ${(props) => {
+      switch (props.type) {
+        case 'empty':
+          return '8px 10px';
+      }
       switch (props.size) {
         case 'large':
           return '12px 24px';
@@ -134,7 +138,7 @@ const Styled = {
       background-color: ${(props) => {
         switch (props.type) {
           case 'primary':
-            return '#6e6e6e';
+            return '#EFEFEF';
           case 'secondary':
             return '#f3f3f3';
           case 'error':

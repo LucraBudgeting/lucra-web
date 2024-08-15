@@ -11,6 +11,7 @@ import { useTransactions } from '@/hooks/dashboard/useTransactions.hook';
 import { LoadingComponent } from '@/atoms/loading/Loading.Component';
 import { balanceEntryToText, textToBalanceEntry } from '@/types/types';
 import { ApiContext } from '@/stores/contexts/api.context';
+import colors from '@/assets/theme/colors';
 import { TransactionList } from '../transaction/TransactionList';
 import { calcRemaining, calcIsRemainingGood } from '../budget/budgetCalculator';
 import { EditOrAddCategory } from '../budget/EditOrAddCategory';
@@ -137,7 +138,7 @@ export const ViewBudgetDialog: FC<ViewBudgetDialogProps> = (props) => {
             <h3>{formatAsMoney(actual, true)}</h3>
           </Styles.infoBlock>
           <hr />
-          <Styles.remainingInfoBlock isremaininggood={String(isRemainingGood)}>
+          <Styles.remainingInfoBlock isggood={String(isRemainingGood)}>
             <h2>Remaining</h2>
             <h3>{formatAsMoney(remaining, true)}</h3>
           </Styles.remainingInfoBlock>
@@ -202,13 +203,15 @@ const Styles = {
   infoBlock: styled.div`
     ${baseInfoBlockStyles}
   `,
-  remainingInfoBlock: styled.div<{ isremaininggood: string }>`
+  remainingInfoBlock: styled.div<{ isggood: string }>`
     ${baseInfoBlockStyles}
-    background-color: ${(props) => (props.isremaininggood === 'true' ? '#e8f5e9' : '#fde7e7')};
+    background-color: ${(props) =>
+      props.isggood === 'true' ? colors.success.focus : colors.error.focus};
 
     h3,
     h2 {
-      color: ${(props) => (props.isremaininggood === 'true' ? '#2e7d32' : '#c62828')} !important;
+      color: ${(props) =>
+        props.isggood === 'true' ? colors.success.main : colors.error.main} !important;
     }
   `,
   transactionListContainer: styled.div`

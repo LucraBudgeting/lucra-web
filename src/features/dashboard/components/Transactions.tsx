@@ -54,7 +54,6 @@ const Styles = {
     flex-direction: column;
     width: 100%;
     height: calc(100vh - 2.5rem);
-    padding-top: 1vh;
   `,
   listContainer: styled.div`
     width: 100%;

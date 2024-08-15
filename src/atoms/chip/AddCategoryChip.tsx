@@ -1,5 +1,7 @@
 import { FC } from 'react';
 import styled from 'styled-components';
+import colors from '@/assets/theme/colors';
+import { Chevron } from '@/assets/chevron';
 import Styled from './Chip.styled';
 
 interface AddCategoryChipProps {
@@ -9,10 +11,8 @@ interface AddCategoryChipProps {
 export const AddCategoryChip: FC<AddCategoryChipProps> = ({ onClick }) => {
   return (
     <AddChip onClick={onClick}>
-      <Styled.emoji role="img" aria-label="emoji">
-        +
-      </Styled.emoji>
-      <Styled.label>Add Category</Styled.label>
+      <Styled.label>Select Category</Styled.label>
+      <Chevron />
     </AddChip>
   );
 };
@@ -21,7 +21,12 @@ const AddChip = styled(Styled.chip)`
   padding: 8px 10px 8px 10px;
   gap: 4px;
   border-radius: 8px;
-  border: 1px;
-  opacity: 0px;
+  border: 1px solid ${colors.grey[100]};
+  background-color: ${colors.white.main};
   box-shadow: 0px 2px 6px 0px #0000000f;
+
+  &:hover {
+    background-color: ${colors.grey[200]};
+    border: 1px solid ${colors.grey[300]};
+  }
 `;

@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import { useDispatch } from 'react-redux';
 import { PlusIcon } from '@/assets/plus-icon';
 import { ProfileFilled } from '@/assets/profile-filled';
-import { SettingsCogFilledIcon } from '@/assets/settings-cog-filled';
 import {
   addNewCategory,
   dashboardSelector,
@@ -111,7 +110,7 @@ export const BudgetHeader: FC<BudgetHeaderProps> = ({}) => {
             </span>
           )}
           <span onClick={toggleSettings} ref={settingCogRef} id="settings_cog_budget_header_icon">
-            <SettingsCogFilledIcon />
+            <ProfileFilled />
           </span>
           <BudgetHeaderTimeRanges />
         </Styles.iconContainer>

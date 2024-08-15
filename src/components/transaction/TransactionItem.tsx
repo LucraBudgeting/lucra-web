@@ -22,9 +22,11 @@ const Styled = {
   container: styled.div<{ islast: string }>`
     display: flex;
     justify-content: space-between;
-    padding: 16px;
+    align-items: center;
+    padding: 16px 24px;
     height: 40px;
-    border-bottom: ${(props) => (props.islast === 'true' ? 'none' : '1px solid #d3d3d399')};
+    border-bottom: ${(props) =>
+      props.islast === 'true' ? 'none' : `1px solid ${colors.grey[300]}`};
     cursor: pointer;
   `,
   title: styled.h3`
@@ -39,7 +41,7 @@ const Styled = {
   `,
   amount: styled.p<{ amount: number }>`
     font-weight: 600;
-    color: ${(props) => (props.amount > 0 ? colors.success.main : colors.error.main)};
+    color: ${(props) => (props.amount > 0 ? colors.success.main : colors.black.main)};
     font-size: 16px;
   `,
   descriptionContainer: styled.div`

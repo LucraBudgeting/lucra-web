@@ -4,7 +4,6 @@ import { ITransactionRule } from '@/types/models/rules/transaction.rule.type';
 import { dashboardSelector } from '@/stores/slices/Dashboard.slice';
 import { EditIcon } from '@/assets/edit-icon';
 import { TrashIcon } from '@/assets/trash-icon';
-import { ElipsesIcon } from '@/assets/elipses-icon';
 import { ApiContext } from '@/stores/contexts/api.context';
 import colors from '@/assets/theme/colors';
 import { getConditionDisplayName } from './rule.utils';
@@ -42,14 +41,14 @@ export const RuleContainer: FC<RuleContainerProps> = ({ index, rule, editCb, cac
   return (
     <Styled.ruleContainer>
       <Styled.actionIcons>
-        <ElipsesIcon />
+        {/* <ElipsesIcon /> */}
         <EditIcon onClick={onEditClick} />
         <TrashIcon onClick={onDeleteClick} />
       </Styled.actionIcons>
-      <Styled.name>
+      {/* <Styled.name>
         <p className="name">Name: </p>
         {rule.name}
-      </Styled.name>
+      </Styled.name> */}
       <Styled.ruleInfoRow>
         <p className="start">If merchant name {getConditionDisplayName(operator)}:</p>
         <Styled.valuesContainer>
@@ -98,6 +97,7 @@ const Styled = {
     border-radius: 16px;
     background-color: ${colors.grey[100]};
     position: relative;
+    width: 90%;
   `,
   name: styled.h3`
     display: flex;

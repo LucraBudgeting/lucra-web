@@ -2,6 +2,7 @@ import { FC } from 'react';
 import styled from 'styled-components';
 import dayjs from 'dayjs';
 import { ITransaction } from '@/types/basic/Transaction.type';
+import colors from '@/assets/theme/colors';
 import { TransactionItem } from './TransactionItem';
 
 interface TransactionListProps {
@@ -16,11 +17,14 @@ const Styled = {
   `,
   dateHeader: styled.div`
     width: 100%;
+    height: 30px;
     display: flex;
-    padding: 4px 0;
-    justify-content: center;
-    background-color: #f2eeeedd;
+    align-items: center;
+    justify-content: flex-start;
+    background-color: ${colors.grey[200]};
+    color: ${colors.grey[600]};
     font-size: 12px;
+    padding-left: 1rem;
   `,
   noTransactionContainer: styled.div`
     flex: 1;

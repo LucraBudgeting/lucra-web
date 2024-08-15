@@ -12,13 +12,13 @@ export const Styled = {
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: rgba(139, 139, 139, 0.057); // Semi-transparent background
-    z-index: ${maxZIndex}; // High z-index to be on top of other content
+    background: rgba(0, 0, 0, 0.65);
+    z-index: ${maxZIndex};
   `,
   dialog: styled.div<{ width: string }>`
     width: ${({ width }) => width};
     background: white;
-    z-index: ${maxZIndex + 1}; // Ensures content is above the overlay
+    z-index: ${maxZIndex + 1};
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -74,6 +74,7 @@ export const Styled = {
   footer: styled.div<{ right?: string }>`
     display: flex;
     padding: 24px;
+    gap: 1rem;
     justify-content: ${({ right }) => (right === 'true' ? 'space-between' : 'flex-end')};
     align-items: center;
     align-self: stretch;
@@ -88,7 +89,7 @@ export const Styled = {
     flex-direction: column;
     align-items: center;
     overflow-y: auto;
-    padding: 30px 30px 0px 30px;
+    padding-top: 1rem;
     width: calc(100% - 60px);
     height: ${({ height }) => height};
     /* z-index: -10; */

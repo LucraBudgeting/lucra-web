@@ -1,8 +1,11 @@
 import styled from 'styled-components';
+import colors from '@/assets/theme/colors';
 
 export const Styles = {
   tableContainer: styled.div`
     width: 100%;
+    max-height: 90vh;
+    overflow-y: scroll;
   `,
   tableHeader: styled.div`
     width: 40%;
@@ -22,7 +25,7 @@ export const Styles = {
     }
   `,
   sectionRows: styled.div`
-    max-height: 35vh;
+    /* max-height: 35vh; */
     overflow-y: auto;
 
     ::-webkit-scrollbar-thumb {
@@ -30,6 +33,12 @@ export const Styles = {
       background-color: rgba(0, 0, 0, 0.5);
       -webkit-box-shadow: 0 0 1px rgba(255, 255, 255, 0.5);
     }
+  `,
+  netRowContainer: styled.div`
+    position: sticky;
+    bottom: 0;
+    background-color: ${colors.light.main};
+    padding: 0;
   `,
   sectionHeader: styled.div`
     padding-top: 2rem;
@@ -69,10 +78,10 @@ export const Styles = {
       max-width: 70%;
     }
   `,
-  sectionTotal: styled.p<{ isremaininggood?: string }>`
+  sectionTotal: styled.p<{ isgood?: string }>`
     color: ${(props) => {
-      if (!props.isremaininggood) return '#333333';
-      return props.isremaininggood === 'true' ? '#2AA64C' : '#CA4141';
+      if (!props.isgood) return '#333333';
+      return props.isgood === 'true' ? colors.success.main : colors.error.main;
     }};
     font-weight: 600;
     width: 30%;

@@ -82,7 +82,8 @@ const Styles = {
     justify-content: space-between;
     align-items: center;
     margin-bottom: 1rem;
-    margin-top: -0.75rem;
+    /* margin-top: -0.75rem; */
+    padding: 0 1rem;
   `,
   title: styled.h2`
     font-size: 18px;

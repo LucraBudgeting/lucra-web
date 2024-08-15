@@ -11,13 +11,14 @@ export default {
     cursor: pointer;
     transition:
       background-color 0.5s ease-in-out,
+      border 0.5s ease-in-out,
       border-radius 0.25s ease-in-out;
     background-color: transparent;
     border-radius: 16px;
 
     &:hover {
       border-radius: 8px;
-      background-color: ${colors.grey[300]};
+      background-color: ${colors.grey[200]};
     }
   `,
   emoji: styled.span`

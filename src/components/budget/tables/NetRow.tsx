@@ -53,22 +53,32 @@ export const NetRow: FC<NetRowProps> = ({
   }, [incomeAverage, expenseAverage]);
 
   return (
-    <Styles.sectionHeader style={{ borderBottom: 'none', cursor: 'default' }}>
-      <p>Net Balance</p>
-      <Styles.sectionTotalsContainer>
-        {isAggregate ? (
-          <>
-            <Styles.sectionTotal>{formatAsMoney(total)}</Styles.sectionTotal>
-            <Styles.sectionTotal>{formatAsMoney(average)}</Styles.sectionTotal>
-          </>
-        ) : (
-          <>
-            <Styles.sectionTotal>{formatAsMoney(budgetTotal)}</Styles.sectionTotal>
-            <Styles.sectionTotal>{formatAsMoney(total)}</Styles.sectionTotal>
-            <Styles.sectionTotal>{formatAsMoney(remaining)}</Styles.sectionTotal>
-          </>
-        )}
-      </Styles.sectionTotalsContainer>
-    </Styles.sectionHeader>
+    <Styles.netRowContainer id="net-row-container">
+      <Styles.sectionHeader
+        style={{ borderBottom: 'none', cursor: 'default', marginBottom: 0, padding: '1rem 0' }}
+      >
+        <p>Net Balance</p>
+        <Styles.sectionTotalsContainer>
+          {isAggregate ? (
+            <>
+              <Styles.sectionTotal isgood={(total > 0).toString()}>
+                {formatAsMoney(total)}
+              </Styles.sectionTotal>
+              <Styles.sectionTotal>{formatAsMoney(average)}</Styles.sectionTotal>
+            </>
+          ) : (
+            <>
+              <Styles.sectionTotal>{formatAsMoney(budgetTotal)}</Styles.sectionTotal>
+              <Styles.sectionTotal isgood={(total > 0).toString()}>
+                {formatAsMoney(total)}
+              </Styles.sectionTotal>
+              <Styles.sectionTotal isgood={(remaining > 0).toString()}>
+                {formatAsMoney(remaining)}
+              </Styles.sectionTotal>
+            </>
+          )}
+        </Styles.sectionTotalsContainer>
+      </Styles.sectionHeader>
+    </Styles.netRowContainer>
   );
 };

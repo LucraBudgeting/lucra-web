@@ -17,6 +17,7 @@ interface RulesDialogProps extends DialogProps {}
 
 export const RulesDialog: FC<RulesDialogProps> = (props) => {
   const [containerRef] = useAutoAnimate();
+  const [rulesContainerRef] = useAutoAnimate();
 
   const [rulesCacheBuster, setRulesCacheBuster] = useState<string>();
   const [isNewOrEdit, setIsNewOrEdit] = useState(false);
@@ -112,7 +113,7 @@ export const RulesDialog: FC<RulesDialogProps> = (props) => {
         ) : showSettings ? (
           <RulesSettings settings={ruleSettings} />
         ) : (
-          <Styles.rulesContainer>
+          <Styles.rulesContainer ref={rulesContainerRef}>
             {isNewOrEdit && (
               <EditOrAddRuleV2
                 saveRuleCb={SaveRuleCb}
@@ -146,8 +147,6 @@ export const RulesDialog: FC<RulesDialogProps> = (props) => {
 const Styles = {
   container: styled.div`
     width: 100%;
-    padding-bottom: 1rem;
-    max-height: 80vh;
 
     display: flex;
     flex-direction: column;
@@ -162,7 +161,8 @@ const Styles = {
     flex-direction: column;
     gap: 1rem;
     overflow-y: auto;
-    max-height: 40vh;
+    width: 100%;
+    max-height: 70vh;
     background-color: white;
   `,
 };

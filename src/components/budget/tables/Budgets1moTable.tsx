@@ -96,7 +96,7 @@ export const Budgets1moTable: FC<BudgetsTableProps> = ({ categories }) => {
   );
 
   return (
-    <Styles.tableContainer>
+    <Styles.tableContainer id="budgets-table-container">
       <Styles.headerContainer>
         <p>Category</p>
         <Styles.tableHeader>
@@ -115,7 +115,7 @@ export const Budgets1moTable: FC<BudgetsTableProps> = ({ categories }) => {
             <Styles.sectionTotalsContainer>
               <Styles.sectionTotal>{formatAsMoney(incomeTotals.budget)}</Styles.sectionTotal>
               <Styles.sectionTotal>{formatAsMoney(incomeTotals.actual)}</Styles.sectionTotal>
-              <Styles.sectionTotal isremaininggood={isIncomeRemainingGood ? 'true' : 'false'}>
+              <Styles.sectionTotal isgood={isIncomeRemainingGood ? 'true' : 'false'}>
                 {formatAsMoney(incomeTotals.remaining)}
               </Styles.sectionTotal>
             </Styles.sectionTotalsContainer>
@@ -142,7 +142,7 @@ export const Budgets1moTable: FC<BudgetsTableProps> = ({ categories }) => {
             <Styles.sectionTotalsContainer>
               <Styles.sectionTotal>{formatAsMoney(expenseTotals.budget)}</Styles.sectionTotal>
               <Styles.sectionTotal>{formatAsMoney(expenseTotals.actual)}</Styles.sectionTotal>
-              <Styles.sectionTotal isremaininggood={isExpenseRemainingGood ? 'true' : 'false'}>
+              <Styles.sectionTotal isgood={isExpenseRemainingGood ? 'true' : 'false'}>
                 {formatAsMoney(expenseTotals.remaining)}
               </Styles.sectionTotal>
             </Styles.sectionTotalsContainer>

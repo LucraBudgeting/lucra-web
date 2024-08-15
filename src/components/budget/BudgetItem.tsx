@@ -3,8 +3,8 @@ import styled from 'styled-components';
 import { formatAsMoney } from '@/utils/formatAsMoney';
 import { ICategory } from '@/types/basic/Category.type';
 import { dashboardSelector } from '@/stores/slices/Dashboard.slice';
-import { AvatarEmoji } from '@/atoms/avatar/AvatarEmoji';
 import { ViewBudgetDialog } from '@/components/dialog/ViewBudgetDialog';
+import colors from '@/assets/theme/colors';
 import { calcIsRemainingGood, calcRemaining } from './budgetCalculator';
 
 export interface BudgetItemProps {
@@ -33,7 +33,7 @@ export const BudgetItem: FC<BudgetItemProps> = ({ category }) => {
     <>
       <Styled.container onClick={toggleViewBudgetDialog} id={`budget_item_${category.id}`}>
         <Styled.budgetContainer>
-          <AvatarEmoji emoji={avatar.emoji} backgroundColor={avatar.backgroundColor} align="left" />
+          <p>{avatar.emoji}</p>
           <Styled.title>{label}</Styled.title>
         </Styled.budgetContainer>
         <Styled.amountContainer>
@@ -50,8 +50,8 @@ export const BudgetItem: FC<BudgetItemProps> = ({ category }) => {
           {isAggregate && category.id ? (
             <Styled.amountCell>{formatAsMoney(-budgetAverage[category.id] || 0)}</Styled.amountCell>
           ) : (
-            <Styled.remainingCell isremaininggood={isRemainingGood ? 'true' : 'false'}>
-              {formatAsMoney(remaining)}
+            <Styled.remainingCell isgood={isRemainingGood ? 'true' : 'false'}>
+              <p>{formatAsMoney(remaining)}</p>
             </Styled.remainingCell>
           )}
         </Styled.amountContainer>
@@ -88,7 +88,7 @@ const Styled = {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 1rem;
+    gap: 10px;
   `,
   title: styled.p``,
   amountCell: styled.div`
@@ -109,8 +109,19 @@ const Styled = {
       max-width: 70%;
     }
   `,
-  remainingCell: styled.div<{ isremaininggood: string }>`
-    color: ${(props) => (props.isremaininggood == 'true' ? '#2AA64C' : '#CA4141')};
+  remainingCell: styled.div<{ isgood: string }>`
+    p {
+      color: ${(props) => (props.isgood == 'true' ? colors.success.main : colors.error.main)};
+      background-color: ${(props) =>
+        props.isgood == 'true' ? colors.success.focus : colors.error.focus};
+      width: fit-content;
+      padding: 6px 10px;
+      border-radius: 30px;
+    }
+
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
     font-weight: 600;
     width: 30%;
     text-align: right;

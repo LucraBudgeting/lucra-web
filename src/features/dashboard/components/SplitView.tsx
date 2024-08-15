@@ -20,11 +20,16 @@ const SplitViewContainer = styled.div`
 
 const SplitViewPane = styled.div<{ width: number }>`
   width: ${(props) => `${props.width}%`};
-  padding: 10px;
   height: calc(100% - 10px);
   display: flex;
   flex-direction: column;
 `;
+
+const LeftViewPane = styled(SplitViewPane)`
+  padding-right: 1rem;
+  padding-left: 1rem;
+`;
+const RightViewPane = styled(SplitViewPane)``;
 
 const Divider = styled.div`
   width: 1px;
@@ -85,17 +90,17 @@ const SplitView: React.FC<SplitViewProps> = ({
 
   return (
     <SplitViewContainer>
-      <SplitViewPane width={leftWidth} ref={leftRef}>
+      <LeftViewPane width={leftWidth} ref={leftRef}>
         {left}
-      </SplitViewPane>
+      </LeftViewPane>
       {isMobile ? null : (
         <>
           <Divider onMouseDown={(e) => e.preventDefault()}>
             <Handle onMouseDown={handleMouseDown} />
           </Divider>
-          <SplitViewPane width={100 - leftWidth} ref={rightRef}>
+          <RightViewPane width={100 - leftWidth} ref={rightRef}>
             {right}
-          </SplitViewPane>
+          </RightViewPane>
         </>
       )}
     </SplitViewContainer>

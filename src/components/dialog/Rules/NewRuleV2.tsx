@@ -11,6 +11,7 @@ import { BaseSelect, ISelectOptions } from '@/atoms/select/BaseSelect';
 import { Button } from '@/atoms/button/Button';
 import { Styled } from '@/atoms/dialog/Dialog.styles';
 import { categoriesToOptions, categoryListToOptions } from '@/components/category/category.utils';
+import colors from '@/assets/theme/colors';
 import {
   conditionOperatorOptions,
   getConditionOperatorFromName,
@@ -27,7 +28,7 @@ interface EditOrAddRuleProps {
 
 const merchantNameField = 'name';
 const aiTagField = 'categoryDetailed';
-const maxAllowedValues = 4;
+const maxAllowedValues = 6;
 
 export const EditOrAddRuleV2: FC<EditOrAddRuleProps> = ({
   rule,
@@ -51,7 +52,6 @@ export const EditOrAddRuleV2: FC<EditOrAddRuleProps> = ({
     rule?.parsedCondition?.categoryId ?? ''
   );
   const [categoryOptionList, setCategoryOptionList] = useState<ISelectOptions[]>([]);
-  const [ruleName, setRuleName] = useState<string>(rule?.name ?? '');
 
   useEffect(() => {
     const categories = [...debitCategories, ...creditCategories];
@@ -65,14 +65,6 @@ export const EditOrAddRuleV2: FC<EditOrAddRuleProps> = ({
 
   function changeCategory(updatedValue: string) {
     setSelectedCategory(updatedValue);
-  }
-
-  function onRuleNameChange(e: ChangeEvent<HTMLInputElement>): void {
-    const value = e.target.value;
-
-    if (value.length <= 35) {
-      setRuleName(value as string);
-    }
   }
 
   function onConditionChange(updatedValue: string) {
@@ -133,7 +125,7 @@ export const EditOrAddRuleV2: FC<EditOrAddRuleProps> = ({
 
     const ruleToSave = {
       ...rule,
-      name: ruleName,
+      name: 'New Rule',
       parsedCondition: {
         conditionGroups: [
           {
@@ -151,19 +143,17 @@ export const EditOrAddRuleV2: FC<EditOrAddRuleProps> = ({
   return (
     <Styles.newRuleContainer>
       <Styles.instructionSection>
-        <p>Rule name</p>
-        <BaseInput placeholder="Enter name" value={ruleName} onChange={onRuleNameChange} />
-      </Styles.instructionSection>
-      <Styles.instructionSection>
-        <p>Merchant name</p>
+        <p>If merchant name</p>
         <Styles.row>
-          <BaseSelect
-            sz="medium"
-            options={conditionOperatorOptions}
-            value={getConditionOperatorFromName(conditionOperator)}
-            onValueChange={onConditionChange}
-          />
-          <Styles.inputColumn>
+          <Styles.conditionOperatorContainer id="condition-select">
+            <BaseSelect
+              sz="large"
+              options={conditionOperatorOptions}
+              value={getConditionOperatorFromName(conditionOperator)}
+              onValueChange={onConditionChange}
+            />
+          </Styles.conditionOperatorContainer>
+          <Styles.inputColumn width="65%">
             <BaseInput
               placeholder="Enter merchant name"
               value={merchantNameValues[0]}
@@ -185,7 +175,7 @@ export const EditOrAddRuleV2: FC<EditOrAddRuleProps> = ({
         </Styles.row>
       </Styles.instructionSection>
       <Styles.instructionSection>
-        <p>AI Auto-Tags </p>
+        <p>Tags applied by banking institution</p>
         <Styles.row>
           <Styles.inputColumn width="100%">
             <BaseSelect
@@ -208,7 +198,7 @@ export const EditOrAddRuleV2: FC<EditOrAddRuleProps> = ({
         </Styles.row>
       </Styles.instructionSection>
       <Styles.instructionSection>
-        <p>Category</p>
+        <p>Then categorize as</p>
         <BaseSelect
           options={categoryOptionList}
           value={selectedCategory}
@@ -226,7 +216,7 @@ export const EditOrAddRuleV2: FC<EditOrAddRuleProps> = ({
 };
 
 function AddValueBtn({ onClick }: { onClick: () => void }) {
-  return <Button label="+ Add" onClick={onClick} type="secondary" />;
+  return <Button label="+ Add" onClick={onClick} type="empty" />;
 }
 
 const Styles = {
@@ -235,6 +225,7 @@ const Styles = {
     display: flex;
     flex-direction: column;
     gap: 1.5rem;
+    padding-bottom: 1rem;
   `,
   instructionSection: styled.div`
     width: 100%;
@@ -243,13 +234,15 @@ const Styles = {
     gap: 0.5rem;
 
     p {
-      font-weight: 400;
+      font-weight: 600;
+      color: ${colors.grey[700]};
     }
   `,
   row: styled.div`
     display: flex;
     align-items: flex-start;
     gap: 16px;
+    width: 100%;
   `,
   column: styled.div`
     display: flex;
@@ -263,6 +256,9 @@ const Styles = {
     align-items: flex-start;
     gap: 8px;
     width: ${({ width }) => width ?? 'auto'};
+  `,
+  conditionOperatorContainer: styled.div`
+    width: 35%;
   `,
   ...Styled,
 };
