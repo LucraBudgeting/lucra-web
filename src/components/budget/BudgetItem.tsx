@@ -68,7 +68,7 @@ const Styled = {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    height: 50px;
+    height: 60px;
     border-bottom: solid 1px #ccc;
     cursor: pointer;
   `,
