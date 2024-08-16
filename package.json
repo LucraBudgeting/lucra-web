@@ -88,6 +88,9 @@
       "plugin:storybook/recommended"
     ]
   },
+  "engines": {
+    "node": ">=20.0.0"
+  },
   "resolutions": {
     "styled-components": "^5"
   }
