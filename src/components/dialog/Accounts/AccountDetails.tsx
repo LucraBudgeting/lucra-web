@@ -81,7 +81,7 @@ const Styled = {
       img {
         max-height: 40px;
         max-width: 40px;
-        background-color: ${(props) => props.$color};
+        border: solid 2px ${(props) => props.$color};
         padding: 4px;
         border-radius: 50%;
       }
