@@ -20,19 +20,19 @@ export const BudgetHeaderTimeRanges: FC<BudgetHeaderTimeRangesProps> = ({}) => {
   return (
     <Styled.container>
       <Styled.timeBtn
-        active={(currentRange == '1mo').toString()}
+        $active={(currentRange == '1mo').toString()}
         onClick={() => handleTimeRangeChange('1mo')}
       >
         1mo
       </Styled.timeBtn>
       <Styled.timeBtn
-        active={(currentRange == '6mo').toString()}
+        $active={(currentRange == '6mo').toString()}
         onClick={() => handleTimeRangeChange('6mo')}
       >
         6mo
       </Styled.timeBtn>
       <Styled.timeBtn
-        active={(currentRange == '12mo').toString()}
+        $active={(currentRange == '12mo').toString()}
         onClick={() => handleTimeRangeChange('12mo')}
       >
         12mo
@@ -52,7 +52,7 @@ const Styled = {
     display: flex;
     user-select: none;
   `,
-  timeBtn: styled.div<{ active: string }>`
+  timeBtn: styled.div<{ $active: string }>`
     display: flex;
     align-items: center;
     justify-content: center;
@@ -63,8 +63,8 @@ const Styled = {
     font-weight: 600;
     line-height: 18px;
     text-align: left;
-    background-color: ${({ active }) => (active === 'true' ? '#a9a9a968' : 'transparent')};
-    color: ${({ active }) => (active === 'true' ? '#333333' : '#707070')};
+    background-color: ${({ $active: active }) => (active === 'true' ? '#a9a9a968' : 'transparent')};
+    color: ${({ $active: active }) => (active === 'true' ? '#333333' : '#707070')};
 
     &:not(:first-child):not(:last-child) {
       border-left: 1px solid #e2e2e2;

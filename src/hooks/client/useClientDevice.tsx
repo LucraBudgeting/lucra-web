@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 
-const smallestDesktop = 1200;
+const smallestDesktop = 600;
 
 const useClientDevice = () => {
   const [windowSize, setWindowSize] = useState({

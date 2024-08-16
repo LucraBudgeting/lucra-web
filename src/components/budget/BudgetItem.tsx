@@ -50,7 +50,7 @@ export const BudgetItem: FC<BudgetItemProps> = ({ category }) => {
           {isAggregate && category.id ? (
             <Styled.amountCell>{formatAsMoney(-budgetAverage[category.id] || 0)}</Styled.amountCell>
           ) : (
-            <Styled.remainingCell isgood={isRemainingGood ? 'true' : 'false'}>
+            <Styled.remainingCell $isGood={isRemainingGood ? 'true' : 'false'}>
               <p>{formatAsMoney(remaining)}</p>
             </Styled.remainingCell>
           )}
@@ -109,11 +109,11 @@ const Styled = {
       max-width: 70%;
     }
   `,
-  remainingCell: styled.div<{ isgood: string }>`
+  remainingCell: styled.div<{ $isGood: string }>`
     p {
-      color: ${(props) => (props.isgood == 'true' ? colors.success.main : colors.error.main)};
+      color: ${(props) => (props.$isGood == 'true' ? colors.success.main : colors.error.main)};
       background-color: ${(props) =>
-        props.isgood == 'true' ? colors.success.focus : colors.error.focus};
+        props.$isGood == 'true' ? colors.success.focus : colors.error.focus};
       width: fit-content;
       padding: 6px 10px;
       border-radius: 30px;

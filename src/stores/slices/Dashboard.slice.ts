@@ -23,6 +23,8 @@ export const initialState = {
   transactions: [] as ITransaction[],
   bankAccounts: {} as Record<string, IBankAccount>,
   budgetActuals: {} as Record<string, number>,
+  totalTransactionIncome: 0,
+  totalTransactionExpense: 0,
   budgetAverage: {} as Record<string, number>,
   currentRange: '1mo' as budgetHeaderTimeRanges,
   dateRange: {
@@ -84,6 +86,9 @@ export const dashboardSlice = createSlice({
       state.transactions = action.payload;
       state.budgetActuals = calculateCategoryActuals(state);
       state.budgetAverage = calculateCategoryAverage(state);
+      const { income, expense } = calculateTransactionActuals(action.payload);
+      state.totalTransactionIncome = income;
+      state.totalTransactionExpense = expense;
     },
     setNewRange: (state, action: PayloadAction<budgetHeaderTimeRanges>) => {
       state.currentRange = action.payload;
@@ -180,6 +185,30 @@ export const dashboardSlice = createSlice({
     },
   },
 });
+
+function calculateTransactionActuals(transactions: ITransaction[]): {
+  income: number;
+  expense: number;
+} {
+  return transactions.reduce(
+    (acc, transaction) => {
+      if (transaction.isExcludedFromBudget) return acc;
+
+      const amount = parseFloat(transaction.amount.toString());
+
+      // If the amount is positive, it is an expense
+      // If the amount is negative, it is an income
+      if (amount > 0) {
+        acc.expense += -amount;
+      } else {
+        acc.income -= amount;
+      }
+
+      return acc;
+    },
+    { income: 0, expense: 0 }
+  );
+}
 
 function calculateCategoryActuals(state: typeof initialState): Record<string, number> {
   return state.transactions.reduce(

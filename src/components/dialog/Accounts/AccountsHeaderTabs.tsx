@@ -15,20 +15,20 @@ export const AccountsHeaderTabs: FC<AccountsHeaderTabsProps> = ({ changeTab, cur
   return (
     <Styles.container>
       <Styles.tab
-        isactive={currentTab == 'depository' ? 'true' : 'false'}
+        $isActive={currentTab == 'depository' ? 'true' : 'false'}
         onClick={() => changeTab('depository')}
       >
         Depository
       </Styles.tab>
       <Styles.tab
-        isactive={currentTab == 'credit' ? 'true' : 'false'}
+        $isActive={currentTab == 'credit' ? 'true' : 'false'}
         onClick={() => changeTab('credit')}
       >
         Credit Cards
       </Styles.tab>
       {isAccountsInvestmentEnabled && (
         <Styles.tab
-          isactive={currentTab == 'investment' ? 'true' : 'false'}
+          $isActive={currentTab == 'investment' ? 'true' : 'false'}
           onClick={() => changeTab('investment')}
         >
           Investment
@@ -45,12 +45,12 @@ const Styles = {
     margin-bottom: 1rem;
     width: 100%;
   `,
-  tab: styled.div<{ isactive: string }>`
+  tab: styled.div<{ $isActive: string }>`
     flex: 1;
     box-sizing: border-box;
     padding: 0.5rem 1rem;
-    border-bottom: 2px solid ${(props) => (props.isactive === 'true' ? '#333333' : 'transparent')};
-    color: ${(props) => (props.isactive === 'true' ? '#333333' : '#9B9B9B')};
+    border-bottom: 2px solid ${(props) => (props.$isActive === 'true' ? '#333333' : 'transparent')};
+    color: ${(props) => (props.$isActive === 'true' ? '#333333' : '#9B9B9B')};
     text-align: center; /* Center text horizontally */
     transition: all 0.3s ease-in-out;
     cursor: pointer;

@@ -128,20 +128,22 @@ export const ViewBudgetDialog: FC<ViewBudgetDialogProps> = (props) => {
           )}
         </Styles.editContainer>
       ) : (
-        <Styles.detailsContainer>
-          <Styles.infoBlock>
-            <h2>Budget</h2>
-            <h3>{formatAsMoney(amount, true)}</h3>
-          </Styles.infoBlock>
-          <Styles.infoBlock>
-            <h2>Actual</h2>
-            <h3>{formatAsMoney(actual, true)}</h3>
-          </Styles.infoBlock>
-          <hr />
-          <Styles.remainingInfoBlock isggood={String(isRemainingGood)}>
-            <h2>Remaining</h2>
-            <h3>{formatAsMoney(remaining, true)}</h3>
-          </Styles.remainingInfoBlock>
+        <>
+          <Styles.detailsContainer>
+            <Styles.infoBlock>
+              <h2>Budget</h2>
+              <h3>{formatAsMoney(amount, true)}</h3>
+            </Styles.infoBlock>
+            <Styles.infoBlock>
+              <h2>Actual</h2>
+              <h3>{formatAsMoney(actual, true)}</h3>
+            </Styles.infoBlock>
+            <hr />
+            <Styles.remainingInfoBlock $isGood={String(isRemainingGood)}>
+              <h2>Remaining</h2>
+              <h3>{formatAsMoney(remaining, true)}</h3>
+            </Styles.remainingInfoBlock>
+          </Styles.detailsContainer>
           <Styles.transactionListContainer>
             {isTransactionsFetching && <LoadingComponent />}
             {!isTransactionsFetching && transactions.length === 0 && <div>No transactions</div>}
@@ -149,7 +151,7 @@ export const ViewBudgetDialog: FC<ViewBudgetDialogProps> = (props) => {
               <TransactionList transactions={filterTransactions()} />
             )}
           </Styles.transactionListContainer>
-        </Styles.detailsContainer>
+        </>
       )}
       {showDeleteDialog && (
         <DestroyDialog
@@ -193,6 +195,7 @@ const Styles = {
     gap: 24px;
     width: 100%;
     padding: 12px;
+    margin-bottom: 1rem;
 
     hr {
       border: 2px solid #e8e8e8;
@@ -203,19 +206,22 @@ const Styles = {
   infoBlock: styled.div`
     ${baseInfoBlockStyles}
   `,
-  remainingInfoBlock: styled.div<{ isggood: string }>`
+  remainingInfoBlock: styled.div<{ $isGood: string }>`
     ${baseInfoBlockStyles}
     background-color: ${(props) =>
-      props.isggood === 'true' ? colors.success.focus : colors.error.focus};
+      props.$isGood === 'true' ? colors.success.focus : colors.error.focus};
 
     h3,
     h2 {
       color: ${(props) =>
-        props.isggood === 'true' ? colors.success.main : colors.error.main} !important;
+        props.$isGood === 'true' ? colors.success.main : colors.error.main} !important;
     }
   `,
   transactionListContainer: styled.div`
+    position: relative;
     max-height: 40vh;
+    width: 100%;
     overflow-y: auto;
+    overflow-x: hidden;
   `,
 };

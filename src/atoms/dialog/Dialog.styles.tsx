@@ -92,7 +92,6 @@ export const Styled = {
     padding-top: 1rem;
     width: calc(100% - 60px);
     height: ${({ height }) => height};
-    /* z-index: -10; */
-    /* max-height: 600px; */
+    overflow-x: hidden;
   `,
 };

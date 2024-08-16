@@ -19,14 +19,14 @@ interface TransactionItemProps {
 }
 
 const Styled = {
-  container: styled.div<{ islast: string }>`
+  container: styled.div<{ $isLast: string }>`
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 16px 24px;
     height: 40px;
     border-bottom: ${(props) =>
-      props.islast === 'true' ? 'none' : `1px solid ${colors.grey[300]}`};
+      props.$isLast === 'true' ? 'none' : `1px solid ${colors.grey[300]}`};
     cursor: pointer;
   `,
   title: styled.h3`
@@ -39,9 +39,9 @@ const Styled = {
     white-space: nowrap;
     overflow-x: hidden;
   `,
-  amount: styled.p<{ amount: number }>`
+  amount: styled.p<{ $amount: number }>`
     font-weight: 600;
-    color: ${(props) => (props.amount > 0 ? colors.success.main : colors.black.main)};
+    color: ${(props) => (props.$amount > 0 ? colors.success.main : colors.black.main)};
     font-size: 16px;
   `,
   descriptionContainer: styled.div`
@@ -96,7 +96,7 @@ export const TransactionItem: FC<TransactionItemProps> = ({
 
   return (
     <>
-      <Styled.container islast={isLast ? 'true' : 'false'} onClick={toggleDetails}>
+      <Styled.container $isLast={isLast ? 'true' : 'false'} onClick={toggleDetails}>
         <Styled.descriptionContainer ref={parentRef}>
           <Styled.title>{description}</Styled.title>
           <span onClick={(e) => toggleChipClick(e)}>
@@ -116,7 +116,7 @@ export const TransactionItem: FC<TransactionItemProps> = ({
           )}
         </Styled.descriptionContainer>
         <Styled.amountContainer>
-          <Styled.amount amount={amount}>{formatAsMoney(amount, true)}</Styled.amount>
+          <Styled.amount $amount={amount}>{formatAsMoney(amount, true)}</Styled.amount>
         </Styled.amountContainer>
       </Styled.container>
       {isDetailsOpen && <TransactionDetails closeCb={toggleDetails} id={id} />}

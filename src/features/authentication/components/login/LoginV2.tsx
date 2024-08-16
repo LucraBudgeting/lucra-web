@@ -54,6 +54,11 @@ export const LoginV2: FC<LoginV2Props> = ({}) => {
     validateLoginForm();
   }
 
+  function validateBlur() {
+    onEmailBlur();
+    onPasswordBlur();
+  }
+
   function validateLoginForm() {
     setIsLoginDisabled(!email || !password || emailErrors.length > 0 || passwordErrors.length > 0);
   }
@@ -115,19 +120,19 @@ export const LoginV2: FC<LoginV2Props> = ({}) => {
             tabIndex={1}
             value={email}
             onChange={onEmailChange}
-            onBlur={onEmailBlur}
-            errors={emailErrors}
+            onBlur={validateBlur}
+            $errors={emailErrors}
             name="login email"
             id="login-email"
           />
           <BaseInput
             label="Password*"
-            issecret={true.toString()}
+            $isSecret={true.toString()}
             tabIndex={2}
             value={password}
             onChange={onPasswordChange}
-            onBlur={onPasswordBlur}
-            errors={passwordErrors}
+            onBlur={validateBlur}
+            $errors={passwordErrors}
             name="login password"
             id="login-password"
           />

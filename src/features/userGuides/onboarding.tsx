@@ -3,8 +3,9 @@ import Joyride, { Step, CallBackProps, STATUS } from 'react-joyride';
 import { useDispatch } from 'react-redux';
 import { setIsInTour } from '@/stores/slices/Dashboard.slice';
 import colors from '@/assets/theme/colors';
+import localStorageRepository from '@/utils/localStorage.repository';
 
-const hasOnboarded = false;
+const hasOnboarded = localStorageRepository.hasCompletedNewAccountOnboarding();
 
 const steps: Step[] = [
   {
@@ -50,6 +51,7 @@ export function OnboardingGuide() {
     if (type === 'step:after' && action === 'next') {
       if (steps.length === stepIndex + 1) {
         setRun(false);
+        localStorageRepository.completeNewAccountOnboarding();
       }
 
       const querySelector = steps[index].target as string;

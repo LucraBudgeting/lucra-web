@@ -17,7 +17,7 @@ export function LoadingComponent({
 
   return (
     <Styled.container id="loading">
-      <Styled.animationContainer maxheight={maxHeight} id="loading-container">
+      <Styled.animationContainer $maxHeight={maxHeight} id="loading-container">
         {animation}
       </Styled.animationContainer>
       {loadingText && <Styled.text>{loadingText}</Styled.text>}
@@ -38,9 +38,9 @@ const Styled = {
     align-items: center;
     gap: 2rem;
   `,
-  animationContainer: styled.div<{ maxheight?: string }>`
+  animationContainer: styled.div<{ $maxHeight?: string }>`
     padding: 0.25rem;
-    max-height: ${({ maxheight }) => (maxheight ? maxheight : '10vh')};
+    max-height: ${({ $maxHeight: maxheight }) => (maxheight ? maxheight : '10vh')};
   `,
   text: styled.h6`
     animation: ${breathing} 3s infinite ease-in-out;

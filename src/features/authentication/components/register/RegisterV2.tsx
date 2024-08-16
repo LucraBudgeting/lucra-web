@@ -159,7 +159,7 @@ export const RegisterV2: FC<RegisterV2Props> = ({}) => {
             value={name}
             onChange={onNameChange}
             onBlur={onNameBlur}
-            errors={nameErrors}
+            $errors={nameErrors}
             name="name"
             id="registration-full-name"
           />
@@ -169,29 +169,29 @@ export const RegisterV2: FC<RegisterV2Props> = ({}) => {
             value={email}
             onChange={onEmailChange}
             onBlur={onEmailBlur}
-            errors={emailErrors}
+            $errors={emailErrors}
             name="registration email"
             id="registration-email"
           />
           <BaseInput
             label="Password*"
-            issecret={true.toString()}
+            $isSecret={true.toString()}
             tabIndex={3}
             value={password}
             onChange={onPasswordChange}
             onBlur={onPasswordBlur}
-            errors={passwordErrors}
+            $errors={passwordErrors}
             name="registration password"
             id="registration-password"
           />
           <BaseInput
             label="Confirm Password*"
-            issecret={true.toString()}
+            $isSecret={true.toString()}
             tabIndex={4}
             value={confirmPassword}
             onChange={onConfirmPasswordChange}
             onBlur={onConfirmPasswordBlur}
-            errors={confirmPasswordErrors}
+            $errors={confirmPasswordErrors}
             name="confirm password"
             id="registration-confirm-password"
           />

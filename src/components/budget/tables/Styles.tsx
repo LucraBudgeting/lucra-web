@@ -78,10 +78,10 @@ export const Styles = {
       max-width: 70%;
     }
   `,
-  sectionTotal: styled.p<{ isgood?: string }>`
+  sectionTotal: styled.p<{ $isGood?: string }>`
     color: ${(props) => {
-      if (!props.isgood) return '#333333';
-      return props.isgood === 'true' ? colors.success.main : colors.error.main;
+      if (!props.$isGood) return '#333333';
+      return props.$isGood === 'true' ? colors.success.main : colors.error.main;
     }};
     font-weight: 600;
     width: 30%;

@@ -53,7 +53,7 @@ export const OnboardingStep2Left: FC<OnboardingStep2Props> = ({}) => {
       <Styled.leftInputContainer>
         <Styled.input
           label="Password"
-          issecret={true.toString()}
+          $isSecret={true.toString()}
           onChange={updatePassword}
           value={password}
         />

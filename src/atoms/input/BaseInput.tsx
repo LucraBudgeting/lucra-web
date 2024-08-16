@@ -6,8 +6,8 @@ import { Eye } from '@/assets/eye';
 interface BaseInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   label?: string;
   error?: string;
-  errors?: string[];
-  issecret?: string;
+  $errors?: string[];
+  $isSecret?: string;
   alwaysshowlabel?: boolean;
 }
 
@@ -16,8 +16,8 @@ export const BaseInput: FC<BaseInputProps> = (props) => {
     value,
     label,
     error,
-    issecret: isSecret,
-    errors,
+    $isSecret: isSecret,
+    $errors: errors,
     alwaysshowlabel: alwaysShowLabel = true,
   } = props;
 
@@ -65,7 +65,7 @@ export const BaseInput: FC<BaseInputProps> = (props) => {
           onBlur={handleBlur}
           ref={inputRef}
         />
-        <Label isactive={(isActive || value !== '').toString()} onClick={handleLabelClick}>
+        <Label $isActive={(isActive || value !== '').toString()} onClick={handleLabelClick}>
           {label}
         </Label>
         {isSecret && (
@@ -107,18 +107,18 @@ const StyledInput = styled.input`
   z-index: 2;
 `;
 
-const Label = styled.label<{ isactive: string }>`
+const Label = styled.label<{ $isActive: string }>`
   position: absolute;
   z-index: 1;
   left: 12px;
-  top: ${(props) => (props.isactive == 'true' ? '-10px' : '18px')};
-  cursor: ${(props) => (props.isactive == 'true' ? 'auto' : 'text')};
+  top: ${(props) => (props.$isActive == 'true' ? '-10px' : '18px')};
+  cursor: ${(props) => (props.$isActive == 'true' ? 'auto' : 'text')};
   background: white;
   padding: 0 5px;
   transition:
     top 0.2s,
     font-size 0.2s;
-  font-size: ${(props) => (props.isactive == 'true' ? '14px' : '16px')};
+  font-size: ${(props) => (props.$isActive == 'true' ? '14px' : '16px')};
   color: #999;
 `;
 

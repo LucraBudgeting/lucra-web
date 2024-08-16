@@ -45,7 +45,7 @@ export const AuthContainer: FC<AuthContainerProps> = ({
           <BackArrow /> Back
         </Styles.backBtn>
       )}
-      <DialogContainer width="auto" closeCb={() => {}} enableFooter={false} enableHeader={false}>
+      <DialogContainer width="35vw" closeCb={() => {}} enableFooter={false} enableHeader={false}>
         <Styles.container ref={ref} id="auth-dialog-container">
           <DarkLogo />
           <Styles.group>
@@ -95,16 +95,13 @@ const Styles = {
     margin-bottom: 2rem;
     gap: 1rem;
     width: 30vw;
-    max-width: 400px;
 
     @media (max-width: 1000px) {
       width: 50vw;
-      max-width: 100%;
     }
 
     @media (max-width: 600px) {
       width: 90vw;
-      max-width: 100%;
     }
   `,
   backBtn: styled(Button)`

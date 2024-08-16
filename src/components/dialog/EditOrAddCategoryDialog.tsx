@@ -20,7 +20,7 @@ export const EditOrAddCategoryDialog: FC<EditOrAddCategoryDialogProps> = (props)
   );
   const [label, setLabel] = useState<string>(category?.label ?? '');
   const [currentEmoji, setCurrentEmoji] = useState<string>(category?.avatar.emoji ?? '💰');
-  const [budgetedAmount, setBudgetedAmount] = useState(budgeted);
+  const [budgetedAmount, setBudgetedAmount] = useState(budgeted ?? 0);
 
   const saveCategory = () => {
     if (!successCb) return;
@@ -38,7 +38,7 @@ export const EditOrAddCategoryDialog: FC<EditOrAddCategoryDialogProps> = (props)
     successCb(savedCategory);
   };
 
-  const isSaveDisabled = () => !label || budgetedAmount <= 0.0;
+  const isSaveDisabled = () => !label;
 
   const onBudgetTypeChange = (budgetType: string) => {
     setBudgetType(budgetType);

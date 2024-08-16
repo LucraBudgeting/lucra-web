@@ -48,6 +48,14 @@ class LocalStorageRepository {
   public deleteUserToken(): void {
     removeLocal(LocalKeys.ADMIN_USER_TOKEN);
   }
+
+  public completeNewAccountOnboarding(): void {
+    setLocal(LocalKeys.HAS_COMPLETED_NEW_ACCOUNT_ONBOARDING, 'true');
+  }
+
+  public hasCompletedNewAccountOnboarding(): boolean {
+    return !!getLocal(LocalKeys.HAS_COMPLETED_NEW_ACCOUNT_ONBOARDING);
+  }
 }
 
 export default new LocalStorageRepository();

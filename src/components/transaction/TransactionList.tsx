@@ -13,7 +13,6 @@ const Styled = {
   container: styled.div<{ height?: string; width?: string }>`
     width: 100%;
     height: 100%;
-    overflow: auto;
   `,
   dateHeader: styled.div`
     width: 100%;
