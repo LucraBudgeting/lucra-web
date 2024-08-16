@@ -11,8 +11,9 @@ const steps: Step[] = [
   {
     target: '#settings_cog_budget_header_icon',
     title: 'Add an account',
-    content: 'You need to add a bank account to get started.',
+    content: 'To get started you need to add an account',
     placement: 'bottom',
+    disableBeacon: true,
   },
   {
     target: '#settings_accounts',
@@ -27,7 +28,7 @@ const steps: Step[] = [
 ];
 
 export function OnboardingGuide() {
-  const [run, setRun] = useState(!hasOnboarded);
+  const [run, setRun] = useState(false);
   const [stepIndex, setStepIndex] = useState(0);
   const dispatch = useDispatch();
 
@@ -35,7 +36,7 @@ export function OnboardingGuide() {
     const { status, index, type, action } = data;
     const finishedStatuses = [STATUS.FINISHED, STATUS.SKIPPED, STATUS.ERROR, STATUS.IDLE];
 
-    // @ts-expect-error - TS doesn't know about the STATUS enum
+    // @ts-expect-error - TS doesn't know about the click method
     if (finishedStatuses.includes(status)) {
       setRun(false);
       return;
@@ -82,6 +83,12 @@ export function OnboardingGuide() {
   useEffect(() => {
     dispatch(setIsInTour(run));
   }, [run]);
+
+  useEffect(() => {
+    if (!hasOnboarded) {
+      setRun(true);
+    }
+  }, []);
 
   return (
     <Joyride
