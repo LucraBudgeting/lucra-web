@@ -86,8 +86,10 @@ export const RulesDialog: FC<RulesDialogProps> = (props) => {
     setRulesCacheBuster(new Date().getTime().toString());
   }
 
-  function onSettingsClick() {
-    setShowSettings(!showSettings);
+  function applyRules() {
+    rulesApi.ApplyRulesToTransactions().finally(() => {
+      location.reload();
+    });
   }
 
   return (
@@ -96,8 +98,8 @@ export const RulesDialog: FC<RulesDialogProps> = (props) => {
       menuButtons={[
         {
           icon: <SettingsCogFilledIcon />,
-          text: 'Settings',
-          onClick: onSettingsClick,
+          text: 'Overwrite categories with rules',
+          onClick: applyRules,
         },
       ]}
       enableFooter={!isNewOrEdit}

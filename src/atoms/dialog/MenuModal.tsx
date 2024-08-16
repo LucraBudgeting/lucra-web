@@ -88,7 +88,7 @@ const Styled = {
     display: flex;
     gap: 1rem;
     border-radius: 12px;
-    min-width: 10rem;
+
     border-bottom: 1px solid #e2e2e2;
 
     transition: all ease-in 0.4s;
