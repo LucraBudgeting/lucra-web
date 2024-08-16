@@ -45,7 +45,7 @@ export const AccountsDialog: FC<AccountsDialogProps> = (props) => {
   );
 
   const totalDepository = depositoryAccountsList.reduce((acc, account) => {
-    return acc + (account.accountBalance?.currentBalance ?? 0);
+    return acc + (account.accountBalance?.availableBalance ?? 0);
   }, 0);
 
   const totalDebts = creditAccountsList.reduce((acc, account) => {

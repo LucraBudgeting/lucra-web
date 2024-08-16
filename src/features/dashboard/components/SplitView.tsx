@@ -55,7 +55,7 @@ const SplitView: React.FC<SplitViewProps> = ({
   right,
   leftMinContainerWidth = 50,
   rightMinContainerWidth = 25,
-  initialLeftContainerWidth = 75,
+  initialLeftContainerWidth = 60,
 }) => {
   const { windowSize, isMobile } = useClientDevice();
   const [leftWidth, setLeftWidth] = useState(initialLeftContainerWidth);

@@ -71,11 +71,11 @@ export const Styled = {
       width: 0.5rem;
     }
   `,
-  footer: styled.div<{ right?: string }>`
+  footer: styled.div<{ $right?: string }>`
     display: flex;
     padding: 24px;
     gap: 1rem;
-    justify-content: ${({ right }) => (right === 'true' ? 'space-between' : 'flex-end')};
+    justify-content: ${({ $right: right }) => (right === 'true' ? 'space-between' : 'flex-end')};
     align-items: center;
     align-self: stretch;
   `,

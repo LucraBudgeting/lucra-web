@@ -86,7 +86,7 @@ export const DialogContainer: FC<DiaglogContainerProps> = ({
           {children}
         </Styled.content>
         {enableFooter && (
-          <Styled.footer id="dialog-footer" right={deleteButton.toString()}>
+          <Styled.footer id="dialog-footer" $right={deleteButton.toString()}>
             {deleteButton && (
               <Button onClick={deleteBtn} label="Delete" type="error" id="dialog_delete_btn" />
             )}

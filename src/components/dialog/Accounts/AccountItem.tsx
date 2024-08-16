@@ -5,6 +5,7 @@ import { IBankAccount } from '@/types/models/bank/BankAccount';
 import { getBase64ImageString } from '@/utils/base64Img';
 import { formatAsMoney } from '@/utils/formatAsMoney';
 import { accountTypes } from './AccountsDialog';
+import { isBalanceOrAvailable } from './functions';
 
 interface AccountItemProps {
   account: IBankAccount;
@@ -14,19 +15,7 @@ interface AccountItemProps {
 
 export const AccountItem: FC<AccountItemProps> = ({ account, type, onClick }) => {
   const { bankInstitution, mask, accountName, accountBalance, id } = account;
-  let amountType;
-  switch (account.type?.toLowerCase()) {
-    case 'checking':
-    case 'savings':
-      amountType = 'Balance';
-      break;
-    case 'loan':
-    case 'creditcard':
-      amountType = 'Available';
-      break;
-    default:
-      amountType = '';
-  }
+  const amountType = isBalanceOrAvailable(account.type);
 
   return (
     <Styled.container id={`account-${type}-${id}`} onClick={() => onClick(account)}>
