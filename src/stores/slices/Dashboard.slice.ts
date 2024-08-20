@@ -86,7 +86,10 @@ export const dashboardSlice = createSlice({
       state.transactions = action.payload;
       state.budgetActuals = calculateCategoryActuals(state);
       state.budgetAverage = calculateCategoryAverage(state);
-      const { income, expense } = calculateTransactionActuals(action.payload);
+      const { income, expense } = calculateTransactionActuals(
+        action.payload,
+        state.transferCategory.id ?? '' //TODO POSSIBLE RACE CONDITION
+      );
       state.totalTransactionIncome = income;
       state.totalTransactionExpense = expense;
     },
@@ -186,13 +189,17 @@ export const dashboardSlice = createSlice({
   },
 });
 
-function calculateTransactionActuals(transactions: ITransaction[]): {
+function calculateTransactionActuals(
+  transactions: ITransaction[],
+  transferCategoryId: string
+): {
   income: number;
   expense: number;
 } {
   return transactions.reduce(
     (acc, transaction) => {
       if (transaction.isExcludedFromBudget) return acc;
+      if (transaction.categoryId === transferCategoryId) return acc;
 
       const amount = parseFloat(transaction.amount.toString());
 
