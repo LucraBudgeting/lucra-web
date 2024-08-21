@@ -200,5 +200,5 @@ textarea:-webkit-autofill {
 }
 
 *:hover {
-  scrollbar-color: #888 transparent;
+  scrollbar-color: transparent;
 }
