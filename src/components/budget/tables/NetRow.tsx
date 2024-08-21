@@ -70,7 +70,9 @@ export const NetRow: FC<NetRowProps> = ({
             </>
           ) : (
             <>
-              <Styles.sectionTotal>{formatAsMoney(budgetTotal)}</Styles.sectionTotal>
+              <Styles.sectionTotal $isGood={(budgetTotal > 0).toString()}>
+                {formatAsMoney(Math.abs(budgetTotal))}
+              </Styles.sectionTotal>
               <Styles.sectionTotal $isGood={(total > 0).toString()}>
                 {formatAsMoney(total)}
               </Styles.sectionTotal>
