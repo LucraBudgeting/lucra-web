@@ -64,9 +64,11 @@ export const NetRow: FC<NetRowProps> = ({
           {isAggregate ? (
             <>
               <Styles.sectionTotal $isGood={(total > 0).toString()}>
-                {formatAsMoney(total)}
+                {formatAsMoney(Math.abs(total))}
               </Styles.sectionTotal>
-              <Styles.sectionTotal>{formatAsMoney(average)}</Styles.sectionTotal>
+              <Styles.sectionTotal $isGood={(average > 0).toString()}>
+                {formatAsMoney(Math.abs(average))}
+              </Styles.sectionTotal>
             </>
           ) : (
             <>

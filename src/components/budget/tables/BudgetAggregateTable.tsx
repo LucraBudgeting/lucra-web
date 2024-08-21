@@ -23,7 +23,23 @@ const initialSectionTotals: ISectionTotals = {
 };
 
 export const BudgetAggregateTable: FC<BudgetAggregateTableProps> = ({ categories }) => {
-  const { budgetActuals } = dashboardSelector();
+  let totalMonths = 1;
+  const { budgetActuals, currentRange } = dashboardSelector();
+
+  switch (currentRange) {
+    case '1mo':
+      totalMonths = 1;
+      break;
+    case '6mo':
+      totalMonths = 6;
+      break;
+    case '12mo':
+      totalMonths = 12;
+      break;
+    default:
+      totalMonths = 1;
+      break;
+  }
 
   const [incomeTotals, setIncomeTotals] = useState<ISectionTotals>(initialSectionTotals);
   const [expenseTotals, setExpenseTotals] = useState<ISectionTotals>(initialSectionTotals);
@@ -58,10 +74,8 @@ export const BudgetAggregateTable: FC<BudgetAggregateTableProps> = ({ categories
       counts.debit++;
     });
 
-    if (counts.credit > 0) {
-      incomeTotals.average = incomeTotals.total / counts.credit;
-      expenseTotals.average = expenseTotals.total / counts.debit;
-    }
+    incomeTotals.average = Math.abs(incomeTotals.total / totalMonths);
+    expenseTotals.average = Math.abs(expenseTotals.total / totalMonths);
 
     setIncomeTotals(incomeTotals);
     setExpenseTotals(expenseTotals);

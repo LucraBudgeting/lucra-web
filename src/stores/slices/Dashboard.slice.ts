@@ -248,6 +248,22 @@ function calculateCategoryAverage(state: typeof initialState): Record<string, nu
   const sums: Record<string, number> = {};
   const counts: Record<string, number> = {};
 
+  let totalMonths = 1;
+  switch (state.currentRange) {
+    case '1mo':
+      totalMonths = 1;
+      break;
+    case '6mo':
+      totalMonths = 6;
+      break;
+    case '12mo':
+      totalMonths = 12;
+      break;
+    default:
+      totalMonths = 1;
+      break;
+  }
+
   state.transactions.forEach((transaction) => {
     if (!transaction.categoryId) return;
     if (transaction.isExcludedFromBudget) return;
@@ -264,7 +280,7 @@ function calculateCategoryAverage(state: typeof initialState): Record<string, nu
 
   const averages: Record<string, number> = {};
   for (const categoryId in sums) {
-    averages[categoryId] = sums[categoryId] / counts[categoryId];
+    averages[categoryId] = Math.abs(sums[categoryId] / totalMonths);
   }
 
   return averages;

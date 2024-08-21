@@ -48,7 +48,7 @@ export const BudgetItem: FC<BudgetItemProps> = ({ category }) => {
           )}
           <Styled.amountCell>{formatAsMoney(actual)}</Styled.amountCell>
           {isAggregate && category.id ? (
-            <Styled.amountCell>{formatAsMoney(-budgetAverage[category.id] || 0)}</Styled.amountCell>
+            <Styled.amountCell>{formatAsMoney(budgetAverage[category.id] || 0)}</Styled.amountCell>
           ) : (
             <Styled.remainingCell $isGood={isRemainingGood ? 'true' : 'false'}>
               <p>{formatAsMoney(remaining)}</p>
