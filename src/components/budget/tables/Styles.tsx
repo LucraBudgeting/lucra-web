@@ -13,6 +13,7 @@ export const Styles = {
     justify-content: flex-end;
     gap: 24px;
     min-width: 600px;
+    padding-right: 8px;
 
     @media (max-width: 600px) {
       min-width: 60%;
