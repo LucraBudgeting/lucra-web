@@ -11,7 +11,7 @@ interface IDateRange {
 }
 
 const now = new Date();
-const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
+const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1, 0, 0, 0, 0);
 
 export type budgetHeaderTimeRanges = '1mo' | '6mo' | '12mo';
 
