@@ -200,13 +200,14 @@ function calculateTransactionActuals(
     (acc, transaction) => {
       if (transaction.isExcludedFromBudget) return acc;
       if (transaction.categoryId === transferCategoryId) return acc;
+      if (!transaction.categoryId) return acc;
 
       const amount = parseFloat(transaction.amount.toString());
 
       // If the amount is positive, it is an expense
       // If the amount is negative, it is an income
       if (amount > 0) {
-        acc.expense += -amount;
+        acc.expense += amount;
       } else {
         acc.income -= amount;
       }

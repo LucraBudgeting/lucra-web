@@ -28,6 +28,7 @@ export const NetRow: FC<NetRowProps> = ({
 
   const [total, setTotal] = useState(0);
   const [remaining, setRemaining] = useState(0);
+  const [isRemainingGood, setIsRemainingGood] = useState(true);
   const [average, setAverage] = useState(0);
   const [budgetTotal, setBudgetTotal] = useState(0);
 
@@ -35,7 +36,8 @@ export const NetRow: FC<NetRowProps> = ({
 
   useEffect(() => {
     if (incomeRemaining && expenseRemaining) {
-      setRemaining(incomeRemaining - expenseRemaining);
+      setRemaining(Math.abs(incomeRemaining) - Math.abs(expenseRemaining));
+      setIsRemainingGood(Math.abs(incomeRemaining) - Math.abs(expenseRemaining) > 0);
     }
   }, [incomeRemaining, expenseRemaining]);
   useEffect(() => {
@@ -72,8 +74,8 @@ export const NetRow: FC<NetRowProps> = ({
               <Styles.sectionTotal $isGood={(total > 0).toString()}>
                 {formatAsMoney(total)}
               </Styles.sectionTotal>
-              <Styles.sectionTotal $isGood={(remaining > 0).toString()}>
-                {formatAsMoney(remaining)}
+              <Styles.sectionTotal $isGood={isRemainingGood.toString()}>
+                {formatAsMoney(Math.abs(remaining))}
               </Styles.sectionTotal>
             </>
           )}

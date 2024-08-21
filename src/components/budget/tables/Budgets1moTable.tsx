@@ -116,7 +116,7 @@ export const Budgets1moTable: FC<BudgetsTableProps> = ({ categories }) => {
               <Styles.sectionTotal>{formatAsMoney(incomeTotals.budget)}</Styles.sectionTotal>
               <Styles.sectionTotal>{formatAsMoney(totalTransactionIncome)}</Styles.sectionTotal>
               <Styles.sectionTotal $isGood={isIncomeRemainingGood ? 'true' : 'false'}>
-                {formatAsMoney(incomeTotals.remaining)}
+                {formatAsMoney(Math.abs(incomeTotals.remaining))}
               </Styles.sectionTotal>
             </Styles.sectionTotalsContainer>
           </Styles.sectionHeader>
@@ -143,7 +143,7 @@ export const Budgets1moTable: FC<BudgetsTableProps> = ({ categories }) => {
               <Styles.sectionTotal>{formatAsMoney(expenseTotals.budget)}</Styles.sectionTotal>
               <Styles.sectionTotal>{formatAsMoney(totalTransactionExpense)}</Styles.sectionTotal>
               <Styles.sectionTotal $isGood={isExpenseRemainingGood ? 'true' : 'false'}>
-                {formatAsMoney(expenseTotals.remaining)}
+                {formatAsMoney(Math.abs(expenseTotals.remaining))}
               </Styles.sectionTotal>
             </Styles.sectionTotalsContainer>
           </Styles.sectionHeader>
