@@ -29,7 +29,7 @@ const initialSectionTotals: ISectionTotals = {
 export const Budgets1moTable: FC<BudgetsTableProps> = ({ categories }) => {
   const [budgetsContainerRef] = useAutoAnimate();
 
-  const { budgetActuals, totalTransactionIncome, totalTransactionExpense } = dashboardSelector();
+  const { budgetActuals } = dashboardSelector();
 
   const [incomeTotals, setIncomeTotals] = useState<ISectionTotals>(initialSectionTotals);
   const [expenseTotals, setExpenseTotals] = useState<ISectionTotals>(initialSectionTotals);
@@ -114,7 +114,7 @@ export const Budgets1moTable: FC<BudgetsTableProps> = ({ categories }) => {
             </p>
             <Styles.sectionTotalsContainer>
               <Styles.sectionTotal>{formatAsMoney(incomeTotals.budget)}</Styles.sectionTotal>
-              <Styles.sectionTotal>{formatAsMoney(totalTransactionIncome)}</Styles.sectionTotal>
+              <Styles.sectionTotal>{formatAsMoney(incomeTotals.actual)}</Styles.sectionTotal>
               <Styles.sectionTotal $isGood={isIncomeRemainingGood ? 'true' : 'false'}>
                 {formatAsMoney(Math.abs(incomeTotals.remaining))}
               </Styles.sectionTotal>
@@ -141,7 +141,7 @@ export const Budgets1moTable: FC<BudgetsTableProps> = ({ categories }) => {
             </p>
             <Styles.sectionTotalsContainer>
               <Styles.sectionTotal>{formatAsMoney(expenseTotals.budget)}</Styles.sectionTotal>
-              <Styles.sectionTotal>{formatAsMoney(totalTransactionExpense)}</Styles.sectionTotal>
+              <Styles.sectionTotal>{formatAsMoney(expenseTotals.actual)}</Styles.sectionTotal>
               <Styles.sectionTotal $isGood={isExpenseRemainingGood ? 'true' : 'false'}>
                 {formatAsMoney(Math.abs(expenseTotals.remaining))}
               </Styles.sectionTotal>
