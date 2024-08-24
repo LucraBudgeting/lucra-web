@@ -25,7 +25,8 @@ export const LoginV2: FC<LoginV2Props> = ({}) => {
   const [loginError, setLoginError] = useState<string>('');
   const [passwordErrors, setPasswordErrors] = useState<string[]>([]);
   const [isAuthorizing, setIsAuthorizing] = useState<boolean>(false);
-  const [isLoginDisabled, setIsLoginDisabled] = useState<boolean>(true);
+  const isLoginDisabled =
+    !email || !password || emailErrors.length > 0 || passwordErrors.length > 0;
 
   function redirectToRegister() {
     navigate(authRoutes.register);
@@ -34,33 +35,34 @@ export const LoginV2: FC<LoginV2Props> = ({}) => {
     navigate(authRoutes.forgotPassword);
   }
 
+  function validateEmailField(value: string) {
+    const errors = validateEmail(value);
+    setEmailErrors(errors);
+  }
+
+  function validatePasswordField(value: string) {
+    const errors = validatePassword(value);
+    setPasswordErrors(errors);
+  }
+
   function onEmailChange(e: React.ChangeEvent<HTMLInputElement>) {
-    setEmail(e.target.value);
+    const value = e.target.value;
+    setEmail(value);
+    validateEmailField(value);
   }
 
   function onEmailBlur() {
-    const errors = validateEmail(email);
-    setEmailErrors(errors);
-    validateLoginForm();
+    validateEmailField(email);
   }
 
   function onPasswordChange(e: React.ChangeEvent<HTMLInputElement>) {
-    setPassword(e.target.value);
+    const value = e.target.value;
+    setPassword(value);
+    validatePasswordField(value);
   }
 
   function onPasswordBlur() {
-    const errors = validatePassword(password);
-    setPasswordErrors(errors);
-    validateLoginForm();
-  }
-
-  function validateBlur() {
-    onEmailBlur();
-    onPasswordBlur();
-  }
-
-  function validateLoginForm() {
-    setIsLoginDisabled(!email || !password || emailErrors.length > 0 || passwordErrors.length > 0);
+    validatePasswordField(password);
   }
 
   function submitLogin() {
@@ -120,7 +122,7 @@ export const LoginV2: FC<LoginV2Props> = ({}) => {
             tabIndex={1}
             value={email}
             onChange={onEmailChange}
-            onBlur={validateBlur}
+            onBlur={onEmailBlur}
             $errors={emailErrors}
             name="login email"
             id="login-email"
@@ -131,7 +133,7 @@ export const LoginV2: FC<LoginV2Props> = ({}) => {
             tabIndex={2}
             value={password}
             onChange={onPasswordChange}
-            onBlur={validateBlur}
+            onBlur={onPasswordBlur}
             $errors={passwordErrors}
             name="login password"
             id="login-password"
