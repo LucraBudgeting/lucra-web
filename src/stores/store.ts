@@ -3,8 +3,10 @@ import { combineReducers, configureStore, PreloadedState } from '@reduxjs/toolki
 import authenticationReducer from './slices/Authentication.slice';
 import onboardingSliceReducer from './slices/Onboarding.slice';
 import dashboardSliceReducer from './slices/Dashboard.slice';
+import userGuideSliceReducer from './slices/userGuide.slice';
 
 const rootReducer = combineReducers({
+  userGuide: userGuideSliceReducer,
   authentication: authenticationReducer,
   onboarding: onboardingSliceReducer,
   dashboard: dashboardSliceReducer,

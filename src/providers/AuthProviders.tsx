@@ -10,6 +10,7 @@ import LocalStorageRepository from '@/utils/localStorage.repository';
 import { LoadingComponent } from '@/atoms/loading/Loading.Component';
 import { envHelper } from '@/utils/env.helper';
 import { dashboardSelector, setTransactions } from '@/stores/slices/Dashboard.slice';
+import { useUserGuide } from '@/hooks/guide/useUserGuide.hook';
 
 interface AuthCheckProviderProps {}
 
@@ -17,6 +18,7 @@ export const AuthCheckProvider: FC<AuthCheckProviderProps> = ({}) => {
   const apis = useContext(ApiContext);
   const dispatch = useAppDispatch();
   const { isAuthenticated, user } = useAuth();
+  useUserGuide();
   const { dateRange } = dashboardSelector();
 
   const [isLoading, setIsLoading] = useState<boolean>(true);

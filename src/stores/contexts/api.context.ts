@@ -8,6 +8,7 @@ import BankApi from '@/apis/bank/bank.api';
 import CategoryApi from '@/apis/budget/category.api';
 import TransactionApi from '@/apis/budget/transaction.api';
 import RulesApi from '@/apis/rules/rules.api';
+import { UserGuideApi } from '@/apis/guide/userGuide.api';
 
 interface Apis {
   billingApi: BillingApi;
@@ -20,11 +21,13 @@ interface Apis {
   categoryApi: CategoryApi;
   transactionApi: TransactionApi;
   rulesApi: RulesApi;
+  userGuideApi: UserGuideApi;
 }
 
 const { VITE_ENV } = import.meta.env;
 
 export const initializedApis: Apis = {
+  userGuideApi: new UserGuideApi(),
   billingApi: new BillingApi(),
   authApi: new AuthenticationApi(),
   qsPlaidApi: new QsPlaidApi(),

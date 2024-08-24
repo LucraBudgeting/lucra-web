@@ -1,8 +1,10 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import Joyride, { Step, CallBackProps, STATUS } from 'react-joyride';
 import { useDispatch } from 'react-redux';
 import { setIsInTour } from '@/stores/slices/Dashboard.slice';
 import colors from '@/assets/theme/colors';
+import { useUserGuide } from '@/hooks/guide/useUserGuide.hook';
+import { ApiContext } from '@/stores/contexts/api.context';
 
 const hasOnboarded = true;
 
@@ -26,9 +28,16 @@ const steps: Step[] = [
   },
 ];
 
-export function OnboardingGuide() {
+const addAccountGuideKey = 'AddingAnAccount';
+
+export function AddAccountGuide() {
   const [run, setRun] = useState(false);
   const [stepIndex, setStepIndex] = useState(0);
+
+  const apis = useContext(ApiContext);
+  const { progress, guides } = useUserGuide();
+  const guideId = guides.find((guide) => guide.key === addAccountGuideKey)?.id;
+
   const dispatch = useDispatch();
 
   const handleJoyrideCallback = (data: CallBackProps) => {
@@ -50,7 +59,7 @@ export function OnboardingGuide() {
 
     if (type === 'step:after' && action === 'next') {
       if (steps.length === stepIndex + 1) {
-        setRun(false);
+        markGuideAsComplete();
       }
 
       const querySelector = steps[index].target as string;
@@ -83,10 +92,21 @@ export function OnboardingGuide() {
   }, [run]);
 
   useEffect(() => {
-    if (!hasOnboarded) {
+    if (!guideId) return;
+
+    const guideProgress = progress[guideId];
+
+    if (!guideProgress?.completed) {
       setRun(true);
     }
   }, []);
+
+  function markGuideAsComplete() {
+    if (!guideId) return;
+
+    setRun(false);
+    apis.userGuideApi.markGuideAsComplete(guideId);
+  }
 
   return (
     <Joyride
