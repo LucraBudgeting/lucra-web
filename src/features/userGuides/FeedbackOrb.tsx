@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useRef, useState } from 'react';
 import styled from 'styled-components';
 import colors from '@/assets/theme/colors';
 import { Button } from '@/atoms/button/Button';
@@ -77,13 +77,17 @@ const Content = styled.p`
 `;
 
 export const OrbWithFeedback: React.FC = () => {
+  const orbRef = useRef<HTMLDivElement>(null);
   const { userFeedbackApi } = useContext(ApiContext);
   const [isOpen, setIsOpen] = useState(false);
   const [isSubmittingFeedback, setIsSubmittingFeedback] = useState(false);
   const [feedback, setFeedback] = useState('');
   const [hasFeedbackBeenSubmitted, setHasFeedbackBeenSubmitted] = useState(false);
 
-  const handleToggle = () => {
+  const handleToggle = (e?: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+    if (e) {
+      e.stopPropagation();
+    }
     setIsOpen(!isOpen);
     setHasFeedbackBeenSubmitted(false);
   };
@@ -93,7 +97,7 @@ export const OrbWithFeedback: React.FC = () => {
     handleToggle();
   }
 
-  const dialogRef = useOutsideClickRef(handleOutsideClick);
+  const dialogRef = useOutsideClickRef(handleOutsideClick, [orbRef]);
 
   function submitFeedback() {
     setIsSubmittingFeedback(true);
@@ -106,7 +110,7 @@ export const OrbWithFeedback: React.FC = () => {
 
   return (
     <>
-      <Orb $isOpen={isOpen} onClick={handleToggle}>
+      <Orb ref={orbRef} $isOpen={isOpen} onClick={handleToggle}>
         Leave feedback
       </Orb>
       <Dialog ref={dialogRef} $isOpen={isOpen}>
