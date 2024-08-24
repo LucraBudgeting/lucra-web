@@ -5,7 +5,7 @@ import { dashboardSelector } from '@/stores/slices/Dashboard.slice';
 import { useOutsideClickRef } from '@/hooks/react/useOutsideClickRef';
 import { maxZIndex } from '@/utils/domConstants';
 import colors from '@/assets/theme/colors';
-import { ICategory, transferCategoryId } from '../../types/basic/Category.type';
+import { ICategory } from '../../types/basic/Category.type';
 import { CategoryItem } from './CategoryItem';
 import { FixedCategoryItem } from './FixedCategoryItem';
 
@@ -68,7 +68,7 @@ export const CategoryListModal: FC<CategoryListProps> = ({
     }
   }, [searchInputRef, isVisible]);
 
-  const { debitCategories, creditCategories } = dashboardSelector();
+  const { debitCategories, creditCategories, transferCategory } = dashboardSelector();
   const [searchValue, setSearchValue] = useState('');
   const [incomeList, setIncomeList] = useState<ICategory[]>(creditCategories);
   const [expenseList, setExpenseList] = useState<ICategory[]>(debitCategories);
@@ -93,7 +93,7 @@ export const CategoryListModal: FC<CategoryListProps> = ({
 
   function setAsTransfer(event: React.MouseEvent) {
     event.stopPropagation();
-    categoryClickCb(transferCategoryId);
+    categoryClickCb(transferCategory.id);
   }
 
   return (

@@ -7,10 +7,10 @@ import {
   ITransactionRule,
 } from '@/types/models/rules/transaction.rule.type';
 import { BaseInput } from '@/atoms/input/BaseInput';
-import { BaseSelect, ISelectOptions } from '@/atoms/select/BaseSelect';
+import { BaseSelect, ISelectOptionGroup } from '@/atoms/select/BaseSelect';
 import { Button } from '@/atoms/button/Button';
 import { Styled } from '@/atoms/dialog/Dialog.styles';
-import { categoriesToOptions, categoryListToOptions } from '@/components/category/category.utils';
+import { categoriesToGroups, categoryListToOptions } from '@/components/category/category.utils';
 import colors from '@/assets/theme/colors';
 import {
   conditionOperatorOptions,
@@ -40,7 +40,7 @@ export const EditOrAddRuleV2: FC<EditOrAddRuleProps> = ({
   const { conditions } = rule?.parsedCondition?.conditionGroups[0] ?? newConditionGroup;
   const { operator } = conditions[0] ?? newCondition;
 
-  const { debitCategories, creditCategories } = dashboardSelector();
+  const { debitCategories, creditCategories, transferCategory } = dashboardSelector();
   const [merchantNameValues, setMerchantNameValues] = useState<string[]>(
     getMerchantValues(conditions)
   );
@@ -51,17 +51,11 @@ export const EditOrAddRuleV2: FC<EditOrAddRuleProps> = ({
   const [selectedCategory, setSelectedCategory] = useState<string>(
     rule?.parsedCondition?.categoryId ?? ''
   );
-  const [categoryOptionList, setCategoryOptionList] = useState<ISelectOptions[]>([]);
+  const [categoryOptionList, setCategoryOptionList] = useState<ISelectOptionGroup[]>([]);
 
   useEffect(() => {
-    const categories = [...debitCategories, ...creditCategories];
-    const options = categoriesToOptions(categories);
-    setCategoryOptionList(options);
-
-    if (!rule?.parsedCondition?.categoryId) {
-      setSelectedCategory(options[0].value?.toString());
-    }
-  }, [debitCategories, creditCategories]);
+    setCategoryOptionList(categoriesToGroups(debitCategories, creditCategories, transferCategory));
+  }, [debitCategories, creditCategories, transferCategory]);
 
   function changeCategory(updatedValue: string) {
     setSelectedCategory(updatedValue);
@@ -200,7 +194,7 @@ export const EditOrAddRuleV2: FC<EditOrAddRuleProps> = ({
       <Styles.instructionSection>
         <p>Then categorize as</p>
         <BaseSelect
-          options={categoryOptionList}
+          groups={categoryOptionList}
           value={selectedCategory}
           onValueChange={changeCategory}
           sz="large"

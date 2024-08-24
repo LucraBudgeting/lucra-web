@@ -2,37 +2,61 @@ import { ChangeEvent, FC } from 'react';
 import styled from 'styled-components';
 import { Chevron } from '@/assets/chevron';
 
-export interface ISelectOptions {
+export interface ISelectOption {
   value: string | number;
   displayName?: string;
 }
 
+export interface ISelectOptionGroup {
+  label: string;
+  options: ISelectOption[];
+}
+
 interface BaseSelectProps extends React.SelectHTMLAttributes<HTMLSelectElement> {
   onValueChange: (updatedValue: string) => void;
-  options: ISelectOptions[];
+  options?: ISelectOption[];
+  groups?: ISelectOptionGroup[];
   sz?: Size;
 }
 
 type Size = 'small' | 'medium' | 'large' | 'auto';
 
 export const BaseSelect: FC<BaseSelectProps> = (props) => {
-  const { onValueChange, value, options, sz = 'auto' } = props;
+  const { onValueChange, value, options, sz = 'auto', groups } = props;
   const onChange = (event: ChangeEvent<HTMLSelectElement>) => {
     onValueChange(event.target.value as string);
   };
   return (
     <Styles.container size={sz}>
       <Styles.select onChange={onChange} value={value ?? ''}>
-        {options.map((option, i) => (
-          <option value={option.value ? option.value : '0'} key={i}>
-            {option.displayName ? option.displayName : option.value}
-          </option>
-        ))}
+        {options?.map((option, i) => <BaseOption baseOption={option} key={i} />)}
+        {groups?.map((group, i) => {
+          return group.label ? (
+            <optgroup label={group.label} key={i}>
+              {group.options.map((option, j) => (
+                <BaseOption baseOption={option} key={j} />
+              ))}
+            </optgroup>
+          ) : (
+            <BaseOption baseOption={group.options[0]} />
+          );
+        })}
       </Styles.select>
       <Styles.chevronWrapper>
         <Chevron color="#9B9B9B" />
       </Styles.chevronWrapper>
     </Styles.container>
+  );
+};
+
+export const BaseOption: FC<{ baseOption: ISelectOption; key?: number | string }> = ({
+  baseOption,
+  key,
+}) => {
+  return (
+    <option value={baseOption.value ? baseOption.value : '0'} key={key}>
+      {baseOption.displayName ? baseOption.displayName : baseOption.value}
+    </option>
   );
 };
 

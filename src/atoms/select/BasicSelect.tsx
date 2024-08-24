@@ -1,11 +1,11 @@
 import { ChangeEvent, FC } from 'react';
 import styled from 'styled-components';
-import { ISelectOptions } from './BaseSelect';
+import { ISelectOption } from './BaseSelect';
 
 interface BasicSelectProps {
   value: string | null;
   onValueChange: (updatedValue: string) => void;
-  options: ISelectOptions[];
+  options: ISelectOption[];
 }
 
 export const BasicSelect: FC<BasicSelectProps> = ({ value, onValueChange, options }) => {

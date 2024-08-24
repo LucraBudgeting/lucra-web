@@ -11,11 +11,11 @@ import colors from '@/assets/theme/colors';
 import { formatAsMoney } from '@/utils/formatAsMoney';
 import { toLongDateFormat } from '@/utils/time.helper';
 import { getBase64ImageString } from '@/utils/base64Img';
-import { BaseSelect, ISelectOptions } from '@/atoms/select/BaseSelect';
+import { BaseSelect, ISelectOptionGroup } from '@/atoms/select/BaseSelect';
 import { BaseToggle } from '@/atoms/toggle/BaseToggle';
 import { LoadingComponent } from '@/atoms/loading/Loading.Component';
 import { ApiContext } from '@/stores/contexts/api.context';
-import { categoriesToOptions } from '../category/category.utils';
+import { categoriesToGroups } from '../category/category.utils';
 
 interface TransactionDetailsProps extends DialogProps {
   id: string;
@@ -32,15 +32,13 @@ export const TransactionDetails: FC<TransactionDetailsProps> = (props) => {
 
   const [isExcluded, setIsExcluded] = useState(false);
   const [isShowingDetails, setIsShowingDetails] = useState(false);
-  const [categoryOptionList, setCategoryOptionList] = useState<ISelectOptions[]>([]);
+  const [categoryOptionList, setCategoryOptionList] = useState<ISelectOptionGroup[]>([]);
   const [selectedCategory, setSelectedCategory] = useState<string>(transaction?.categoryId ?? '');
 
   let bankAccount = {} as IBankAccount;
 
   useEffect(() => {
-    const categories = [...debitCategories, ...creditCategories, transferCategory];
-    const options = categoriesToOptions(categories);
-    setCategoryOptionList(options);
+    setCategoryOptionList(categoriesToGroups(debitCategories, creditCategories, transferCategory));
   }, [debitCategories, creditCategories]);
 
   useEffect(() => {
@@ -117,7 +115,7 @@ export const TransactionDetails: FC<TransactionDetailsProps> = (props) => {
               <h3>Category</h3>
               <BaseSelect
                 onValueChange={onCategoryChange}
-                options={categoryOptionList}
+                groups={categoryOptionList}
                 value={selectedCategory}
               />
             </Styled.categorySelectContainer>
