@@ -8,21 +8,23 @@ import { ApiContext } from '@/stores/contexts/api.context';
 // Styled components
 const Orb = styled.div<{ isOpen: boolean }>`
   position: fixed;
-  bottom: 20px;
-  left: 20px;
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  background-color: ${(props) => (props.isOpen ? colors.brand.light : colors.brand.main)};
+  bottom: 30px;
+  right: 30px;
+  border-radius: 100px;
+  background-color: ${(props) => (props.isOpen ? colors.brand.light : colors.grey[100])};
+  padding: 10px 14px;
   display: flex;
   justify-content: center;
   align-items: center;
   cursor: pointer;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  font-size: 1.5rem;
-  transition: background-color 0.75s ease;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+
+  transition:
+    background-color,
+    box-shadow 0.75s ease;
 
   &:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.8);
     background-color: ${colors.brand.light};
   }
 `;
@@ -30,7 +32,7 @@ const Orb = styled.div<{ isOpen: boolean }>`
 const Dialog = styled.div`
   position: fixed;
   bottom: 80px;
-  left: 20px;
+  right: 20px;
   min-width: 300px;
   max-width: 500px;
   padding: 20px;
@@ -93,7 +95,7 @@ export const OrbWithFeedback: React.FC = () => {
   return (
     <>
       <Orb isOpen={isOpen} onClick={handleToggle}>
-        💬
+        Leave feedback
       </Orb>
       {isOpen && (
         <Dialog ref={dialogRef}>
