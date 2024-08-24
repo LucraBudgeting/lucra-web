@@ -6,12 +6,13 @@ import { useOutsideClickRef } from '@/hooks/react/useOutsideClickRef';
 import { ApiContext } from '@/stores/contexts/api.context';
 
 // Styled components
-const Orb = styled.div<{ isOpen: boolean }>`
+const Orb = styled.div<{ $isOpen: boolean }>`
+  user-select: none;
   position: fixed;
   bottom: 30px;
   right: 30px;
   border-radius: 100px;
-  background-color: ${(props) => (props.isOpen ? colors.brand.light : colors.grey[100])};
+  background-color: ${(props) => (props.$isOpen ? colors.brand.light : colors.grey[100])};
   padding: 10px 14px;
   display: flex;
   justify-content: center;
@@ -29,7 +30,7 @@ const Orb = styled.div<{ isOpen: boolean }>`
   }
 `;
 
-const Dialog = styled.div`
+const Dialog = styled.div<{ $isOpen: boolean }>`
   position: fixed;
   bottom: 100px;
   right: 30px;
@@ -44,6 +45,12 @@ const Dialog = styled.div`
   flex-direction: column;
   align-items: flex-start;
   gap: 1rem;
+
+  transform: ${(props) => (props.$isOpen ? 'scale(1)' : 'scale(0.5)')};
+  opacity: ${(props) => (props.$isOpen ? '1' : '0')};
+  transition:
+    transform 0.3s ease,
+    opacity 0.3s ease;
 `;
 
 const FeedbackTextArea = styled.textarea`
@@ -81,7 +88,12 @@ export const OrbWithFeedback: React.FC = () => {
     setHasFeedbackBeenSubmitted(false);
   };
 
-  const dialogRef = useOutsideClickRef(handleToggle);
+  function handleOutsideClick() {
+    if (!isOpen) return;
+    handleToggle();
+  }
+
+  const dialogRef = useOutsideClickRef(handleOutsideClick);
 
   function submitFeedback() {
     setIsSubmittingFeedback(true);
@@ -94,29 +106,27 @@ export const OrbWithFeedback: React.FC = () => {
 
   return (
     <>
-      <Orb isOpen={isOpen} onClick={handleToggle}>
+      <Orb $isOpen={isOpen} onClick={handleToggle}>
         Leave feedback
       </Orb>
-      {isOpen && (
-        <Dialog ref={dialogRef}>
-          <h1>Leave Feedback</h1>
-          <Content>
-            Tell us about your experience with Lucra!
-            <br />
-            Let us know what you like, don’t like, or what features you would like to see in the
-            future.
-          </Content>
-          <FeedbackTextArea
-            placeholder="Enter feedback..."
-            value={feedback}
-            onChange={(e) => setFeedback(e.target.value)}
-          />
-          <Button onClick={submitFeedback} disabled={isSubmittingFeedback || !feedback}>
-            {isSubmittingFeedback ? 'Submitting' : 'Submit'}
-          </Button>
-          {hasFeedbackBeenSubmitted && <p>Thank you for your feedback!</p>}
-        </Dialog>
-      )}
+      <Dialog ref={dialogRef} $isOpen={isOpen}>
+        <h1 style={{ userSelect: 'none' }}>Leave Feedback</h1>
+        <Content>
+          Tell us about your experience with Lucra!
+          <br />
+          Let us know what you like, don’t like, or what features you would like to see in the
+          future.
+        </Content>
+        <FeedbackTextArea
+          placeholder="Enter feedback..."
+          value={feedback}
+          onChange={(e) => setFeedback(e.target.value)}
+        />
+        <Button onClick={submitFeedback} disabled={isSubmittingFeedback || !feedback}>
+          {isSubmittingFeedback ? 'Submitting' : 'Submit'}
+        </Button>
+        {hasFeedbackBeenSubmitted && <p>Thank you for your feedback!</p>}
+      </Dialog>
     </>
   );
 };
