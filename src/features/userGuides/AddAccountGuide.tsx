@@ -1,10 +1,10 @@
 import { useContext, useEffect, useState } from 'react';
-import Joyride, { Step, CallBackProps, STATUS } from 'react-joyride';
+import { Step, CallBackProps, STATUS } from 'react-joyride';
 import { useDispatch } from 'react-redux';
 import { setIsInTour } from '@/stores/slices/Dashboard.slice';
-import colors from '@/assets/theme/colors';
 import { useUserGuide } from '@/hooks/guide/useUserGuide.hook';
 import { ApiContext } from '@/stores/contexts/api.context';
+import { LucraJoyride } from './LucraJoyride';
 
 const steps: Step[] = [
   {
@@ -16,12 +16,14 @@ const steps: Step[] = [
   },
   {
     target: '#settings_accounts',
-    content: 'Open Accounts',
+    title: 'Open Accounts',
+    content: '',
     placement: 'right',
   },
   {
     target: '#plaid_add_account_btn',
-    content: 'Click here to add an account',
+    title: 'Click here to add an account',
+    content: '',
     placement: 'right',
   },
 ];
@@ -107,36 +109,11 @@ export function AddAccountGuide() {
   }
 
   return (
-    <Joyride
-      steps={steps}
+    <LucraJoyride
       run={run}
+      steps={steps}
       stepIndex={stepIndex}
-      callback={handleJoyrideCallback}
-      continuous
-      showProgress
-      disableOverlayClose
-      disableScrolling
-      styles={{
-        options: {
-          zIndex: 10000,
-          primaryColor: colors.brand.main,
-          textColor: colors.brand.dark,
-          backgroundColor: '#FFFFFF',
-          overlayColor: 'rgba(0, 0, 0, 0.65)',
-        },
-        overlay: {
-          zIndex: 9999,
-        },
-        tooltip: {
-          zIndex: 10001,
-        },
-        buttonBack: {
-          display: 'none',
-        },
-        buttonClose: {
-          display: 'none',
-        },
-      }}
+      handleJoyrideCallback={handleJoyrideCallback}
     />
   );
 }
