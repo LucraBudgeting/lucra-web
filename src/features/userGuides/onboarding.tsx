@@ -5,7 +5,7 @@ import { setIsInTour } from '@/stores/slices/Dashboard.slice';
 import colors from '@/assets/theme/colors';
 import localStorageRepository from '@/utils/localStorage.repository';
 
-const hasOnboarded = localStorageRepository.hasCompletedNewAccountOnboarding();
+const hasOnboarded = true;
 
 const steps: Step[] = [
   {

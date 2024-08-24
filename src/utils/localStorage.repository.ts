@@ -49,12 +49,16 @@ class LocalStorageRepository {
     removeLocal(LocalKeys.ADMIN_USER_TOKEN);
   }
 
-  public completeNewAccountOnboarding(): void {
-    setLocal(LocalKeys.HAS_COMPLETED_NEW_ACCOUNT_ONBOARDING, 'true');
+  public setSplitContainerWidth(width: number): void {
+    setLocal(LocalKeys.SPLIT_CONTAINER_WIDTH, width.toString());
   }
 
-  public hasCompletedNewAccountOnboarding(): boolean {
-    return !!getLocal(LocalKeys.HAS_COMPLETED_NEW_ACCOUNT_ONBOARDING);
+  public getSplitContainerWidth(): number {
+    const width = getLocal(LocalKeys.SPLIT_CONTAINER_WIDTH);
+    if (width) {
+      return parseInt(width, 10);
+    }
+    return 60;
   }
 }
 

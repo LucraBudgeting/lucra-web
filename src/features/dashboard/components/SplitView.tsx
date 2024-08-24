@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { useAutoAnimate } from '@formkit/auto-animate/react';
 import useClientDevice from '@/hooks/client/useClientDevice';
+import localStorageRepository from '@/utils/localStorage.repository';
 
 interface SplitViewProps {
   left: React.ReactNode;
@@ -55,7 +56,7 @@ const SplitView: React.FC<SplitViewProps> = ({
   right,
   leftMinContainerWidth = 50,
   rightMinContainerWidth = 25,
-  initialLeftContainerWidth = 60,
+  initialLeftContainerWidth = localStorageRepository.getSplitContainerWidth() || 60,
 }) => {
   const { windowSize, isMobile } = useClientDevice();
   const [leftWidth, setLeftWidth] = useState(initialLeftContainerWidth);
@@ -74,6 +75,7 @@ const SplitView: React.FC<SplitViewProps> = ({
 
     if (newLeftWidth >= leftMinContainerWidth && newLeftWidth <= 100 - rightMinContainerWidth) {
       setLeftWidth(newLeftWidth);
+      localStorageRepository.setSplitContainerWidth(newLeftWidth);
     }
   };
 
