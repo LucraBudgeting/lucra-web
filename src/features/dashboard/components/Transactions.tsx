@@ -10,9 +10,18 @@ interface TransactionsProps {
   isFetching: boolean;
 }
 
+export interface transactionFilters {
+  unCategorized: boolean;
+}
+
+const initialFilter: transactionFilters = {
+  unCategorized: false,
+};
+
 export const Transactions: FC<TransactionsProps> = ({ transactions, isFetching }) => {
   const [filteredTransactions, setFilteredTransactions] = useState<ITransaction[]>([]);
   const [search, setSearch] = useState('');
+  const [filters, setFilters] = useState(initialFilter);
 
   useEffect(() => {
     searchTransactions(search);
@@ -34,9 +43,29 @@ export const Transactions: FC<TransactionsProps> = ({ transactions, isFetching }
     );
   };
 
+  useEffect(() => {
+    let filteredTransactionsLocal = [...transactions];
+    if (filters.unCategorized) {
+      filteredTransactionsLocal = filteredTransactionsLocal.filter(
+        (transaction) => !transaction.categoryId
+      );
+    }
+
+    setFilteredTransactions(filteredTransactionsLocal);
+  }, [filters]);
+
+  const updateFilters = (filter: transactionFilters) => {
+    setFilters({ ...filters, ...filter });
+  };
+
   return (
     <Styles.container>
-      <TransactionHeader searchValue={search} onSearchChange={searchTransactions} />
+      <TransactionHeader
+        searchValue={search}
+        onSearchChange={searchTransactions}
+        filters={filters}
+        updateFilters={updateFilters}
+      />
       <Styles.listContainer>
         {isFetching ? (
           <LoadingComponent loadingText="Loading Transactions" />

@@ -6,30 +6,37 @@ import { PlusIcon } from '@/assets/plus-icon';
 import { SpyGlassOutline } from '@/assets/spyglass-outline';
 import { SearchInput } from '@/atoms/input/SearchInput';
 import colors from '@/assets/theme/colors';
+import { transactionFilters } from './Transactions';
 
 interface TransactionHeaderProps {
   searchValue: string;
   onSearchChange: (search: string) => void;
+  filters: transactionFilters;
+  updateFilters: (filter: transactionFilters) => void;
 }
 
 const enableFeature = {
   add: false,
   search: true,
-  settings: false,
+  filters: true,
 };
 
-export const TransactionHeader: FC<TransactionHeaderProps> = ({ searchValue, onSearchChange }) => {
+export const TransactionHeader: FC<TransactionHeaderProps> = ({
+  searchValue,
+  onSearchChange,
+  filters,
+  updateFilters,
+}) => {
   const [secondarySpaceRef] = useAutoAnimate();
 
   const [isAddOpen, setIsAddOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
-  const [isSettingsOpen, setIsSettingsOpen] = useState(false);
   function toggleSearch() {
     setIsSearchOpen(!isSearchOpen);
   }
 
-  function toggleSettings() {
-    setIsSettingsOpen(!isSettingsOpen);
+  function toggleFilters() {
+    updateFilters({ unCategorized: !filters.unCategorized });
   }
 
   function toggleAdd() {
@@ -55,8 +62,8 @@ export const TransactionHeader: FC<TransactionHeaderProps> = ({ searchValue, onS
                   <SpyGlassOutline type="bold" />
                 </span>
               )}
-              {enableFeature.settings && (
-                <span onClick={toggleSettings}>
+              {enableFeature.filters && (
+                <span onClick={toggleFilters}>
                   <FilterIcon />
                 </span>
               )}
