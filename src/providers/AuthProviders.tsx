@@ -10,6 +10,7 @@ import LocalStorageRepository from '@/utils/localStorage.repository';
 import { LoadingComponent } from '@/atoms/loading/Loading.Component';
 import { dashboardSelector, setTransactions } from '@/stores/slices/Dashboard.slice';
 import { LucraGuides } from '@/features/userGuides/LucraGuides';
+import { OrbWithFeedback } from '@/features/userGuides/FeedbackOrb';
 
 interface AuthCheckProviderProps {}
 
@@ -90,6 +91,7 @@ export const AuthCheckProvider: FC<AuthCheckProviderProps> = ({}) => {
     <>
       <Outlet />
       <LucraGuides />
+      <OrbWithFeedback />
     </>
   );
 };
