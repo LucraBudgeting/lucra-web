@@ -39,6 +39,11 @@ const Divider = styled.div`
   cursor: ew-resize;
   position: relative;
   border-radius: 10px;
+  transition: width 0.2s ease;
+
+  &:hover {
+    width: 8px;
+  }
 `;
 
 const Handle = styled.div`
