@@ -31,8 +31,8 @@ const Orb = styled.div<{ isOpen: boolean }>`
 
 const Dialog = styled.div`
   position: fixed;
-  bottom: 80px;
-  right: 20px;
+  bottom: 100px;
+  right: 30px;
   min-width: 300px;
   max-width: 500px;
   padding: 20px;
