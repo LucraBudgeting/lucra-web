@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import { useCategories } from '@/hooks/dashboard/useCategories.hook';
 import { useTransactions } from '@/hooks/dashboard/useTransactions.hook';
 import { useAccounts } from '@/hooks/dashboard/useAccounts.hook';
-import { AddAccountGuide } from '@/features/userGuides/AddAccountGuide';
 import { Budgets } from '../components/Budgets';
 import { Transactions } from '../components/Transactions';
 import SplitView from '../components/SplitView';
@@ -30,7 +29,6 @@ export const DashboardPage: FC<DashboardPageProps> = ({}) => {
           }
         />
       </Styled.container>
-      <AddAccountGuide />
     </>
   );
 };

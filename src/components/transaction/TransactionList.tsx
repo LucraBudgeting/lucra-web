@@ -47,7 +47,7 @@ export const TransactionList: FC<TransactionListProps> = ({ transactions }) => {
     );
   }
   return (
-    <Styled.container>
+    <Styled.container className="transaction-list">
       {Object.keys(groupedTransactions).map((date) => (
         <div key={date}>
           <Styled.dateHeader>{dayjs(date).format('MMM D, YYYY')}</Styled.dateHeader>

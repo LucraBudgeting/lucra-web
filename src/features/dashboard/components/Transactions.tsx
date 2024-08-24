@@ -68,7 +68,7 @@ export const Transactions: FC<TransactionsProps> = ({ transactions, isFetching }
         filters={filters}
         updateFilters={updateFilters}
       />
-      <Styles.listContainer>
+      <Styles.listContainer className="transaction-list-container">
         {isFetching ? (
           <LoadingComponent loadingText="Loading Transactions" />
         ) : (
@@ -90,5 +90,6 @@ const Styles = {
     width: 100%;
     overflow-y: scroll;
     overflow-x: hidden;
+    margin-right: -50rem;
   `,
 };

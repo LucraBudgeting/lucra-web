@@ -8,9 +8,8 @@ import { setAuthentication } from '@/stores/slices/Authentication.slice';
 import { Redirect } from '@/routes/redirect';
 import LocalStorageRepository from '@/utils/localStorage.repository';
 import { LoadingComponent } from '@/atoms/loading/Loading.Component';
-import { envHelper } from '@/utils/env.helper';
 import { dashboardSelector, setTransactions } from '@/stores/slices/Dashboard.slice';
-import { useUserGuide } from '@/hooks/guide/useUserGuide.hook';
+import { LucraGuides } from '@/features/userGuides/LucraGuides';
 
 interface AuthCheckProviderProps {}
 
@@ -18,7 +17,6 @@ export const AuthCheckProvider: FC<AuthCheckProviderProps> = ({}) => {
   const apis = useContext(ApiContext);
   const dispatch = useAppDispatch();
   const { isAuthenticated, user } = useAuth();
-  useUserGuide();
   const { dateRange } = dashboardSelector();
 
   const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -81,14 +79,19 @@ export const AuthCheckProvider: FC<AuthCheckProviderProps> = ({}) => {
     );
 
   //When in local environment, skip the authentication check (When saving changes to slices youll be redirected to login page even though youre authenticated due to race condition)
-  if (envHelper.isLocal) return <Outlet />;
+  // if (envHelper.isLocal) return <Outlet />;
 
   if (!isAuthenticated) {
     // LOGOUT REQUEST
     return <Redirect />;
   }
 
-  return <Outlet />;
+  return (
+    <>
+      <Outlet />
+      <LucraGuides />
+    </>
+  );
 };
 
 const LoadingContainer = styled.div`
