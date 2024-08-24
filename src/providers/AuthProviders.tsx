@@ -9,6 +9,7 @@ import { Redirect } from '@/routes/redirect';
 import LocalStorageRepository from '@/utils/localStorage.repository';
 import { LoadingComponent } from '@/atoms/loading/Loading.Component';
 import { envHelper } from '@/utils/env.helper';
+import { dashboardSelector, setTransactions } from '@/stores/slices/Dashboard.slice';
 
 interface AuthCheckProviderProps {}
 
@@ -16,10 +17,23 @@ export const AuthCheckProvider: FC<AuthCheckProviderProps> = ({}) => {
   const apis = useContext(ApiContext);
   const dispatch = useAppDispatch();
   const { isAuthenticated, user } = useAuth();
+  const { dateRange } = dashboardSelector();
 
   const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [shouldRefreshTransactions, setShouldRefreshTransactions] = useState<boolean>(false);
 
   const hasAuthToken = LocalStorageRepository.getUserToken();
+
+  useEffect(() => {
+    if (shouldRefreshTransactions) {
+      setTimeout(() => {
+        console.log('REFRESHING TRANSACTIONS');
+        apis.transactionApi.GetTransactions(dateRange.startDate, dateRange.endDate).then((data) => {
+          dispatch(setTransactions(data.transactions));
+        });
+      }, 10000);
+    }
+  }, [shouldRefreshTransactions]);
 
   useEffect(() => {
     let isMounted = true;
@@ -29,7 +43,10 @@ export const AuthCheckProvider: FC<AuthCheckProviderProps> = ({}) => {
         .then((res) => {
           if (!isMounted) return;
 
-          const { user, accessToken } = res;
+          const { user, accessToken, doesNeedSync } = res;
+          if (doesNeedSync) {
+            setShouldRefreshTransactions(true);
+          }
           dispatch(
             setAuthentication({
               userId: user.userId,
