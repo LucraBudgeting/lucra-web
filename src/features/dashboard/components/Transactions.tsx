@@ -24,27 +24,29 @@ export const Transactions: FC<TransactionsProps> = ({ transactions, isFetching }
   const [filters, setFilters] = useState(initialFilter);
 
   useEffect(() => {
-    searchTransactions(search);
+    filterTransactions();
   }, [transactions]);
 
   const searchTransactions = (search: string) => {
     setSearch(search);
+  };
 
-    if (!search) return setFilteredTransactions(transactions);
+  useEffect(() => {
+    filterTransactions();
+  }, [filters, search]);
 
-    setFilteredTransactions(
-      transactions.filter((transaction) =>
+  function filterTransactions() {
+    let filteredTransactionsLocal = [...transactions];
+    if (search) {
+      filteredTransactionsLocal = filteredTransactionsLocal.filter((transaction) =>
         transaction.name
           ? transaction.name.toLowerCase().includes(search.toLowerCase())
           : false || transaction.merchantName
             ? transaction.merchantName.toLowerCase().includes(search.toLowerCase())
             : false
-      )
-    );
-  };
+      );
+    }
 
-  useEffect(() => {
-    let filteredTransactionsLocal = [...transactions];
     if (filters.unCategorized) {
       filteredTransactionsLocal = filteredTransactionsLocal.filter(
         (transaction) => !transaction.categoryId
@@ -52,7 +54,7 @@ export const Transactions: FC<TransactionsProps> = ({ transactions, isFetching }
     }
 
     setFilteredTransactions(filteredTransactionsLocal);
-  }, [filters]);
+  }
 
   const updateFilters = (filter: transactionFilters) => {
     setFilters({ ...filters, ...filter });
