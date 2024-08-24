@@ -6,8 +6,6 @@ import colors from '@/assets/theme/colors';
 import { useUserGuide } from '@/hooks/guide/useUserGuide.hook';
 import { ApiContext } from '@/stores/contexts/api.context';
 
-const hasOnboarded = true;
-
 const steps: Step[] = [
   {
     target: '#settings_cog_budget_header_icon',
