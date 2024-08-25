@@ -6,8 +6,8 @@ import { ProfileFilled } from '@/assets/profile-filled';
 import {
   addNewCategory,
   dashboardSelector,
-  goBack1Month,
-  goForward1Month,
+  goBackDateRange,
+  goForwardDateRange,
   resetDateRange,
 } from '@/stores/slices/Dashboard.slice';
 import { getShortMonth, yearFromIso } from '@/utils/time.helper';
@@ -76,11 +76,11 @@ export const BudgetHeader: FC<BudgetHeaderProps> = ({}) => {
   }
 
   function forward1Month() {
-    dispatch(goForward1Month());
+    dispatch(goForwardDateRange());
   }
 
   function backward1Month() {
-    dispatch(goBack1Month());
+    dispatch(goBackDateRange());
   }
 
   return (

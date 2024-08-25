@@ -120,23 +120,26 @@ export const dashboardSlice = createSlice({
       state.currentRange = '1mo';
       state.dateRange = initialState.dateRange;
     },
-    goForward1Month: (state) => {
-      if (state.currentRange !== '1mo') {
-        state.currentRange = '1mo';
-        state.dateRange = initialState.dateRange;
-      }
+    goForwardDateRange: (state) => {
+      const rangeToMove = parseInt(state.currentRange.split('mo')[0]);
 
       const currentEndDate = new Date(state.dateRange.endDate);
 
-      // Calculate the next startDate as the first day of the next month
+      // Calculate the next startDate by adding the rangeToMove months
       const nextStartDate = new Date(
         currentEndDate.getFullYear(),
-        currentEndDate.getMonth() + 1,
+        currentEndDate.getMonth() + rangeToMove,
         1
       );
 
-      // Calculate the next endDate as the last day of the next month
-      const nextEndDate = new Date(currentEndDate.getFullYear(), currentEndDate.getMonth() + 2, 0);
+      // Calculate the next endDate as the last day after adding the rangeToMove months
+      const nextEndDate = new Date(
+        nextStartDate.getFullYear(),
+        nextStartDate.getMonth() + rangeToMove,
+        0
+      );
+
+      const now = new Date();
 
       // Ensure that the nextEndDate does not go into the future
       if (nextStartDate > now) {
@@ -148,28 +151,28 @@ export const dashboardSlice = createSlice({
         endDate: (nextEndDate > now ? now : nextEndDate).toISOString(),
       };
     },
-    goBack1Month: (state) => {
-      if (state.currentRange !== '1mo') {
-        state.currentRange = '1mo';
-        state.dateRange = initialState.dateRange;
-      }
+
+    goBackDateRange: (state) => {
+      const rangeToMove = parseInt(state.currentRange.split('mo')[0]);
+
       const currentStartDate = new Date(state.dateRange.startDate);
 
-      // Set the startDate to the first day of the previous month
+      // Calculate the startDate by subtracting the rangeToMove months
       const startDate = new Date(
         currentStartDate.getFullYear(),
-        currentStartDate.getMonth() - 1,
+        currentStartDate.getMonth() - rangeToMove,
         1
       );
 
-      // Set the endDate to the last day of the previous month
-      const endDate = new Date(currentStartDate.getFullYear(), currentStartDate.getMonth(), 0);
+      // Calculate the endDate as the last day of the calculated start month
+      const endDate = new Date(startDate.getFullYear(), startDate.getMonth() + rangeToMove, 0);
 
       state.dateRange = {
         startDate: startDate.toISOString(),
         endDate: endDate.toISOString(),
       };
     },
+
     updateTransactionCategory: (
       state,
       action: PayloadAction<{ id: string; categoryId?: string }>
@@ -292,8 +295,8 @@ export const {
   setTransactions,
   addNewCategory,
   updateTransactionCategory,
-  goForward1Month,
-  goBack1Month,
+  goForwardDateRange,
+  goBackDateRange,
   setNewRange,
   setBankAccounts,
   resetDateRange,
