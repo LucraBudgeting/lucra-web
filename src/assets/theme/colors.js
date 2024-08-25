@@ -73,6 +73,7 @@ const colors = {
     0: '#FFFFFF',
     50: '#FAFAFA',
     100: '#F5F5F5',
+    150: '#F1F1F1',
     200: '#E5E5E5',
     300: '#D6D6D6',
     400: '#A3A3A3',

@@ -86,8 +86,9 @@ const Styled = {
     transition: all 0.5s ease;
 
     &:hover {
-      background-color: ${colors.grey[100]};
-      box-shadow: 0px 2px 6px 0px #0000000f;
+      background-color: ${colors.grey[150]};
+      box-shadow: 0px 6px 12px 0px #0000000f;
+      border-radius: 8px;
     }
   `,
   input: styled.input<{ width: string }>`

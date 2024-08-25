@@ -22,6 +22,7 @@ const Orb = styled.div<{ $isOpen: boolean }>`
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
   font-size: 12px;
   font-weight: 400;
+  z-index: ${maxZIndex};
 
   transition:
     background-color,
