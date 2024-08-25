@@ -4,6 +4,7 @@ import colors from '@/assets/theme/colors';
 import { Button } from '@/atoms/button/Button';
 import { useOutsideClickRef } from '@/hooks/react/useOutsideClickRef';
 import { ApiContext } from '@/stores/contexts/api.context';
+import { maxZIndex } from '@/utils/domConstants';
 
 // Styled components
 const Orb = styled.div<{ $isOpen: boolean }>`
@@ -47,6 +48,7 @@ const Dialog = styled.div<{ $isOpen: boolean }>`
   flex-direction: column;
   align-items: flex-start;
   gap: 1rem;
+  z-index: ${maxZIndex};
 
   transform: ${(props) => (props.$isOpen ? 'scale(1)' : 'scale(0.5)')};
   opacity: ${(props) => (props.$isOpen ? '1' : '0')};
