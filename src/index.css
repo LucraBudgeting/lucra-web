@@ -175,8 +175,8 @@ textarea:-webkit-autofill {
 }
 
 *::-webkit-scrollbar {
-  width: 12px;
-  height: 12px;
+  width: 0px; /* Set scrollbar width to 0 */
+  height: 0px; /* Set scrollbar height to 0 */
   background-color: transparent;
 }
 
@@ -190,11 +190,11 @@ textarea:-webkit-autofill {
 }
 
 *:hover::-webkit-scrollbar-thumb {
-  background-color: #888;
+  background-color: transparent; /* Ensure thumb remains transparent on hover */
 }
 
 * {
-  scrollbar-width: thin;
+  scrollbar-width: none; /* Disable scrollbar on Firefox */
   scrollbar-color: transparent transparent;
   transition: scrollbar-color 0.1s ease;
 }

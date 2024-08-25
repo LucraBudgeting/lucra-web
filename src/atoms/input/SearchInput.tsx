@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import React, { forwardRef } from 'react';
 import styled from 'styled-components';
 import { SpyGlassOutline } from '@/assets/spyglass-outline';
 
@@ -25,7 +25,7 @@ const StyledInput = styled.input`
   padding: 8px;
 `;
 
-interface inputProps {
+interface InputProps {
   placeholder?: string;
   value?: string;
   onChange: (str: string) => void;
@@ -33,28 +33,26 @@ interface inputProps {
   showX?: boolean;
 }
 
-export const SearchInput: FC<inputProps> = ({
-  placeholder = 'Search...',
-  value,
-  onChange,
-  onXClick,
-  showX = false,
-}) => {
-  const onInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    onChange(e.target.value);
-  };
+export const SearchInput = forwardRef<HTMLInputElement, InputProps>(
+  ({ placeholder = 'Search...', value, onChange, onXClick, showX = false }, ref) => {
+    const onInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+      onChange(e.target.value);
+    };
 
-  return (
-    <Container>
-      <IconWrapper>
-        <SpyGlassOutline />
-      </IconWrapper>
-      <StyledInput placeholder={placeholder} value={value} onChange={onInputChange} />
-      {showX && (
-        <IconWrapper onClick={onXClick} style={{ cursor: 'pointer' }}>
-          X
+    return (
+      <Container>
+        <IconWrapper>
+          <SpyGlassOutline />
         </IconWrapper>
-      )}
-    </Container>
-  );
-};
+        <StyledInput ref={ref} placeholder={placeholder} value={value} onChange={onInputChange} />
+        {showX && (
+          <IconWrapper onClick={onXClick} style={{ cursor: 'pointer' }}>
+            X
+          </IconWrapper>
+        )}
+      </Container>
+    );
+  }
+);
+
+SearchInput.displayName = 'SearchInput';

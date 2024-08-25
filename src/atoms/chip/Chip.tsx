@@ -15,7 +15,7 @@ export const Chip: FC<chipProps> = ({ emoji, label, onClick }) => {
         {emoji}
       </Styled.emoji>
       <Styled.label>{label}</Styled.label>
-      <Chevron direction="down" color="#525252" />
+      <Chevron direction="up" color="#525252" />
     </Styled.chip>
   );
 };

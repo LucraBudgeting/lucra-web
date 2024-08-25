@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { TransactionList } from '@/components/transaction/TransactionList';
 import { ITransaction } from '@/types/basic/Transaction.type';
 import { LoadingComponent } from '@/atoms/loading/Loading.Component';
+import { dashboardSelector } from '@/stores/slices/Dashboard.slice';
 import { TransactionHeader } from './TransactionHeader';
 
 interface TransactionsProps {
@@ -22,6 +23,7 @@ export const Transactions: FC<TransactionsProps> = ({ transactions, isFetching }
   const [filteredTransactions, setFilteredTransactions] = useState<ITransaction[]>([]);
   const [search, setSearch] = useState('');
   const [filters, setFilters] = useState(initialFilter);
+  const { categoryDictionary } = dashboardSelector();
 
   useEffect(() => {
     filterTransactions();
@@ -38,13 +40,28 @@ export const Transactions: FC<TransactionsProps> = ({ transactions, isFetching }
   function filterTransactions() {
     let filteredTransactionsLocal = [...transactions];
     if (search) {
-      filteredTransactionsLocal = filteredTransactionsLocal.filter((transaction) =>
-        transaction.name
-          ? transaction.name.toLowerCase().includes(search.toLowerCase())
-          : false || transaction.merchantName
-            ? transaction.merchantName.toLowerCase().includes(search.toLowerCase())
-            : false
-      );
+      filteredTransactionsLocal = filteredTransactionsLocal.filter((transaction) => {
+        let isValid = false;
+        const name = transaction.name?.toLowerCase();
+        const merchantName = transaction.merchantName?.toLowerCase();
+        const searchTerm = search.toLowerCase();
+
+        if (name) {
+          isValid = name.includes(searchTerm);
+        }
+
+        if (merchantName) {
+          isValid = merchantName.includes(searchTerm);
+        }
+
+        if (transaction.categoryId) {
+          isValid = categoryDictionary[transaction.categoryId].label
+            .toLowerCase()
+            .includes(searchTerm);
+        }
+
+        return isValid;
+      });
     }
 
     if (filters.unCategorized) {

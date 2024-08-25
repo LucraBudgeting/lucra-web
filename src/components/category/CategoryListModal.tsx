@@ -107,18 +107,23 @@ export const CategoryListModal: FC<CategoryListProps> = ({
           onChange={(e) => filterCategories(e.target.value)}
         />
       </Styled.searchContainer>
-      <Styled.categoryConatainer>
-        {incomeList.length > 0 && <Styled.title>Income</Styled.title>}
-        {incomeList.map((income) => (
-          <CategoryItem key={income.id} {...income} categoryClickCb={categoryClick} />
-        ))}
-      </Styled.categoryConatainer>
-      <Styled.categoryConatainer>
-        {expenseList.length > 0 && <Styled.title>Expense</Styled.title>}
-        {expenseList.map((expense) => (
-          <CategoryItem key={expense.id} {...expense} categoryClickCb={categoryClick} />
-        ))}
-      </Styled.categoryConatainer>
+      {!!incomeList.length && (
+        <Styled.categoryConatainer>
+          <Styled.title id="income-category-title">Income</Styled.title>
+          {incomeList.map((income) => (
+            <CategoryItem key={income.id} {...income} categoryClickCb={categoryClick} />
+          ))}
+        </Styled.categoryConatainer>
+      )}
+      {!!expenseList.length && (
+        <Styled.categoryConatainer>
+          <Styled.title id="expense-category-title">Expense</Styled.title>
+          {expenseList.map((expense) => (
+            <CategoryItem key={expense.id} {...expense} categoryClickCb={categoryClick} />
+          ))}
+        </Styled.categoryConatainer>
+      )}
+      {!!(!expenseList.length && !incomeList.length) && <p>No Categories</p>}
       <Styled.categoryConatainer>
         <Styled.title>Transfer</Styled.title>
         <CategoryItem
@@ -129,7 +134,6 @@ export const CategoryListModal: FC<CategoryListProps> = ({
           categoryClickCb={setAsTransfer}
         />
       </Styled.categoryConatainer>
-      {/* <Styled.title>Transfer</Styled.title> */}
       <Styled.fixedContainer>
         {currentCategoryId && (
           <FixedCategoryItem
@@ -147,19 +151,19 @@ export const CategoryListModal: FC<CategoryListProps> = ({
 
 const Styled = {
   container: styled.div`
-    position: relative;
     display: flex;
     width: 250px;
     max-height: 500px;
     padding: 20px;
     flex-direction: column;
     align-items: flex-start;
-    gap: 24px;
+    gap: 12px;
     border-radius: 16px;
-    border: 1px solid var(--Grey-Stroke, #e2e2e2);
-    background: var(--Grey-White, #fff);
+    border: 1px solid ${colors.grey[300]};
+    background: ${colors.white.main};
     overflow: auto;
     box-shadow: 0px 2px 8px -1px rgba(0, 0, 0, 0.1);
+    color: ${colors.grey[700]};
   `,
   categoryConatainer: styled.div`
     display: flex;
@@ -167,34 +171,28 @@ const Styled = {
     width: 100%;
   `,
   fixedContainer: styled.div`
+    position: relative;
     display: flex;
     flex-direction: column;
-    width: 100%;
+    width: calc(100% + 40px);
+    margin-left: -20px;
+    padding: 0 20px;
+    padding-top: 10px;
     border-top: 1px solid ${colors.grey[300]};
-
-    /* & > div:not(:last-child) {
-      border-bottom: 1px solid #ccc;
-      border-top: 1px solid #ccc;
-      padding-bottom: 10px;
-    }
-
-    div {
-      padding-top: 10px;
-    } */
   `,
   title: styled.h1`
-    color: ${colors.grey[500]};
+    color: ${colors.grey[700]};
     font-size: 16px;
     font-weight: 500;
     line-height: 20px;
+    margin-bottom: 4px;
   `,
   searchContainer: styled.div`
     display: flex;
     align-items: center;
     width: 100%;
-    background: #f0f0f0;
+    background: transparent;
     border-bottom: 1px solid #ddd;
-    border-radius: 5px;
     background: transparent;
   `,
   searchInput: styled.input`

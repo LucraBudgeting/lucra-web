@@ -1,4 +1,4 @@
-import { FC, useState } from 'react';
+import { FC, useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import { useAutoAnimate } from '@formkit/auto-animate/react';
 import { FilterIcon } from '@/assets/filter-icon';
@@ -27,11 +27,21 @@ export const TransactionHeader: FC<TransactionHeaderProps> = ({
   filters,
   updateFilters,
 }) => {
+  const searchInputRef = useRef<HTMLInputElement>(null);
   const [secondarySpaceRef] = useAutoAnimate();
 
   const [isAddOpen, setIsAddOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
+
+  useEffect(() => {
+    //AUTO FOCUS SEARCH WHEN RENDERED
+    if (isSearchOpen && searchInputRef.current) {
+      searchInputRef.current.focus();
+    }
+  }, [searchInputRef, isSearchOpen]);
+
   function toggleSearch() {
+    onSearchChange('');
     setIsSearchOpen(!isSearchOpen);
   }
 
@@ -76,6 +86,7 @@ export const TransactionHeader: FC<TransactionHeaderProps> = ({
             onXClick={toggleSearch}
             onChange={onSearchChange}
             value={searchValue}
+            ref={searchInputRef}
           />
         )}
       </span>

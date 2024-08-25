@@ -29,16 +29,22 @@ export const BaseSelect: FC<BaseSelectProps> = (props) => {
   return (
     <Styles.container size={sz}>
       <Styles.select onChange={onChange} value={value ?? ''}>
-        {options?.map((option, i) => <BaseOption baseOption={option} key={i} />)}
+        {options?.map((option, i) => (
+          <BaseOption key={`option-${i}`} baseOption={option} iKey={`option-${i}`} />
+        ))}
         {groups?.map((group, i) => {
           return group.label ? (
-            <optgroup label={group.label} key={i}>
+            <optgroup label={group.label} key={`group-${i}`}>
               {group.options.map((option, j) => (
-                <BaseOption baseOption={option} key={j} />
+                <BaseOption key={`group-option-${i}-${j}`} baseOption={option} />
               ))}
             </optgroup>
           ) : (
-            <BaseOption baseOption={group.options[0]} />
+            <BaseOption
+              key={`group-no-label-${i}`}
+              baseOption={group.options[0]}
+              iKey={`group-no-label-${i}`}
+            />
           );
         })}
       </Styles.select>
@@ -49,9 +55,9 @@ export const BaseSelect: FC<BaseSelectProps> = (props) => {
   );
 };
 
-export const BaseOption: FC<{ baseOption: ISelectOption; key?: number | string }> = ({
+export const BaseOption: FC<{ baseOption: ISelectOption; iKey?: number | string }> = ({
   baseOption,
-  key,
+  iKey: key,
 }) => {
   return (
     <option value={baseOption.value ? baseOption.value : '0'} key={key}>

@@ -1,6 +1,5 @@
 import { FC } from 'react';
 import styled from 'styled-components';
-import colors from '@/assets/theme/colors';
 import { ICategory } from '@/types/basic/Category.type';
 
 interface FixedCategoryItemProps extends ICategory {
@@ -23,7 +22,6 @@ export const FixedCategoryItem: FC<FixedCategoryItemProps> = ({
 
 const Styled = {
   container: styled.div`
-    /* border: 1px solid ${colors.grey[300]}; */
     display: flex;
     width: 100%;
     align-items: center;
