@@ -20,4 +20,5 @@ export interface DialogProps<T = any> {
   height?: string;
   closeText?: string;
   nextText?: string;
+  showBackground?: boolean;
 }

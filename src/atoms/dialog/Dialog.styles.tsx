@@ -3,7 +3,7 @@ import { maxZIndex } from '@/utils/domConstants';
 import colors from '@/assets/theme/colors';
 
 export const Styled = {
-  overlay: styled.div`
+  overlay: styled.div<{ $showBackground?: boolean }>`
     position: fixed;
     top: 0;
     left: 0;
@@ -12,7 +12,7 @@ export const Styled = {
     display: flex;
     justify-content: center;
     align-items: center;
-    background: rgba(0, 0, 0, 0.65);
+    background: ${(props) => (props.$showBackground ? 'transparent' : 'rgba(0, 0, 0, 0.25)')};
     z-index: ${maxZIndex};
   `,
   dialog: styled.div<{ width: string }>`

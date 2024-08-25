@@ -31,6 +31,7 @@ export const DialogContainer: FC<DiaglogContainerProps> = ({
   width = '540px',
   height = 'auto',
   forwardRef,
+  showBackground,
 }) => {
   const closeDialog = () => {
     if (closeCb) {
@@ -62,7 +63,7 @@ export const DialogContainer: FC<DiaglogContainerProps> = ({
   };
 
   return (
-    <Styled.overlay onClick={overLayClick} id="dialog-overlay">
+    <Styled.overlay onClick={overLayClick} id="dialog-overlay" $showBackground={showBackground}>
       <Styled.dialog ref={forwardRef} onClick={dialogClick} width={width} id="dialog-container">
         {enableHeader && (
           <Styled.header id="dialog-header">
