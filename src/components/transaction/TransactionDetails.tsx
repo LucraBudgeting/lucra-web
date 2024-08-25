@@ -84,7 +84,7 @@ export const TransactionDetails: FC<TransactionDetailsProps> = (props) => {
       {...props}
       enableHeader={true}
       enableFooter={true}
-      headerText={transaction?.merchantName || 'Transaction Details'}
+      headerText={transaction?.merchantName || transaction?.name || 'Transaction Details'}
       successCb={saveTransaction}
       closeCb={props.closeCb}
     >
