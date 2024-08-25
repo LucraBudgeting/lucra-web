@@ -1,8 +1,8 @@
 import { FC, useEffect, useState } from 'react';
 import { ICategoriesSplit } from '@/hooks/dashboard/useCategories.hook';
-import { Chevron } from '@/assets/chevron';
 import { dashboardSelector } from '@/stores/slices/Dashboard.slice';
 import { formatAsMoney } from '@/utils/formatAsMoney';
+import { SideArrowFilledIcon } from '@/assets/side-arrow-filled-icon';
 import { AddBudgetRow } from '../AddBudgetRow';
 import { BudgetItem } from '../BudgetItem';
 import { Styles } from './Styles';
@@ -99,10 +99,10 @@ export const BudgetAggregateTable: FC<BudgetAggregateTableProps> = ({ categories
       </Styles.headerContainer>
       <Styles.budgetsContainer>
         <Styles.budgetSection>
-          <Styles.sectionHeader onClick={toggleIncomeCollapse}>
+          <Styles.sectionHeader $isFirst={true} onClick={toggleIncomeCollapse}>
             <p className="section-title">
+              <SideArrowFilledIcon direction={isIncomeCollapsed ? 'right' : 'down'} />
               Income
-              <Chevron direction={isIncomeCollapsed ? 'up' : 'down'} />
             </p>
             <Styles.sectionTotalsContainer>
               <Styles.sectionTotal>{formatAsMoney(incomeTotals.total)}</Styles.sectionTotal>
@@ -125,8 +125,8 @@ export const BudgetAggregateTable: FC<BudgetAggregateTableProps> = ({ categories
         <Styles.budgetSection>
           <Styles.sectionHeader onClick={toggleExpenseCollapse}>
             <p className="section-title">
+              <SideArrowFilledIcon direction={isExpenseCollapsed ? 'right' : 'down'} />
               Expense
-              <Chevron direction={isExpenseCollapsed ? 'up' : 'down'} />
             </p>
             <Styles.sectionTotalsContainer>
               <Styles.sectionTotal>{formatAsMoney(expenseTotals.total)}</Styles.sectionTotal>

@@ -95,7 +95,7 @@ const Styled = {
     padding: ${(props) => {
       switch (props.type) {
         case 'empty':
-          return '8px 10px';
+          return '12px 10px';
       }
       switch (props.size) {
         case 'large':

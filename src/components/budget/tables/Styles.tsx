@@ -41,10 +41,13 @@ export const Styles = {
     background-color: ${colors.light.main};
     padding: 0;
   `,
-  sectionHeader: styled.div`
-    padding-top: 2rem;
+  sectionHeader: styled.div<{ $isFirst?: boolean }>`
+    position: sticky;
+    top: ${(props) => (props.$isFirst ? '0' : '0')};
+    z-index: ${(props) => (props.$isFirst ? 9 : 8)};
+    background-color: ${colors.grey[100]};
+    padding-top: 1rem;
     padding-bottom: 1rem;
-    margin-bottom: 1rem;
     display: flex;
     justify-content: space-between;
 
@@ -53,9 +56,13 @@ export const Styles = {
 
     .section-title {
       user-select: none;
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      gap: 8px;
 
       svg {
-        margin-left: 1rem;
+        margin-left: 2px;
       }
     }
 
@@ -63,12 +70,7 @@ export const Styles = {
       font-size: 18px;
       font-weight: 600;
       line-height: 22px;
-      text-align: left;
       cursor: pointer;
-      display: flex;
-      justify-content: flex-start;
-      align-items: center;
-      gap: 8px;
     }
   `,
   sectionTotalsContainer: styled.div`
@@ -97,6 +99,11 @@ export const Styles = {
   headerContainer: styled.div`
     display: flex;
     justify-content: space-between;
+    background-color: ${colors.grey[100]};
+    z-index: 10;
+
+    position: sticky;
+    top: 0;
 
     user-select: none;
 

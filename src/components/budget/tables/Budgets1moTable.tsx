@@ -107,7 +107,7 @@ export const Budgets1moTable: FC<BudgetsTableProps> = ({ categories }) => {
       </Styles.headerContainer>
       <Styles.budgetsContainer ref={budgetsContainerRef}>
         <Styles.budgetSection>
-          <Styles.sectionHeader onClick={toggleIncomeCollapse}>
+          <Styles.sectionHeader $isFirst={true} onClick={toggleIncomeCollapse}>
             <p className="section-title">
               <SideArrowFilledIcon direction={isIncomeCollapsed ? 'right' : 'down'} />
               Income

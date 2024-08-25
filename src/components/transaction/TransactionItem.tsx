@@ -28,6 +28,12 @@ const Styled = {
     border-bottom: ${(props) =>
       props.$isLast === 'true' ? 'none' : `1px solid ${colors.grey[300]}`};
     cursor: pointer;
+    transition: all 0.5s ease;
+
+    &:hover {
+      background-color: ${colors.grey[200]};
+      box-shadow: 0px 2px 6px 0px #0000000f;
+    }
   `,
   title: styled.h3`
     margin-bottom: 8px;

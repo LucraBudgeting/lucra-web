@@ -30,7 +30,7 @@ export const SideArrowFilledIcon: FC<SideArrowFilledIconProps> = ({ onClick, dir
       viewBox="0 0 7 10"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
-      style={{ transform: `rotate(${rotate}deg)` }}
+      style={{ transform: `rotate(${rotate}deg)`, transition: 'transform 0.3s ease' }}
     >
       <path
         d="M0.328411 5.744C-0.114011 5.34666 -0.114011 4.65334 0.328411 4.256L4.58182 0.436019C5.22558 -0.142142 6.25 0.314742 6.25 1.18002L6.25 8.81999C6.25 9.68526 5.22558 10.1421 4.58182 9.56398L0.328411 5.744Z"

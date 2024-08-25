@@ -74,6 +74,13 @@ const Styled = {
     height: 60px;
     border-bottom: solid 1px #ccc;
     cursor: pointer;
+    padding-left: 4px;
+    transition: all 0.5s ease;
+
+    &:hover {
+      background-color: ${colors.grey[100]};
+      box-shadow: 0px 2px 6px 0px #0000000f;
+    }
   `,
   input: styled.input<{ width: string }>`
     border: 1px solid #ccc;
@@ -115,9 +122,7 @@ const Styled = {
   remainingCell: styled.div<{ $isGood: boolean; $isZero: boolean }>`
     p {
       color: ${(props) => {
-        console.log(props);
         if (props.$isZero) return colors.grey[800];
-        console.log('asdasd', props);
         return props.$isGood ? colors.success.main : colors.error.main;
       }};
       background-color: ${(props) => {

@@ -20,10 +20,12 @@ const Styled = {
     display: flex;
     align-items: center;
     justify-content: flex-start;
-    background-color: ${colors.grey[200]};
+    background-color: ${colors.grey[300]};
     color: ${colors.grey[600]};
     font-size: 12px;
     padding-left: 1rem;
+    position: sticky;
+    top: 0;
   `,
   noTransactionContainer: styled.div`
     flex: 1;
