@@ -3,7 +3,7 @@ import { FC, useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { BaseInput, Error } from '@/atoms/input/BaseInput';
 import { LoadingComponent } from '@/atoms/loading/Loading.Component';
-import { authRoutes } from '@/routes/RouteConstants';
+import { authRoutes, homeRoute } from '@/routes/RouteConstants';
 import { ApiContext } from '@/stores/contexts/api.context';
 import localStorageRepository from '@/utils/localStorage.repository';
 import * as Styles from '../auth.styles';
@@ -27,29 +27,63 @@ export const RegisterV2: FC<RegisterV2Props> = ({}) => {
   const [registrationError, setRegistrationError] = useState<string>('');
   const [passwordErrors, setPasswordErrors] = useState<string[]>([]);
   const [isAuthorizing, setIsAuthorizing] = useState<boolean>(false);
-  const [isRegisterDisabled, setIsRegisterDisabled] = useState<boolean>(true);
+  const isRegisterDisabled =
+    !name ||
+    !email ||
+    !password ||
+    !confirmPassword ||
+    nameErrors.length > 0 ||
+    emailErrors.length > 0 ||
+    passwordErrors.length > 0 ||
+    confirmPasswordErrors.length > 0;
 
   function redirectToLogin() {
     navigate(authRoutes.login);
   }
 
+  function validateNameField(value: string) {
+    const errors = [];
+    if (!value) {
+      errors.push('Name is required');
+    }
+    setNameErrors(errors);
+  }
+
+  function validateEmailField(value: string) {
+    const errors = validateEmail(value);
+    setEmailErrors(errors);
+  }
+
+  function validatePasswordField(value: string) {
+    const errors = validatePassword(value);
+    setPasswordErrors(errors);
+  }
+
+  function validateConfirmPasswordField(value: string) {
+    const errors = validatePassword(value);
+    if (password !== value) {
+      errors.push('Passwords do not match');
+    }
+    setConfirmPasswordErrors(errors);
+  }
+
   function onNameChange(e: React.ChangeEvent<HTMLInputElement>) {
-    setName(e.target.value);
+    const value = e.target.value;
+    setName(value);
+    validateNameField(value);
+    validateRegistrationForm();
   }
 
   function onNameBlur() {
-    const errors = [];
-
-    if (!name) {
-      errors.push('Name is required');
-    }
-
-    setNameErrors(errors);
+    validateNameField(name);
     validateRegistrationForm();
   }
 
   function onEmailChange(e: React.ChangeEvent<HTMLInputElement>) {
-    setEmail(e.target.value);
+    const value = e.target.value;
+    setEmail(value);
+    validateEmailField(value);
+    validateRegistrationForm();
   }
 
   function onEmailBlur() {
@@ -69,45 +103,29 @@ export const RegisterV2: FC<RegisterV2Props> = ({}) => {
         .finally(() => {
           blurActions(errors);
         });
+    } else {
+      blurActions(errors);
     }
   }
 
   function onPasswordChange(e: React.ChangeEvent<HTMLInputElement>) {
-    setPassword(e.target.value);
+    const value = e.target.value;
+    setPassword(value);
+    validatePasswordField(value);
   }
 
   function onPasswordBlur() {
-    const errors = validatePassword(password);
-    setPasswordErrors(errors);
-    validateRegistrationForm();
+    validatePasswordField(password);
   }
 
   function onConfirmPasswordChange(e: React.ChangeEvent<HTMLInputElement>) {
-    setConfirmPassword(e.target.value);
+    const value = e.target.value;
+    setConfirmPassword(value);
+    validateConfirmPasswordField(value);
   }
 
   function onConfirmPasswordBlur() {
-    const errors = validatePassword(confirmPassword);
-
-    if (password !== confirmPassword) {
-      errors.push('Passwords do not match');
-    }
-
-    setConfirmPasswordErrors(errors);
-    validateRegistrationForm();
-  }
-
-  function validateRegistrationForm() {
-    setIsRegisterDisabled(
-      !name ||
-        !email ||
-        !password ||
-        !confirmPassword ||
-        nameErrors.length > 0 ||
-        emailErrors.length > 0 ||
-        passwordErrors.length > 0 ||
-        confirmPasswordErrors.length > 0
-    );
+    validateConfirmPasswordField(confirmPassword);
   }
 
   function submitRegister() {
@@ -121,7 +139,12 @@ export const RegisterV2: FC<RegisterV2Props> = ({}) => {
       .createAccount(email, name, password)
       .then((res) => {
         localStorageRepository.setUserToken(res.token);
-        location.href = res.checkoutUrl;
+
+        if (res.checkoutUrl) {
+          location.href = res.checkoutUrl;
+        } else {
+          navigate(homeRoute);
+        }
       })
       .catch((res) => {
         setRegistrationError(res.message);
