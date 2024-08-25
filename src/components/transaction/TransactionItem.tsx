@@ -42,7 +42,7 @@ const Styled = {
   amount: styled.p<{ $amount: number }>`
     font-weight: 600;
     color: ${(props) => (props.$amount > 0 ? colors.success.main : colors.black.main)};
-    font-size: 16px;
+    font-size: 14px;
   `,
   descriptionContainer: styled.div`
     display: flex;

@@ -21,4 +21,5 @@ export interface DialogProps<T = any> {
   closeText?: string;
   nextText?: string;
   showBackground?: boolean;
+  closeOnEscape?: boolean;
 }

@@ -42,7 +42,7 @@ export const ViewBudgetDialog: FC<ViewBudgetDialogProps> = (props) => {
   const remaining = calcRemaining(amount, actual);
   const isRemainingGood = calcIsRemainingGood(amount, actual, budgetType);
 
-  const headerLabel = isEditEnabled ? 'Edit category' : avatar.emoji + label;
+  const headerLabel = isEditEnabled ? 'Edit category' : avatar.emoji + ' ' + label;
 
   const ref = useOutsideClickRef(closeCb);
 

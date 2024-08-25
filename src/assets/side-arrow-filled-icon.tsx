@@ -1,12 +1,27 @@
 import { FC } from 'react';
 
 interface SideArrowFilledIconProps {
-  direction?: 'right' | 'left';
+  direction?: 'right' | 'left' | 'up' | 'down';
   onClick?: () => void;
 }
 
 export const SideArrowFilledIcon: FC<SideArrowFilledIconProps> = ({ onClick, direction }) => {
-  const rotate = direction === 'right' ? 180 : 0;
+  let rotate = 0;
+
+  switch (direction) {
+    case 'right':
+      rotate = 180;
+      break;
+    case 'left':
+      rotate = 0;
+      break;
+    case 'up':
+      rotate = 90;
+      break;
+    case 'down':
+      rotate = 270;
+      break;
+  }
   return (
     <svg
       onClick={onClick}

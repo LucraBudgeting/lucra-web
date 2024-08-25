@@ -53,7 +53,6 @@ export const CategoryListModal: FC<CategoryListProps> = ({
       setModalStyle({
         position: 'absolute',
         top,
-        // left,
         maxHeight: `${modalHeight}px`,
         zIndex: maxZIndex + 1,
       });
@@ -123,7 +122,7 @@ export const CategoryListModal: FC<CategoryListProps> = ({
           ))}
         </Styled.categoryConatainer>
       )}
-      {!!(!expenseList.length && !incomeList.length) && <p>No Categories</p>}
+      {!!(!expenseList.length && !incomeList.length) && <p>No results</p>}
       <Styled.categoryConatainer>
         <Styled.title>Transfer</Styled.title>
         <CategoryItem

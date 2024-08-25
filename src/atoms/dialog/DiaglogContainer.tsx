@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, useEffect } from 'react';
 import { EditIcon } from '@/assets/edit-icon';
 import { CrossIcon } from '@/assets/cross-icon';
 import { Button } from '../button/Button';
@@ -32,6 +32,7 @@ export const DialogContainer: FC<DiaglogContainerProps> = ({
   height = 'auto',
   forwardRef,
   showBackground,
+  closeOnEscape = true,
 }) => {
   const closeDialog = () => {
     if (closeCb) {
@@ -61,6 +62,24 @@ export const DialogContainer: FC<DiaglogContainerProps> = ({
   const dialogClick = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     e.stopPropagation();
   };
+
+  useEffect(() => {
+    if (!closeOnEscape) {
+      return;
+    }
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        closeDialog();
+      }
+    };
+
+    document.addEventListener('keydown', handleKeyDown);
+
+    return () => {
+      document.removeEventListener('keydown', handleKeyDown);
+    };
+  }, []);
 
   return (
     <Styled.overlay onClick={overLayClick} id="dialog-overlay" $showBackground={showBackground}>

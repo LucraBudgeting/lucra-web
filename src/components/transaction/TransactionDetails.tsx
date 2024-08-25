@@ -160,7 +160,6 @@ const Styled = {
     flex-direction: column;
     width: 100%;
     gap: 2rem;
-    margin-top: -2rem;
     margin-bottom: 2rem;
   `,
   header: styled.div`

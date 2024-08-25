@@ -50,7 +50,10 @@ export const BudgetItem: FC<BudgetItemProps> = ({ category }) => {
           {isAggregate && category.id ? (
             <Styled.amountCell>{formatAsMoney(budgetAverage[category.id] || 0)}</Styled.amountCell>
           ) : (
-            <Styled.remainingCell $isGood={isRemainingGood ? 'true' : 'false'}>
+            <Styled.remainingCell
+              $isGood={isRemainingGood}
+              $isZero={remaining === 0 || isNaN(remaining)}
+            >
               <p>{formatAsMoney(remaining)}</p>
             </Styled.remainingCell>
           )}
@@ -109,11 +112,19 @@ const Styled = {
       max-width: 70%;
     }
   `,
-  remainingCell: styled.div<{ $isGood: string }>`
+  remainingCell: styled.div<{ $isGood: boolean; $isZero: boolean }>`
     p {
-      color: ${(props) => (props.$isGood == 'true' ? colors.success.main : colors.error.main)};
-      background-color: ${(props) =>
-        props.$isGood == 'true' ? colors.success.focus : colors.error.focus};
+      color: ${(props) => {
+        console.log(props);
+        if (props.$isZero) return colors.grey[800];
+        console.log('asdasd', props);
+        return props.$isGood ? colors.success.main : colors.error.main;
+      }};
+      background-color: ${(props) => {
+        console.log(props);
+        if (props.$isZero) return colors.grey[300];
+        return props.$isGood ? colors.success.focus : colors.error.focus;
+      }};
       width: fit-content;
       padding: 6px 10px;
       border-radius: 30px;

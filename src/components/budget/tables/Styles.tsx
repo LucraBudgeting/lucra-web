@@ -63,7 +63,12 @@ export const Styles = {
       font-size: 18px;
       font-weight: 600;
       line-height: 22px;
+      text-align: left;
       cursor: pointer;
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      gap: 8px;
     }
   `,
   sectionTotalsContainer: styled.div`

@@ -10,8 +10,8 @@ export default {
     padding: 6px 12px;
     cursor: pointer;
     transition:
-      background-color 0.5s ease-in-out,
-      border 0.5s ease-in-out,
+      background-color,
+      border,
       border-radius 0.25s ease-in-out;
     background-color: transparent;
     border-radius: 16px;

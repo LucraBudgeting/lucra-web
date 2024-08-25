@@ -23,8 +23,8 @@ const Styled = {
   label: styled.label`
     position: relative;
     display: inline-block;
-    width: 60px;
-    height: 34px;
+    width: 36px;
+    height: 20px;
 
     input {
       opacity: 0;
@@ -59,10 +59,10 @@ const Styled = {
     .slider:before {
       position: absolute;
       content: '';
-      height: 26px;
-      width: 26px;
-      left: 4px;
-      bottom: 4px;
+      height: 16px;
+      width: 16px;
+      left: 3px;
+      bottom: 2px;
       background-color: white;
       -webkit-transition: 0.4s;
       transition: 0.4s;
@@ -77,14 +77,14 @@ const Styled = {
     }
 
     input:checked + .slider:before {
-      -webkit-transform: translateX(26px);
-      -ms-transform: translateX(26px);
-      transform: translateX(26px);
+      -webkit-transform: translateX(15px);
+      -ms-transform: translateX(15px);
+      transform: translateX(15px);
     }
 
     /* Rounded sliders */
     .slider.round {
-      border-radius: 34px;
+      border-radius: 30px;
     }
 
     .slider.round:before {

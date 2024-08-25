@@ -80,6 +80,7 @@ export const OrbWithFeedback: React.FC = () => {
   const orbRef = useRef<HTMLDivElement>(null);
   const { userFeedbackApi } = useContext(ApiContext);
   const [isOpen, setIsOpen] = useState(false);
+  const [isRendered, setIsRendered] = useState(isOpen);
   const [isSubmittingFeedback, setIsSubmittingFeedback] = useState(false);
   const [feedback, setFeedback] = useState('');
   const [hasFeedbackBeenSubmitted, setHasFeedbackBeenSubmitted] = useState(false);
@@ -88,8 +89,15 @@ export const OrbWithFeedback: React.FC = () => {
     if (e) {
       e.stopPropagation();
     }
-    setIsOpen(!isOpen);
-    setHasFeedbackBeenSubmitted(false);
+    if (isOpen) {
+      // Closing: Start transition, then set isRendered to false after the transition duration
+      setIsOpen(false);
+      setTimeout(() => setIsRendered(false), 300); // Match this duration to your transition duration
+    } else {
+      // Opening: Set isRendered to true, then start transition
+      setIsRendered(true);
+      setTimeout(() => setIsOpen(true), 10); // Slight delay to ensure render before transition
+    }
   };
 
   function handleOutsideClick() {
@@ -113,24 +121,26 @@ export const OrbWithFeedback: React.FC = () => {
       <Orb ref={orbRef} $isOpen={isOpen} onClick={handleToggle}>
         Leave feedback
       </Orb>
-      <Dialog ref={dialogRef} $isOpen={isOpen}>
-        <h1 style={{ userSelect: 'none' }}>Leave Feedback</h1>
-        <Content>
-          Tell us about your experience with Lucra!
-          <br />
-          Let us know what you like, don’t like, or what features you would like to see in the
-          future.
-        </Content>
-        <FeedbackTextArea
-          placeholder="Enter feedback..."
-          value={feedback}
-          onChange={(e) => setFeedback(e.target.value)}
-        />
-        <Button onClick={submitFeedback} disabled={isSubmittingFeedback || !feedback}>
-          {isSubmittingFeedback ? 'Submitting' : 'Submit'}
-        </Button>
-        {hasFeedbackBeenSubmitted && <p>Thank you for your feedback!</p>}
-      </Dialog>
+      {isRendered && (
+        <Dialog ref={dialogRef} $isOpen={isOpen}>
+          <h1 style={{ userSelect: 'none' }}>Leave Feedback</h1>
+          <Content>
+            Tell us about your experience with Lucra!
+            <br />
+            Let us know what you like, don’t like, or what features you would like to see in the
+            future.
+          </Content>
+          <FeedbackTextArea
+            placeholder="Enter feedback..."
+            value={feedback}
+            onChange={(e) => setFeedback(e.target.value)}
+          />
+          <Button onClick={submitFeedback} disabled={isSubmittingFeedback || !feedback}>
+            {isSubmittingFeedback ? 'Submitting' : 'Submit'}
+          </Button>
+          {hasFeedbackBeenSubmitted && <p>Thank you for your feedback!</p>}
+        </Dialog>
+      )}
     </>
   );
 };

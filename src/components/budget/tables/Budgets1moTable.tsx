@@ -2,10 +2,10 @@ import { FC, useEffect, useState } from 'react';
 import { useAutoAnimate } from '@formkit/auto-animate/react';
 import { BudgetItem } from '@/components/budget/BudgetItem';
 import { ICategoriesSplit } from '@/hooks/dashboard/useCategories.hook';
-import { Chevron } from '@/assets/chevron';
 import { dashboardSelector } from '@/stores/slices/Dashboard.slice';
 import { calcIsRemainingGood } from '@/components/budget/budgetCalculator';
 import { formatAsMoney } from '@/utils/formatAsMoney';
+import { SideArrowFilledIcon } from '@/assets/side-arrow-filled-icon';
 import { AddBudgetRow } from '../AddBudgetRow';
 import { Styles } from './Styles';
 import { NetRow } from './NetRow';
@@ -109,8 +109,8 @@ export const Budgets1moTable: FC<BudgetsTableProps> = ({ categories }) => {
         <Styles.budgetSection>
           <Styles.sectionHeader onClick={toggleIncomeCollapse}>
             <p className="section-title">
+              <SideArrowFilledIcon direction={isIncomeCollapsed ? 'right' : 'down'} />
               Income
-              <Chevron direction={isIncomeCollapsed ? 'up' : 'down'} />
             </p>
             <Styles.sectionTotalsContainer>
               <Styles.sectionTotal>{formatAsMoney(incomeTotals.budget)}</Styles.sectionTotal>
@@ -136,8 +136,8 @@ export const Budgets1moTable: FC<BudgetsTableProps> = ({ categories }) => {
         <Styles.budgetSection>
           <Styles.sectionHeader onClick={toggleExpenseCollapse}>
             <p className="section-title">
+              <SideArrowFilledIcon direction={isExpenseCollapsed ? 'right' : 'down'} />
               Expenses
-              <Chevron direction={isExpenseCollapsed ? 'up' : 'down'} />
             </p>
             <Styles.sectionTotalsContainer>
               <Styles.sectionTotal>{formatAsMoney(expenseTotals.budget)}</Styles.sectionTotal>
