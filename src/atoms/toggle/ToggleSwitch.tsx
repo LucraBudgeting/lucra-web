@@ -59,6 +59,7 @@ const Styled = {
     color: black;
     padding: 4px;
     gap: 0;
+    width: 100%;
   `,
   marker: styled.div<{ width: string }>`
     position: absolute;

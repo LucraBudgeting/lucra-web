@@ -46,6 +46,7 @@ const Styled = {
     align-items: center;
     justify-content: center;
     gap: 16px;
+    width: 100%;
   `,
   section: styled.section<{ type?: 'warning' | 'success' }>`
     flex: 1;
@@ -74,10 +75,11 @@ const Styled = {
     ${inputStyles}
   `,
   sectionItem: styled.div`
-    /* height: 75px; */
     display: flex;
+    width: 100%;
     align-items: center;
     justify-content: center;
+    margin-top: 1rem;
   `,
 };
 
