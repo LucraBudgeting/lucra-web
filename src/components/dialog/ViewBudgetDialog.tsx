@@ -144,7 +144,8 @@ export const ViewBudgetDialog: FC<ViewBudgetDialogProps> = (props) => {
               <h3>{formatAsMoney(remaining, true)}</h3>
             </Styles.remainingInfoBlock>
           </Styles.detailsContainer>
-          <Styles.transactionListContainer>
+          <Styles.transactionListContainer id="dialog-list-container">
+            <h2>Transactions</h2>
             {isTransactionsFetching && <LoadingComponent />}
             {!isTransactionsFetching && transactions.length === 0 && <div>No transactions</div>}
             {!isTransactionsFetching && transactions.length > 0 && (
@@ -171,11 +172,17 @@ const baseInfoBlockStyles = css`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: #f9f9f9;
-  height: 3rem;
   padding: 0.6rem;
   border-radius: 0.8rem;
   margin: 0;
+
+  h2 {
+    color: ${colors.grey[700]};
+  }
+
+  h3 {
+    font-weight: 600;
+  }
 `;
 
 const Styles = {
@@ -196,9 +203,13 @@ const Styles = {
     width: 100%;
     padding: 12px;
     margin-bottom: 1rem;
+    background-color: ${colors.grey[100]};
+    padding: 0.6rem;
+    border-radius: 0.8rem;
+    margin-top: 1rem;
 
     hr {
-      border: 2px solid #e8e8e8;
+      border: 1px solid ${colors.black.light};
       border-radius: 2px;
       width: 100%;
     }
@@ -208,20 +219,32 @@ const Styles = {
   `,
   remainingInfoBlock: styled.div<{ $isGood: string }>`
     ${baseInfoBlockStyles}
-    background-color: ${(props) =>
-      props.$isGood === 'true' ? colors.success.focus : colors.error.focus};
 
     h3,
     h2 {
       color: ${(props) =>
         props.$isGood === 'true' ? colors.success.main : colors.error.main} !important;
     }
+
+    h3 {
+      background-color: ${(props) =>
+        props.$isGood === 'true' ? colors.success.focus : colors.error.focus} !important;
+      border-radius: 30px;
+      padding: 6px 10px;
+    }
   `,
   transactionListContainer: styled.div`
     position: relative;
     max-height: 40vh;
-    width: 100%;
     overflow-y: auto;
     overflow-x: hidden;
+    width: calc(100% + 60px);
+
+    h2 {
+      font-size: 16px;
+      font-weight: 600;
+      color: ${colors.black.main};
+      margin: 1rem;
+    }
   `,
 };

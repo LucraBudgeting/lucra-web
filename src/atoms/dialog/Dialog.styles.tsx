@@ -91,6 +91,8 @@ export const Styled = {
     overflow-y: auto;
     padding-top: 1rem;
     width: calc(100% - 60px);
+    /* width: 100%; */
+    padding: 0 30px;
     height: ${({ height }) => height};
     overflow-x: hidden;
   `,

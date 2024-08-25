@@ -19,6 +19,8 @@ const Orb = styled.div<{ $isOpen: boolean }>`
   align-items: center;
   cursor: pointer;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+  font-size: 12px;
+  font-weight: 400;
 
   transition:
     background-color,

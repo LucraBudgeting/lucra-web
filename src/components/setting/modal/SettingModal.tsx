@@ -10,13 +10,13 @@ import { useAuth } from '@/hooks/authentication/useAuth.hook';
 import { FeatureFlagContext } from '@/stores/contexts/featureFlag.context';
 import { CommitHash } from '@/utils/CommitHash';
 import { AccountsDialog } from '@/components/dialog/Accounts/AccountsDialog';
-import { AutomationIcon } from '@/assets/Automation-outline';
 import { RulesDialog } from '@/components/dialog/Rules/RulesDialog';
 import useClientDevice from '@/hooks/client/useClientDevice';
 import { maxZIndex } from '@/utils/domConstants';
 import { BillingIcon } from '@/assets/billing-icon';
 import { ApiContext } from '@/stores/contexts/api.context';
 import { DarkLogoAnimatedIcon } from '@/assets/logos/Dark_Logo.animated';
+import { LightningIcon } from '@/assets/lightning-icon';
 import { SettingModalSection } from './SettingModalSection';
 import { SettingProfileHeader } from './SettingProfileHeader';
 
@@ -172,7 +172,7 @@ export const SettingModal: FC<ProfileModalProps> = ({ outsideClickCb, parentRef 
             onClick={goToBilling}
             id="settings_billing"
           />
-          <SettingModalSection Icon={AutomationIcon} title="Rules" onClick={onRulesClick} />
+          <SettingModalSection Icon={LightningIcon} title="Rules" onClick={onRulesClick} />
           {isSettingsModalAppearanceEnabled && (
             <SettingModalSection
               Icon={ApperanceOutline}

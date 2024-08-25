@@ -126,7 +126,6 @@ const Styled = {
         return props.$isGood ? colors.success.main : colors.error.main;
       }};
       background-color: ${(props) => {
-        console.log(props);
         if (props.$isZero) return colors.grey[300];
         return props.$isGood ? colors.success.focus : colors.error.focus;
       }};

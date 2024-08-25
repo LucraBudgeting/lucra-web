@@ -186,7 +186,9 @@ const Styles = {
   accountTypeListContainer: styled.div`
     margin-top: 1rem;
   `,
-  accountTypeContainer: styled.div``,
+  accountTypeContainer: styled.div`
+    margin-bottom: 32px;
+  `,
   accountTypeHeader: styled.div`
     width: 100%;
     display: flex;
