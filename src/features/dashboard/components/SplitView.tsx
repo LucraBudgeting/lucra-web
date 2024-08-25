@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { useAutoAnimate } from '@formkit/auto-animate/react';
 import useClientDevice from '@/hooks/client/useClientDevice';
 import localStorageRepository from '@/utils/localStorage.repository';
+import colors from '@/assets/theme/colors';
 
 interface SplitViewProps {
   left: React.ReactNode;
@@ -37,8 +38,9 @@ const RightViewPane = styled(SplitViewPane)``;
 
 const Divider = styled.div`
   width: 1px;
-  background-color: #ccc;
-  height: 100%;
+  background-color: ${colors.grey[300]};
+  z-index: 100;
+  height: 100vh;
   cursor: ew-resize;
   position: relative;
   border-radius: 10px;

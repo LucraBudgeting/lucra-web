@@ -13,7 +13,7 @@ interface EditOrAddCategoryDialogProps extends DialogProps {
 }
 
 export const EditOrAddCategoryDialog: FC<EditOrAddCategoryDialogProps> = (props) => {
-  const { category, budgeted, headerText, successCb, initialBudgetType } = props;
+  const { category, budgeted, headerText, successCb, initialBudgetType = 'credit' } = props;
 
   const [budgetType, setBudgetType] = useState<string>(
     balanceEntryToText(category?.budgetType ?? initialBudgetType ?? 'debit')

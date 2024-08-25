@@ -1,11 +1,14 @@
-import { FC, useEffect, useRef, useState } from 'react';
+import { FC, useContext, useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
+import { useDispatch } from 'react-redux';
 import { SpyGlassOutline } from '@/assets/spyglass-outline';
-import { dashboardSelector } from '@/stores/slices/Dashboard.slice';
+import { addNewCategory, dashboardSelector } from '@/stores/slices/Dashboard.slice';
 import { useOutsideClickRef } from '@/hooks/react/useOutsideClickRef';
 import { maxZIndex } from '@/utils/domConstants';
 import colors from '@/assets/theme/colors';
+import { ApiContext } from '@/stores/contexts/api.context';
 import { ICategory } from '../../types/basic/Category.type';
+import { EditOrAddCategoryDialog } from '../dialog/EditOrAddCategoryDialog';
 import { CategoryItem } from './CategoryItem';
 import { FixedCategoryItem } from './FixedCategoryItem';
 
@@ -26,33 +29,43 @@ export const CategoryListModal: FC<CategoryListProps> = ({
     display: 'none',
   });
   const [isVisible, setIsVisible] = useState(false);
-
-  const modalRef = useOutsideClickRef(outsideClickCb);
+  const [isAddCategoryOpen, setIsAddCategoryOpen] = useState(false);
+  const [searchValue, setSearchValue] = useState('');
+  const { debitCategories, creditCategories, transferCategory } = dashboardSelector();
+  const [incomeList, setIncomeList] = useState<ICategory[]>(creditCategories);
+  const [expenseList, setExpenseList] = useState<ICategory[]>(debitCategories);
+  const modalRef = useOutsideClickRef(outsideClick);
   const searchInputRef = useRef<HTMLInputElement>(null);
+  const { categoryApi } = useContext(ApiContext);
+  const dispatch = useDispatch();
+
+  function outsideClick() {
+    if (isAddCategoryOpen) {
+      return;
+    }
+
+    setIsVisible(false);
+    outsideClickCb && outsideClickCb();
+  }
 
   useEffect(() => {
     if (parentRef.current) {
       const rect = parentRef.current.getBoundingClientRect();
       const availableHeightBelow = window.innerHeight - rect.bottom;
       const availableHeightAbove = rect.top;
-      const availableWidthRight = window.innerWidth - rect.right;
       const modalHeight = 400;
-      const modalWidth = 50;
 
       let top = rect.bottom + window.scrollY;
-      let _left = rect.left + window.scrollX;
+      const left = window.scrollX + rect.width / 3;
 
       if (availableHeightBelow < modalHeight && availableHeightAbove > modalHeight) {
         top = rect.top + window.scrollY - modalHeight;
       }
 
-      if (availableWidthRight < modalWidth) {
-        _left = rect.left + window.scrollX - modalWidth;
-      }
-
       setModalStyle({
         position: 'absolute',
         top,
+        left: left,
         maxHeight: `${modalHeight}px`,
         zIndex: maxZIndex + 1,
       });
@@ -61,16 +74,16 @@ export const CategoryListModal: FC<CategoryListProps> = ({
   }, [parentRef]);
 
   useEffect(() => {
+    setIncomeList(creditCategories);
+    setExpenseList(debitCategories);
+  }, [creditCategories, debitCategories]);
+
+  useEffect(() => {
     //AUTO FOCUS SEARCH WHEN RENDERED
     if (isVisible && searchInputRef.current) {
       searchInputRef.current.focus();
     }
   }, [searchInputRef, isVisible]);
-
-  const { debitCategories, creditCategories, transferCategory } = dashboardSelector();
-  const [searchValue, setSearchValue] = useState('');
-  const [incomeList, setIncomeList] = useState<ICategory[]>(creditCategories);
-  const [expenseList, setExpenseList] = useState<ICategory[]>(debitCategories);
 
   const filterCategories = (value: string) => {
     const incomeCategories = creditCategories.filter((category) =>
@@ -94,6 +107,21 @@ export const CategoryListModal: FC<CategoryListProps> = ({
     event.stopPropagation();
     categoryClickCb(transferCategory.id);
   }
+
+  function toggleAddCategory() {
+    setIsAddCategoryOpen(!isAddCategoryOpen);
+  }
+
+  const addBudgetCb = (newCategory: ICategory) => {
+    categoryApi
+      .AddCategory(newCategory)
+      .then((res) => {
+        dispatch(addNewCategory(res.category));
+      })
+      .finally(() => {
+        setIsAddCategoryOpen(false);
+      });
+  };
 
   return (
     <>
@@ -137,15 +165,37 @@ export const CategoryListModal: FC<CategoryListProps> = ({
         <Styled.fixedContainer>
           {currentCategoryId && (
             <FixedCategoryItem
+              label="Add Category"
+              budgetType="transfer"
+              amount={0}
+              avatar={{ emoji: '➕', backgroundColor: '' }}
+              color={colors.grey[500]}
+              categoryClickCb={toggleAddCategory}
+            />
+          )}
+        </Styled.fixedContainer>
+        <Styled.fixedContainer>
+          {currentCategoryId && (
+            <FixedCategoryItem
               label="Remove Category"
               budgetType="transfer"
               amount={0}
-              avatar={{ emoji: '❌', backgroundColor: '' }}
+              avatar={{ emoji: 'X', backgroundColor: '' }}
+              color={colors.error.main}
               categoryClickCb={categoryClick}
             />
           )}
         </Styled.fixedContainer>
       </Styled.container>
+      {isAddCategoryOpen && (
+        <EditOrAddCategoryDialog
+          budgeted={0}
+          closeCb={toggleAddCategory}
+          closeOnOverlayClick={true}
+          successCb={addBudgetCb}
+          nextText="Add Category"
+        />
+      )}
     </>
   );
 };
