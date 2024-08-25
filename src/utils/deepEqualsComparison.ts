@@ -26,3 +26,7 @@ export function deepEquals(obj1: any, obj2: any): boolean {
 
   return true;
 }
+
+export function isObjEmpty(obj: any): boolean {
+  return Object.keys(obj).length === 0 && obj.constructor === Object;
+}

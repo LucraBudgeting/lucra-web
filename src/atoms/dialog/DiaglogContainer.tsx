@@ -96,7 +96,7 @@ export const DialogContainer: FC<DiaglogContainerProps> = ({
                   <EditIcon />
                 </p>
               )}
-              <p onClick={closeDialog}>
+              <p onClick={closeDialog} id="close-dialog-cross">
                 <CrossIcon />
               </p>
             </Styled.headerActions>

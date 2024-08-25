@@ -1,4 +1,4 @@
-import { FC, useContext, useRef, useState } from 'react';
+import { FC, useContext, useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import { useDispatch } from 'react-redux';
 import { PlusIcon } from '@/assets/plus-icon';
@@ -17,6 +17,7 @@ import { ICategory } from '@/types/basic/Category.type';
 import { ApiContext } from '@/stores/contexts/api.context';
 import colors from '@/assets/theme/colors';
 import { Button } from '@/atoms/button/Button';
+import { userGuideSelector } from '@/stores/slices/userGuide.slice';
 import { EditOrAddCategoryDialog } from '../dialog/EditOrAddCategoryDialog';
 import { SideArrowFilledIcon } from '../../assets/side-arrow-filled-icon';
 import { BudgetHeaderTimeRanges } from './BudgetHeaderTimeRanges';
@@ -37,6 +38,7 @@ export const BudgetHeader: FC<BudgetHeaderProps> = ({}) => {
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
 
   const { dateRange, currentRange } = dashboardSelector();
+  const { closeDialogBuster } = userGuideSelector();
 
   const isNotInCurrentMonth = !isInCurrentMonth(new Date(dateRange.endDate));
 
@@ -45,6 +47,10 @@ export const BudgetHeader: FC<BudgetHeaderProps> = ({}) => {
   if (currentRange !== '1mo') {
     startDateStr = `${getShortMonth(dateRange.startDate)} ${yearFromIso(dateRange.startDate)} - ${getShortMonth(dateRange.endDate)} ${yearFromIso(dateRange.endDate)}`;
   }
+
+  useEffect(() => {
+    setIsSettingsOpen(false);
+  }, [closeDialogBuster]);
 
   const addBudgetCb = (newCategory: ICategory) => {
     setIsCategoryAdding(true);
@@ -101,8 +107,8 @@ export const BudgetHeader: FC<BudgetHeaderProps> = ({}) => {
               Current month
             </Button>
           )}
-          <span onClick={toggleAdd}>
-            <PlusIcon id="add_new_budget_header_icon" />
+          <span onClick={toggleAdd} id="add_new_budget_header_icon">
+            <PlusIcon />
           </span>
           {isBudgetHeaderProfileIconEnabled && (
             <span onClick={toggleProfile}>

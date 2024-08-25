@@ -1,5 +1,5 @@
-import { FC } from 'react';
-import Joyride, { Step, TooltipRenderProps } from 'react-joyride';
+import { FC, useState } from 'react';
+import Joyride, { CallBackProps, STATUS, Step, TooltipRenderProps } from 'react-joyride';
 import styled from 'styled-components';
 import colors from '@/assets/theme/colors';
 import { guideStyles } from './guide.styles';
@@ -7,16 +7,63 @@ import { guideStyles } from './guide.styles';
 interface LucraJoyrideProps {
   run: boolean;
   steps: Step[];
-  stepIndex: number;
-  handleJoyrideCallback: (data: any) => void;
+  markGuideAsComplete?: () => void;
+  setRun?: (val: boolean) => void;
 }
 
 export const LucraJoyride: FC<LucraJoyrideProps> = ({
   run,
   steps,
-  stepIndex,
-  handleJoyrideCallback,
+  markGuideAsComplete,
+  setRun,
 }) => {
+  const [stepIndex, setStepIndex] = useState(0);
+
+  const handleJoyrideCallback = (data: CallBackProps) => {
+    const { status, index, type, action } = data;
+    const finishedStatuses = [STATUS.FINISHED, STATUS.SKIPPED, STATUS.ERROR, STATUS.IDLE];
+
+    // @ts-expect-error - TS doesn't know about the click method
+    if (finishedStatuses.includes(status)) {
+      setRun && setRun(false);
+      return;
+    }
+
+    if (action === 'prev') {
+      setStepIndex((prevIndex) => prevIndex - 1);
+      return;
+    }
+
+    if (type === 'step:after' && action === 'next') {
+      if (steps.length === stepIndex + 1) {
+        markGuideAsComplete && markGuideAsComplete();
+      }
+
+      const querySelector = steps[index].target as string;
+      const element = document.querySelector(querySelector);
+      if (element) {
+        // @ts-expect-error - TS doesn't know about the click method
+        element.click();
+      }
+
+      if (steps.length > index + 1) {
+        nextStep(steps[index + 1].target as string);
+      }
+      return;
+    }
+
+    function nextStep(nextQuerySelector: string) {
+      const element = document.querySelector(nextQuerySelector);
+      if (element) {
+        setStepIndex((prevIndex) => prevIndex + 1);
+      } else {
+        setTimeout(() => {
+          nextStep(nextQuerySelector);
+        }, 10);
+      }
+    }
+  };
+
   return (
     <Joyride
       steps={steps}
