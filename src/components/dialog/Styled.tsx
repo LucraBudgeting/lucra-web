@@ -41,6 +41,7 @@ const Styled = {
   `,
   sectionContainer: styled.div`
     margin-bottom: 15px;
+    padding-top: 1rem;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -79,7 +80,6 @@ const Styled = {
     width: 100%;
     align-items: center;
     justify-content: center;
-    margin-top: 1rem;
   `,
 };
 
