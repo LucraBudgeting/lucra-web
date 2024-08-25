@@ -60,7 +60,15 @@ export const BudgetItem: FC<BudgetItemProps> = ({ category }) => {
         </Styled.amountContainer>
       </Styled.container>
       {isViewDialogOpen && (
-        <ViewBudgetDialog category={category} closeCb={toggleViewBudgetDialog} />
+        <ViewBudgetDialog
+          category={category}
+          closeCb={toggleViewBudgetDialog}
+          amount={amount}
+          isRemainingGood={isRemainingGood}
+          remaining={remaining}
+          actual={actual}
+          average={budgetAverage[category.id ?? ''] || 0}
+        />
       )}
     </>
   );

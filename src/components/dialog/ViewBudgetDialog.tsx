@@ -12,13 +12,18 @@ import { LoadingComponent } from '@/atoms/loading/Loading.Component';
 import { balanceEntryToText, textToBalanceEntry } from '@/types/types';
 import { ApiContext } from '@/stores/contexts/api.context';
 import colors from '@/assets/theme/colors';
+import { getShortMonth, yearFromIso } from '@/utils/time.helper';
 import { TransactionList } from '../transaction/TransactionList';
-import { calcRemaining, calcIsRemainingGood } from '../budget/budgetCalculator';
 import { EditOrAddCategory } from '../budget/EditOrAddCategory';
 import { DestroyDialog } from './Destroy/DestroyDialog';
 
 interface ViewBudgetDialogProps extends DialogProps {
   category: ICategory;
+  amount?: number;
+  isRemainingGood?: boolean;
+  remaining?: number;
+  actual?: number;
+  average?: number;
 }
 
 export const ViewBudgetDialog: FC<ViewBudgetDialogProps> = (props) => {
@@ -29,18 +34,18 @@ export const ViewBudgetDialog: FC<ViewBudgetDialogProps> = (props) => {
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
 
   const dispatch = useDispatch();
-
   const { categoryApi } = useContext(ApiContext);
-
-  const { closeCb } = props;
-  const { id, label, avatar, amount, budgetType } = category;
+  const { closeCb, amount = 0, isRemainingGood, remaining = 0, actual = 0, average = 0 } = props;
+  const { id, label, avatar } = category;
+  const { dateRange, currentRange } = dashboardSelector();
+  const isAggregate = currentRange !== '1mo';
+  let startDateStr = `${getShortMonth(dateRange.endDate)} ${yearFromIso(dateRange.endDate)}`;
+  if (currentRange !== '1mo') {
+    startDateStr = `${getShortMonth(dateRange.startDate)} ${yearFromIso(dateRange.startDate)} - ${getShortMonth(dateRange.endDate)} ${yearFromIso(dateRange.endDate)}`;
+  }
 
   const filterTransactions = () =>
     transactions.filter((transaction) => transaction.categoryId === id);
-
-  const actual = id ? dashboardSelector().budgetActuals[id] : 0;
-  const remaining = calcRemaining(amount, actual);
-  const isRemainingGood = calcIsRemainingGood(amount, actual, budgetType);
 
   const headerLabel = isEditEnabled ? 'Edit category' : avatar.emoji + ' ' + label;
 
@@ -129,23 +134,41 @@ export const ViewBudgetDialog: FC<ViewBudgetDialogProps> = (props) => {
         </Styles.editContainer>
       ) : (
         <>
-          <Styles.detailsContainer>
-            <Styles.infoBlock>
-              <h2>Budget</h2>
-              <h3>{formatAsMoney(amount, true)}</h3>
-            </Styles.infoBlock>
-            <Styles.infoBlock>
-              <h2>Actual</h2>
-              <h3>{formatAsMoney(actual, true)}</h3>
-            </Styles.infoBlock>
-            <hr />
-            <Styles.remainingInfoBlock $isGood={String(isRemainingGood)}>
-              <h2>Remaining</h2>
-              <h3>{formatAsMoney(remaining, true)}</h3>
-            </Styles.remainingInfoBlock>
-          </Styles.detailsContainer>
-          <Styles.transactionListContainer id="dialog-list-container">
+          <Styles.dateContainer>
+            <h2>{startDateStr}</h2>
+          </Styles.dateContainer>
+          {isAggregate ? (
+            <Styles.aggregateContainer>
+              <Styles.aggregateBlock>
+                <h2>Total</h2>
+                <h1>{formatAsMoney(actual, true)}</h1>
+              </Styles.aggregateBlock>
+              <Styles.aggregateBlock>
+                <h2>Average</h2>
+                <h1>{formatAsMoney(average, true)}</h1>
+              </Styles.aggregateBlock>
+            </Styles.aggregateContainer>
+          ) : (
+            <Styles.detailsContainer>
+              <Styles.infoBlock>
+                <h2>Budget</h2>
+                <h3>{formatAsMoney(amount, true)}</h3>
+              </Styles.infoBlock>
+              <Styles.infoBlock>
+                <h2>Actual</h2>
+                <h3>{formatAsMoney(actual, true)}</h3>
+              </Styles.infoBlock>
+              <hr />
+              <Styles.remainingInfoBlock $isGood={String(isRemainingGood)}>
+                <h2>Remaining</h2>
+                <h3>{formatAsMoney(remaining, true)}</h3>
+              </Styles.remainingInfoBlock>
+            </Styles.detailsContainer>
+          )}
+          <Styles.transactionHeader>
             <h2>Transactions</h2>
+          </Styles.transactionHeader>
+          <Styles.transactionListContainer id="dialog-list-container">
             {isTransactionsFetching && <LoadingComponent />}
             {!isTransactionsFetching && transactions.length === 0 && <div>No transactions</div>}
             {!isTransactionsFetching && transactions.length > 0 && (
@@ -186,6 +209,43 @@ const baseInfoBlockStyles = css`
 `;
 
 const Styles = {
+  dateContainer: styled.div`
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    margin-top: 1rem;
+
+    h2 {
+      font-weight: 600;
+    }
+  `,
+  aggregateContainer: styled.div`
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    padding-top: 1rem;
+  `,
+  aggregateBlock: styled.div`
+    background-color: ${colors.grey[100]};
+    width: 40%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 24px 20px;
+    border-radius: 16px;
+
+    h1 {
+      color: ${colors.black.main};
+      font-size: 20px;
+      font-weight: 600;
+    }
+
+    h2 {
+      color: ${colors.grey[500]};
+      font-size: 14px;
+      font-weight: 500;
+    }
+  `,
   editContainer: styled.div`
     display: flex;
     flex-direction: column;
@@ -233,12 +293,8 @@ const Styles = {
       padding: 6px 10px;
     }
   `,
-  transactionListContainer: styled.div`
-    position: relative;
-    max-height: 40vh;
-    overflow-y: auto;
-    overflow-x: hidden;
-    width: calc(100% + 60px);
+  transactionHeader: styled.div`
+    width: 100%;
 
     h2 {
       font-size: 16px;
@@ -246,5 +302,13 @@ const Styles = {
       color: ${colors.black.main};
       margin: 1rem;
     }
+  `,
+  transactionListContainer: styled.div`
+    position: relative;
+    max-height: 40vh;
+    overflow-y: auto;
+    overflow-x: hidden;
+    width: calc(100% + 60px);
+    margin-bottom: 18px;
   `,
 };
