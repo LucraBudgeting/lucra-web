@@ -71,19 +71,16 @@ export const RegisterV2: FC<RegisterV2Props> = ({}) => {
     const value = e.target.value;
     setName(value);
     validateNameField(value);
-    validateRegistrationForm();
   }
 
   function onNameBlur() {
     validateNameField(name);
-    validateRegistrationForm();
   }
 
   function onEmailChange(e: React.ChangeEvent<HTMLInputElement>) {
     const value = e.target.value;
     setEmail(value);
     validateEmailField(value);
-    validateRegistrationForm();
   }
 
   function onEmailBlur() {
@@ -91,7 +88,6 @@ export const RegisterV2: FC<RegisterV2Props> = ({}) => {
 
     function blurActions(errorList: string[]) {
       setEmailErrors(errorList);
-      validateRegistrationForm();
     }
 
     if (errors.length === 0) {
