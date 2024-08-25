@@ -11,7 +11,7 @@ interface AddCategoryChipProps {
 export const AddCategoryChip: FC<AddCategoryChipProps> = ({ onClick }) => {
   return (
     <AddChip onClick={onClick}>
-      <Styled.label>Select Category</Styled.label>
+      <Styled.addLabel>Select Category</Styled.addLabel>
       <Chevron />
     </AddChip>
   );

@@ -29,4 +29,9 @@ export default {
     font-size: 14px;
     margin-right: 0.25rem;
   `,
+  addLabel: styled.span`
+    font-size: 14px;
+    margin-right: 0.25rem;
+    color: ${colors.grey[600]};
+  `,
 };

@@ -11,10 +11,10 @@ export const FixedCategoryItem: FC<FixedCategoryItemProps> = ({
   avatar,
   categoryClickCb,
 }) => {
-  const { emoji, backgroundColor } = avatar;
+  const { emoji } = avatar;
   return (
     <Styled.container onClick={(e) => categoryClickCb(e)}>
-      <Styled.emoji color={backgroundColor}>{emoji}</Styled.emoji>
+      <Styled.emoji>{emoji}</Styled.emoji>
       <Styled.title>{label}</Styled.title>
     </Styled.container>
   );
@@ -36,9 +36,7 @@ const Styled = {
     font-weight: 500;
     line-height: 18px;
   `,
-  emoji: styled.h1<{ color?: string }>`
-    background: ${({ color }) => color ?? 'transparent'};
-    border-radius: 20px;
-    padding: 4px;
+  emoji: styled.h1`
+    font-size: 12px;
   `,
 };

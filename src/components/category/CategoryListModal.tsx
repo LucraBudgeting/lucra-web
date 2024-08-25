@@ -96,55 +96,57 @@ export const CategoryListModal: FC<CategoryListProps> = ({
   }
 
   return (
-    <Styled.container ref={modalRef} style={modalStyle}>
-      <Styled.searchContainer>
-        <SpyGlassOutline />
-        <Styled.searchInput
-          ref={searchInputRef}
-          placeholder="Search..."
-          value={searchValue}
-          onChange={(e) => filterCategories(e.target.value)}
-        />
-      </Styled.searchContainer>
-      {!!incomeList.length && (
-        <Styled.categoryConatainer>
-          <Styled.title id="income-category-title">Income</Styled.title>
-          {incomeList.map((income) => (
-            <CategoryItem key={income.id} {...income} categoryClickCb={categoryClick} />
-          ))}
-        </Styled.categoryConatainer>
-      )}
-      {!!expenseList.length && (
-        <Styled.categoryConatainer>
-          <Styled.title id="expense-category-title">Expense</Styled.title>
-          {expenseList.map((expense) => (
-            <CategoryItem key={expense.id} {...expense} categoryClickCb={categoryClick} />
-          ))}
-        </Styled.categoryConatainer>
-      )}
-      {!!(!expenseList.length && !incomeList.length) && <p>No results</p>}
-      <Styled.categoryConatainer>
-        <Styled.title>Transfer</Styled.title>
-        <CategoryItem
-          label="Transfer"
-          budgetType="transfer"
-          amount={0}
-          avatar={{ emoji: '🔀', backgroundColor: '' }}
-          categoryClickCb={setAsTransfer}
-        />
-      </Styled.categoryConatainer>
-      <Styled.fixedContainer>
-        {currentCategoryId && (
-          <FixedCategoryItem
-            label="Remove Category"
-            budgetType="credit"
-            amount={0}
-            avatar={{ emoji: '❌', backgroundColor: '' }}
-            categoryClickCb={categoryClick}
+    <>
+      <Styled.container ref={modalRef} style={modalStyle}>
+        <Styled.searchContainer>
+          <SpyGlassOutline />
+          <Styled.searchInput
+            ref={searchInputRef}
+            placeholder="Search..."
+            value={searchValue}
+            onChange={(e) => filterCategories(e.target.value)}
           />
+        </Styled.searchContainer>
+        {!!incomeList.length && (
+          <Styled.categoryConatainer>
+            <Styled.title id="income-category-title">Income</Styled.title>
+            {incomeList.map((income) => (
+              <CategoryItem key={income.id} {...income} categoryClickCb={categoryClick} />
+            ))}
+          </Styled.categoryConatainer>
         )}
-      </Styled.fixedContainer>
-    </Styled.container>
+        {!!expenseList.length && (
+          <Styled.categoryConatainer>
+            <Styled.title id="expense-category-title">Expense</Styled.title>
+            {expenseList.map((expense) => (
+              <CategoryItem key={expense.id} {...expense} categoryClickCb={categoryClick} />
+            ))}
+          </Styled.categoryConatainer>
+        )}
+        {!!(!expenseList.length && !incomeList.length) && <p>No results</p>}
+        <Styled.categoryConatainer>
+          <Styled.title>Transfer</Styled.title>
+          <CategoryItem
+            label="Transfer"
+            budgetType="transfer"
+            amount={0}
+            avatar={{ emoji: '🔀', backgroundColor: '' }}
+            categoryClickCb={setAsTransfer}
+          />
+        </Styled.categoryConatainer>
+        <Styled.fixedContainer>
+          {currentCategoryId && (
+            <FixedCategoryItem
+              label="Remove Category"
+              budgetType="transfer"
+              amount={0}
+              avatar={{ emoji: '❌', backgroundColor: '' }}
+              categoryClickCb={categoryClick}
+            />
+          )}
+        </Styled.fixedContainer>
+      </Styled.container>
+    </>
   );
 };
 

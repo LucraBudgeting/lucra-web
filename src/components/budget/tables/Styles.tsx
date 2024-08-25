@@ -45,7 +45,7 @@ export const Styles = {
     position: sticky;
     top: ${(props) => (props.$isFirst ? '0' : '0')};
     z-index: ${(props) => (props.$isFirst ? 9 : 8)};
-    background-color: ${colors.grey[100]};
+    background-color: ${colors.grey[50]};
     padding-top: 1rem;
     padding-bottom: 1rem;
     display: flex;
@@ -99,7 +99,7 @@ export const Styles = {
   headerContainer: styled.div`
     display: flex;
     justify-content: space-between;
-    background-color: ${colors.grey[100]};
+    background-color: ${colors.grey[50]};
     z-index: 10;
 
     position: sticky;
