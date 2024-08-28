@@ -21,7 +21,7 @@ export function calcIsRemainingGood(budgeted: number, actual: number, budgetType
   }
 }
 
-export function calcRemaining(budgeted: number, actual: number, budgetType?: balanceEntry) {
+export function calcRemaining(budgeted: number, actual: number) {
   actual = normalizeNumber(actual);
 
   return Math.abs(budgeted - actual);
