@@ -33,7 +33,6 @@ export const Styled = {
     align-items: center;
     align-self: stretch;
     position: relative; // Needed for absolute positioning of the close button
-    z-index: ${maxZIndex + 3};
     border-bottom: ${colors.grey[300]} solid 1px;
   `,
   headerText: styled.div`
