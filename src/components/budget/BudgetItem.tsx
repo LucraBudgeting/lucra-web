@@ -19,7 +19,7 @@ export const BudgetItem: FC<BudgetItemProps> = ({ category }) => {
   const { id, label, avatar, amount, budgetType } = category;
   const actual = id ? budgetActuals[id] : 0;
 
-  const remaining = calcRemaining(amount, actual);
+  const remaining = calcRemaining(amount, actual, category.budgetType);
   const isRemainingGood = calcIsRemainingGood(amount, actual, budgetType);
   const inputWidth = formatAsMoney(amount).length * 10 + 20 + 'px';
 
