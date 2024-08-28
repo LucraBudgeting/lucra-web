@@ -29,6 +29,7 @@ interface EditOrAddRuleProps {
 const merchantNameField = 'name';
 const aiTagField = 'categoryDetailed';
 const maxAllowedValues = 6;
+const isAutoTagEnabled = true;
 
 export const EditOrAddRuleV2: FC<EditOrAddRuleProps> = ({
   rule,
@@ -168,29 +169,31 @@ export const EditOrAddRuleV2: FC<EditOrAddRuleProps> = ({
           </Styles.inputColumn>
         </Styles.row>
       </Styles.instructionSection>
-      <Styles.instructionSection>
-        <p>Tags applied by banking institution</p>
-        <Styles.row>
-          <Styles.inputColumn width="100%">
-            <BaseSelect
-              value={aiTagValues[0]}
-              onValueChange={(value) => onAiTagChange(value, 0)}
-              options={categoryListOptions}
-            />
-            {aiTagValues.slice(1).map((value, index) => (
+      {isAutoTagEnabled && (
+        <Styles.instructionSection>
+          <p>Tags applied by banking institution</p>
+          <Styles.row>
+            <Styles.inputColumn width="100%">
               <BaseSelect
-                key={index}
-                value={value}
-                onValueChange={(value) => onAiTagChange(value, index + 1)}
+                value={aiTagValues[0]}
+                onValueChange={(value) => onAiTagChange(value, 0)}
                 options={categoryListOptions}
               />
-            ))}
-            {aiTagValues.length < maxAllowedValues && aiTagValues[aiTagValues.length - 1] && (
-              <AddValueBtn onClick={addAiTagValue} />
-            )}
-          </Styles.inputColumn>
-        </Styles.row>
-      </Styles.instructionSection>
+              {aiTagValues.slice(1).map((value, index) => (
+                <BaseSelect
+                  key={index}
+                  value={value}
+                  onValueChange={(value) => onAiTagChange(value, index + 1)}
+                  options={categoryListOptions}
+                />
+              ))}
+              {aiTagValues.length < maxAllowedValues && aiTagValues[aiTagValues.length - 1] && (
+                <AddValueBtn onClick={addAiTagValue} />
+              )}
+            </Styles.inputColumn>
+          </Styles.row>
+        </Styles.instructionSection>
+      )}
       <Styles.instructionSection>
         <p>Then categorize as</p>
         <BaseSelect
