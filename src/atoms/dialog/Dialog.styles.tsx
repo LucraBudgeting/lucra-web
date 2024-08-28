@@ -93,6 +93,7 @@ export const Styled = {
     width: calc(100% - 60px);
     /* width: 100%; */
     padding: 0 30px;
+    padding-top: 1rem;
     height: ${({ height }) => height};
     overflow-x: hidden;
   `,
