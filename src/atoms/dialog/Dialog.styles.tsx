@@ -87,13 +87,13 @@ export const Styled = {
     display: flex;
     flex-direction: column;
     align-items: center;
-    overflow-y: auto;
     padding-top: 1rem;
     width: calc(100% - 60px);
-    /* width: 100%; */
     padding: 0 30px;
     padding-top: 1rem;
     height: ${({ height }) => height};
     overflow-x: hidden;
+    overflow-y: scroll;
+    max-height: 80vh;
   `,
 };

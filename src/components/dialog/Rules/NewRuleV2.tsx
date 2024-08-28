@@ -28,7 +28,7 @@ interface EditOrAddRuleProps {
 
 const merchantNameField = 'name';
 const aiTagField = 'categoryDetailed';
-const maxAllowedValues = 6;
+const maxAllowedValues = 60;
 const isAutoTagEnabled = false;
 
 export const EditOrAddRuleV2: FC<EditOrAddRuleProps> = ({
