@@ -28,8 +28,6 @@ export const AccountsDialog: FC<AccountsDialogProps> = (props) => {
   const { isInTour } = dashboardSelector();
   const startOpen = !isInTour;
   const [containerRef] = useAutoAnimate();
-  const [depositoryContainerRef] = useAutoAnimate();
-  const [creditContainerRef] = useAutoAnimate();
 
   const [accountsCacheBuster, setAccountsCacheBuster] = useState<string>();
   const [accounts, isFetchingAccounts] = useAccounts(accountsCacheBuster);
@@ -105,7 +103,7 @@ export const AccountsDialog: FC<AccountsDialogProps> = (props) => {
                 <>
                   <AccountsHeader totalDepository={totalDepository} totalDebts={totalDebts} />
                   <Styles.accountTypeListContainer>
-                    <Styles.accountTypeContainer ref={depositoryContainerRef}>
+                    <Styles.accountTypeContainer>
                       <Styles.accountTypeHeader onClick={toggleDepository}>
                         <Chevron direction={showDepository ? 'up' : 'right'} />
                         <h3>Depository</h3>
@@ -124,7 +122,7 @@ export const AccountsDialog: FC<AccountsDialogProps> = (props) => {
                         </Styles.accountListContainer>
                       )}
                     </Styles.accountTypeContainer>
-                    <Styles.accountTypeContainer ref={creditContainerRef}>
+                    <Styles.accountTypeContainer>
                       <Styles.accountTypeHeader onClick={toggleCredit}>
                         <Chevron direction={showDepository ? 'up' : 'right'} />
                         <h3>Credit Cards</h3>

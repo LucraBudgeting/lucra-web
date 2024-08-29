@@ -41,26 +41,26 @@ export const Transactions: FC<TransactionsProps> = ({ transactions, isFetching }
     let filteredTransactionsLocal = [...transactions];
     if (search) {
       filteredTransactionsLocal = filteredTransactionsLocal.filter((transaction) => {
-        let isValid = false;
         const name = transaction.name?.toLowerCase();
         const merchantName = transaction.merchantName?.toLowerCase();
         const searchTerm = search.toLowerCase();
 
-        if (name) {
-          isValid = name.includes(searchTerm);
+        if (name?.includes(searchTerm)) {
+          return true;
         }
 
-        if (merchantName) {
-          isValid = merchantName.includes(searchTerm);
+        if (merchantName?.includes(searchTerm)) {
+          return true;
         }
 
-        if (transaction.categoryId) {
-          isValid = categoryDictionary[transaction.categoryId].label
-            .toLowerCase()
-            .includes(searchTerm);
+        if (
+          transaction.categoryId &&
+          categoryDictionary[transaction.categoryId].label.toLowerCase().includes(searchTerm)
+        ) {
+          return true;
         }
 
-        return isValid;
+        return false;
       });
     }
 
