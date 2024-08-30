@@ -6,6 +6,7 @@ import { Button } from '@/atoms/button/Button';
 import { DialogContainer } from '@/atoms/dialog/DiaglogContainer';
 import { authRoutes } from '@/routes/RouteConstants';
 import { maxZIndex } from '@/utils/domConstants';
+import useClientDevice from '@/hooks/client/useClientDevice';
 
 interface AuthContainerProps {
   forwardRef?: React.ForwardedRef<HTMLDivElement>;
@@ -32,6 +33,7 @@ export const AuthContainer: FC<AuthContainerProps> = ({
   children,
   isCbDisabled,
 }) => {
+  const { isMobile } = useClientDevice();
   const showBackBtn = showBackPaths.includes(location.pathname);
 
   function onBackClick() {
@@ -46,7 +48,7 @@ export const AuthContainer: FC<AuthContainerProps> = ({
         </Styles.backBtn>
       )}
       <DialogContainer
-        width="35vw"
+        width={isMobile ? '100%' : '35vw'}
         closeCb={() => {}}
         enableFooter={false}
         enableHeader={false}
