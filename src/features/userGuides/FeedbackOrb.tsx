@@ -14,6 +14,7 @@ const Orb = styled.div<{ $isOpen: boolean }>`
   right: 30px;
   border-radius: 100px;
   background-color: ${(props) => (props.$isOpen ? colors.brand.light : colors.grey[100])};
+  border: 2px solid ${colors.brand.main};
   padding: 10px 14px;
   display: flex;
   justify-content: center;
