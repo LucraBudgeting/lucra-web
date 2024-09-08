@@ -36,8 +36,6 @@ export const NetRow: FC<NetRowProps> = ({
 
   useEffect(() => {
     if (incomeRemaining && expenseRemaining) {
-      incomeRemaining = -4689;
-      expenseRemaining = 7209;
       setRemaining(Math.abs(incomeRemaining) - Math.abs(expenseRemaining));
       if (incomeRemaining > expenseRemaining) {
         setIsRemainingGood(Math.abs(incomeRemaining) - Math.abs(expenseRemaining) > 0);
