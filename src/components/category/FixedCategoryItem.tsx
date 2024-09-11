@@ -15,9 +15,8 @@ export const FixedCategoryItem: FC<FixedCategoryItemProps> = ({
   color,
 }) => {
   const { emoji } = avatar;
-  console.log(color);
   return (
-    <Styled.container $color={color} onClick={(e) => categoryClickCb(e)}>
+    <Styled.container onClick={(e) => categoryClickCb(e)}>
       <Styled.emoji>{emoji}</Styled.emoji>
       <Styled.title>{label}</Styled.title>
     </Styled.container>
@@ -25,14 +24,13 @@ export const FixedCategoryItem: FC<FixedCategoryItemProps> = ({
 };
 
 const Styled = {
-  container: styled.div<{ $color?: string }>`
+  container: styled.div`
     display: flex;
     width: 100%;
     align-items: center;
     justify-content: flex-start;
     gap: 14px;
     cursor: pointer;
-    color: ${(props) => props.$color || colors.grey[300]};
   `,
   title: styled.h1`
     font-family: Inter;
