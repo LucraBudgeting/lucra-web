@@ -1,7 +1,6 @@
 import { FC } from 'react';
 import styled from 'styled-components';
 import { ICategory } from '@/types/basic/Category.type';
-import colors from '@/assets/theme/colors';
 
 interface FixedCategoryItemProps extends ICategory {
   categoryClickCb: (event: React.MouseEvent) => void;
@@ -12,7 +11,6 @@ export const FixedCategoryItem: FC<FixedCategoryItemProps> = ({
   label,
   avatar,
   categoryClickCb,
-  color,
 }) => {
   const { emoji } = avatar;
   return (

@@ -7,7 +7,7 @@ interface categoryProps extends ICategory {
 }
 
 export const CategoryItem: FC<categoryProps> = ({ label, id, avatar, categoryClickCb }) => {
-  const { emoji, backgroundColor } = avatar;
+  const { emoji } = avatar;
 
   return (
     <Styled.container onClick={(e) => categoryClickCb(e, id)}>
