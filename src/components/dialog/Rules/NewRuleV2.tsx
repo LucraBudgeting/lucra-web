@@ -109,7 +109,7 @@ export const EditOrAddRuleV2: FC<EditOrAddRuleProps> = ({
         value,
       }));
     const aiTagConditions = aiTagValues
-      .filter((value) => value)
+      .filter((value) => value && value !== '0')
       .map((value) => ({
         field: aiTagField,
         operator: eConditionOperator.equals,
