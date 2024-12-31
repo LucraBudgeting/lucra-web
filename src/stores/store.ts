@@ -1,4 +1,4 @@
-import { combineReducers, configureStore, PreloadedState } from '@reduxjs/toolkit';
+import { combineReducers, configureStore } from '@reduxjs/toolkit';
 
 import authenticationReducer from './slices/Authentication.slice';
 import onboardingSliceReducer from './slices/Onboarding.slice';
@@ -14,7 +14,7 @@ const rootReducer = combineReducers({
 
 export type RootState = ReturnType<typeof rootReducer>;
 
-export const setupStore = (preloadedState?: PreloadedState<RootState>) => {
+export const setupStore = (preloadedState?: RootState) => {
   return configureStore({
     reducer: rootReducer,
     preloadedState,
