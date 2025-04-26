@@ -10,20 +10,35 @@ interface LinkPlaidProps {
   informParent?: (status: informParentCbStatus) => void; // Only needed if parent needs to be informed or onSuccessCb is not present
   isReadyCb?: (ready: boolean) => void;
   onSuccess?: (publicToken: string) => void;
+  mode?: 'add' | 'update';
+  itemId?: string;
 }
 
-export const LinkPlaid: FC<LinkPlaidProps> = ({ children, informParent, onSuccess, isReadyCb }) => {
+export const LinkPlaid: FC<LinkPlaidProps> = ({
+  children,
+  informParent,
+  onSuccess,
+  isReadyCb,
+  mode = 'add',
+  itemId,
+}) => {
   const [tokenHash, setTokenHash] = useState<string>('');
   const [linkToken, setLinkToken] = useState<string>('');
   const { PlaidApi: bankApi } = useContext(ApiContext);
 
   useEffect(() => {
     const fetchLinkToken = async () => {
-      const token = await bankApi.getLinkToken();
+      console.log('itemId', itemId);
+      let token;
+      if (mode === 'update' && itemId) {
+        token = await bankApi.getLinkToken(mode, itemId);
+      } else {
+        token = await bankApi.getLinkToken(mode);
+      }
       setLinkToken(token);
     };
     fetchLinkToken();
-  }, [tokenHash]);
+  }, [tokenHash, mode, itemId]);
 
   const plaidOnSuccess = useCallback(
     async (publicToken: string, metaData: PlaidLinkOnSuccessMetadata) => {
@@ -33,8 +48,9 @@ export const LinkPlaid: FC<LinkPlaidProps> = ({ children, informParent, onSucces
         return onSuccess(publicToken);
       }
 
+      const extra = mode === 'update' ? { update: true } : {};
       await bankApi
-        .syncLinkedAccounts(publicToken, metaData)
+        .syncLinkedAccounts(publicToken, { ...metaData, ...extra })
         .then(() => {
           informParent && informParent('success');
         })
@@ -42,7 +58,7 @@ export const LinkPlaid: FC<LinkPlaidProps> = ({ children, informParent, onSucces
           informParent && informParent('error');
         });
     },
-    []
+    [mode, onSuccess, informParent, bankApi]
   );
 
   const config: Parameters<typeof usePlaidLink>[0] = {

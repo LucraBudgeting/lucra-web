@@ -8,6 +8,7 @@ export interface IBankAccount {
   mask: string;
   accountBalance?: IBankBalance;
   bankInstitution?: IBankInstitution;
+  itemId: string;
 }
 
 export interface IBankBalance {

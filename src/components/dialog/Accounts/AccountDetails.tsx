@@ -6,6 +6,8 @@ import { IBankAccount } from '@/types/models/bank/BankAccount';
 import { getBase64ImageString } from '@/utils/base64Img';
 import { ElipsesIcon } from '@/assets/elipses-icon';
 import colors from '@/assets/theme/colors';
+import { RefreshOutline } from '@/assets/refresh-outline';
+import { LinkPlaid } from '@/components/bank/plaid/Link.Plaid';
 import { formatAsMoney } from '../../../utils/formatAsMoney';
 import { isBalanceOrAvailable } from './functions';
 
@@ -27,9 +29,16 @@ export const AccountDetails: FC<AccountDetailsProps> = ({ account }) => {
       <Styled.headerRow $color={bankInstitution?.primaryColor}>
         <span>
           <img srcSet={getBase64ImageString(bankInstitution?.logoUrl)} />
-          <h2>
+          <Styled.headerTitle>
             {bankInstitution?.name} ({mask})
-          </h2>
+            {account.itemId && (
+              <LinkPlaid mode="update" itemId={account.itemId}>
+                <span style={{ cursor: 'pointer' }}>
+                  <RefreshOutline />
+                </span>
+              </LinkPlaid>
+            )}
+          </Styled.headerTitle>
         </span>
         {showMenu && <ElipsesIcon />}
       </Styled.headerRow>
@@ -102,5 +111,12 @@ const Styled = {
   transactionContainer: styled.div`
     height: 400px;
     width: 100%;
+  `,
+  headerTitle: styled.h2`
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: 500;
+    font-size: 14px;
   `,
 };

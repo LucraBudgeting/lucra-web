@@ -3,9 +3,12 @@ import HttpClient from '@/libs/http/http.client';
 import { BaseRepository } from '../base.repository';
 
 export class PlaidApi extends BaseRepository {
-  getLinkToken = async (): Promise<string> => {
+  getLinkToken = async (mode: 'add' | 'update' = 'add', itemId?: string): Promise<string> => {
+    const body: any = { mode };
+    if (itemId) body.itemId = itemId;
     const linkToken = await HttpClient.post<{ linkToken: string }>(
-      `${this.apiUrl}/api/plaid/link_token`
+      `${this.apiUrl}/api/plaid/link_token`,
+      body
     );
     return linkToken.linkToken;
   };

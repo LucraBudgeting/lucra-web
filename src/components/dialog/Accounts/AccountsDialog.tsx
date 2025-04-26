@@ -146,7 +146,7 @@ export const AccountsDialog: FC<AccountsDialogProps> = (props) => {
               )}
             </Styles.accountListContainer>
             <Styles.footer>
-              <LinkPlaid informParent={accountLinkStatusCb} isReadyCb={isReadyCb}>
+              <LinkPlaid informParent={accountLinkStatusCb} isReadyCb={isReadyCb} mode="add">
                 <Button disabled={!isPlaidReady} id="plaid_add_account_btn">
                   + Add account
                 </Button>
