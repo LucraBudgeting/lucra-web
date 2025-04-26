@@ -24,6 +24,7 @@ export const Default: Story = {
       type: 'Checking',
       subType: 'savings',
       accountName: 'Plaid Silver Standard 0.1% Interest Saving',
+      itemId: 'asd',
       mask: '1111',
       accountBalance: {
         limit: 1000,
